@@ -1,0 +1,36 @@
+pluginManagement {
+
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+        id 'org.asciidoctor.jvm.convert' version "${asciidoctorConvertVersion}"
+        id 'io.spring.javaformat' version "${springJavaFormatVersion}"
+    }
+}
+
+rootProject.name = 'core-server'
+
+//core
+include 'core:core-api'
+include 'core:core-batch'
+include 'core:core-enum'
+
+//domain
+include 'domain:core-domain'
+
+//storage
+include 'storage:core-db'
+include 'storage:core-cache'
+include 'storage:core-index'
+
+// support
+include 'support:logging'
+include 'support:utils'
+
+//external
+include 'external-client'
+
+//tests
+include 'tests:api-docs'
+include 'tests:cucumber'
+

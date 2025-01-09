@@ -1,0 +1,8 @@
+# ryuqq coding convention
+# [blankline-between-import-group]
+5=com.ryuqq
+4=com
+3=net
+2=org
+1=javax
+0=java

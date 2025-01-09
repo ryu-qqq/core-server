@@ -1,0 +1,46 @@
+dependencies {
+    compileOnly 'jakarta.servlet:jakarta.servlet-api'
+    compileOnly 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'com.fasterxml.jackson.core:jackson-databind'
+
+    api 'io.rest-assured:spring-mock-mvc'
+
+    //REST DOCS
+    api 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    api 'org.springframework.restdocs:spring-restdocs-restassured'
+    api 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+}
+
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+
+asciidoctor {
+    dependsOn test
+    inputs.dir snippetsDir
+
+    sources {
+        include("**/index.adoc", "**/common/*.adoc")
+    }
+    attributes 'snippets': snippetsDir
+
+    baseDirFollowsSourceFile()
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+tasks.register('copyDocument', Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+

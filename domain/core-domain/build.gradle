@@ -1,0 +1,15 @@
+
+dependencies {
+    implementation project(':core:core-enum')
+
+    implementation project(':storage:core-db')
+    implementation project(':storage:core-cache')
+
+    implementation project(':support:utils')
+    implementation project(":support:logging")
+    implementation project(':external-client')
+
+    compileOnly("org.springframework:spring-context")
+    compileOnly("jakarta.transaction:jakarta.transaction-api")
+
+}
