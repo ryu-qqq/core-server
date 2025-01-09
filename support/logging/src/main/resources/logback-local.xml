@@ -13,7 +13,7 @@
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>localhost:5044</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"appname":"your_server","profile":"local"}</customFields>
+            <customFields>{"appname":"core-server","profile":"local"}</customFields>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
