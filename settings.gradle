@@ -32,5 +32,5 @@ include 'external-client'
 
 //tests
 include 'tests:api-docs'
-include 'tests:cucumber'
-
+include 'tests:bdd-tests'
+include 'tests:unit-tests'
