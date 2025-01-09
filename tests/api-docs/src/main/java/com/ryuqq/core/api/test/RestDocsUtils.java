@@ -1,4 +1,4 @@
-package com.ryuqq.devbase.api.test;
+package com.ryuqq.core.api.test;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
