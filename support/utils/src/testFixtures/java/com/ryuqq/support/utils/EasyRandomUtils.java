@@ -1,13 +1,9 @@
 package com.ryuqq.support.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.ExclusionPolicy;
-import org.jeasy.random.api.RandomizerContext;
 import org.jeasy.random.randomizers.range.BigDecimalRangeRandomizer;
 
 public class EasyRandomUtils {
@@ -23,29 +19,18 @@ public class EasyRandomUtils {
 			.randomize(BigDecimal.class, new BigDecimalRangeRandomizer(0.0, 1000000.0)) // 0부터 시작
 			.randomizationDepth(3)
 			.collectionSizeRange(1, 2)
-			.exclusionPolicy(new ExclusionPolicy() {
-				@Override
-				public boolean shouldBeExcluded(Field field, RandomizerContext context) {
-					boolean isFinal = Modifier.isFinal(field.getModifiers());
-					boolean isSpecificField = field.getName().equals("testGenerate");
-					return isFinal || isSpecificField;
-				}
+			.objectFactory(new RecordRandomizerRegistry(new EasyRandom()));
 
-				@Override
-				public boolean shouldBeExcluded(Class<?> aClass, RandomizerContext randomizerContext) {
-					return false;
-				}
-			});
-
-		parameters.objectFactory(new RecordRandomizerRegistry(parameters));
 
 		easyRandom = new EasyRandom(parameters);
-
 	}
 
-
-	public static EasyRandom getEasyRandom() {
+	private static EasyRandom getEasyRandom() {
 		return easyRandom;
+	}
+
+	public static <T> T getRandom(Class<T> clazz) {
+		return getEasyRandom().nextObject(clazz);
 	}
 
 }

@@ -1,8 +1,7 @@
 package com.ryuqq.core.api.controller.git.mapper;
 
 import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
-import com.ryuqq.core.domain.ChangedFileCommand;
-import com.ryuqq.core.domain.GitEventCommand;
+import com.ryuqq.core.domain.GitEvent;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GitWebHookAdapterTest extends BaseUnitTest {
 
@@ -22,27 +21,27 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 
 	@Nested
 	@DisplayName("toCommand 메서드")
-	class ToCommand {
+	class toDomain {
 
 		@Test
-		@DisplayName("GitPushEventRequestDto를 GitEventCommand로 변환해야 한다")
-		void shouldConvertGitPushEventRequestDtoToGitEventCommand() {
+		@DisplayName("GitPushEventRequestDto를 GitEventDomain 로 변환해야 한다")
+		void shouldConvertGitPushEventRequestDtoToGitEventDomain() {
 			// Given
 			GitPushEventRequestDto requestDto = createTestRequestDto();
 
 			// When
-			GitEventCommand command = gitWebHookAdapter.toCommand(requestDto);
+			GitEvent command = gitWebHookAdapter.toDomain(requestDto);
 
 			// Then
-			assertEquals("repo-name", command.branchCommand().repositoryName(), "Repository name이 변환되어야 함");
-			assertEquals(1, command.changedFileCommands().size(), "중복 파일이 제거되어야 함");
-			assertEquals("MyClass.java", command.changedFileCommands().get(0).className(), "클래스명이 올바르게 추출되어야 함");
+			assertEquals("repo-name", command.branch().getRepositoryName(), "Repository name이 변환되어야 함");
+			assertEquals(1, command.changedFiles().size(), "중복 파일이 제거되어야 함");
+			assertEquals("MyClass.java", command.changedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
 		}
 	}
 
 	@Nested
-	@DisplayName("toChangedFileCommands 메서드")
-	class ToChangedFileCommands {
+	@DisplayName("toChangedFileDomain 메서드")
+	class toChangedFileDomain {
 
 		@Test
 		@DisplayName("중복된 파일 경로가 있을 때 가장 최근 Commit 정보로 처리해야 한다")
@@ -51,12 +50,12 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 			GitPushEventRequestDto requestDto = createTestRequestDto();
 
 			// When
-			GitEventCommand gitEventCommand = gitWebHookAdapter.toCommand(requestDto);
+			GitEvent gitEvent = gitWebHookAdapter.toDomain(requestDto);
 
 			// Then
-			assertEquals(1, gitEventCommand.changedFileCommands().size(), "중복된 파일 경로가 제거되어야 함");
-			assertEquals("MyClass.java", gitEventCommand.changedFileCommands().get(0).className(), "클래스명이 올바르게 추출되어야 함");
-			assertEquals("2", gitEventCommand.changedFileCommands().get(0).commitId(), "최신 Commit ID가 유지되어야 함");
+			assertEquals(1, gitEvent.changedFiles().size(), "중복된 파일 경로가 제거되어야 함");
+			assertEquals("MyClass.java", gitEvent.changedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
+			assertEquals("2", gitEvent.changedFiles().getFirst().getCommitId(), "최신 Commit ID가 유지되어야 함");
 		}
 	}
 

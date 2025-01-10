@@ -1,9 +1,9 @@
 package com.ryuqq.core.api.controller.git.mapper;
 
 import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
-import com.ryuqq.core.domain.BranchCommand;
-import com.ryuqq.core.domain.ChangedFileCommand;
-import com.ryuqq.core.domain.GitEventCommand;
+import com.ryuqq.core.domain.Branch;
+import com.ryuqq.core.domain.ChangedFile;
+import com.ryuqq.core.domain.GitEvent;
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.CodeStatus;
 
@@ -18,20 +18,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class GitWebHookAdapter {
 
-	public GitEventCommand toCommand(GitPushEventRequestDto requestDto){
-		return new GitEventCommand(
-			new BranchCommand(
+	public GitEvent toDomain(GitPushEventRequestDto requestDto){
+		return new GitEvent(
+			new Branch(
 				requestDto.projectId(),
 				requestDto.repository().name(),
 				requestDto.repository().url(),
 				requestDto.userName(),
 				requestDto.ref()
 			),
-			toChangedFileCommands(requestDto.commits())
+			toChangedFileDomain(requestDto.commits())
 		);
 	}
 
-	private List<ChangedFileCommand> toChangedFileCommands(List<GitPushEventRequestDto.Commit> commits) {
+	private List<ChangedFile> toChangedFileDomain(List<GitPushEventRequestDto.Commit> commits) {
 		Map<String, GitPushEventRequestDto.Commit> latestCommitsByFile = commits.stream()
 			.sorted(Comparator.comparing(GitPushEventRequestDto.Commit::timestamp).reversed()) // 최신순 정렬
 			.flatMap(c -> Stream.concat(
@@ -51,7 +51,7 @@ public class GitWebHookAdapter {
 
 				ChangeType changeType = commit.added().contains(filePath) ? ChangeType.ADDED : ChangeType.MODIFIED;
 
-				return new ChangedFileCommand(
+				return new ChangedFile(
 					extractClassName(filePath),
 					filePath,
 					changeType,

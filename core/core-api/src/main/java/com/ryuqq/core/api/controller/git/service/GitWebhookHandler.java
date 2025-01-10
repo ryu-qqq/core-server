@@ -19,7 +19,7 @@ public class GitWebhookHandler {
 	}
 
 	public GitPushEventResponseDto handle(GitPushEventRequestDto gitPushEventRequestDto){
-		long branchId = gitEventRegistrar.register(gitWebHookAdapter.toCommand(gitPushEventRequestDto));
+		long branchId = gitEventRegistrar.register(gitWebHookAdapter.toDomain(gitPushEventRequestDto));
 		return new GitPushEventResponseDto(branchId);
 	}
 
