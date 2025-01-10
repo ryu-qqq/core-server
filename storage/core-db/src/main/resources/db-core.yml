@@ -50,9 +50,9 @@ storage:
   datasource:
     core:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url:
-      username:
-      password:
+      jdbc-url: jdbc:mysql://localhost:3307/hanni
+      username: admin
+      password: Tpxhvm1234!!
       maximum-pool-size: 5
       connection-timeout: 1100
       keepalive-time: 30000
