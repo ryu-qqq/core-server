@@ -1,6 +1,9 @@
 dependencies {
 
-    // QueryDSL
+	implementation "net.ttddyy:datasource-proxy:${datasourceProxyVersion}"
+
+
+	// QueryDSL
     implementation "com.querydsl:querydsl-sql:${queryDslVersion}"
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
@@ -9,9 +12,9 @@ dependencies {
 
     implementation project(':core:core-enum')
     implementation project(":support:logging")
+	implementation project(":support:utils")
 	testImplementation(testFixtures(project(":tests:unit-tests")))
 	testImplementation(testFixtures(project(":support:utils")))
-
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     //MySql

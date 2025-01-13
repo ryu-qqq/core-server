@@ -18,28 +18,31 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column(name = "DELETE_YN", nullable = false)
-    protected boolean deleteYn;
+    @Column(name = "DELETED", nullable = false)
+    protected boolean deleted;
 
     @CreationTimestamp
-    @Column(name = "INSERT_TIME", nullable = false)
-    private LocalDateTime insertTime;
+    @Column(name = "CREATED_AT", nullable = false)
+    private LocalDateTime createAt;
 
     @UpdateTimestamp
-    @Column(name = "UPDATE_TIME", nullable = false)
-    private LocalDateTime updateTime;
+    @Column(name = "UPDATED_AT", nullable = false)
+    private LocalDateTime updatedAt;
 
     public Long getId() {
         return id;
     }
 
-    public boolean isDeleteYn() {
-        return deleteYn;
-    }
+	public boolean isDeleted() {
+		return deleted;
+	}
 
-    protected void delete(){
-        this.deleteYn = true;
-    }
+	public LocalDateTime getCreateAt() {
+		return createAt;
+	}
 
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
 }

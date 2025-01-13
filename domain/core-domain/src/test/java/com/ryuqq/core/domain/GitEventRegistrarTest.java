@@ -11,6 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import com.ryuqq.core.domain.git.Branch;
+import com.ryuqq.core.domain.git.BranchRegister;
+import com.ryuqq.core.domain.git.ChangedFileRegister;
+import com.ryuqq.core.domain.git.GitEvent;
+import com.ryuqq.core.domain.git.GitEventRegistrar;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class GitEventRegistrarTest extends BaseUnitTest {

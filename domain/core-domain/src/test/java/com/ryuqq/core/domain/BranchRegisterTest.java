@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import com.ryuqq.core.domain.git.Branch;
+import com.ryuqq.core.domain.git.BranchRegister;
 import com.ryuqq.core.storage.db.git.BranchCommand;
 import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
 import com.ryuqq.core.unit.test.BaseUnitTest;

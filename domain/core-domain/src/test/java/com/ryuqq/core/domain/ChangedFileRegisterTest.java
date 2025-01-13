@@ -1,6 +1,5 @@
 package com.ryuqq.core.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -10,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import com.ryuqq.core.domain.git.ChangedFile;
+import com.ryuqq.core.domain.git.ChangedFileRegister;
 import com.ryuqq.core.storage.db.git.ChangedFileCommand;
 import com.ryuqq.core.storage.db.git.ChangedFilePersistenceRepository;
 import com.ryuqq.core.unit.test.BaseUnitTest;
