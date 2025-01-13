@@ -1,12 +1,5 @@
 package com.ryuqq.core.api.controller.git.mapper;
 
-import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
-import com.ryuqq.core.domain.Branch;
-import com.ryuqq.core.domain.ChangedFile;
-import com.ryuqq.core.domain.GitEvent;
-import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.CodeStatus;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +7,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.domain.Branch;
+import com.ryuqq.core.domain.ChangedFile;
+import com.ryuqq.core.domain.GitEvent;
+import com.ryuqq.core.enums.ChangeType;
+import com.ryuqq.core.enums.CodeStatus;
 
 @Component
 public class GitWebHookAdapter {

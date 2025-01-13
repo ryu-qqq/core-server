@@ -8,9 +8,9 @@ dependencies {
     implementation project(":support:logging")
     implementation project(':external-client')
 
+	testImplementation(testFixtures(project(":tests:api-docs")))
 	testImplementation(testFixtures(project(":tests:unit-tests")))
 	testImplementation(testFixtures(project(":support:utils")))
-
 
     compileOnly("org.springframework:spring-context")
     compileOnly("jakarta.transaction:jakarta.transaction-api")

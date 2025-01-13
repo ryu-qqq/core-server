@@ -1,11 +1,11 @@
 package com.ryuqq.core.api.controller.git.service;
 
+import org.springframework.stereotype.Component;
+
 import com.ryuqq.core.api.controller.git.mapper.GitWebHookAdapter;
 import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
 import com.ryuqq.core.api.controller.git.response.GitPushEventResponseDto;
 import com.ryuqq.core.domain.GitEventRegistrar;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class GitWebhookHandler {

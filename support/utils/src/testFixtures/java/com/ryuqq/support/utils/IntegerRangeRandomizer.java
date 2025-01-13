@@ -16,4 +16,3 @@ class IntegerRangeRandomizer implements Randomizer<Integer> {
         return min + (int) (Math.random() * (max - min));
     }
 }
-

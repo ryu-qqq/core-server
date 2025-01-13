@@ -2,51 +2,43 @@ plugins {
 	id 'java-test-fixtures'
 }
 
-
 dependencies {
-
-	testFixturesImplementation 'jakarta.servlet:jakarta.servlet-api'
 	testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testFixturesImplementation 'com.fasterxml.jackson.core:jackson-databind'
-
-	testFixturesImplementation 'io.rest-assured:spring-mock-mvc'
-
-    //REST DOCS
 	testFixturesImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testFixturesImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 	testFixturesImplementation 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testFixturesImplementation 'io.rest-assured:spring-mock-mvc'
+
+	testFixturesImplementation 'jakarta.servlet:jakarta.servlet-api'
+	testFixturesImplementation 'com.fasterxml.jackson.core:jackson-databind'
 
 }
-
-
 ext {
-    snippetsDir = file('build/generated-snippets')
+	snippetsDir = file('build/generated-snippets')
 }
-
 
 asciidoctor {
-    dependsOn test
-    inputs.dir snippetsDir
+	dependsOn test
+	inputs.dir snippetsDir
 
-    sources {
-        include("**/index.adoc", "**/common/*.adoc")
-    }
-    attributes 'snippets': snippetsDir
+	sources {
+		include("**/index.adoc", "**/common/*.adoc")
+	}
 
-    baseDirFollowsSourceFile()
+	attributes 'snippets': snippetsDir
+	baseDirFollowsSourceFile()
 }
 
 asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
+	delete file('src/main/resources/static/docs')
 }
 
 tasks.register('copyDocument', Copy) {
-    dependsOn asciidoctor
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
+	dependsOn asciidoctor
+	from file("build/docs/asciidoc")
+	into file("src/main/resources/static/docs")
 }
 
 build {
-    dependsOn copyDocument
+	dependsOn copyDocument
 }
-

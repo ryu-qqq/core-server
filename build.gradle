@@ -23,6 +23,8 @@ spotless {
 	java {
 		target fileTree('src') {
 			include '**/*.java'
+			exclude '**/Q*.java'
+			exclude '**/generated/**'
 		}
 		importOrderFile(rootProject.file('rule-config/importorder'))
 		removeUnusedImports()
@@ -81,7 +83,7 @@ subprojects {
 
 	tasks.test {
 		useJUnitPlatform {
-			excludeTags('develop', 'restdocs')
+			excludeTags('restdocs')
 		}
 		finalizedBy jacocoTestReport
 	}
@@ -136,13 +138,6 @@ subprojects {
 		}
 	}
 
-	tasks.register('contextTest', Test) {
-		group = 'verification'
-		useJUnitPlatform {
-			includeTags('context')
-		}
-	}
-
 	tasks.register('restDocsTest', Test) {
 		group = 'verification'
 		useJUnitPlatform {
@@ -154,6 +149,13 @@ subprojects {
 		dependsOn restDocsTest
 	}
 
+	tasks.register('contextTest', Test) {
+		group = 'verification'
+		useJUnitPlatform {
+			includeTags('context')
+		}
+	}
+
 	tasks.withType(JavaCompile).configureEach {
 		options.compilerArgs += ['-parameters']
 	}
@@ -163,6 +165,11 @@ subprojects {
 			xml.required.set(false)
 			html.required.set(true)
 		}
+		dependsOn tasks.named("compileJava")
+		dependsOn tasks.named("compileTestJava")
+
+		exclude '**/Q*.java' // QueryDSL 생성된 파일 제외
+		exclude '**/generated/**' // 생성된 모든 파일 제외
 	}
 }
 

@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain;
 
+import java.util.Objects;
+
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.CodeStatus;
 import com.ryuqq.core.storage.db.git.ChangedFileCommand;
-
-import java.util.Objects;
 
 public class ChangedFile {
 	private Long id;

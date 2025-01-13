@@ -1,19 +1,19 @@
 package com.ryuqq.core.domain;
 
-import com.ryuqq.core.storage.db.git.BranchCommand;
-import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
-import com.ryuqq.core.unit.test.BaseUnitTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.ryuqq.core.storage.db.git.BranchCommand;
+import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
+import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class BranchRegisterTest extends BaseUnitTest {
 
