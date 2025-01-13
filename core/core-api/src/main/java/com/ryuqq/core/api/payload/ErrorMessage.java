@@ -1,8 +1,8 @@
 package com.ryuqq.core.api.payload;
 
-import com.ryuqq.core.enums.ErrorType;
-
 import org.springframework.http.HttpStatus;
+
+import com.ryuqq.core.enums.ErrorType;
 
 
 public class ErrorMessage {

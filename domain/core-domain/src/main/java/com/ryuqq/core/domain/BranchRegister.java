@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain;
 
-import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
-
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
 
 @Component
 public class BranchRegister {

@@ -16,4 +16,3 @@ class LongRangeRandomizer implements Randomizer<Long> {
         return min + (long) (Math.random() * (max - min));
     }
 }
-

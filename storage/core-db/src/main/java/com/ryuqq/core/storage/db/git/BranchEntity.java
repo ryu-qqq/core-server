@@ -1,10 +1,10 @@
 package com.ryuqq.core.storage.db.git;
 
+import com.ryuqq.core.storage.db.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
-import com.ryuqq.core.storage.db.BaseEntity;
 
 @Table(name = "BRANCH")
 @Entity

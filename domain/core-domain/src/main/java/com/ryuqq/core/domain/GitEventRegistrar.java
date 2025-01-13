@@ -1,9 +1,9 @@
 package com.ryuqq.core.domain;
 
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.stereotype.Component;
+
+import jakarta.transaction.Transactional;
 
 @Component
 public class GitEventRegistrar {
@@ -18,8 +18,8 @@ public class GitEventRegistrar {
 
 	@Transactional
 	public long register(GitEvent gitEvent) {
-		long branchId = branchRegister.register(gitEvent.branch());
-		changedFileRegister.saveAll(branchId, gitEvent.changedFiles());
+		long branchId = branchRegister.register(gitEvent.getBranch());
+		changedFileRegister.saveAll(branchId, gitEvent.getChangedFiles());
 		return branchId;
 	}
 

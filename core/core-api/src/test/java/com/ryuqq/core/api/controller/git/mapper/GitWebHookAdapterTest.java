@@ -1,8 +1,6 @@
 package com.ryuqq.core.api.controller.git.mapper;
 
-import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
-import com.ryuqq.core.domain.GitEvent;
-import com.ryuqq.core.unit.test.BaseUnitTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +10,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.domain.GitEvent;
+import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class GitWebHookAdapterTest extends BaseUnitTest {
 
@@ -33,9 +33,9 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 			GitEvent command = gitWebHookAdapter.toDomain(requestDto);
 
 			// Then
-			assertEquals("repo-name", command.branch().getRepositoryName(), "Repository name이 변환되어야 함");
-			assertEquals(1, command.changedFiles().size(), "중복 파일이 제거되어야 함");
-			assertEquals("MyClass.java", command.changedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
+			assertEquals("repo-name", command.getBranch().getRepositoryName(), "Repository name이 변환되어야 함");
+			assertEquals(1, command.getChangedFiles().size(), "중복 파일이 제거되어야 함");
+			assertEquals("MyClass.java", command.getChangedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
 		}
 	}
 
@@ -53,9 +53,9 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 			GitEvent gitEvent = gitWebHookAdapter.toDomain(requestDto);
 
 			// Then
-			assertEquals(1, gitEvent.changedFiles().size(), "중복된 파일 경로가 제거되어야 함");
-			assertEquals("MyClass.java", gitEvent.changedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
-			assertEquals("2", gitEvent.changedFiles().getFirst().getCommitId(), "최신 Commit ID가 유지되어야 함");
+			assertEquals(1, gitEvent.getChangedFiles().size(), "중복된 파일 경로가 제거되어야 함");
+			assertEquals("MyClass.java", gitEvent.getChangedFiles().getFirst().getClassName(), "클래스명이 올바르게 추출되어야 함");
+			assertEquals("2", gitEvent.getChangedFiles().getFirst().getCommitId(), "최신 Commit ID가 유지되어야 함");
 		}
 	}
 

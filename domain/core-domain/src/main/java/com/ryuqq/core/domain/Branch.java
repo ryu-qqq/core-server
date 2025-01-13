@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain;
 
-import com.ryuqq.core.storage.db.git.BranchCommand;
-
 import java.util.Objects;
+
+import com.ryuqq.core.storage.db.git.BranchCommand;
 
 public class Branch {
 	private Long id;

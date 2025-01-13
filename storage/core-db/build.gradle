@@ -29,8 +29,8 @@ clean {
     delete file(querydslDir)
 }
 
-tasks.withType(JavaCompile) {
-    options.generatedSourceOutputDirectory = file(querydslDir)
+tasks.withType(JavaCompile).configureEach {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
 }
 
 sourceSets {

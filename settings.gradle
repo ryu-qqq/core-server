@@ -34,3 +34,4 @@ include 'external-client'
 include 'tests:api-docs'
 include 'tests:bdd-tests'
 include 'tests:unit-tests'
+
