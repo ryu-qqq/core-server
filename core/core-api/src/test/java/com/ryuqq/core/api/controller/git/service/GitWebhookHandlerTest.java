@@ -1,23 +1,22 @@
 package com.ryuqq.core.api.controller.git.service;
 
-import com.ryuqq.core.api.controller.git.mapper.GitWebHookAdapter;
-import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
-import com.ryuqq.core.api.controller.git.response.GitPushEventResponseDto;
-import com.ryuqq.core.domain.GitEvent;
-import com.ryuqq.core.domain.GitEventRegistrar;
-import com.ryuqq.core.unit.test.BaseUnitTest;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.ryuqq.core.api.controller.git.mapper.GitWebHookAdapter;
+import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.api.controller.git.response.GitPushEventResponseDto;
+import com.ryuqq.core.domain.GitEvent;
+import com.ryuqq.core.domain.GitEventRegistrar;
+import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class GitWebhookHandlerTest extends BaseUnitTest {
 

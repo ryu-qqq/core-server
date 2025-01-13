@@ -1,11 +1,11 @@
 package com.ryuqq.core.domain;
 
-import com.ryuqq.core.storage.db.git.ChangedFileCommand;
-import com.ryuqq.core.storage.db.git.ChangedFilePersistenceRepository;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.ChangedFileCommand;
+import com.ryuqq.core.storage.db.git.ChangedFilePersistenceRepository;
 
 @Component
 public class ChangedFileRegister {

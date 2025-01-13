@@ -1,7 +1,5 @@
 package com.ryuqq.core.api.test;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,11 +8,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
-import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
-import org.springframework.restdocs.payload.FieldDescriptor;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -71,20 +65,4 @@ public abstract class RestDocsTest {
 			.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 	}
 
-	protected FieldDescriptor[] statusMsg() {
-		return new FieldDescriptor[] {
-			fieldWithPath("status").type(JsonFieldType.NUMBER).description("응답 상태"),
-			fieldWithPath("message").type(JsonFieldType.STRING).description("상태 메시지")
-		};
-	}
-
-	protected OperationRequestPreprocessor requestPreprocessor() {
-		return Preprocessors.preprocessRequest(
-			Preprocessors.modifyUris().scheme("http").host("com.ryuqq.devbase").removePort(),
-			Preprocessors.prettyPrint());
-	}
-
-	protected OperationResponsePreprocessor responsePreprocessor() {
-		return Preprocessors.preprocessResponse(Preprocessors.prettyPrint());
-	}
 }
