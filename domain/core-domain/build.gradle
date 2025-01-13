@@ -1,3 +1,5 @@
+bootJar.enabled = true
+jar.enabled = false
 
 dependencies {
     implementation project(':core:core-enum')
@@ -5,14 +7,16 @@ dependencies {
     implementation project(':storage:core-db')
     implementation project(':storage:core-cache')
 
-    implementation project(":support:logging")
     implementation project(':external-client')
+
+	api project(":support:logging")
 
 	testImplementation(testFixtures(project(":tests:api-docs")))
 	testImplementation(testFixtures(project(":tests:unit-tests")))
 	testImplementation(testFixtures(project(":support:utils")))
 
     compileOnly("org.springframework:spring-context")
+
     compileOnly("jakarta.transaction:jakarta.transaction-api")
 
 }

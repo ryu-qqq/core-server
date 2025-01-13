@@ -1,4 +1,9 @@
 dependencies {
-    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+	implementation "net.ttddyy:datasource-proxy:${datasourceProxyVersion}"
+
+	implementation project(":support:utils")
+
+	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
     implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}"
 }
