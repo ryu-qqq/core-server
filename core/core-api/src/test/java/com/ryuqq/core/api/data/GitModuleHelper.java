@@ -3,7 +3,7 @@ package com.ryuqq.core.api.data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.ryuqq.core.api.controller.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitPushEventRequestDto;
 
 public class GitModuleHelper {
 
