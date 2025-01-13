@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 		"com.ryuqq.core.api",
 		"com.ryuqq.core.domain",
         "com.ryuqq.core.batch",
-        "com.ryuqq.core.storage",
+        "com.ryuqq.core.storage.db",
 		"com.ryuqq.core.logging",
 })
 

@@ -4,8 +4,11 @@ plugins {
 
 
 dependencies {
-    compileOnly("org.springframework:spring-context") // 기존 의존성
-    implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}") // Jackson Databind 추가
+
+
+	compileOnly("org.springframework:spring-context") // 기존 의존성
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+	implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}") // Jackson Databind 추가
     implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}") // 어노테이션 지원 (선택)
 
 
