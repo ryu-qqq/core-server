@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
-import com.ryuqq.core.logging.LogEntry;
+import com.ryuqq.core.logging.SimpleLogEntry;
 import com.ryuqq.core.logging.LogEntryFactory;
 
 @Aspect
@@ -29,7 +29,7 @@ public class StorageLoggingAspect extends AbstractLayerLoggingAspect  {
 
 	@Override
 	protected String createPreLogMessage(String traceId, String className, String methodName, Object[] args) {
-		LogEntry logEntry = LogEntryFactory.createLogEntry(
+		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
 			traceId,
 			STORAGE_LAYER,
 			className,
@@ -39,24 +39,26 @@ public class StorageLoggingAspect extends AbstractLayerLoggingAspect  {
 			0L
 		);
 
-		return logEntry.toJson();
+		return simpleLogEntry.toJson();
 	}
 
 	@Override
 	protected String createPostLogMessage(String traceId, String className, String methodName, Object[] args,
 										  Object result, long executionTime) {
 
-		LogEntry logEntry = LogEntryFactory.createLogEntry(
+		Object safeResult = extractSafeResult(result);
+
+		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
 			traceId,
 			STORAGE_LAYER,
 			className,
 			methodName,
 			args,
-			result,
+			safeResult,
 			executionTime
 		);
 
-		return logEntry.toJson();
+		return simpleLogEntry.toJson();
 	}
 
 	@Override

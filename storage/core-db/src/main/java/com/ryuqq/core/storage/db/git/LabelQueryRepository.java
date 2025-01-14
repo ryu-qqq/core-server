@@ -1,12 +1,12 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.LabelDto;
-
 import java.util.List;
 import java.util.Optional;
 
+import com.ryuqq.core.storage.db.git.dto.LabelDto;
+
 public interface LabelQueryRepository {
 
-	Optional<LabelDto> fetchByLabels(List<String> labels);
+	List<LabelDto> fetchByLabelIn(List<String> names);
 
 }

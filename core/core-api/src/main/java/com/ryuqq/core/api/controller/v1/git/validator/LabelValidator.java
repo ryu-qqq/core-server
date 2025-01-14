@@ -1,6 +1,5 @@
 package com.ryuqq.core.api.controller.v1.git.validator;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
 import com.ryuqq.core.domain.git.Label;
 import com.ryuqq.core.domain.git.LabelFinder;
 
@@ -17,14 +16,11 @@ public class LabelValidator {
 		this.labelFinder = labelFinder;
 	}
 
-	public LabelValidationResult validate(List<GitMergeEventRequestDto.Label> labels) {
-		List<String> requestLabelNames = labels.stream()
-			.map(GitMergeEventRequestDto.Label::name)
-			.toList();
+	public LabelValidationResult validate(List<String> labels) {
 
-		List<Label> validLabels = labelFinder.fetchByNames(requestLabelNames);
+		List<Label> validLabels = labelFinder.fetchByNames(labels);
 
-		List<String> invalidLabels = requestLabelNames.stream()
+		List<String> invalidLabels = labels.stream()
 			.filter(label -> validLabels.stream().noneMatch(validLabel -> validLabel.name().equals(label)))
 			.toList();
 

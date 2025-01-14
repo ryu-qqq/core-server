@@ -1,11 +1,10 @@
 package com.ryuqq.core.api.controller.v1.git.validator;
 
-import com.ryuqq.core.domain.git.Label;
-
 import java.util.List;
 import java.util.Objects;
 
 public final class LabelValidationResult {
+
 	private final boolean valid;
 	private final List<String> invalidLabels;
 

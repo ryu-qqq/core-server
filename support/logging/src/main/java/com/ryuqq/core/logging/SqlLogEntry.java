@@ -17,8 +17,18 @@ public record SqlLogEntry(
 	String params,
 	long executionTime,
 	String errorMessage // 에러 메시지 필드 추가
-) {
+) implements LogEntry {
 	public String toJson() {
 		return JsonUtils.toJson(this);
+	}
+
+	@Override
+	public String getTraceId() {
+		return traceId;
+	}
+
+	@Override
+	public String getLayer() {
+		return layer;
 	}
 }

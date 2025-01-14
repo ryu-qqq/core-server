@@ -70,4 +70,16 @@ public abstract class AbstractLayerLoggingAspect {
 	private String getTraceId() {
 		return TraceIdHolder.getTraceId();
 	}
+
+	protected Object extractSafeResult(Object result) {
+		if (result == null) {
+			return null;
+		}
+
+		if (result instanceof Class<?>) {
+			return ((Class<?>) result).getSimpleName();
+		}
+
+		return result;
+	}
 }

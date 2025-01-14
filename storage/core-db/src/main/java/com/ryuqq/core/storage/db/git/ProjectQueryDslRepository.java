@@ -1,7 +1,6 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.ProjectDto;
-import com.ryuqq.core.storage.db.git.dto.QProjectDto;
+import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
 
 import java.util.Optional;
 
@@ -10,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
+import com.ryuqq.core.storage.db.git.dto.ProjectDto;
+import com.ryuqq.core.storage.db.git.dto.QProjectDto;
 
 @Repository
 public class ProjectQueryDslRepository implements ProjectQueryRepository {

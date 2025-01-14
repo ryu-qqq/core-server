@@ -20,10 +20,10 @@ public class LogEntryFactory {
 	 * @return LogEntry 객체
 	 */
 
-	public static LogEntry createLogEntry(String traceId, String layer, String className, String methodName, Object[] args, Object result, long executionTime) {
+	public static SimpleLogEntry createLogEntry(String traceId, String layer, String className, String methodName, Object[] args, Object result, long executionTime) {
 		Map<String, Object> argsMap = ReflectionUtils.getParameterNameValueMap(className, methodName, args);
 
-		return new LogEntry(
+		return new SimpleLogEntry(
 			traceId,
 			layer,
 			className,
