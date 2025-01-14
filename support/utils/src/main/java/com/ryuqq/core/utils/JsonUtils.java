@@ -4,14 +4,24 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class JsonUtils {
 
-	private static final ObjectMapper objectMapper = new ObjectMapper()
-		.registerModule(new JavaTimeModule())
-		.configure(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+	private static final ObjectMapper objectMapper = createObjectMapper();
 
+	private static ObjectMapper createObjectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.registerModule(new com.fasterxml.jackson.datatype.jdk8.Jdk8Module()); // Optional 지원 추가
+		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		objectMapper.configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
+		objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
+		objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+		return objectMapper;
+	}
 
 
 	public static <T> String toJson(T valueType){

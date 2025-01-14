@@ -1,14 +1,14 @@
 package com.ryuqq.core.api;
 
-import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
-import com.ryuqq.core.logging.LogEntry;
-import com.ryuqq.core.logging.LogEntryFactory;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
+import com.ryuqq.core.logging.SimpleLogEntry;
+import com.ryuqq.core.logging.LogEntryFactory;
 
 @Aspect
 @Component
@@ -17,7 +17,7 @@ public class ApiLoggingAspect extends AbstractLayerLoggingAspect  {
 
 	private static final String API_LAYER = "API";
 
-	@Pointcut("execution(* com.ryuqq.core.api.controller.v1..*(..)) ")
+	@Pointcut("execution(* com.ryuqq.core.api.controller.v1..*(..)) && !within(com.ryuqq.core.api.controller.v1.git.service.GitWebhookHandlerProvider)")
 	public void apiLayerMethods() {
 	}
 
@@ -29,7 +29,7 @@ public class ApiLoggingAspect extends AbstractLayerLoggingAspect  {
 	@Override
 	protected String createPreLogMessage(String traceId, String className, String methodName, Object[] args) {
 
-		LogEntry logEntry = LogEntryFactory.createLogEntry(
+		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
 			traceId,
 			API_LAYER,
 			className,
@@ -39,24 +39,26 @@ public class ApiLoggingAspect extends AbstractLayerLoggingAspect  {
 			0L
 		);
 
-		return logEntry.toJson();
+		return simpleLogEntry.toJson();
 	}
 
 	@Override
 	protected String createPostLogMessage(String traceId, String className, String methodName, Object[] args,
 										  Object result, long executionTime) {
 
-		LogEntry logEntry = LogEntryFactory.createLogEntry(
+		Object safeResult = extractSafeResult(result);
+
+		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
 			traceId,
 			API_LAYER,
 			className,
 			methodName,
 			args,
-			result,
+			safeResult,
 			executionTime
 		);
 
-		return logEntry.toJson();
+		return simpleLogEntry.toJson();
 	}
 
 	@Override

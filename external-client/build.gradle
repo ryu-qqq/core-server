@@ -1,0 +1,9 @@
+
+
+dependencies {
+	implementation project(":support:utils")
+	implementation project(":support:logging")
+
+	api 'org.springframework.cloud:spring-cloud-starter-openfeign' // Feign Client
+	api 'com.fasterxml.jackson.core:jackson-databind' // JSON 파싱
+}
