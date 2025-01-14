@@ -1,7 +1,6 @@
 package com.ryuqq.core.external.git;
 
 import com.ryuqq.core.external.git.response.GitHubCommitResponse;
-import com.ryuqq.core.external.git.response.GitHubPullRequestFileResponse;
 
 import java.util.List;
 
@@ -17,14 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface GitHubFeignClient {
 
-	@GetMapping("/{commitUrl}")
-	GitHubCommitResponse getCommitInfo(@PathVariable("commitUrl") String commitUrl);
+	@GetMapping("/repos/{fullName}/pulls/{pullNumber}/files")
+	List<GitHubCommitResponse> getCommitInfos(@PathVariable("fullName") String fullName,
+									   @PathVariable("pullNumber") int pullNumber);
 
-	@GetMapping("/repos/{owner}/{repo}/pulls/{pullNumber}/files")
-	List<GitHubPullRequestFileResponse> getPullRequestFiles(
-		@PathVariable("owner") String owner,
-		@PathVariable("repo") String repo,
-		@PathVariable("pullNumber") int pullNumber
-	);
 
 }

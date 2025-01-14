@@ -1,7 +1,6 @@
 package com.ryuqq.core.external.git;
 
 import com.ryuqq.core.external.git.response.GitHubCommitResponse;
-import com.ryuqq.core.external.git.response.GitHubPullRequestFileResponse;
 
 import java.util.List;
 
@@ -16,13 +15,8 @@ public class GitHubDataFetcher {
 		this.gitHubFeignClient = gitHubFeignClient;
 	}
 
-	public GitHubCommitResponse fetchCommitInfo(String commitUrl) {
-		return gitHubFeignClient.getCommitInfo(commitUrl);
-	}
-
-
-	public List<GitHubPullRequestFileResponse> fetchChangedFiles(String owner, String repo, int pullNumber) {
-		return gitHubFeignClient.getPullRequestFiles(owner, repo, pullNumber);
+	public List<GitHubCommitResponse> fetchCommitInfo(String fullName, int pullNumber) {
+		return gitHubFeignClient.getCommitInfos(fullName, pullNumber);
 	}
 
 }

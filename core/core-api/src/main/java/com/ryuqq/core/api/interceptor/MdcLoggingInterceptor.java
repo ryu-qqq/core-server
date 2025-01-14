@@ -58,8 +58,9 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 			log.error("[TraceId: {}] Exception: {}", traceId, ex.getMessage(), ex);
 		}
 
-		MDC.clear();
 	}
+
+
 
 	/**
 	 * 요청 파라미터를 Map 형태로 반환
@@ -78,9 +79,12 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 	 * 요청 본문(Request Body)을 문자열로 반환
 	 */
 	private String getRequestBody(HttpServletRequest request) {
-		ContentCachingRequestWrapper wrapper = (ContentCachingRequestWrapper) request;
-		byte[] content = wrapper.getContentAsByteArray();
-		return new String(content, StandardCharsets.UTF_8); // UTF-8로 변환
+		if(request instanceof ContentCachingRequestWrapper) {
+			ContentCachingRequestWrapper wrapper = (ContentCachingRequestWrapper) request;
+			byte[] content = wrapper.getContentAsByteArray();
+			return new String(content, StandardCharsets.UTF_8); // UTF-8로 변환
+		}
+		return "";
 	}
 
 }

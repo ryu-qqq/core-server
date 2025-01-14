@@ -14,9 +14,12 @@ public class JsonUtils {
 	private static ObjectMapper createObjectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
-		objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		objectMapper.registerModule(new com.fasterxml.jackson.datatype.jdk8.Jdk8Module()); // Optional 지원 추가
+		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		objectMapper.configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
 		objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
+		objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
 		return objectMapper;
 	}
 
