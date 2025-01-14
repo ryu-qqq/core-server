@@ -22,36 +22,38 @@ public class GitHubWebHookAdapter implements GitWebHookAdapter<GitHubMergeEventW
 
 	@Override
 	public GitMergeRequestEvent toMergeRequestEvent(GitHubMergeEventWebhookRequestDto requestDto) {
-		Project project = toProjectDomain(requestDto);
-		Branch branch = toBranchDomain(requestDto);
+		Project project = toProjectDomain(requestDto.repository(), requestDto.sender());
+		Branch branch = toBranchDomain(requestDto.repository(), requestDto.getBranchName());
 		List<Commit> commits = toCommitDomain(requestDto);
 
 		return new GitMergeRequestEvent(project, branch, commits);
 	}
 
-	private Project toProjectDomain(GitHubMergeEventWebhookRequestDto requestDto) {
+	private Project toProjectDomain(GitHubMergeEventWebhookRequestDto.Repository repository, GitHubMergeEventWebhookRequestDto.Sender sender) {
 		return new Project(
-			requestDto.repository().id(),
-			requestDto.repository().name(),
-			requestDto.repository().htmlUrl(),
-			requestDto.sender().login(),
+			repository.id(),
+			repository.name(),
+			repository.htmlUrl(),
+			sender.login(),
 			null
 		);
 	}
 
-	private Branch toBranchDomain(GitHubMergeEventWebhookRequestDto requestDto) {
+	private Branch toBranchDomain(GitHubMergeEventWebhookRequestDto.Repository repository, String branchName) {
 		return new Branch(
-			requestDto.repository().name(),
-			requestDto.repository().htmlUrl(),
-			requestDto.pullRequest().base().ref()
+			repository.name(),
+			repository.htmlUrl(),
+			branchName
 		);
 	}
 
 	private List<Commit> toCommitDomain(GitHubMergeEventWebhookRequestDto requestDto) {
 		return gitHubFileAdapter.fetchChangedFiles(
-			requestDto.repository(),
-			requestDto.getCommitUrl(),
+			requestDto.getOwner(),
+			requestDto.getFullName(),
 			requestDto.pullRequestNumber());
 	}
+
+
 
 }

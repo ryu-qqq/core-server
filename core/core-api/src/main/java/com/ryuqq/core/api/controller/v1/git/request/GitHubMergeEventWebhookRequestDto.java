@@ -95,16 +95,21 @@ public record GitHubMergeEventWebhookRequestDto(
 		long id
 	){}
 
+	public String getBranchName(){
+		return pullRequest.base.ref;
+	}
+
+	public String getFullName(){
+		return repository.fullName;
+	}
+
+	public String getOwner(){
+		return repository.owner.login;
+	}
 
 	public List<String> getLabelNames(){
 		return pullRequest.labels.stream()
 			.map(Label::name)
 			.toList();
 	}
-
-	public String getCommitUrl(){
-		return pullRequest.commitUrl;
-	}
-
-
 }

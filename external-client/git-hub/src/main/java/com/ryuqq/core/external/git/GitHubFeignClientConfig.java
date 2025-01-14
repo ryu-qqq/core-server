@@ -19,14 +19,14 @@ public class GitHubFeignClientConfig  {
 		this.properties = properties;
 	}
 
-	@Bean
-	public RequestInterceptor gitHubRequestInterceptor() {
-		return new RequestInterceptor() {
-			@Override
-			public void apply(RequestTemplate requestTemplate) {
-				requestTemplate.header(GIT_HUB_AUTHORIZATION_HEADER, GIT_HUB_AUTHORIZATION_HEADER_PREFIX + properties.getToken());
-			}
-		};
-	}
+	// @Bean
+	// public RequestInterceptor gitHubRequestInterceptor() {
+	// 	return new RequestInterceptor() {
+	// 		@Override
+	// 		public void apply(RequestTemplate requestTemplate) {
+	// 			requestTemplate.header(GIT_HUB_AUTHORIZATION_HEADER, GIT_HUB_AUTHORIZATION_HEADER_PREFIX + properties.getToken());
+	// 		}
+	// 	};
+	// }
 
 }
