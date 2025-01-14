@@ -40,7 +40,6 @@ public class JsonUtils {
         }
     }
 
-
     public static String addFieldsToJsonBody(String jsonBody, Map<String, Object> additionalFields) {
         try {
 			Map<String, Object> jsonMap = objectMapper.readValue(jsonBody, Map.class);
