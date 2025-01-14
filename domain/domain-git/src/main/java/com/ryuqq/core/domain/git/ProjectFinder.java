@@ -20,8 +20,11 @@ public class ProjectFinder {
 	public Optional<Project> findByGitProjectId(long gitProjectId) {
 		return projectQueryRepository.fetchByGitProjectId(gitProjectId)
 			.map(projectMapper::toDomain);
-
 	}
+
+
+
+
 
 
 

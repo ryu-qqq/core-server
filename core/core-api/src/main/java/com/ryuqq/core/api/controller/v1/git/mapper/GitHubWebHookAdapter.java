@@ -5,6 +5,7 @@ import com.ryuqq.core.domain.git.Branch;
 import com.ryuqq.core.domain.git.Commit;
 import com.ryuqq.core.domain.git.GitMergeRequestEvent;
 import com.ryuqq.core.domain.git.Project;
+import com.ryuqq.core.enums.GitType;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class GitHubWebHookAdapter implements GitWebHookAdapter<GitHubMergeEventW
 	private Project toProjectDomain(GitHubMergeEventWebhookRequestDto.Repository repository, GitHubMergeEventWebhookRequestDto.Sender sender) {
 		return new Project(
 			repository.id(),
+			GitType.GIT_HUB,
 			repository.name(),
 			repository.htmlUrl(),
 			sender.login(),

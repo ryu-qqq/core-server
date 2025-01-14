@@ -1,21 +1,25 @@
 package com.ryuqq.core.storage.db.git.dto;
 
+import com.ryuqq.core.enums.GitType;
+
 import com.querydsl.core.annotations.QueryProjection;
 
 public class ProjectDto {
 
 	private long id;
 	private long gitlabProjectId;
+	private GitType gitType;
 	private String name;
 	private String repositoryUrl;
 	private String owner;
 	private String description;
 
 	@QueryProjection
-	public ProjectDto(long id, long gitlabProjectId, String name, String repositoryUrl, String owner,
+	public ProjectDto(long id, long gitlabProjectId, GitType gitType, String name, String repositoryUrl, String owner,
 					  String description) {
 		this.id = id;
 		this.gitlabProjectId = gitlabProjectId;
+		this.gitType = gitType;
 		this.name = name;
 		this.repositoryUrl = repositoryUrl;
 		this.owner = owner;
@@ -28,6 +32,10 @@ public class ProjectDto {
 
 	public long getGitlabProjectId() {
 		return gitlabProjectId;
+	}
+
+	public GitType getGitType() {
+		return gitType;
 	}
 
 	public String getName() {
