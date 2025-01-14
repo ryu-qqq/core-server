@@ -2,28 +2,32 @@ package com.ryuqq.core.domain.git;
 
 import java.util.Objects;
 
+import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.storage.db.git.ProjectCommand;
 
 public class Project {
 
 	private Long id;
 	private final Long gitProjectId;
+	private final GitType gitType;
 	private final String name;
 	private final String repositoryUrl;
 	private final String owner;
 	private final String description;
 
-	public Project(Long gitProjectId, String name, String repositoryUrl, String owner, String description) {
+	public Project(Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
 		this.gitProjectId = gitProjectId;
+		this.gitType = gitType;
 		this.name = name;
 		this.repositoryUrl = repositoryUrl;
 		this.owner = owner;
 		this.description = description;
 	}
 
-	public Project(Long id, Long gitProjectId, String name, String repositoryUrl, String owner, String description) {
+	public Project(Long id, Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
 		this.id = id;
 		this.gitProjectId = gitProjectId;
+		this.gitType = gitType;
 		this.name = name;
 		this.repositoryUrl = repositoryUrl;
 		this.owner = owner;
@@ -31,7 +35,7 @@ public class Project {
 	}
 
 	public ProjectCommand toCommand() {
-		return new ProjectCommand(id, gitProjectId, name, repositoryUrl, owner, description);
+		return new ProjectCommand(id, gitProjectId, gitType, name, repositoryUrl, owner, description);
 	}
 
 	public Long getId() {
@@ -40,6 +44,10 @@ public class Project {
 
 	public Long getGitProjectId() {
 		return gitProjectId;
+	}
+
+	public GitType getGitType() {
+		return gitType;
 	}
 
 	public String getName() {
@@ -69,6 +77,8 @@ public class Project {
 		Project project = (Project) object;
 		return Objects.equals(id, project.id)
 			&& Objects.equals(gitProjectId, project.gitProjectId)
+			&& gitType
+			== project.gitType
 			&& Objects.equals(name, project.name)
 			&& Objects.equals(repositoryUrl, project.repositoryUrl)
 			&& Objects.equals(owner, project.owner)
@@ -77,7 +87,7 @@ public class Project {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, gitProjectId, name, repositoryUrl, owner, description);
+		return Objects.hash(id, gitProjectId, gitType, name, repositoryUrl, owner, description);
 	}
 
 	@Override
@@ -89,6 +99,9 @@ public class Project {
 			+
 			", gitProjectId="
 			+ gitProjectId
+			+
+			", gitType="
+			+ gitType
 			+
 			", name='"
 			+ name

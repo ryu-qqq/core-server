@@ -28,6 +28,7 @@ public class ProjectQueryDslRepository implements ProjectQueryRepository {
 					new QProjectDto(
 						projectEntity.id,
 						projectEntity.gitProjectId,
+						projectEntity.gitType,
 						projectEntity.name.coalesce(""),
 						projectEntity.repositoryUrl.coalesce(""),
 						projectEntity.owner.coalesce(""),

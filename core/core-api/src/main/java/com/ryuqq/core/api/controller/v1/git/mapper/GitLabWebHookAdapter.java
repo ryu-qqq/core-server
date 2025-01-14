@@ -7,6 +7,7 @@ import com.ryuqq.core.domain.git.Commit;
 import com.ryuqq.core.domain.git.GitMergeRequestEvent;
 import com.ryuqq.core.domain.git.Project;
 import com.ryuqq.core.enums.ChangeType;
+import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.TestStatus;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class GitLabWebHookAdapter implements GitWebHookAdapter<GitLabMergeEventW
 		GitLabMergeEventWebhookRequestDto.Repository repo = requestDto.repository();
 		return new Project(
 			requestDto.projectId(),
+			GitType.GIT_LAB,
 			repo.name(),
 			repo.url(),
 			requestDto.userName(),
