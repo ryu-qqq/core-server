@@ -11,6 +11,7 @@ public class ProjectMapper {
 		return new Project(
 			projectDto.getId(),
 			projectDto.getGitlabProjectId(),
+			projectDto.getGitType(),
 			projectDto.getName(),
 			projectDto.getRepositoryUrl(),
 			projectDto.getOwner(),

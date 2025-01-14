@@ -24,6 +24,18 @@ public class ChangedFile {
 		this.status = status;
 	}
 
+	public ChangedFile(Long id, long commitId, String gitCommitId, String className, String filePath,
+					   ChangeType changeType,
+					   TestStatus status) {
+		this.id = id;
+		this.commitId = commitId;
+		this.gitCommitId = gitCommitId;
+		this.className = className;
+		this.filePath = filePath;
+		this.changeType = changeType;
+		this.status = status;
+	}
+
 	public ChangedFileCommand toCommand(long commitId) {
 		return new ChangedFileCommand(id, commitId, gitCommitId, className, filePath, changeType, status);
 	}

@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class ProjectManagerTest extends BaseUnitTest {
@@ -30,7 +31,7 @@ class ProjectManagerTest extends BaseUnitTest {
 	@Test
 	void shouldSaveAndReturnProjectIdWhenNewProjectProvided() {
 		// Given
-		Project project = new Project(0L, "New Project", "repo-url", "owner", "Test Project");
+		Project project = new Project(0L, GitType.GIT_LAB, "New Project", "repo-url", "owner", "Test Project");
 		when(projectFinder.findByGitProjectId(eq(project.getGitProjectId()))).thenReturn(Optional.empty());
 		when(projectRegister.register(eq(project))).thenReturn(123L);
 
@@ -46,7 +47,7 @@ class ProjectManagerTest extends BaseUnitTest {
 	@Test
 	void shouldReturnExistingProjectIdWhenProjectExists() {
 		// Given
-		Project existingProject = new Project(1L, 1L, "Existing Project", "repo-url", "owner", "Test Project");
+		Project existingProject = new Project(1L, 1L, GitType.GIT_LAB, "Existing Project", "repo-url", "owner", "Test Project");
 		when(projectFinder.findByGitProjectId(eq(existingProject.getGitProjectId()))).thenReturn(Optional.of(existingProject));
 
 		// When
@@ -61,7 +62,7 @@ class ProjectManagerTest extends BaseUnitTest {
 	@Test
 	void shouldPassCorrectProjectToRegister() {
 		// Given
-		Project newProject = new Project(0L, "Correct Project", "repo-url", "owner", "Test Project");
+		Project newProject = new Project(0L, GitType.GIT_LAB, "Correct Project", "repo-url", "owner", "Test Project");
 		ArgumentCaptor<Project> projectCaptor = ArgumentCaptor.forClass(Project.class);
 		when(projectFinder.findByGitProjectId(eq(newProject.getGitProjectId()))).thenReturn(Optional.empty());
 
