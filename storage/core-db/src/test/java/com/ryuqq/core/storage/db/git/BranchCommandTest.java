@@ -1,15 +1,15 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.unit.test.BaseUnitTest;
-import com.ryuqq.support.utils.EasyRandomUtils;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import com.ryuqq.core.unit.test.BaseUnitTest;
+import com.ryuqq.support.utils.EasyRandomUtils;
 
 class BranchCommandTest extends BaseUnitTest {
 

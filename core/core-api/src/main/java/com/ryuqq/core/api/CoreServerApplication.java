@@ -6,13 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = {
-		"com.ryuqq.core.api",
-		"com.ryuqq.core.domain",
-        "com.ryuqq.core.batch",
-        "com.ryuqq.core.storage.db",
-		"com.ryuqq.core.logging",
+		"com.ryuqq.core"
 })
-
 public class CoreServerApplication {
 
     public static void main(String[] args) {

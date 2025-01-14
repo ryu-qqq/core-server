@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitLabMergeEventWebhookRequestDto;
 import com.ryuqq.core.api.data.GitModuleHelper;
-import com.ryuqq.core.domain.git.GitMergeRequestEvent;
+import com.ryuqq.core.domain.git.git.GitMergeRequestEvent;
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
@@ -28,7 +28,7 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 		@DisplayName("GitMergeEventRequestDto를 GitMergeRequestEvent로 변환해야 한다")
 		void shouldConvertGitMergeEventRequestDtoToGitMergeRequestEvent() {
 			// Given
-			GitMergeEventRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDto();
+			GitLabMergeEventWebhookRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDto();
 
 			// When
 			GitMergeRequestEvent event = gitWebHookAdapter.toMergeRequestEvent(requestDto);
@@ -59,7 +59,7 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 		@DisplayName("Commits가 비어있는 경우 빈 GitMergeRequestEvent를 반환해야 한다")
 		void shouldReturnEmptyGitMergeRequestEventWhenCommitsAreEmpty() {
 			// Given
-			GitMergeEventRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithNoCommits();
+			GitLabMergeEventWebhookRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithNoCommits();
 
 			// When
 			GitMergeRequestEvent event = gitWebHookAdapter.toMergeRequestEvent(requestDto);
@@ -81,7 +81,7 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 		@DisplayName("추가와 수정된 파일이 혼합된 경우 올바르게 처리해야 한다")
 		void shouldHandleMixedAddedAndModifiedFiles() {
 			// Given
-			GitMergeEventRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithMixedFiles();
+			GitLabMergeEventWebhookRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithMixedFiles();
 
 			// When
 			GitMergeRequestEvent event = gitWebHookAdapter.toMergeRequestEvent(requestDto);
@@ -106,7 +106,7 @@ class GitWebHookAdapterTest extends BaseUnitTest {
 		@DisplayName("파일 경로가 없는 경우 변경된 파일은 빈 컬렉션이어야 한다")
 		void shouldReturnEmptyClassNameWhenFilePathIsEmpty() {
 			// Given
-			GitMergeEventRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithEmptyFilePath();
+			GitLabMergeEventWebhookRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDtoWithEmptyFilePath();
 
 			// When
 			GitMergeRequestEvent event = gitWebHookAdapter.toMergeRequestEvent(requestDto);

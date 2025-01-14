@@ -16,7 +16,7 @@ include 'core:core-batch'
 include 'core:core-enum'
 
 //domain
-include 'domain:core-domain'
+include 'domain:domain-git'
 
 //storage
 include 'storage:core-db'
@@ -28,10 +28,12 @@ include 'support:logging'
 include 'support:utils'
 
 //external
-include 'external-client'
+include 'external-client:git-hub'
 
 //tests
 include 'tests:api-docs'
 include 'tests:bdd-tests'
 include 'tests:unit-tests'
+
+
 

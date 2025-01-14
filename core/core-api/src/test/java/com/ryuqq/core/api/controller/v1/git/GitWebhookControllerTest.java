@@ -18,9 +18,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitLabMergeEventWebhookRequestDto;
 import com.ryuqq.core.api.controller.v1.git.response.GitPushEventResponseDto;
-import com.ryuqq.core.api.controller.v1.git.service.GitWebhookHandler;
+import com.ryuqq.core.api.controller.v1.git.service.GitLabWebhookHandler;
 import com.ryuqq.core.api.data.GitModuleHelper;
 import com.ryuqq.core.api.test.RestDocsTest;
 
@@ -34,7 +34,7 @@ class GitWebhookControllerTest extends RestDocsTest {
 	private GitWebhookController gitWebhookController;
 
 	@Mock
-	private GitWebhookHandler gitWebhookHandler;
+	private GitLabWebhookHandler gitLabWebhookHandler;
 
 	@BeforeEach
 	void setUp() {
@@ -46,10 +46,10 @@ class GitWebhookControllerTest extends RestDocsTest {
 	@Test
 	void shouldHandleGitWebhookAndReturnResponse() throws Exception {
 		// Given
-		GitMergeEventRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDto();
+		GitLabMergeEventWebhookRequestDto requestDto = GitModuleHelper.toGitPushEventRequestDto();
 
 		GitPushEventResponseDto responseDto = new GitPushEventResponseDto(1L);
-		when(gitWebhookHandler.handle(any(GitMergeEventRequestDto.class))).thenReturn(responseDto);
+		when(gitLabWebhookHandler.handle(any(GitLabMergeEventWebhookRequestDto.class))).thenReturn(responseDto);
 
 		given()
 			.accept(ContentType.JSON)
