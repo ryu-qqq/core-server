@@ -1,24 +1,23 @@
 package com.ryuqq.core.storage.db.git;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.CodeStatus;
+import com.ryuqq.core.enums.TestStatus;
 
 public record ChangedFileCommand(
 	Long id,
-	long branchId,
+	long commitId,
+	String gitCommitId,
 	String className,
 	String filePath,
 	ChangeType changeType,
-	CodeStatus status,
-	String commitId,
-	String commitMessage
+	TestStatus status
 ) {
 
 	public ChangedFileEntity toEntity(){
 		if(id != null){
-			return new ChangedFileEntity(id, branchId, className, filePath, changeType, status, commitId, commitMessage);
+			return new ChangedFileEntity(id,  commitId, gitCommitId, className, filePath, changeType, status);
 		}
-		return new ChangedFileEntity(branchId, className, filePath, changeType, status, commitId, commitMessage);
+		return new ChangedFileEntity(commitId, gitCommitId, className, filePath, changeType, status);
 	}
 
 }

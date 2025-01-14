@@ -1,34 +1,75 @@
 package com.ryuqq.core.api.data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
 
 public class GitModuleHelper {
 
-	public static GitPushEventRequestDto toGitPushEventRequestDto(){
-		return new GitPushEventRequestDto(
-			"push",
-			"refs/heads/main",
-			12345L,
-			"test-user",
-			List.of(
-				new GitPushEventRequestDto.Commit(
-					"commit-id",
-					"Initial commit",
-					LocalDateTime.now(),
-					List.of("src/main/java/NewFile1.java"),
-					List.of("src/main/java/NewFile2.java"),
-					List.of("src/main/java/NewFile3.java")
-				)
-			),
-			new GitPushEventRequestDto.Repository(
-				"test-repo",
-				"http://github.com/test-repo",
-				"Test repository",
-				"http://github.com/test-repo/homepage"
-			)
+	public static GitMergeEventRequestDto toGitPushEventRequestDto() {
+		GitMergeEventRequestDto.Commit commit1 = new GitMergeEventRequestDto.Commit(
+			"1", "First commit", OffsetDateTime.parse("2025-01-08T10:00:00Z"),
+			new GitMergeEventRequestDto.Author("TEST", "TEST"),
+			List.of("src/main/java/MyClass.java"), List.of(), List.of()
+		);
+
+		GitMergeEventRequestDto.Commit commit2 = new GitMergeEventRequestDto.Commit(
+			"2", "Second commit", OffsetDateTime.parse("2025-01-08T11:00:00Z"),
+			new GitMergeEventRequestDto.Author("TEST", "TEST"),
+			List.of(), List.of("src/main/java/MyClass.java"), List.of()
+		);
+
+		return new GitMergeEventRequestDto(
+			"merge_request", "refs/heads/main", 1L, "test-user",
+			List.of(commit1, commit2),
+			new GitMergeEventRequestDto.Repository("repo-name", "repo-url", "desc", "homepage"),
+			List.of(new GitMergeEventRequestDto.Label(1, "Label"))
 		);
 	}
+
+	public static GitMergeEventRequestDto toGitPushEventRequestDtoWithNoCommits() {
+		return new GitMergeEventRequestDto(
+			"merge_request", "refs/heads/main", 1L, "test-user",
+			List.of(), // No commits
+			new GitMergeEventRequestDto.Repository("repo-name", "repo-url", "desc", "homepage"),
+			List.of(new GitMergeEventRequestDto.Label(1, "Label"))
+		);
+	}
+
+	public static GitMergeEventRequestDto toGitPushEventRequestDtoWithMixedFiles() {
+		GitMergeEventRequestDto.Commit commit1 = new GitMergeEventRequestDto.Commit(
+			"1", "First commit", OffsetDateTime.parse("2025-01-08T10:00:00Z"),
+			new GitMergeEventRequestDto.Author("TEST", "TEST"),
+			List.of("src/main/java/MyClass.java"), // Added files
+			List.of("src/main/java/YourClass.java"), // Modified files
+			List.of()
+		);
+
+		return new GitMergeEventRequestDto(
+			"merge_request", "refs/heads/main", 1L, "test-user",
+			List.of(commit1), // Single commit with mixed files
+			new GitMergeEventRequestDto.Repository("repo-name", "repo-url", "desc", "homepage"),
+			List.of(new GitMergeEventRequestDto.Label(1, "Label"))
+		);
+	}
+
+	public static GitMergeEventRequestDto toGitPushEventRequestDtoWithEmptyFilePath() {
+		GitMergeEventRequestDto.Commit commit1 = new GitMergeEventRequestDto.Commit(
+			"1", "First commit", OffsetDateTime.parse("2025-01-08T10:00:00Z"),
+			new GitMergeEventRequestDto.Author("TEST", "TEST"),
+			List.of(""), // Added files
+			List.of(), // Modified files
+			List.of()
+		);
+
+		return new GitMergeEventRequestDto(
+			"merge_request", "refs/heads/main", 1L, "test-user",
+			List.of(commit1), // Single commit with mixed files
+			new GitMergeEventRequestDto.Repository("repo-name", "repo-url", "desc", "homepage"),
+			List.of(new GitMergeEventRequestDto.Label(1, "Label"))
+		);
+	}
+
+
 }

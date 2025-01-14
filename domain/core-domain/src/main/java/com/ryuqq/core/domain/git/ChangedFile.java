@@ -3,52 +3,41 @@ package com.ryuqq.core.domain.git;
 import java.util.Objects;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.CodeStatus;
+import com.ryuqq.core.enums.TestStatus;
 import com.ryuqq.core.storage.db.git.ChangedFileCommand;
 
 public class ChangedFile {
 	private Long id;
-	private long branchId;
+	private long commitId;
+	private String gitCommitId;
 	private String className;
 	private String filePath;
 	private ChangeType changeType;
-	private CodeStatus status;
-	private String commitId;
-	private String commitMessage;
+	private TestStatus status;
 
-	public ChangedFile(String className, String filePath, ChangeType changeType, CodeStatus status,
-					   String commitId, String commitMessage) {
+	public ChangedFile(String gitCommitId, String className, String filePath, ChangeType changeType,
+					   TestStatus status) {
+		this.gitCommitId = gitCommitId;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
 		this.status = status;
-		this.commitId = commitId;
-		this.commitMessage = commitMessage;
 	}
 
-	public ChangedFile(Long id, long branchId, String className, String filePath, ChangeType changeType,
-					   CodeStatus status,
-					   String commitId, String commitMessage) {
-		this.id = id;
-		this.branchId = branchId;
-		this.className = className;
-		this.filePath = filePath;
-		this.changeType = changeType;
-		this.status = status;
-		this.commitId = commitId;
-		this.commitMessage = commitMessage;
-	}
-
-	public ChangedFileCommand toCommand(long branchId) {
-		return new ChangedFileCommand(id, branchId, className, filePath, changeType, status, commitId, commitMessage);
+	public ChangedFileCommand toCommand(long commitId) {
+		return new ChangedFileCommand(id, commitId, gitCommitId, className, filePath, changeType, status);
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public long getBranchId() {
-		return branchId;
+	public long getCommitId() {
+		return commitId;
+	}
+
+	public String getGitCommitId() {
+		return gitCommitId;
 	}
 
 	public String getClassName() {
@@ -63,16 +52,8 @@ public class ChangedFile {
 		return changeType;
 	}
 
-	public CodeStatus getStatus() {
+	public TestStatus getStatus() {
 		return status;
-	}
-
-	public String getCommitId() {
-		return commitId;
-	}
-
-	public String getCommitMessage() {
-		return commitMessage;
 	}
 
 	@Override
@@ -84,22 +65,21 @@ public class ChangedFile {
 			|| getClass()
 			!= object.getClass()) return false;
 		ChangedFile that = (ChangedFile) object;
-		return branchId
-			== that.branchId
+		return commitId
+			== that.commitId
 			&& Objects.equals(id, that.id)
+			&& Objects.equals(gitCommitId, that.gitCommitId)
 			&& Objects.equals(className, that.className)
 			&& Objects.equals(filePath, that.filePath)
 			&& changeType
 			== that.changeType
 			&& status
-			== that.status
-			&& Objects.equals(commitId, that.commitId)
-			&& Objects.equals(commitMessage, that.commitMessage);
+			== that.status;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, branchId, className, filePath, changeType, status, commitId, commitMessage);
+		return Objects.hash(id, commitId, gitCommitId, className, filePath, changeType, status);
 	}
 
 	@Override
@@ -109,8 +89,12 @@ public class ChangedFile {
 			"id="
 			+ id
 			+
-			", branchId="
-			+ branchId
+			", commitId="
+			+ commitId
+			+
+			", gitCommitId='"
+			+ gitCommitId
+			+ '\''
 			+
 			", className='"
 			+ className
@@ -125,14 +109,6 @@ public class ChangedFile {
 			+
 			", status="
 			+ status
-			+
-			", commitId='"
-			+ commitId
-			+ '\''
-			+
-			", commitMessage='"
-			+ commitMessage
-			+ '\''
 			+
 			'}';
 	}
