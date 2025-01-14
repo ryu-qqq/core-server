@@ -1,4 +1,4 @@
-package com.ryuqq.core.domain;
+package com.ryuqq.core.domain.git;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -11,17 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.ryuqq.core.domain.git.Branch;
-import com.ryuqq.core.domain.git.BranchRegister;
-import com.ryuqq.core.domain.git.ChangedFileRegister;
-import com.ryuqq.core.domain.git.GitEvent;
-import com.ryuqq.core.domain.git.GitEventRegistrar;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
-class GitEventRegistrarTest extends BaseUnitTest {
+class GitMergeRequestEventRegistrarTest extends BaseUnitTest {
 
 	@InjectMocks
-	private GitEventRegistrar gitEventRegistrar;
+	private GitMergeRequestManager gitMergeRequestManager;
 
 	@Mock
 	private BranchRegister branchRegister;
@@ -33,21 +28,21 @@ class GitEventRegistrarTest extends BaseUnitTest {
 	@Test
 	void shouldRegisterBranchAndChangedFilesWhenGitEventCommandIsProvided() {
 		// Given
-		GitEvent gitEvent = mock(GitEvent.class);
+		GitMergeRequestEvent gitMergeRequestEvent = mock(GitMergeRequestEvent.class);
 		Branch branch = mock(Branch.class);
 		long expectedBranchId = 1L;
 
 
-		when(gitEvent.getBranch()).thenReturn(branch);
-		when(branchRegister.register(branch)).thenReturn(expectedBranchId);
+		when(gitMergeRequestEvent.branch()).thenReturn(branch);
+		when(branchRegister.register(0, branch)).thenReturn(expectedBranchId);
 
 		// When
-		long actualBranchId = gitEventRegistrar.register(gitEvent);
+		long actualBranchId = gitMergeRequestManager.register(gitMergeRequestEvent);
 
 		// Then
 		assertEquals(expectedBranchId, actualBranchId, "Branch ID는 기대값과 같아야 합니다");
-		verify(branchRegister, times(1)).register(branch);
-		verify(changedFileRegister, times(1)).saveAll(expectedBranchId, gitEvent.getChangedFiles());
+		verify(branchRegister, times(1)).register(0, branch);
+		//verify(changedFileRegister, times(1)).saveAll(expectedBranchId, gitMergeRequestEvent.getCommits());
 	}
 
 

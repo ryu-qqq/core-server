@@ -19,28 +19,23 @@ public class BranchEntity extends BaseEntity {
 	@Column(name = "REPOSITORY_URL", nullable = false, length = 255)
 	private String repositoryUrl;
 
-	@Column(name = "NAME", nullable = false, length = 100)
-	private String name;
-
 	@Column(name = "BASE_BRANCH", nullable = false, length = 150)
 	private String baseBranch;
 
 	protected BranchEntity() {}
 
-	public BranchEntity(long projectId, String repositoryName, String repositoryUrl, String name, String baseBranch) {
+	public BranchEntity(long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
 		this.projectId = projectId;
 		this.repositoryName = repositoryName;
 		this.repositoryUrl = repositoryUrl;
-		this.name = name;
 		this.baseBranch = baseBranch;
 	}
 
-	public BranchEntity(long id, long projectId, String repositoryName, String repositoryUrl, String name, String baseBranch) {
+	public BranchEntity(long id, long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
 		this.id = id;
 		this.projectId = projectId;
 		this.repositoryName = repositoryName;
 		this.repositoryUrl = repositoryUrl;
-		this.name = name;
 		this.baseBranch = baseBranch;
 	}
 
@@ -54,10 +49,6 @@ public class BranchEntity extends BaseEntity {
 
 	public String getRepositoryUrl() {
 		return repositoryUrl;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public String getBaseBranch() {

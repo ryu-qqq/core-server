@@ -1,13 +1,12 @@
 package com.ryuqq.core.api.controller.v1.git.request;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record GitPushEventRequestDto(
+public record GitMergeEventRequestDto(
 	String objectKind,
 	String ref,
 	@JsonProperty("project_id")
@@ -15,16 +14,23 @@ public record GitPushEventRequestDto(
 	@JsonProperty("user_name")
 	String userName,
 	List<Commit> commits,
-	Repository repository
+	Repository repository,
+	List<Label> labels
 ) {
 	public record Commit(
 		String id,
 		String message,
 		@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
 		OffsetDateTime timestamp,
+		Author author,
 		List<String> added,
 		List<String> modified,
 		List<String> removed
+	){}
+
+	public record Author(
+		String name,
+		String email
 	){}
 
 	public record Repository(
@@ -32,6 +38,11 @@ public record GitPushEventRequestDto(
 		String url,
 		String description,
 		String homepage
+	){}
+
+	public record Label(
+		long id,
+		String name
 	){}
 
 }

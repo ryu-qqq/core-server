@@ -1,75 +1,83 @@
 package com.ryuqq.core.api.controller.v1.git.mapper;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
 import com.ryuqq.core.domain.git.Branch;
 import com.ryuqq.core.domain.git.ChangedFile;
-import com.ryuqq.core.domain.git.GitEvent;
+import com.ryuqq.core.domain.git.Commit;
+import com.ryuqq.core.domain.git.GitMergeRequestEvent;
+import com.ryuqq.core.domain.git.Project;
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.CodeStatus;
+import com.ryuqq.core.enums.TestStatus;
 
 @Component
 public class GitWebHookAdapter {
 
-	public GitEvent toDomain(GitPushEventRequestDto requestDto){
-		return new GitEvent(
-			new Branch(
-				requestDto.projectId(),
-				requestDto.repository().name(),
-				requestDto.repository().url(),
-				requestDto.userName(),
-				requestDto.ref()
-			),
-			toChangedFileDomain(requestDto.commits())
+	public GitMergeRequestEvent toMergeRequestEvent(GitMergeEventRequestDto requestDto) {
+		Project project = toProjectDomain(requestDto);
+		Branch branch = toBranchDomain(requestDto);
+		List<Commit> commits = toCommitDomain(requestDto.commits());
+
+		return new GitMergeRequestEvent(project, branch, commits);
+	}
+
+	private Project toProjectDomain(GitMergeEventRequestDto requestDto) {
+		GitMergeEventRequestDto.Repository repo = requestDto.repository();
+		return new Project(
+			requestDto.projectId(),
+			repo.name(),
+			repo.url(),
+			requestDto.userName(),
+			repo.description()
 		);
 	}
 
-	private List<ChangedFile> toChangedFileDomain(List<GitPushEventRequestDto.Commit> commits) {
-		Map<String, GitPushEventRequestDto.Commit> latestCommitsByFile = commits.stream()
-			.sorted(Comparator.comparing(GitPushEventRequestDto.Commit::timestamp).reversed()) // 최신순 정렬
-			.flatMap(c -> Stream.concat(
-				c.added().stream().map(file -> Map.entry(file, c)),
-				c.modified().stream().map(file -> Map.entry(file, c))
+	private Branch toBranchDomain(GitMergeEventRequestDto requestDto) {
+		return new Branch(
+			requestDto.repository().name(),
+			requestDto.repository().url(),
+			requestDto.ref()
+		);
+	}
+
+	private List<Commit> toCommitDomain(List<GitMergeEventRequestDto.Commit> commits) {
+		return commits.stream()
+			.map(commit -> new Commit(
+				commit.id(),
+				commit.author().name(),
+				commit.message(),
+				commit.timestamp(),
+				toChangedFileDomain(commit)
 			))
-			.collect(Collectors.toMap(
-				Map.Entry::getKey,
-				Map.Entry::getValue,
-				(commit1, commit2) -> commit1
-			));
-
-		return latestCommitsByFile.entrySet().stream()
-			.map(entry -> {
-				String filePath = entry.getKey();
-				GitPushEventRequestDto.Commit commit = entry.getValue();
-
-				ChangeType changeType = commit.added().contains(filePath) ? ChangeType.ADDED : ChangeType.MODIFIED;
-
-				return new ChangedFile(
-					extractClassName(filePath),
-					filePath,
-					changeType,
-					CodeStatus.PENDING,
-					commit.id(),
-					commit.message()
-				);
-			})
 			.toList();
 	}
 
+	private List<ChangedFile> toChangedFileDomain(GitMergeEventRequestDto.Commit commit) {
+		return Stream.concat(
+				commit.added().stream()
+					.filter(this::isJavaFile)
+					.map(file -> new ChangedFile(commit.id(), extractClassName(file), file, ChangeType.ADDED, TestStatus.PENDING)),
+				commit.modified().stream()
+					.filter(this::isJavaFile)
+					.map(file -> new ChangedFile(commit.id(), extractClassName(file), file, ChangeType.MODIFIED, TestStatus.PENDING))
+			)
+			.distinct()
+			.toList();
+	}
 
 	private static String extractClassName(String filePath) {
 		if (filePath == null || filePath.isEmpty()) {
 			return "";
 		}
-
 		return filePath.substring(filePath.lastIndexOf('/') + 1);
+	}
+
+	private boolean isJavaFile(String filePath) {
+		return filePath != null && filePath.endsWith(".java");
 	}
 
 }

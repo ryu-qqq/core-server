@@ -1,8 +1,8 @@
 package com.ryuqq.core.logging;
 
-import com.ryuqq.core.utils.JsonUtils;
-
 import java.util.Map;
+
+import com.ryuqq.core.utils.JsonUtils;
 
 /**
  * LogEntry 객체를 생성하는 팩토리 메서드.

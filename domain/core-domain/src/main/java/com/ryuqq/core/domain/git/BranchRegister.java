@@ -13,8 +13,8 @@ public class BranchRegister {
 		this.branchPersistenceRepository = branchPersistenceRepository;
 	}
 
-	public long register(Branch branch) {
-		return branchPersistenceRepository.save(branch.toCommand());
+	public long register(long projectId, Branch branch) {
+		return branchPersistenceRepository.save(branch.toCommand(projectId));
 	}
 
 }

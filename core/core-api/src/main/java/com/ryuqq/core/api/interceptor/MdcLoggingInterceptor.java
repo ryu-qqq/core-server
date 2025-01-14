@@ -1,7 +1,5 @@
 package com.ryuqq.core.api.interceptor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -13,6 +11,7 @@ import org.slf4j.MDC;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
+
 import com.ryuqq.core.utils.TraceIdHolder;
 
 import jakarta.servlet.http.HttpServletRequest;

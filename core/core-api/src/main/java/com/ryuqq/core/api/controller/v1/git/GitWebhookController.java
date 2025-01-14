@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitPushEventRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitMergeEventRequestDto;
 import com.ryuqq.core.api.controller.v1.git.response.GitPushEventResponseDto;
 import com.ryuqq.core.api.controller.v1.git.service.GitWebhookHandler;
 import com.ryuqq.core.api.payload.ApiResponse;
@@ -25,7 +25,7 @@ public class GitWebhookController {
 
 	@PostMapping("/git/webhook")
 	public ResponseEntity<ApiResponse<GitPushEventResponseDto>> handleGitWebHook(
-		@RequestBody GitPushEventRequestDto gitLabPushEventRequestDto) {
+		@RequestBody GitMergeEventRequestDto gitLabPushEventRequestDto) {
 		return ResponseEntity.ok(ApiResponse.success(gitWebhookHandler.handle(gitLabPushEventRequestDto)));
 	}
 

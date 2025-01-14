@@ -1,4 +1,4 @@
-package com.ryuqq.core.domain;
+package com.ryuqq.core.domain.git;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.ryuqq.core.domain.git.Branch;
-import com.ryuqq.core.domain.git.BranchRegister;
 import com.ryuqq.core.storage.db.git.BranchCommand;
 import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
 import com.ryuqq.core.unit.test.BaseUnitTest;
@@ -35,9 +33,9 @@ class BranchRegisterTest extends BaseUnitTest {
 		long expectedId = 1L;
 
 		when(branchPersistenceRepository.save(branchCommand)).thenReturn(expectedId);
-		when(branch.toCommand()).thenReturn(branchCommand);
+		when(branch.toCommand(0L)).thenReturn(branchCommand);
 
-		long actualId = branchRegister.register(branch);
+		long actualId = branchRegister.register(0, branch);
 
 		assertEquals(expectedId, actualId, "Branch ID는 기대값과 같아야 합니다");
 		verify(branchPersistenceRepository, times(1)).save(branchCommand);

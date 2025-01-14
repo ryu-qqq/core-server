@@ -9,29 +9,24 @@ public class Branch {
 	private long projectId;
 	private String repositoryName;
 	private String repositoryUrl;
-	private String name;
 	private String baseBranch;
 
-	public Branch(long projectId, String repositoryName, String repositoryUrl, String name, String baseBranch) {
-		this.projectId = projectId;
+	public Branch(String repositoryName, String repositoryUrl, String baseBranch) {
 		this.repositoryName = repositoryName;
 		this.repositoryUrl = repositoryUrl;
-		this.name = name;
 		this.baseBranch = baseBranch;
 	}
 
-	public Branch(Long id, long projectId, String repositoryName, String repositoryUrl, String name,
-				  String baseBranch) {
+	public Branch(Long id, long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
 		this.id = id;
 		this.projectId = projectId;
 		this.repositoryName = repositoryName;
 		this.repositoryUrl = repositoryUrl;
-		this.name = name;
 		this.baseBranch = baseBranch;
 	}
 
-	public BranchCommand toCommand() {
-		return new BranchCommand(id, projectId, repositoryName, repositoryUrl, name, baseBranch);
+	public BranchCommand toCommand(long projectId) {
+		return new BranchCommand(null, projectId, repositoryName, repositoryUrl, baseBranch);
 	}
 
 	public Long getId() {
@@ -50,9 +45,6 @@ public class Branch {
 		return repositoryUrl;
 	}
 
-	public String getName() {
-		return name;
-	}
 
 	public String getBaseBranch() {
 		return baseBranch;
@@ -74,14 +66,12 @@ public class Branch {
 			&&
 			Objects.equals(this.repositoryUrl, that.repositoryUrl)
 			&&
-			Objects.equals(this.name, that.name)
-			&&
 			Objects.equals(this.baseBranch, that.baseBranch);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(projectId, repositoryName, repositoryUrl, name, baseBranch);
+		return Objects.hash(projectId, repositoryName, repositoryUrl, baseBranch);
 	}
 
 	@Override
@@ -98,10 +88,6 @@ public class Branch {
 			+
 			"repositoryUrl="
 			+ repositoryUrl
-			+ ", "
-			+
-			"name="
-			+ name
 			+ ", "
 			+
 			"baseBranch="
