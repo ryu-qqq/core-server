@@ -1,5 +1,6 @@
 package com.ryuqq.core.external.git;
 
+import com.ryuqq.core.external.GlobalFeignConfig;
 import com.ryuqq.core.external.git.response.GitHubCommitResponse;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(
 	name = "githubApiClient",
 	url = "https://api.github.com",
-	configuration = GitHubFeignClientConfig.class
+	configuration = GlobalFeignConfig.class
 
 )
 public interface GitHubFeignClient {
