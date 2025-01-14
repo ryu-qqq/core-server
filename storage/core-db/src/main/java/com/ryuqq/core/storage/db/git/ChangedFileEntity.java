@@ -1,22 +1,24 @@
 package com.ryuqq.core.storage.db.git;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.CodeStatus;
+import com.ryuqq.core.enums.TestStatus;
 import com.ryuqq.core.storage.db.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Table(name = "CHANGED_FILE")
 @Entity
 public class ChangedFileEntity extends BaseEntity {
 
-	@Column(name = "BRANCH_ID", nullable = false)
-	private long branchId;
+	@Column(name = "COMMIT_ID", nullable = false)
+	private long commitId;
+
+	@Column(name = "GIT_COMMIT_ID", nullable = false, length = 255)
+	private String gitCommitId;
 
 	@Column(name = "CLASS_NAME", nullable = false, length = 255)
 	private String className;
@@ -30,43 +32,37 @@ public class ChangedFileEntity extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS", nullable = false)
-	private CodeStatus status;
-
-	@Column(name = "COMMIT_ID", nullable = false, length = 255)
-	private String commitId;
-
-	@Lob
-	@Column(name = "COMMIT_MESSAGE")
-	private String commitMessage;
-
+	private TestStatus status;
 
 	protected ChangedFileEntity() {}
 
-	public ChangedFileEntity(long branchId, String className, String filePath, ChangeType changeType, CodeStatus status,
-							 String commitId, String commitMessage) {
-		this.branchId = branchId;
+	public ChangedFileEntity(long commitId, String gitCommitId, String className, String filePath,
+							 ChangeType changeType,
+							 TestStatus status) {
+		this.commitId = commitId;
+		this.gitCommitId = gitCommitId;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
 		this.status = status;
-		this.commitId = commitId;
-		this.commitMessage = commitMessage;
 	}
 
-	public ChangedFileEntity(long id, long branchId, String className, String filePath, ChangeType changeType, CodeStatus status,
-							 String commitId, String commitMessage) {
+	public ChangedFileEntity(long id, long commitId, String gitCommitId, String className, String filePath,
+							 ChangeType changeType,
+							 TestStatus status) {
 		this.id = id;
-		this.branchId = branchId;
+		this.commitId = commitId;
+		this.gitCommitId = gitCommitId;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
 		this.status = status;
-		this.commitId = commitId;
-		this.commitMessage = commitMessage;
 	}
 
-	public long getBranchId() {
-		return branchId;
+
+
+	public long getCommitId() {
+		return commitId;
 	}
 
 	public String getClassName() {
@@ -81,15 +77,12 @@ public class ChangedFileEntity extends BaseEntity {
 		return changeType;
 	}
 
-	public CodeStatus getStatus() {
+	public TestStatus getStatus() {
 		return status;
 	}
 
-	public String getCommitId() {
-		return commitId;
+	public String getGitCommitId() {
+		return gitCommitId;
 	}
 
-	public String getCommitMessage() {
-		return commitMessage;
-	}
 }

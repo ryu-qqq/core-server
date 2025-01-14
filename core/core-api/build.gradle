@@ -1,5 +1,3 @@
-bootJar.enabled = true
-jar.enabled = false
 
 dependencies {
     implementation project(":core:core-batch")
@@ -7,9 +5,11 @@ dependencies {
     implementation project(":support:logging")
 	implementation project(":support:utils")
 
-	implementation project(":domain:core-domain")
+	implementation project(":domain:domain-git")
+	implementation project(":external-client:git-hub")
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 

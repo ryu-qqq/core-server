@@ -1,12 +1,9 @@
 package com.ryuqq.core.logging;
 
-import com.ryuqq.core.utils.ReflectionUtils;
-
 import java.io.StringReader;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ryuqq.core.utils.ReflectionUtils;
 
 public class LogEntryFactory {
 
@@ -23,10 +20,10 @@ public class LogEntryFactory {
 	 * @return LogEntry 객체
 	 */
 
-	public static LogEntry createLogEntry(String traceId, String layer, String className, String methodName, Object[] args, Object result, long executionTime) {
+	public static SimpleLogEntry createLogEntry(String traceId, String layer, String className, String methodName, Object[] args, Object result, long executionTime) {
 		Map<String, Object> argsMap = ReflectionUtils.getParameterNameValueMap(className, methodName, args);
 
-		return new LogEntry(
+		return new SimpleLogEntry(
 			traceId,
 			layer,
 			className,

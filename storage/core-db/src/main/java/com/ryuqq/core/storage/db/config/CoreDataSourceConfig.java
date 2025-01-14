@@ -1,7 +1,5 @@
 package com.ryuqq.core.storage.db.config;
 
-import com.ryuqq.core.storage.db.SlowQueryListener;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +13,8 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import com.ryuqq.core.storage.db.SlowQueryListener;
 
 @Configuration
 public class CoreDataSourceConfig {
@@ -40,7 +40,7 @@ public class CoreDataSourceConfig {
 		return ProxyDataSourceBuilder.create(dataSource)
 			.name("PROXY-DS")
 			.listener(loggingListener)
-			.listener(new SlowQueryListener(500))  // 500ms 이상 쿼리 감지
+			.listener(new SlowQueryListener(500))
 			.build();
 	}
 

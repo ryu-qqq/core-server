@@ -1,7 +1,5 @@
 package com.ryuqq.core.storage.db.config;
 
-import jakarta.persistence.EntityManagerFactory;
-
 import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -13,6 +11,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableTransactionManagement

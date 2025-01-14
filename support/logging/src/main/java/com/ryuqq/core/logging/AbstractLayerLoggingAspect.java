@@ -1,11 +1,11 @@
 package com.ryuqq.core.logging;
 
-import com.ryuqq.core.utils.TraceIdHolder;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ryuqq.core.utils.TraceIdHolder;
 
 public abstract class AbstractLayerLoggingAspect {
 
@@ -69,5 +69,17 @@ public abstract class AbstractLayerLoggingAspect {
 
 	private String getTraceId() {
 		return TraceIdHolder.getTraceId();
+	}
+
+	protected Object extractSafeResult(Object result) {
+		if (result == null) {
+			return null;
+		}
+
+		if (result instanceof Class<?>) {
+			return ((Class<?>) result).getSimpleName();
+		}
+
+		return result;
 	}
 }

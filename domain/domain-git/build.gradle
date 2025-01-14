@@ -1,0 +1,8 @@
+dependencies {
+    api project(':domain')
+
+	testImplementation(testFixtures(project(":tests:api-docs")))
+	testImplementation(testFixtures(project(":tests:unit-tests")))
+	testImplementation(testFixtures(project(":support:utils")))
+
+}

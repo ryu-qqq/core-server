@@ -1,9 +1,5 @@
 package com.ryuqq.core.storage.db;
 
-import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.logging.SqlLogEntry;
-import com.ryuqq.core.utils.TraceIdHolder;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +11,10 @@ import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.ParameterSetOperation;
+
+import com.ryuqq.core.logging.LogEntryFactory;
+import com.ryuqq.core.logging.SqlLogEntry;
+import com.ryuqq.core.utils.TraceIdHolder;
 
 public class SlowQueryListener implements QueryExecutionListener {
 

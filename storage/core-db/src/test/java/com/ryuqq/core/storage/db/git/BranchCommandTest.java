@@ -1,6 +1,8 @@
 package com.ryuqq.core.storage.db.git;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +23,6 @@ class BranchCommandTest extends BaseUnitTest {
 			branchCommandWithId.projectId(),
 			branchCommandWithId.repositoryName(),
 			branchCommandWithId.repositoryUrl(),
-			branchCommandWithId.name(),
 			branchCommandWithId.baseBranch()
 		);
 
@@ -37,7 +38,6 @@ class BranchCommandTest extends BaseUnitTest {
 			assertEquals(branchCommandWithId.projectId(), entity.getProjectId(), "Project ID는 일치해야 합니다.");
 			assertEquals(branchCommandWithId.repositoryName(), entity.getRepositoryName(), "Repository Name은 일치해야 합니다.");
 			assertEquals(branchCommandWithId.repositoryUrl(), entity.getRepositoryUrl(), "Repository URL은 일치해야 합니다.");
-			assertEquals(branchCommandWithId.name(), entity.getName(), "Name은 일치해야 합니다.");
 			assertEquals(branchCommandWithId.baseBranch(), entity.getBaseBranch(), "Base Branch는 일치해야 합니다.");
 		}
 
@@ -53,7 +53,6 @@ class BranchCommandTest extends BaseUnitTest {
 			assertEquals(branchCommandWithoutId.projectId(), entity.getProjectId(), "Project ID는 일치해야 합니다.");
 			assertEquals(branchCommandWithoutId.repositoryName(), entity.getRepositoryName(), "Repository Name은 일치해야 합니다.");
 			assertEquals(branchCommandWithoutId.repositoryUrl(), entity.getRepositoryUrl(), "Repository URL은 일치해야 합니다.");
-			assertEquals(branchCommandWithoutId.name(), entity.getName(), "Name은 일치해야 합니다.");
 			assertEquals(branchCommandWithoutId.baseBranch(), entity.getBaseBranch(), "Base Branch는 일치해야 합니다.");
 		}
 	}
