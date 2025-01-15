@@ -61,14 +61,7 @@ public class ApiLoggingAspect extends AbstractLayerLoggingAspect  {
 		return simpleLogEntry.toJson();
 	}
 
-	@Override
-	protected String createErrorLogMessage(String traceId, String className, String methodName, Object[] args,
-										   Exception ex, long executionTime) {
-		return String.format(
-			"[%s][TraceId: %s] Error in %s.%s after %d ms. Exception: %s",
-			API_LAYER, traceId, className, methodName, executionTime, ex.getMessage()
-		);
-	}
+
 
 
 }
