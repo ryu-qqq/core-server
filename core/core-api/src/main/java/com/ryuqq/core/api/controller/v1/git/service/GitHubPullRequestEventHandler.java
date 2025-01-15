@@ -24,6 +24,9 @@ public class GitHubPullRequestEventHandler implements GitHubWebhookHandler<GitHu
 	@Override
 	public GitHubPullRequestEventResponseDto handle(GitHubPullRequestEventDto requestDto) {
 		PullRequest pullRequest = gitPullRequestCreateAdapter.toPullRequest(requestDto);
+
+		if(!pullRequest.isOpened()) return new GitHubPullRequestEventResponseDto(0L);
+
 		long pullRequestId = pullRequestAggregateRoot.processPullRequest(pullRequest);
 		return new GitHubPullRequestEventResponseDto(pullRequestId);
 	}

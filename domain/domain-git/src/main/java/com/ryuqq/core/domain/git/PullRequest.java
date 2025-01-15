@@ -19,6 +19,8 @@ public class PullRequest {
 
 	public PullRequest(long gitProjectId, long gitPullId, String sourceBranch, String targetBranch, String title,
 					   String description, MergeStatus status, List<PullRequestCommit> commits) {
+		this.id = 0L;
+		this.branchId = 0L;
 		this.gitProjectId = gitProjectId;
 		this.gitPullId = gitPullId;
 		this.sourceBranch = sourceBranch;
@@ -75,6 +77,10 @@ public class PullRequest {
 
 	public MergeStatus getStatus() {
 		return status;
+	}
+
+	public boolean isOpened(){
+		return status.isOpened();
 	}
 
 }

@@ -16,7 +16,7 @@ public record GitHubPullRequestEventDto(
 ) implements GitHubWebhookRequestDto
 {
 	public long getGitProjectId(){
-		return pullRequest.projectId();
+		return repository.projectId();
 	}
 
 	public String getSourceBranch(){

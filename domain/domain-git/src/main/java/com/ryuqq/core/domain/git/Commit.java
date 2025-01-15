@@ -19,6 +19,8 @@ public class Commit {
 
 	protected Commit(String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
 				  List<ChangedFile> changedFiles) {
+		this.id = 0L;
+		this.branchId = 0L;
 		this.gitCommitId = gitCommitId;
 		this.author = author;
 		this.commitMessage = commitMessage;
@@ -28,6 +30,7 @@ public class Commit {
 
 	protected Commit(long branchId, String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
 					 List<ChangedFile> changedFiles) {
+		this.id = 0L;
 		this.branchId = branchId;
 		this.gitCommitId = gitCommitId;
 		this.author = author;

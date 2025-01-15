@@ -40,6 +40,7 @@ public class PullRequestAggregateRoot {
 		List<String> gitCommitIds = pullRequestCommits.stream()
 			.map(PullRequestCommit::getGitCommitId)
 			.toList();
+
 		return commitFinder.fetchByGitCommitIdIn(gitCommitIds);
 	}
 
