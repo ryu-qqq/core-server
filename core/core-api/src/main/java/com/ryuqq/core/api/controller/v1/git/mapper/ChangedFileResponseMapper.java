@@ -12,12 +12,10 @@ public class ChangedFileResponseMapper {
 	public ChangedFileResponseDto toResponseDto(GitType gitType, ChangedFile changedFile) {
 		return new ChangedFileResponseDto(
 			changedFile.getId(),
-			changedFile.getGitCommitId(),
 			changedFile.getClassName(),
 			changedFile.getFilePath(),
 			gitType,
-			changedFile.getChangeType(),
-			changedFile.getStatus()
+			changedFile.getChangeType()
 		);
 	}
 }

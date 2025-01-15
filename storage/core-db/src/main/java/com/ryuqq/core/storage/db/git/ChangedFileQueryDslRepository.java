@@ -35,11 +35,9 @@ public class ChangedFileQueryDslRepository implements ChangedFileQueryRepository
 				new QChangedFileDto(
 					changedFileEntity.id,
 					changedFileEntity.commitId,
-					changedFileEntity.gitCommitId,
 					changedFileEntity.className,
 					changedFileEntity.filePath,
-					changedFileEntity.changeType,
-					changedFileEntity.status
+					changedFileEntity.changeType
 				)
 			)
 			.from(changedFileEntity)
@@ -50,7 +48,6 @@ public class ChangedFileQueryDslRepository implements ChangedFileQueryRepository
 			.innerJoin(projectEntity)
 				.on(projectEntity.id.eq(branchEntity.projectId))
 			.where(
-				testStatusEq(filterDto.testStatus()),
 				gitTypeEq(filterDto.gitType()),
 				cursorBasedFilter(filterDto.cursorId(), filterDto.sort())
 			)
@@ -75,7 +72,6 @@ public class ChangedFileQueryDslRepository implements ChangedFileQueryRepository
 			.innerJoin(projectEntity)
 				.on(projectEntity.id.eq(branchEntity.projectId))
 			.where(
-				testStatusEq(filterDto.testStatus()),
 				gitTypeEq(filterDto.gitType())
 			)
 			.fetchOne();
@@ -85,10 +81,6 @@ public class ChangedFileQueryDslRepository implements ChangedFileQueryRepository
 
 	private BooleanExpression gitTypeEq(GitType gitType){
 		return projectEntity.gitType.eq(gitType);
-	}
-
-	private BooleanExpression testStatusEq(TestStatus testStatus){
-		return changedFileEntity.status.eq(testStatus);
 	}
 
 	private BooleanExpression cursorBasedFilter(Long cursorId, Sort sort) {

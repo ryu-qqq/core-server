@@ -6,12 +6,10 @@ import com.ryuqq.core.enums.TestStatus;
 
 public record ChangedFileResponseDto(
 	long changedFileId,
-	String gitCommitId,
 	String className,
 	String filePath,
 	GitType gitType,
-	ChangeType changeType,
-	TestStatus testStatus
+	ChangeType changeType
 ) {
 
 }
