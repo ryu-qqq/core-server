@@ -41,7 +41,7 @@ public class MergeReport {
 	}
 
 	public static MergeReport init(long branchId, int totalFiles){
-		return new MergeReport(branchId, totalFiles, 0, 0, 0, 0, MergeStatus.PENDING, null);
+		return new MergeReport(branchId, totalFiles, 0, 0, 0, 0, MergeStatus.OPENED, null);
 	}
 
 	public MergeReportCommand toCommand() {

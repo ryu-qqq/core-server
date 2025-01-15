@@ -18,8 +18,12 @@ public class JsonUtils {
 		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		objectMapper.configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
 		objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
-		objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-
+		objectMapper.setDefaultPropertyInclusion(
+			com.fasterxml.jackson.annotation.JsonInclude.Value.construct(
+				com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL,
+				com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS
+			)
+		);
 		return objectMapper;
 	}
 

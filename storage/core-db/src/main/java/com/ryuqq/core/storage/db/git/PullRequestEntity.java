@@ -30,7 +30,7 @@ public class PullRequestEntity extends BaseEntity {
 	private String title;
 
 	@Lob
-	@Column(name = "DECRIPTION", nullable = true)
+	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
 
 	@Enumerated(EnumType.STRING)

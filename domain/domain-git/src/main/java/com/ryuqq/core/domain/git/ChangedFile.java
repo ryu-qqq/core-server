@@ -11,12 +11,15 @@ public class ChangedFile {
 	private final ChangeType changeType;
 
 	protected ChangedFile(String className, String filePath, ChangeType changeType) {
+		this.id = 0L;
+		this.commitId = 0L;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
 	}
 
 	protected ChangedFile(long commitId, String className, String filePath, ChangeType changeType) {
+		this.id = 0L;
 		this.commitId = commitId;
 		this.className = className;
 		this.filePath = filePath;
