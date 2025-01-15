@@ -19,9 +19,14 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import com.ryuqq.core.api.payload.ApiResponse;
 import com.ryuqq.core.api.payload.ErrorMessage;
+import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
+import com.ryuqq.core.utils.TraceIdHolder;
 
 import jakarta.validation.ConstraintViolationException;
+
+import static com.ryuqq.core.enums.LogLevel.ERROR;
+import static com.ryuqq.core.enums.LogLevel.WARN;
 
 @RestControllerAdvice
 @RestController
@@ -30,19 +35,15 @@ public class GlobalExceptionController {
     private static final String ERROR_LOG_MSG_FORMAT = "CoreException : {}";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // @ExceptionHandler(ApplicationException.class)
-    // public ResponseEntity<ApiResponse<?>> handleCoreException(ApplicationException e) {
-    //     switch (e.getErrorType().getLogLevel()) {
-    //         case ERROR -> log.error(ERROR_LOG_MSG_FORMAT, e.getMessage(), e);
-    //         case WARN -> log.warn(ERROR_LOG_MSG_FORMAT, e.getMessage(), e);
-    //         default -> log.info(ERROR_LOG_MSG_FORMAT, e.getMessage(), e);
-    //     }
-	//
-    //     return ResponseEntity
-    //             .status(e.getErrorType().getStatus())
-    //             .body(ApiResponse.error(new ErrorMessage(e.getErrorType())));
-    // }
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleGlobalException(Exception ex) {
+		String traceId = TraceIdHolder.getTraceId();
+		log.error("[TraceId: {}] Unhandled exception: {}", traceId, ex.getMessage(), ex);
 
+		return ResponseEntity
+			.status(HttpStatus.INTERNAL_SERVER_ERROR)
+			.body("Internal server error occurred.");
+	}
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleValidationExceptions(IllegalArgumentException e) {

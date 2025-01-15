@@ -20,25 +20,17 @@ public abstract class AbstractLayerLoggingAspect {
 		String traceId = getTraceId();
 		long startTime = System.currentTimeMillis();
 
-		try {
-			String preLogMessage = createPreLogMessage(traceId, className, methodName, args);
-			log(preLogMessage);
 
-			Object result = joinPoint.proceed();
+		String preLogMessage = createPreLogMessage(traceId, className, methodName, args);
+		log(preLogMessage);
 
-			long endTime = System.currentTimeMillis();
-			String postLogMessage = createPostLogMessage(traceId, className, methodName, args, result, endTime - startTime);
-			log(postLogMessage);
+		Object result = joinPoint.proceed();
+		long endTime = System.currentTimeMillis();
 
-			return result;
+		String postLogMessage = createPostLogMessage(traceId, className, methodName, args, result, endTime - startTime);
 
-		} catch (Exception ex) {
-			long errorTime = System.currentTimeMillis();
-			String errorLogMessage = createErrorLogMessage(traceId, className, methodName, args, ex, errorTime - startTime);
-			logError(errorLogMessage, ex);
-
-			throw ex;
-		}
+		log(postLogMessage);
+		return result;
 	}
 
 	/**
@@ -50,11 +42,6 @@ public abstract class AbstractLayerLoggingAspect {
 	 * 호출 후 로그 메시지 생성 (구현체에서 정의)
 	 */
 	protected abstract String createPostLogMessage(String traceId, String className, String methodName, Object[] args, Object result, long executionTime);
-
-	/**
-	 * 에러 발생 시 로그 메시지 생성 (구현체에서 정의)
-	 */
-	protected abstract String createErrorLogMessage(String traceId, String className, String methodName, Object[] args, Exception ex, long executionTime);
 
 	/**
 	 * 로그 출력 메서드 (구현체에서 정의 가능)
