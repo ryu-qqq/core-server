@@ -30,11 +30,7 @@ public class ProjectQueryDslRepository implements ProjectQueryRepository {
 						projectEntity.id,
 						projectEntity.gitProjectId,
 						projectEntity.gitType,
-<<<<<<< HEAD
 						projectEntity.repositoryName.coalesce(""),
-=======
-						projectEntity.name.coalesce(""),
->>>>>>> main
 						projectEntity.repositoryUrl.coalesce(""),
 						projectEntity.owner.coalesce(""),
 						projectEntity.description.coalesce("")
