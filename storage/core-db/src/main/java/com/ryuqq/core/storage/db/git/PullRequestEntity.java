@@ -37,13 +37,11 @@ public class PullRequestEntity extends BaseEntity {
 	@Column(name = "STATUS", nullable = false)
 	private MergeStatus status;
 
-	@Column(name = "REVIEWER", nullable = false, length = 255)
-	private String reviewer;
 
 	protected PullRequestEntity() {}
 
 	public PullRequestEntity(long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-							 String description, MergeStatus status, String reviewer) {
+							 String description, MergeStatus status) {
 		this.gitPullId = gitPullId;
 		this.branchId = branchId;
 		this.sourceBranch = sourceBranch;
@@ -51,11 +49,10 @@ public class PullRequestEntity extends BaseEntity {
 		this.title = title;
 		this.description = description;
 		this.status = status;
-		this.reviewer = reviewer;
 	}
 
 	public PullRequestEntity(long id, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-							 String description, MergeStatus status, String reviewer) {
+							 String description, MergeStatus status) {
 		this.id = id;
 		this.gitPullId = gitPullId;
 		this.branchId = branchId;
@@ -64,7 +61,6 @@ public class PullRequestEntity extends BaseEntity {
 		this.title = title;
 		this.description = description;
 		this.status = status;
-		this.reviewer = reviewer;
 	}
 
 	public long getGitPullId() {
@@ -95,7 +91,4 @@ public class PullRequestEntity extends BaseEntity {
 		return status;
 	}
 
-	public String getReviewer() {
-		return reviewer;
-	}
 }

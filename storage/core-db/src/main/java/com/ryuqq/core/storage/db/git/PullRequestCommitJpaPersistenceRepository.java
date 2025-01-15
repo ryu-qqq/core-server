@@ -10,4 +10,10 @@ public class PullRequestCommitJpaPersistenceRepository implements PullRequestCom
 	public PullRequestCommitJpaPersistenceRepository(PullRequestCommitJpaRepository pullRequestCommitJpaRepository) {
 		this.pullRequestCommitJpaRepository = pullRequestCommitJpaRepository;
 	}
+
+	@Override
+	public void save(PullRequestCommitCommand pullRequestCommitCommand) {
+		pullRequestCommitJpaRepository.save(pullRequestCommitCommand.toEntity());
+	}
+
 }

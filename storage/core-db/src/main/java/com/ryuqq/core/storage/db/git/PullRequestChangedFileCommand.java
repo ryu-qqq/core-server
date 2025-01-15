@@ -1,12 +1,15 @@
 package com.ryuqq.core.storage.db.git;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.enums.TestStatus;
 
 public record PullRequestChangedFileCommand(
 	long pullRequestId,
+	long changedFileId,
 	String filePath,
-	ChangeType changeType,
-	TestStatus status
+	ChangeType changeType
 ) {
+
+	public PullRequestChangedFileEntity toEntity(){
+		return new PullRequestChangedFileEntity(pullRequestId, changedFileId, filePath, changeType);
+	}
 }

@@ -20,7 +20,7 @@ public class ProjectFinder {
 	public Project fetchByGitProjectIdAndGitType(long gitProjectId, GitType gitType) {
 		return projectQueryRepository.fetchByGitProjectIdAndGitType(gitProjectId, gitType)
 			.map(projectMapper::toDomain)
-			.orElseThrow(() -> new DataNotFoundException(String.format("Project not found %s, Git Type %d", gitProjectId, gitType)));
+			.orElseThrow(() -> new DataNotFoundException(String.format("Project not found %s, Git Type %s", gitProjectId, gitType)));
 	}
 
 }

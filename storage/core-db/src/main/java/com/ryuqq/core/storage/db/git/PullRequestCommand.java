@@ -10,16 +10,15 @@ public record PullRequestCommand(
 	String targetBranch,
 	String title,
 	String description,
-	MergeStatus status,
-	String reviewer
+	MergeStatus status
 ) {
 
 	public PullRequestEntity toEntity(){
 		if(id == null){
-			return new PullRequestEntity(gitPullId, branchId, sourceBranch, targetBranch, title, description, status, reviewer);
+			return new PullRequestEntity(gitPullId, branchId, sourceBranch, targetBranch, title, description, status);
 		}
 
-		return new PullRequestEntity(id, gitPullId, branchId, sourceBranch, targetBranch, title, description, status, reviewer);
+		return new PullRequestEntity(id, gitPullId, branchId, sourceBranch, targetBranch, title, description, status);
 	}
 
 }

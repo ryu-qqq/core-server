@@ -9,13 +9,12 @@ import jakarta.persistence.Table;
 
 @Table(name = "BRANCH")
 @Entity
-@IdClass(BranchId.class)
 public class BranchEntity extends BaseEntity {
 
 	@Column(name = "PROJECT_ID", nullable = false)
 	private long projectId;
 
-	@Column(name = "BASE_BRANCH", nullable = false, length = 100)
+	@Column(name = "BRANCH_NAME", nullable = false, length = 100)
 	private String branchName;
 
 	@Column(name = "BASE_BRANCH_NAME", nullable = false, length = 100)

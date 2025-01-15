@@ -17,4 +17,9 @@ public class BranchRegister {
 		return branchPersistenceRepository.save(branch.toCommand());
 	}
 
+	public long register(long projectId, String branchName, String baseBranchName){
+		Branch branch = BranchFactory.create(projectId, branchName, baseBranchName);
+		return register(branch);
+	}
+
 }

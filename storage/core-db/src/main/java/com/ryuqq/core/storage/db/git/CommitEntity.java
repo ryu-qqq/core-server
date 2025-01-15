@@ -1,8 +1,8 @@
 package com.ryuqq.core.storage.db.git;
 
-import java.time.OffsetDateTime;
-
 import com.ryuqq.core.storage.db.BaseEntity;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,8 +15,8 @@ public class CommitEntity extends BaseEntity {
 	@Column(name = "BRANCH_ID", nullable = false)
 	private Long branchId;
 
-	@Column(name = "COMMIT_ID", nullable = false, length = 255)
-	private String commitId;
+	@Column(name = "GIT_COMMIT_ID", nullable = false, length = 255)
+	private String gitCommitId;
 
 	@Column(name = "AUTHOR", nullable = false, length = 255)
 	private String author;
@@ -25,35 +25,35 @@ public class CommitEntity extends BaseEntity {
 	private String commitMessage;
 
 	@Column(name = "TIMESTAMP", nullable = false)
-	private OffsetDateTime timestamp;
+	private LocalDateTime timestamp;
 
 	protected CommitEntity() {}
 
-	public CommitEntity(Long branchId, String commitId, String author, String commitMessage, OffsetDateTime timestamp) {
+	public CommitEntity(Long branchId, String gitCommitId, String author, String commitMessage,
+						LocalDateTime timestamp) {
 		this.branchId = branchId;
-		this.commitId = commitId;
+		this.gitCommitId = gitCommitId;
 		this.author = author;
 		this.commitMessage = commitMessage;
 		this.timestamp = timestamp;
 	}
 
-	public CommitEntity(long id, Long branchId, String commitId, String author, String commitMessage, OffsetDateTime timestamp) {
+	public CommitEntity(long id, Long branchId, String gitCommitId, String author, String commitMessage,
+						LocalDateTime timestamp) {
 		this.id = id;
 		this.branchId = branchId;
-		this.commitId = commitId;
+		this.gitCommitId = gitCommitId;
 		this.author = author;
 		this.commitMessage = commitMessage;
 		this.timestamp = timestamp;
 	}
-
-
 
 	public Long getBranchId() {
 		return branchId;
 	}
 
-	public String getCommitId() {
-		return commitId;
+	public String getGitCommitId() {
+		return gitCommitId;
 	}
 
 	public String getAuthor() {
@@ -64,7 +64,7 @@ public class CommitEntity extends BaseEntity {
 		return commitMessage;
 	}
 
-	public OffsetDateTime getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 }

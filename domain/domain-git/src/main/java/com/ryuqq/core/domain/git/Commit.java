@@ -1,5 +1,6 @@
 package com.ryuqq.core.domain.git;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +10,14 @@ import com.ryuqq.core.storage.db.git.CommitCommand;
 
 public class Commit {
 	private Long id;
-	private Long commitId;
+	private long branchId;
 	private String gitCommitId;
 	private String author;
 	private String commitMessage;
-	private OffsetDateTime timestamp;
+	private LocalDateTime timestamp;
 	private List<ChangedFile> changedFiles;
 
-	public Commit(String gitCommitId, String author, String commitMessage,
-				  OffsetDateTime timestamp,
+	protected Commit(String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
 				  List<ChangedFile> changedFiles) {
 		this.gitCommitId = gitCommitId;
 		this.author = author;
@@ -26,12 +26,21 @@ public class Commit {
 		this.changedFiles = changedFiles;
 	}
 
+	protected Commit(long branchId, String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
+					 List<ChangedFile> changedFiles) {
+		this.branchId = branchId;
+		this.gitCommitId = gitCommitId;
+		this.author = author;
+		this.commitMessage = commitMessage;
+		this.timestamp = timestamp;
+		this.changedFiles = changedFiles;
+	}
 
-	public Commit(Long id, Long commitId, String gitCommitId, String author, String commitMessage,
-				  OffsetDateTime timestamp,
+	protected Commit(Long id, long branchId, String gitCommitId, String author, String commitMessage,
+				  LocalDateTime timestamp,
 				  List<ChangedFile> changedFiles) {
 		this.id = id;
-		this.commitId = commitId;
+		this.branchId = branchId;
 		this.gitCommitId = gitCommitId;
 		this.author = author;
 		this.commitMessage = commitMessage;
@@ -39,16 +48,16 @@ public class Commit {
 		this.changedFiles = changedFiles;
 	}
 
-	public CommitCommand toCommand(Long branchId){
-		return new CommitCommand(null, branchId, gitCommitId, author, commitMessage, timestamp);
+	public CommitCommand toCommand(long branchId){
+		return new CommitCommand(id, branchId, gitCommitId, author, commitMessage, timestamp);
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public Long getCommitId() {
-		return commitId;
+	public long getBranchId() {
+		return branchId;
 	}
 
 	public String getGitCommitId() {
@@ -63,72 +72,11 @@ public class Commit {
 		return commitMessage;
 	}
 
-	public OffsetDateTime getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
 	public List<ChangedFile> getChangedFiles() {
 		return changedFiles;
-	}
-
-	public void addChangedFile(ChangedFile changedFile) {
-		if (changedFiles == null) {
-			changedFiles = new ArrayList<>();
-		}
-		changedFiles.add(changedFile);
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this
-			== object) return true;
-		if (object
-			== null
-			|| getClass()
-			!= object.getClass()) return false;
-		Commit commit = (Commit) object;
-		return Objects.equals(id, commit.id)
-			&& Objects.equals(commitId, commit.commitId)
-			&& Objects.equals(gitCommitId, commit.gitCommitId)
-			&& Objects.equals(author, commit.author)
-			&& Objects.equals(commitMessage, commit.commitMessage)
-			&& Objects.equals(timestamp, commit.timestamp)
-			&& Objects.equals(changedFiles, commit.changedFiles);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, commitId, gitCommitId, author, commitMessage, timestamp, changedFiles);
-	}
-
-	@Override
-	public String toString() {
-		return "Commit{"
-			+
-			"id="
-			+ id
-			+
-			", commitId="
-			+ commitId
-			+
-			", gitCommitId='"
-			+ gitCommitId
-			+ '\''
-			+
-			", author='"
-			+ author
-			+ '\''
-			+
-			", commitMessage='"
-			+ commitMessage
-			+ '\''
-			+
-			", timestamp="
-			+ timestamp
-			+
-			", changedFiles="
-			+ changedFiles
-			+
-			'}';
 	}
 }

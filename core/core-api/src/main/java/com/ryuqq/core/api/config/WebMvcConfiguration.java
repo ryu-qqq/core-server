@@ -18,7 +18,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(new MdcLoggingInterceptor());
 	}
 
-
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new GitHubEventResolver());

@@ -1,6 +1,6 @@
 package com.ryuqq.core.storage.db.git;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 public record CommitCommand(
 	Long id,
@@ -8,7 +8,7 @@ public record CommitCommand(
 	String gitCommitId,
 	String author,
 	String commitMessage,
-	OffsetDateTime timestamp
+	LocalDateTime timestamp
 ) {
 
 	public CommitEntity toEntity(){

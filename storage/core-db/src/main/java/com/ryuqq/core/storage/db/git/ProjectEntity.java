@@ -12,10 +12,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PROJECT")
-@IdClass(ProjectId.class)
 public class ProjectEntity extends BaseEntity {
 
-	@Column(name = "GITLAB_PROJECT_ID", nullable = false)
+	@Column(name = "GIT_PROJECT_ID", nullable = false)
 	private long gitProjectId;
 
 	@Enumerated(EnumType.STRING)

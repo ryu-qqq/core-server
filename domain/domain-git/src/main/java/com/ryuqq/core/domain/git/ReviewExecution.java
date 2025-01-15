@@ -12,15 +12,11 @@ public class ReviewExecution {
 	private ReviewStatus reviewStatus;
 
 
-	public ReviewExecution(long commitId, long changedFileId, TestStatus testStatus, ReviewStatus reviewStatus) {
+	protected ReviewExecution(long commitId, long changedFileId, TestStatus testStatus, ReviewStatus reviewStatus) {
 		this.commitId = commitId;
 		this.changedFileId = changedFileId;
 		this.testStatus = testStatus;
 		this.reviewStatus = reviewStatus;
-	}
-
-	public static ReviewExecution init(long commitId, long changedFileId){
-		return new ReviewExecution(commitId, changedFileId, TestStatus.PENDING, ReviewStatus.PENDING);
 	}
 
 	public ReviewExecutionCommand toCommand(){

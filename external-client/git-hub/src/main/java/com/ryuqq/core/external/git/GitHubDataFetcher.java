@@ -15,7 +15,7 @@ public class GitHubDataFetcher {
 		this.gitHubFeignClient = gitHubFeignClient;
 	}
 
-	public List<GitHubCommitResponse> fetchCommitInfo(String fullName, int pullNumber) {
+	public List<GitHubCommitResponse> fetchCommitInfo(String fullName, long pullNumber) {
 		return gitHubFeignClient.getCommitInfos(fullName, pullNumber);
 	}
 
