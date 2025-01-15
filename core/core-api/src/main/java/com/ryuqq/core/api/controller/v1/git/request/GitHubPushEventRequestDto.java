@@ -19,7 +19,7 @@ public record GitHubPushEventRequestDto(
 	}
 
 	public String getBranchName() {
-		return branchName.replaceAll("refs/heads", "");
+		return branchName.replaceAll("refs/heads/", "");
 	}
 
 

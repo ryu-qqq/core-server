@@ -1,6 +1,7 @@
 package com.ryuqq.core.storage.db.git;
 
 import com.ryuqq.core.storage.db.git.dto.BranchDto;
+import com.ryuqq.core.storage.db.git.dto.QBranchDto;
 
 import java.util.Optional;
 
@@ -41,19 +42,23 @@ public class BranchQueryDslRepository implements BranchQueryRepository{
 
 	@Override
 	public Optional<BranchDto> fetchByGitProjectIdAndBranchName(long gitProjectId, String branchName) {
-		return Optional.empty();
-		// return Optional.ofNullable(
-		// 					queryFactory.select(
-		// 							new QBranchDto()
-		// 						)
-		// 						.from(branchEntity)
-		// 						.innerJoin(projectEntity)
-		// 							.on(projectEntity.id.eq(branchEntity.projectId))
-		// 						.where(
-		// 							gitProjectIdEq(gitProjectId), branchNameEq(branchName)
-		// 						)
-		// 						.fetchOne()
-		// 				);
+		return Optional.ofNullable(
+							queryFactory.select(
+									new QBranchDto(
+										branchEntity.id,
+										branchEntity.projectId,
+										branchEntity.branchName,
+										branchEntity.baseBranchName
+									)
+								)
+								.from(branchEntity)
+								.innerJoin(projectEntity)
+									.on(projectEntity.id.eq(branchEntity.projectId))
+								.where(
+									gitProjectIdEq(gitProjectId), branchNameEq(branchName)
+								)
+								.fetchOne()
+						);
 	}
 
 
