@@ -15,7 +15,7 @@ public record GitHubCommit(
 	String gitCommitId,
 	@JsonProperty("message")
 	String commitMessage,
-	@JsonProperty("timeStamp")
+	@JsonProperty("timestamp")
 	String createAt,
 	GitHubAuthor author,
 	List<String> added,

@@ -25,7 +25,7 @@ public class GitHubPushEventHandler implements GitHubWebhookHandler<GitHubPushEv
 	@Override
 	public GitHubPushEventResponseDto handle(GitHubPushEventRequestDto requestDto) {
 		List<Commit> commits = gitPushEventAdapter.toCommits(requestDto);
-		long branchId = commitAggregateRoot.processCommits(requestDto.getGitProjectId(), requestDto.branchName(), commits);
+		long branchId = commitAggregateRoot.processCommits(requestDto.getGitProjectId(), requestDto.getBranchName(), commits);
 		return new GitHubPushEventResponseDto(branchId);
 	}
 
