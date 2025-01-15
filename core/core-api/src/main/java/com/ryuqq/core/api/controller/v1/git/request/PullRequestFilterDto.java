@@ -1,25 +1,26 @@
 package com.ryuqq.core.api.controller.v1.git.request;
 
-import com.ryuqq.core.domain.git.ChangedFileRequestFilter;
+import com.ryuqq.core.domain.git.PullRequestFilter;
 import com.ryuqq.core.enums.GitType;
+import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.enums.Sort;
-import com.ryuqq.core.enums.TestStatus;
 
-public record ChangedFileRequestFilterDto(
+public record PullRequestFilterDto(
 	GitType gitType,
-	TestStatus testStatus,
+	MergeStatus status,
+	ReviewStatus reviewStatus,
 	Integer pageSize,
 	Integer pageNumber,
 	Long cursorId,
 	Sort sort
-
 ) {
 
-	public ChangedFileRequestFilter toReviewExecutionRequestFilter() {
+	public PullRequestFilter toPullRequestFilter(){
 		int defaultSize = (pageSize == null || pageSize == 0) ? 20 : pageSize;
 		int defaultNumber = (pageNumber == null || pageNumber == 0) ? 0 : pageNumber;
-		return new ChangedFileRequestFilter(gitType, testStatus, defaultSize, defaultNumber, cursorId, sort);
+
+		return new PullRequestFilter(gitType, status, reviewStatus, defaultSize, defaultNumber, cursorId, sort);
 	}
 
 	public int getPageSize(){

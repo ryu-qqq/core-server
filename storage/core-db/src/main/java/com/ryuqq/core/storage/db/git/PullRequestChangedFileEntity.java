@@ -1,6 +1,7 @@
 package com.ryuqq.core.storage.db.git;
 
 import com.ryuqq.core.enums.ChangeType;
+import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.storage.db.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -26,19 +27,26 @@ public class PullRequestChangedFileEntity extends BaseEntity {
 	@Column(name = "CHANGE_TYPE", nullable = false)
 	private ChangeType changeType;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "REVIEW_STATUS", nullable = false)
+	private ReviewStatus reviewStatus;
 
 
 	protected PullRequestChangedFileEntity() {}
 
-	public PullRequestChangedFileEntity(long pullRequestId, long changedFileId, String filePath, ChangeType changeType) {
+	public PullRequestChangedFileEntity(long pullRequestId, long changedFileId, String filePath, ChangeType changeType,
+										ReviewStatus reviewStatus) {
 		this.pullRequestId = pullRequestId;
 		this.changedFileId = changedFileId;
 		this.filePath = filePath;
 		this.changeType = changeType;
+		this.reviewStatus = reviewStatus;
 	}
 
-	public PullRequestChangedFileEntity(long id, long pullRequestId, long changedFileId, String filePath, ChangeType changeType) {
+	public PullRequestChangedFileEntity(long id, long pullRequestId, long changedFileId, String filePath, ChangeType changeType,
+										ReviewStatus reviewStatus) {
 		this.changedFileId = changedFileId;
+		this.reviewStatus = reviewStatus;
 		this.id = id;
 		this.pullRequestId = pullRequestId;
 		this.filePath = filePath;
