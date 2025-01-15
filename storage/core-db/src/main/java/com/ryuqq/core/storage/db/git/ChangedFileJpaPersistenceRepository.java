@@ -14,8 +14,8 @@ public class ChangedFileJpaPersistenceRepository implements ChangedFilePersisten
 	}
 
 	@Override
-	public long save(ChangedFileCommand changedFileCommand) {
-		return changedFileJpaRepository.save(changedFileCommand.toEntity()).getId();
+	public void save(ChangedFileCommand changedFileCommand) {
+		changedFileJpaRepository.save(changedFileCommand.toEntity());
 	}
 
 	@Override

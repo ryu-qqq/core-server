@@ -3,21 +3,34 @@ package com.ryuqq.core.domain.git;
 import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.storage.db.git.PullRequestCommand;
 
-import java.util.Objects;
+import java.util.List;
 
 public class PullRequest {
 	Long id;
+	Long branchId;
+	long gitProjectId;
 	long gitPullId;
-	long branchId;
 	String sourceBranch;
 	String targetBranch;
 	String title;
 	String description;
 	MergeStatus status;
-	String reviewer;
+	List<PullRequestCommit> commits;
+
+	public PullRequest(long gitProjectId, long gitPullId, String sourceBranch, String targetBranch, String title,
+					   String description, MergeStatus status, List<PullRequestCommit> commits) {
+		this.gitProjectId = gitProjectId;
+		this.gitPullId = gitPullId;
+		this.sourceBranch = sourceBranch;
+		this.targetBranch = targetBranch;
+		this.title = title;
+		this.description = description;
+		this.status = status;
+		this.commits = commits;
+	}
 
 	public PullRequest(Long id, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-					   String description, MergeStatus status, String reviewer) {
+					   String description, MergeStatus status) {
 		this.id = id;
 		this.gitPullId = gitPullId;
 		this.branchId = branchId;
@@ -26,11 +39,10 @@ public class PullRequest {
 		this.title = title;
 		this.description = description;
 		this.status = status;
-		this.reviewer = reviewer;
 	}
 
-	public PullRequestCommand toCommand(){
-		return new PullRequestCommand(id, gitPullId, branchId, sourceBranch, targetBranch, title, description, status, reviewer);
+	public PullRequestCommand toCommand(long branchId){
+		return new PullRequestCommand(id, gitPullId, branchId, sourceBranch, targetBranch, title, description, status);
 	}
 
 	public Long getId() {
@@ -65,74 +77,4 @@ public class PullRequest {
 		return status;
 	}
 
-	public String getReviewer() {
-		return reviewer;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this
-			== object) return true;
-		if (object
-			== null
-			|| getClass()
-			!= object.getClass()) return false;
-		PullRequest that = (PullRequest) object;
-		return gitPullId
-			== that.gitPullId
-			&& branchId
-			== that.branchId
-			&& Objects.equals(id, that.id)
-			&& Objects.equals(sourceBranch, that.sourceBranch)
-			&& Objects.equals(targetBranch, that.targetBranch)
-			&& Objects.equals(title, that.title)
-			&& Objects.equals(description, that.description)
-			&& status
-			== that.status
-			&& Objects.equals(reviewer, that.reviewer);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, gitPullId, branchId, sourceBranch, targetBranch, title, description, status, reviewer);
-	}
-
-	@Override
-	public String toString() {
-		return "PullRequest{"
-			+
-			"id="
-			+ id
-			+
-			", gitPullId="
-			+ gitPullId
-			+
-			", branchId="
-			+ branchId
-			+
-			", sourceBranch='"
-			+ sourceBranch
-			+ '\''
-			+
-			", targetBranch='"
-			+ targetBranch
-			+ '\''
-			+
-			", title='"
-			+ title
-			+ '\''
-			+
-			", description='"
-			+ description
-			+ '\''
-			+
-			", status="
-			+ status
-			+
-			", reviewer='"
-			+ reviewer
-			+ '\''
-			+
-			'}';
-	}
 }

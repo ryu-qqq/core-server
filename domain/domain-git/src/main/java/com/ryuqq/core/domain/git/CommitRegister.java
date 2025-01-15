@@ -13,7 +13,7 @@ public class CommitRegister {
 		this.commitPersistenceRepository = commitPersistenceRepository;
 	}
 
-	public long save(long branchId, Commit commit) {
+	public long register(long branchId, Commit commit) {
 		return commitPersistenceRepository.save(commit.toCommand(branchId));
 	}
 

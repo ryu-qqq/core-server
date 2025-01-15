@@ -6,17 +6,22 @@ import com.ryuqq.core.storage.db.git.BranchCommand;
 
 public class Branch {
 	private Long id;
-	private final long projectId;
+	private long projectId;
 	private final String branchName;
 	private final String baseBranchName;
 
-	public Branch(long projectId, String branchName, String baseBranchName) {
+	protected Branch(String branchName, String baseBranchName) {
+		this.branchName = branchName;
+		this.baseBranchName = baseBranchName;
+	}
+
+	protected Branch(long projectId, String branchName, String baseBranchName) {
 		this.projectId = projectId;
 		this.branchName = branchName;
 		this.baseBranchName = baseBranchName;
 	}
 
-	public Branch(Long id, long projectId, String branchName, String baseBranchName) {
+	protected Branch(Long id, long projectId, String branchName, String baseBranchName) {
 		this.id = id;
 		this.projectId = projectId;
 		this.branchName = branchName;

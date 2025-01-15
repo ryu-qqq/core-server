@@ -13,9 +13,8 @@ public class PullRequestRegister {
 		this.pullRequestPersistenceRepository = pullRequestPersistenceRepository;
 	}
 
-	public long register(PullRequest pullRequest){
-		return pullRequestPersistenceRepository.save(pullRequest.toCommand());
+	public long register(long branchId, PullRequest pullRequest){
+		return pullRequestPersistenceRepository.save(pullRequest.toCommand(branchId));
 	}
-
 
 }

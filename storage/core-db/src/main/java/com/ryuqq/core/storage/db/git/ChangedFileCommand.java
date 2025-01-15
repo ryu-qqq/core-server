@@ -6,18 +6,16 @@ import com.ryuqq.core.enums.TestStatus;
 public record ChangedFileCommand(
 	Long id,
 	long commitId,
-	String gitCommitId,
 	String className,
 	String filePath,
-	ChangeType changeType,
-	TestStatus status
+	ChangeType changeType
 ) {
 
 	public ChangedFileEntity toEntity(){
 		if(id != null){
-			return new ChangedFileEntity(id,  commitId, gitCommitId, className, filePath, changeType, status);
+			return new ChangedFileEntity(id, commitId, className, filePath, changeType);
 		}
-		return new ChangedFileEntity(commitId, gitCommitId, className, filePath, changeType, status);
+		return new ChangedFileEntity(commitId, className, filePath, changeType);
 	}
 
 }

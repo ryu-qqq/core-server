@@ -17,9 +17,6 @@ public class ChangedFileEntity extends BaseEntity {
 	@Column(name = "COMMIT_ID", nullable = false)
 	private long commitId;
 
-	@Column(name = "GIT_COMMIT_ID", nullable = false, length = 255)
-	private String gitCommitId;
-
 	@Column(name = "CLASS_NAME", nullable = false, length = 255)
 	private String className;
 
@@ -30,36 +27,22 @@ public class ChangedFileEntity extends BaseEntity {
 	@Column(name = "CHANGE_TYPE", nullable = false)
 	private ChangeType changeType;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS", nullable = false)
-	private TestStatus status;
-
 	protected ChangedFileEntity() {}
 
-	public ChangedFileEntity(long commitId, String gitCommitId, String className, String filePath,
-							 ChangeType changeType,
-							 TestStatus status) {
+	public ChangedFileEntity(long commitId, String className, String filePath, ChangeType changeType) {
 		this.commitId = commitId;
-		this.gitCommitId = gitCommitId;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
-		this.status = status;
 	}
 
-	public ChangedFileEntity(long id, long commitId, String gitCommitId, String className, String filePath,
-							 ChangeType changeType,
-							 TestStatus status) {
+	public ChangedFileEntity(long id, long commitId, String className, String filePath, ChangeType changeType) {
 		this.id = id;
 		this.commitId = commitId;
-		this.gitCommitId = gitCommitId;
 		this.className = className;
 		this.filePath = filePath;
 		this.changeType = changeType;
-		this.status = status;
 	}
-
-
 
 	public long getCommitId() {
 		return commitId;
@@ -76,13 +59,4 @@ public class ChangedFileEntity extends BaseEntity {
 	public ChangeType getChangeType() {
 		return changeType;
 	}
-
-	public TestStatus getStatus() {
-		return status;
-	}
-
-	public String getGitCommitId() {
-		return gitCommitId;
-	}
-
 }

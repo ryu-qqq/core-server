@@ -10,7 +10,9 @@ public record GitHubRepository(
 	@JsonProperty("name")
 	String repositoryName,
 	@JsonProperty("url")
-	String repositoryUrl
+	String repositoryUrl,
+	@JsonProperty("full_name")
+	String fullName
 
 ) {
 }

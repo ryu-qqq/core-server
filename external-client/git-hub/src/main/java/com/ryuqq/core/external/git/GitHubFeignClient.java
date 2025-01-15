@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface GitHubFeignClient {
 
 	@GetMapping("/repos/{fullName}/pulls/{pullNumber}/files")
-	List<GitHubCommitResponse> getCommitInfos(@PathVariable("fullName") String fullName,
-									   @PathVariable("pullNumber") int pullNumber);
-
+	List<GitHubCommitResponse> getCommitInfos(@PathVariable("fullName") String fullName, @PathVariable("pullNumber") long pullNumber);
 
 }

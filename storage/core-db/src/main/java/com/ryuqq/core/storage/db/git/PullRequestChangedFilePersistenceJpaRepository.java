@@ -12,6 +12,9 @@ public class PullRequestChangedFilePersistenceJpaRepository implements PullReque
 		this.pullRequestChangedFileJpaRepository = pullRequestChangedFileJpaRepository;
 	}
 
-
+	@Override
+	public void save(PullRequestChangedFileCommand pullRequestChangedFileCommand) {
+		pullRequestChangedFileJpaRepository.save(pullRequestChangedFileCommand.toEntity());
+	}
 
 }

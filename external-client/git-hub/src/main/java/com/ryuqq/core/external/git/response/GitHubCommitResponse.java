@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record GitHubCommitResponse(
-	String sha,
+	@JsonProperty("sha")
+	String gitCommitId,
 	String filename,
 	String status,
 	int additions,
@@ -19,4 +20,6 @@ public record GitHubCommitResponse(
 	@JsonProperty("contents_url")
 	String contentsUrl,
 	String patch
-) {}
+) {
+
+}
