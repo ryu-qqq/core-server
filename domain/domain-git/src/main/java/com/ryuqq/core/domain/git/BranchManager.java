@@ -1,6 +1,6 @@
 package com.ryuqq.core.domain.git;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -8,18 +8,20 @@ import org.springframework.stereotype.Component;
 public class BranchManager {
 
 	private final BranchRegister branchRegister;
-	private final CommitManager commitManager;
+	private final BranchFinder branchFinder;
 
-	public BranchManager(BranchRegister branchRegister, CommitManager commitManager) {
+	public BranchManager(BranchRegister branchRegister, BranchFinder branchFinder) {
 		this.branchRegister = branchRegister;
-		this.commitManager = commitManager;
+		this.branchFinder = branchFinder;
 	}
 
-	public long registerBranchWithCommits(long projectId, Branch branch, List<Commit> commits){
-		long branchId = branchRegister.register(projectId, branch);
-		commitManager.processCommits(branchId, commits);
-
-		return branchId;
+	public long fetchOrRegisterBranch(Branch branch) {
+		Optional<Branch> existingBranch = branchFinder.fetchByProjectIdAndBranchName(branch.getProjectId(), branch.getBranchName());
+		if (existingBranch.isPresent()) {
+			return existingBranch.get().getId();
+		}
+		return branchRegister.register(branch);
 	}
+
 
 }

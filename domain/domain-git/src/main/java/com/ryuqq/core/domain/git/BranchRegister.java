@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.git;
 
-import org.springframework.stereotype.Component;
-
 import com.ryuqq.core.storage.db.git.BranchPersistenceRepository;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class BranchRegister {
@@ -13,8 +13,8 @@ public class BranchRegister {
 		this.branchPersistenceRepository = branchPersistenceRepository;
 	}
 
-	public long register(long projectId, Branch branch) {
-		return branchPersistenceRepository.save(branch.toCommand(projectId));
+	public long register(Branch branch) {
+		return branchPersistenceRepository.save(branch.toCommand());
 	}
 
 }

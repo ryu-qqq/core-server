@@ -18,7 +18,7 @@ public record GitLabMergeEventWebhookRequestDto(
 	List<Commit> commits,
 	Repository repository,
 	List<Label> labels
-) implements GitWebhookRequestDto {
+) {
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public record Commit(

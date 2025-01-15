@@ -31,7 +31,7 @@ class ProjectManagerTest extends BaseUnitTest {
 	void shouldSaveAndReturnProjectIdWhenNewProjectProvided() {
 		// Given
 		Project project = new Project(0L, "New Project", "repo-url", "owner", "Test Project");
-		when(projectFinder.findByGitProjectId(eq(project.getGitProjectId()))).thenReturn(Optional.empty());
+		when(projectFinder.fetchByGitProjectIdAndGitType(eq(project.getGitProjectId()))).thenReturn(Optional.empty());
 		when(projectRegister.register(eq(project))).thenReturn(123L);
 
 		// When
@@ -47,7 +47,7 @@ class ProjectManagerTest extends BaseUnitTest {
 	void shouldReturnExistingProjectIdWhenProjectExists() {
 		// Given
 		Project existingProject = new Project(1L, 1L, "Existing Project", "repo-url", "owner", "Test Project");
-		when(projectFinder.findByGitProjectId(eq(existingProject.getGitProjectId()))).thenReturn(Optional.of(existingProject));
+		when(projectFinder.fetchByGitProjectIdAndGitType(eq(existingProject.getGitProjectId()))).thenReturn(Optional.of(existingProject));
 
 		// When
 		long result = projectManager.findOrRegisterProject(existingProject);
@@ -63,7 +63,7 @@ class ProjectManagerTest extends BaseUnitTest {
 		// Given
 		Project newProject = new Project(0L, "Correct Project", "repo-url", "owner", "Test Project");
 		ArgumentCaptor<Project> projectCaptor = ArgumentCaptor.forClass(Project.class);
-		when(projectFinder.findByGitProjectId(eq(newProject.getGitProjectId()))).thenReturn(Optional.empty());
+		when(projectFinder.fetchByGitProjectIdAndGitType(eq(newProject.getGitProjectId()))).thenReturn(Optional.empty());
 
 		// When
 		projectManager.findOrRegisterProject(newProject);

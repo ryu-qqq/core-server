@@ -12,7 +12,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-
 	testImplementation testFixtures(project(":tests:unit-tests"))
 	testImplementation testFixtures(project(":tests:api-docs"))
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
