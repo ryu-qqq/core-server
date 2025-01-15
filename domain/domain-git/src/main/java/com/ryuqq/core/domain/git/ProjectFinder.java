@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain.git;
 
-import org.springframework.stereotype.Component;
-
 import com.ryuqq.core.domain.exception.DataNotFoundException;
 import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.storage.db.git.ProjectQueryRepository;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProjectFinder {

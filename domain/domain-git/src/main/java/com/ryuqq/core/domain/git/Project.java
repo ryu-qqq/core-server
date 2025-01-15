@@ -10,7 +10,11 @@ public class Project {
 	private Long id;
 	private final Long gitProjectId;
 	private final GitType gitType;
+<<<<<<< HEAD
 	private final String repositoryName;
+=======
+	private final String name;
+>>>>>>> main
 	private final String repositoryUrl;
 	private final String owner;
 	private final String description;
@@ -18,7 +22,11 @@ public class Project {
 	public Project(Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
 		this.gitProjectId = gitProjectId;
 		this.gitType = gitType;
+<<<<<<< HEAD
 		this.repositoryName = name;
+=======
+		this.name = name;
+>>>>>>> main
 		this.repositoryUrl = repositoryUrl;
 		this.owner = owner;
 		this.description = description;
@@ -28,14 +36,22 @@ public class Project {
 		this.id = id;
 		this.gitProjectId = gitProjectId;
 		this.gitType = gitType;
+<<<<<<< HEAD
 		this.repositoryName = name;
+=======
+		this.name = name;
+>>>>>>> main
 		this.repositoryUrl = repositoryUrl;
 		this.owner = owner;
 		this.description = description;
 	}
 
 	public ProjectCommand toCommand() {
+<<<<<<< HEAD
 		return new ProjectCommand(id, gitProjectId, gitType, repositoryName, repositoryUrl, owner, description);
+=======
+		return new ProjectCommand(id, gitProjectId, gitType, name, repositoryUrl, owner, description);
+>>>>>>> main
 	}
 
 	public Long getId() {
@@ -44,6 +60,10 @@ public class Project {
 
 	public Long getGitProjectId() {
 		return gitProjectId;
+	}
+
+	public GitType getGitType() {
+		return gitType;
 	}
 
 	public String getName() {
@@ -73,7 +93,13 @@ public class Project {
 		Project project = (Project) object;
 		return Objects.equals(id, project.id)
 			&& Objects.equals(gitProjectId, project.gitProjectId)
+<<<<<<< HEAD
 			&& Objects.equals(repositoryName, project.repositoryName)
+=======
+			&& gitType
+			== project.gitType
+			&& Objects.equals(name, project.name)
+>>>>>>> main
 			&& Objects.equals(repositoryUrl, project.repositoryUrl)
 			&& Objects.equals(owner, project.owner)
 			&& Objects.equals(description, project.description);
@@ -81,7 +107,11 @@ public class Project {
 
 	@Override
 	public int hashCode() {
+<<<<<<< HEAD
 		return Objects.hash(id, gitProjectId, repositoryName, repositoryUrl, owner, description);
+=======
+		return Objects.hash(id, gitProjectId, gitType, name, repositoryUrl, owner, description);
+>>>>>>> main
 	}
 
 	@Override
@@ -93,6 +123,9 @@ public class Project {
 			+
 			", gitProjectId="
 			+ gitProjectId
+			+
+			", gitType="
+			+ gitType
 			+
 			", name='"
 			+ repositoryName
