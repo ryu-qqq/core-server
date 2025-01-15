@@ -6,27 +6,25 @@ import com.ryuqq.core.storage.db.git.BranchCommand;
 
 public class Branch {
 	private Long id;
-	private long projectId;
-	private String repositoryName;
-	private String repositoryUrl;
-	private String baseBranch;
+	private final long projectId;
+	private final String branchName;
+	private final String baseBranchName;
 
-	public Branch(String repositoryName, String repositoryUrl, String baseBranch) {
-		this.repositoryName = repositoryName;
-		this.repositoryUrl = repositoryUrl;
-		this.baseBranch = baseBranch;
+	public Branch(long projectId, String branchName, String baseBranchName) {
+		this.projectId = projectId;
+		this.branchName = branchName;
+		this.baseBranchName = baseBranchName;
 	}
 
-	public Branch(Long id, long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
+	public Branch(Long id, long projectId, String branchName, String baseBranchName) {
 		this.id = id;
 		this.projectId = projectId;
-		this.repositoryName = repositoryName;
-		this.repositoryUrl = repositoryUrl;
-		this.baseBranch = baseBranch;
+		this.branchName = branchName;
+		this.baseBranchName = baseBranchName;
 	}
 
-	public BranchCommand toCommand(long projectId) {
-		return new BranchCommand(null, projectId, repositoryName, repositoryUrl, baseBranch);
+	public BranchCommand toCommand() {
+		return new BranchCommand(null, projectId, branchName, baseBranchName);
 	}
 
 	public Long getId() {
@@ -37,62 +35,53 @@ public class Branch {
 		return projectId;
 	}
 
-	public String getRepositoryName() {
-		return repositoryName;
+	public String getBranchName() {
+		return branchName;
 	}
 
-	public String getRepositoryUrl() {
-		return repositoryUrl;
-	}
-
-
-	public String getBaseBranch() {
-		return baseBranch;
+	public String getBaseBranchName() {
+		return baseBranchName;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj
-			== this) return true;
-		if (obj
+	public boolean equals(Object object) {
+		if (this
+			== object) return true;
+		if (object
 			== null
-			|| obj.getClass()
-			!= this.getClass()) return false;
-		var that = (Branch) obj;
-		return this.projectId
-			== that.projectId
-			&&
-			Objects.equals(this.repositoryName, that.repositoryName)
-			&&
-			Objects.equals(this.repositoryUrl, that.repositoryUrl)
-			&&
-			Objects.equals(this.baseBranch, that.baseBranch);
+			|| getClass()
+			!= object.getClass()) return false;
+		Branch branch = (Branch) object;
+		return projectId
+			== branch.projectId
+			&& Objects.equals(id, branch.id)
+			&& Objects.equals(branchName, branch.branchName)
+			&& Objects.equals(baseBranchName, branch.baseBranchName);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(projectId, repositoryName, repositoryUrl, baseBranch);
+		return Objects.hash(id, projectId, branchName, baseBranchName);
 	}
 
 	@Override
 	public String toString() {
-		return "Branch["
+		return "Branch{"
 			+
-			"projectId="
+			"id="
+			+ id
+			+
+			", projectId="
 			+ projectId
-			+ ", "
 			+
-			"repositoryName="
-			+ repositoryName
-			+ ", "
+			", branchName='"
+			+ branchName
+			+ '\''
 			+
-			"repositoryUrl="
-			+ repositoryUrl
-			+ ", "
+			", baseBranchName='"
+			+ baseBranchName
+			+ '\''
 			+
-			"baseBranch="
-			+ baseBranch
-			+ ']';
+			'}';
 	}
-
 }

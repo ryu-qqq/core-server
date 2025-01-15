@@ -15,7 +15,7 @@ public record GitHubMergeEventWebhookRequestDto(
 	PullRequest pullRequest,
 	Repository repository,
 	Sender sender
-) implements GitWebhookRequestDto {
+) {
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public record PullRequest(

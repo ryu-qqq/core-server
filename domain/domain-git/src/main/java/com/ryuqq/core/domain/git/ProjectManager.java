@@ -16,7 +16,7 @@ public class ProjectManager {
 	}
 
 	public long findOrRegisterProject(Project project) {
-		Optional<Project> projectOpt = projectFinder.findByGitProjectId(project.getGitProjectId());
+		Optional<Project> projectOpt = projectFinder.fetchByGitProjectIdAndGitType(project.getGitProjectId());
 
 		if(projectOpt.isPresent()) {
 			Project findProject = projectOpt.get();

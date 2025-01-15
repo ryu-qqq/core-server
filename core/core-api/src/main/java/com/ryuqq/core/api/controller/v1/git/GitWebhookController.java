@@ -8,33 +8,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ryuqq.core.api.controller.v1.git.request.GitHubMergeEventWebhookRequestDto;
+import com.ryuqq.core.api.controller.v1.git.request.GitHubWebhookRequestDto;
 import com.ryuqq.core.api.controller.v1.git.request.GitLabMergeEventWebhookRequestDto;
 import com.ryuqq.core.api.controller.v1.git.response.GitPushEventResponseDto;
-import com.ryuqq.core.api.controller.v1.git.service.GitLabWebhookHandler;
-import com.ryuqq.core.api.controller.v1.git.service.GitWebhookHandler;
-import com.ryuqq.core.api.controller.v1.git.service.GitWebhookHandlerProvider;
+import com.ryuqq.core.api.controller.v1.git.service.GitHubWebhookHandler;
+import com.ryuqq.core.api.controller.v1.git.service.GitHubWebhookHandlerProvider;
 import com.ryuqq.core.api.payload.ApiResponse;
 
 @RequestMapping(BASE_END_POINT_V1)
 @RestController
 public class GitWebhookController {
 
-	private final GitWebhookHandlerProvider gitWebhookHandlerProvider;
+	private final GitHubWebhookHandlerProvider gitHubWebhookHandlerProvider;
 
-	public GitWebhookController(GitWebhookHandlerProvider gitWebhookHandlerProvider) {
-		this.gitWebhookHandlerProvider = gitWebhookHandlerProvider;
-	}
-
-	@PostMapping("/webhook/gitlab")
-	public ResponseEntity<ApiResponse<GitPushEventResponseDto>> handleGitLabWebhook(@RequestBody GitLabMergeEventWebhookRequestDto requestDto) {
-		GitWebhookHandler<GitLabMergeEventWebhookRequestDto> handler = gitWebhookHandlerProvider.getHandler(GitLabMergeEventWebhookRequestDto.class);
-		return ResponseEntity.ok(ApiResponse.success(handler.handle(requestDto)));
+	public GitWebhookController(GitHubWebhookHandlerProvider gitHubWebhookHandlerProvider) {
+		this.gitHubWebhookHandlerProvider = gitHubWebhookHandlerProvider;
 	}
 
 	@PostMapping("/webhook/github")
-	public ResponseEntity<ApiResponse<GitPushEventResponseDto>> handleGitWebHook(@RequestBody GitHubMergeEventWebhookRequestDto requestDto) {
-		GitWebhookHandler<GitHubMergeEventWebhookRequestDto> handler = gitWebhookHandlerProvider.getHandler(GitHubMergeEventWebhookRequestDto.class);
+	public <T extends GitHubWebhookRequestDto> ResponseEntity<ApiResponse<?>> handleGitWebHook(@RequestBody T requestDto) {
+		@SuppressWarnings("unchecked")
+		GitHubWebhookHandler<T, ?> handler = (GitHubWebhookHandler<T, ?>) gitHubWebhookHandlerProvider.getHandler(requestDto.getClass());
 		return ResponseEntity.ok(ApiResponse.success(handler.handle(requestDto)));
 	}
 

@@ -4,54 +4,46 @@ import com.ryuqq.core.storage.db.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
 @Table(name = "BRANCH")
 @Entity
+@IdClass(BranchId.class)
 public class BranchEntity extends BaseEntity {
 
 	@Column(name = "PROJECT_ID", nullable = false)
 	private long projectId;
 
-	@Column(name = "REPOSITORY_NAME", nullable = false, length = 255)
-	private String repositoryName;
+	@Column(name = "BASE_BRANCH", nullable = false, length = 100)
+	private String branchName;
 
-	@Column(name = "REPOSITORY_URL", nullable = false, length = 255)
-	private String repositoryUrl;
-
-	@Column(name = "BASE_BRANCH", nullable = false, length = 150)
-	private String baseBranch;
+	@Column(name = "BASE_BRANCH_NAME", nullable = false, length = 100)
+	private String baseBranchName;
 
 	protected BranchEntity() {}
 
-	public BranchEntity(long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
+	public BranchEntity(long projectId, String branchName, String baseBranchName) {
 		this.projectId = projectId;
-		this.repositoryName = repositoryName;
-		this.repositoryUrl = repositoryUrl;
-		this.baseBranch = baseBranch;
+		this.branchName = branchName;
+		this.baseBranchName = baseBranchName;
 	}
 
-	public BranchEntity(long id, long projectId, String repositoryName, String repositoryUrl, String baseBranch) {
-		this.id = id;
+	public BranchEntity(long id, long projectId, String branchName, String baseBranchName) {
 		this.projectId = projectId;
-		this.repositoryName = repositoryName;
-		this.repositoryUrl = repositoryUrl;
-		this.baseBranch = baseBranch;
+		this.branchName = branchName;
+		this.baseBranchName = baseBranchName;
 	}
 
 	public long getProjectId() {
 		return projectId;
 	}
 
-	public String getRepositoryName() {
-		return repositoryName;
+	public String getBranchName() {
+		return branchName;
 	}
 
-	public String getRepositoryUrl() {
-		return repositoryUrl;
-	}
-
-	public String getBaseBranch() {
-		return baseBranch;
+	public String getBaseBranchName() {
+		return baseBranchName;
 	}
 }

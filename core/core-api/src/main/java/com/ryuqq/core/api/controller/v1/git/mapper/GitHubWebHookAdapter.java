@@ -41,7 +41,7 @@ public class GitHubWebHookAdapter implements GitWebHookAdapter<GitHubMergeEventW
 
 	private Branch toBranchDomain(GitHubMergeEventWebhookRequestDto.Repository repository, String branchName) {
 		return new Branch(
-			repository.name(),
+			0L,
 			repository.htmlUrl(),
 			branchName
 		);
