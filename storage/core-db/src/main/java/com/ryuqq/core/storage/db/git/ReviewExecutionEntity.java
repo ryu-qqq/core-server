@@ -21,25 +21,18 @@ public class ReviewExecutionEntity extends BaseEntity {
 	@Column(name = "CHANGED_FILE_ID", nullable = false)
 	private Long changedFileId;
 
-	@Column(name = "REVIEWER", nullable = false, length = 255)
-	private String reviewer;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "REVIEW_STATUS", nullable = false, length = 20)
 	private ReviewStatus reviewStatus;
-
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TEST_STATUS", nullable = false, length = 20)
 	private TestStatus testStatus;
 
-	@Lob
-	@Column(name = "COMMENTS", nullable = false)
-	private String comments;
+	@Column(name = "RESULT_PATH", nullable = true, length = 255)
+	private String resultPath;
 
-	@Lob
-	@Column(name = "TEST_LOGS", nullable = false)
-	private String testLogs;
+
 
 	protected ReviewExecutionEntity() {}
 
@@ -50,15 +43,14 @@ public class ReviewExecutionEntity extends BaseEntity {
 		this.reviewStatus = reviewStatus;
 	}
 
-	public ReviewExecutionEntity(Long commitId, Long changedFileId, String reviewer, ReviewStatus reviewStatus,
-								 TestStatus testStatus, String comments, String testLogs) {
+	public ReviewExecutionEntity(long id, Long commitId, Long changedFileId, ReviewStatus reviewStatus, TestStatus testStatus,
+								 String resultPath) {
+		this.id = id;
 		this.commitId = commitId;
 		this.changedFileId = changedFileId;
-		this.reviewer = reviewer;
 		this.reviewStatus = reviewStatus;
 		this.testStatus = testStatus;
-		this.comments = comments;
-		this.testLogs = testLogs;
+		this.resultPath = resultPath;
 	}
 
 	public Long getCommitId() {
@@ -69,10 +61,6 @@ public class ReviewExecutionEntity extends BaseEntity {
 		return changedFileId;
 	}
 
-	public String getReviewer() {
-		return reviewer;
-	}
-
 	public ReviewStatus getReviewStatus() {
 		return reviewStatus;
 	}
@@ -81,11 +69,7 @@ public class ReviewExecutionEntity extends BaseEntity {
 		return testStatus;
 	}
 
-	public String getComments() {
-		return comments;
-	}
-
-	public String getTestLogs() {
-		return testLogs;
+	public String getResultPath() {
+		return resultPath;
 	}
 }

@@ -10,7 +10,7 @@ public class ProjectMapper {
 	public Project toDomain(ProjectDto projectDto) {
 		return new Project(
 			projectDto.getId(),
-			projectDto.getGitlabProjectId(),
+			projectDto.getGitProjectId(),
 			projectDto.getGitType(),
 			projectDto.getName(),
 			projectDto.getRepositoryUrl(),

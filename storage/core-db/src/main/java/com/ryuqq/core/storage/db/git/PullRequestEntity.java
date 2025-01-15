@@ -7,7 +7,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
+import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.MergeStatus;
+import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.storage.db.BaseEntity;
 
 @Table(name = "PULL_REQUEST")
@@ -18,7 +20,11 @@ public class PullRequestEntity extends BaseEntity {
 	private long gitPullId;
 
 	@Column(name = "BRANCH_ID", nullable = false)
-	long branchId;
+	private long branchId;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "GIT_TYPE", nullable = false)
+	private GitType gitType;
 
 	@Column(name = "SOURCE_BRANCH", nullable = false, length = 255)
 	private String sourceBranch;
@@ -37,39 +43,56 @@ public class PullRequestEntity extends BaseEntity {
 	@Column(name = "STATUS", nullable = false)
 	private MergeStatus status;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "REVIEW_STATUS", nullable = false)
+	private ReviewStatus reviewStatus;
+
 
 	protected PullRequestEntity() {}
 
-	public PullRequestEntity(long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-							 String description, MergeStatus status) {
+	public PullRequestEntity(long gitPullId, long branchId, GitType gitType, String sourceBranch, String targetBranch, String title,
+							 String description, MergeStatus status, ReviewStatus reviewStatus) {
 		this.gitPullId = gitPullId;
 		this.branchId = branchId;
+		this.gitType = gitType;
 		this.sourceBranch = sourceBranch;
 		this.targetBranch = targetBranch;
 		this.title = title;
 		this.description = description;
 		this.status = status;
+		this.reviewStatus = reviewStatus;
 	}
 
-	public PullRequestEntity(long id, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-							 String description, MergeStatus status) {
+	public PullRequestEntity(long id, long gitPullId, long branchId, GitType gitType, String sourceBranch, String targetBranch, String title,
+							 String description, MergeStatus status, ReviewStatus reviewStatus) {
 		this.id = id;
 		this.gitPullId = gitPullId;
 		this.branchId = branchId;
+		this.gitType = gitType;
 		this.sourceBranch = sourceBranch;
 		this.targetBranch = targetBranch;
 		this.title = title;
 		this.description = description;
 		this.status = status;
+		this.reviewStatus = reviewStatus;
 	}
 
 	public long getGitPullId() {
 		return gitPullId;
 	}
 
+	public GitType getGitType() {
+		return gitType;
+	}
+
+	public ReviewStatus getReviewStatus() {
+		return reviewStatus;
+	}
+
 	public long getBranchId() {
 		return branchId;
 	}
+
 
 	public String getSourceBranch() {
 		return sourceBranch;

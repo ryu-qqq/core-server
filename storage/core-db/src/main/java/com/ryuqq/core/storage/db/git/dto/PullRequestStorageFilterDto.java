@@ -1,17 +1,16 @@
 package com.ryuqq.core.storage.db.git.dto;
 
 import com.ryuqq.core.enums.GitType;
+import com.ryuqq.core.enums.MergeStatus;
+import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.enums.Sort;
-import com.ryuqq.core.enums.TestStatus;
 
-public record ChangedFileRequestStorageFilterDto(
+public record PullRequestStorageFilterDto(
 	GitType gitType,
-	TestStatus testStatus,
+	MergeStatus status,
+	ReviewStatus reviewStatus,
 	Integer pageSize,
 	Integer pageNumber,
 	Long cursorId,
 	Sort sort
-) {
-
-
-}
+) {}

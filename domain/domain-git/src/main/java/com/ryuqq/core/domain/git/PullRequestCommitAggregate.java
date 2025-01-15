@@ -1,6 +1,7 @@
 package com.ryuqq.core.domain.git;
 
 import com.ryuqq.core.enums.ChangeType;
+import com.ryuqq.core.enums.ReviewStatus;
 
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class PullRequestCommitAggregate {
 	}
 
 	public void saveChangedFile(long pullRequestId, long changedFileId, String filePath, ChangeType changeType) {
-		PullRequestChangedFile pullRequestChangedFile = new PullRequestChangedFile(pullRequestId, changedFileId, filePath, changeType);
+		PullRequestChangedFile pullRequestChangedFile = new PullRequestChangedFile(pullRequestId, changedFileId, filePath, changeType, ReviewStatus.PENDING);
 		pullRequestChangedFileRegister.register(pullRequestChangedFile);
 	}
 

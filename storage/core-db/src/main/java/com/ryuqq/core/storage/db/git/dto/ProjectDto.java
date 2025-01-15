@@ -7,7 +7,7 @@ import com.querydsl.core.annotations.QueryProjection;
 public class ProjectDto {
 
 	private long id;
-	private long gitlabProjectId;
+	private long gitProjectId;
 	private GitType gitType;
 	private String name;
 	private String repositoryUrl;
@@ -15,10 +15,10 @@ public class ProjectDto {
 	private String description;
 
 	@QueryProjection
-	public ProjectDto(long id, long gitlabProjectId, GitType gitType, String name, String repositoryUrl, String owner,
+	public ProjectDto(long id, long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner,
 					  String description) {
 		this.id = id;
-		this.gitlabProjectId = gitlabProjectId;
+		this.gitProjectId = gitProjectId;
 		this.gitType = gitType;
 		this.name = name;
 		this.repositoryUrl = repositoryUrl;
@@ -30,8 +30,8 @@ public class ProjectDto {
 		return id;
 	}
 
-	public long getGitlabProjectId() {
-		return gitlabProjectId;
+	public long getGitProjectId() {
+		return gitProjectId;
 	}
 
 	public GitType getGitType() {
