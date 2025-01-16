@@ -2,6 +2,7 @@ package com.ryuqq.core.domain.git;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
@@ -18,24 +19,24 @@ public class PullRequestCommitAggregateProcessor {
 	}
 
 	public void process(long pullRequestId, List<PullRequestCommit> pullRequestCommits, List<Commit> commits) {
-		Map<String, Commit> commitMap = pullRequestCommitHelper.mapCommitsByGitCommitId(commits);
-		Map<String, PullRequestCommit> pullRequestCommitMap = pullRequestCommitHelper.mapPullRequestCommitsByGitCommitId(pullRequestCommits);
 
-		for (String gitCommitId : pullRequestCommitMap.keySet()) {
-			Commit commit = commitMap.get(gitCommitId);
-			if(commit != null) {
-				PullRequestCommit pullRequestCommit = pullRequestCommitMap.get(gitCommitId);
+		commits.forEach(c -> commitAggregate.saveCommit(c.getId(), pullRequestId));
 
-				commitAggregate.saveCommit(commit.getId(), pullRequestId);
+		Map<String, PullRequestCommitHelper.FileCommitPair> fileCommitMap =  pullRequestCommitHelper.mapPullRequestCommitsByGitCommitId(commits);
 
-				Map<String, ChangedFile> changedFileMap = pullRequestCommitHelper.mapChangedFilesByPath(commit.getChangedFiles());
-				ChangedFile changedFile = changedFileMap.get(pullRequestCommit.filePath);
+		pullRequestCommits.forEach(pullRequestCommit -> {
+			String filePath = pullRequestCommit.getFilePath();
+			PullRequestCommitHelper.FileCommitPair fileCommitPair = fileCommitMap.get(filePath);
 
-				commitAggregate.saveChangedFile(pullRequestId, changedFile.getId(), pullRequestCommit.filePath, pullRequestCommit.changeType);
+			if (fileCommitPair != null) {
+				ChangedFile changedFile = fileCommitPair.getChangedFile();
+				Commit commit = fileCommitPair.getCommit();
+
+				commitAggregate.saveChangedFile(pullRequestId, changedFile.getId(), filePath, pullRequestCommit.getChangeType());
 				commitAggregate.saveReviewExecution(commit.getId(), changedFile.getId());
 			}
-
-		}
+		});
 	}
+
 
 }

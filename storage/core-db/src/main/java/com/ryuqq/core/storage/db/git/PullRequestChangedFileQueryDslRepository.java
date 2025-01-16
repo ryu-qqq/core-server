@@ -44,6 +44,8 @@ public class PullRequestChangedFileQueryDslRepository implements PullRequestChan
 			.from(pullRequestChangedFileEntity)
 			.innerJoin(changedFileEntity)
 				.on(pullRequestChangedFileEntity.changedFileId.eq(changedFileEntity.id))
+			.innerJoin(commitEntity)
+				.on(commitEntity.id.eq(changedFileEntity.commitId))
 			.innerJoin(branchEntity)
 				.on(branchEntity.id.eq(commitEntity.branchId))
 			.innerJoin(projectEntity)

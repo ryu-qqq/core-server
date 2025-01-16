@@ -14,7 +14,7 @@ public class JsonUtils {
 	private static ObjectMapper createObjectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
-		objectMapper.registerModule(new com.fasterxml.jackson.datatype.jdk8.Jdk8Module()); // Optional 지원 추가
+		objectMapper.registerModule(new com.fasterxml.jackson.datatype.jdk8.Jdk8Module());
 		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		objectMapper.configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
 		objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);

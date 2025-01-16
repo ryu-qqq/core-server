@@ -26,7 +26,7 @@ public class PullRequestAggregateRoot {
 	public long processPullRequest(PullRequest pullRequest) {
 		Branch branch = branchFinder.fetchByGitProjectIdAndBranchName(pullRequest.gitProjectId, pullRequest.sourceBranch);
 		long pullRequestId = savePullRequest(branch.getId(), pullRequest);
-		List<Commit> commits = findCommits(pullRequest.commits);
+		List<Commit> commits = findCommits(branch.getId(), pullRequest.commits);
 
 		pullRequestCommitAggregateProcessor.process(pullRequestId, pullRequest.commits, commits);
 		return pullRequestId;
@@ -36,12 +36,12 @@ public class PullRequestAggregateRoot {
 		return pullRequestRegister.register(branchId, pullRequest);
 	}
 
-	private List<Commit> findCommits(List<PullRequestCommit> pullRequestCommits) {
-		List<String> gitCommitIds = pullRequestCommits.stream()
-			.map(PullRequestCommit::getGitCommitId)
+	private List<Commit> findCommits(long branchId, List<PullRequestCommit> pullRequestCommits) {
+		List<String> filePaths = pullRequestCommits.stream()
+			.map(PullRequestCommit::getFilePath)
 			.toList();
 
-		return commitFinder.fetchByGitCommitIdIn(gitCommitIds);
+		return commitFinder.fetchByBranchIdAndFilePathIn(branchId, filePaths);
 	}
 
 }

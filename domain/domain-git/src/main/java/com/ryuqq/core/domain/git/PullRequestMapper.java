@@ -18,7 +18,8 @@ public class PullRequestMapper {
 			pullRequestDto.getTitle(),
 			pullRequestDto.getDescription(),
 			pullRequestDto.getStatus(),
-			pullRequestDto.getReviewStatus()
+			pullRequestDto.getReviewStatus(),
+			pullRequestDto.getCreateAt()
 		);
 	}
 }

@@ -18,8 +18,8 @@ public class CommitFinder {
 	}
 
 
-	public List<Commit> fetchByGitCommitIdIn(List<String> gitCommitIds){
-		return commitQueryRepository.fetchByGitCommitIdIn(gitCommitIds).stream()
+	public List<Commit> fetchByBranchIdAndFilePathIn(long branchId, List<String> filePaths){
+		return commitQueryRepository.fetchByBranchIdAndFilePathIn(branchId, filePaths).stream()
 			.map(commitMapper::toDomain)
 			.toList();
 	}

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CommitQueryRepository {
 
-	List<CommitDto> fetchByGitCommitIdIn(List<String> gitCommitIds);
+	List<CommitDto> fetchByBranchIdAndFilePathIn(long branchId, List<String> filePaths);
 }

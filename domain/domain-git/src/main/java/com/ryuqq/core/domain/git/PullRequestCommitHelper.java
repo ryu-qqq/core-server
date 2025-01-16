@@ -10,18 +10,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class PullRequestCommitHelper {
 
-	public Map<String, Commit> mapCommitsByGitCommitId(List<Commit> commits) {
+	public Map<String, FileCommitPair> mapPullRequestCommitsByGitCommitId(List<Commit> commits) {
 		return commits.stream()
-			.collect(Collectors.toMap(Commit::getGitCommitId, Function.identity(), (v1, v2) -> v1));
+			.flatMap(commit -> commit.getChangedFiles().stream()
+				.map(changedFile -> new FileCommitPair(changedFile, commit)))
+			.collect(Collectors.toMap(
+				pair -> pair.getChangedFile().getFilePath(),
+				Function.identity(),
+				(existing, replacement) -> existing // Handle duplicate filePath if needed
+			));
 	}
 
-	public Map<String, PullRequestCommit> mapPullRequestCommitsByGitCommitId(List<PullRequestCommit> pullRequestCommits) {
-		return pullRequestCommits.stream()
-			.collect(Collectors.toMap(PullRequestCommit::getGitCommitId, Function.identity()));
+
+
+
+	protected static class FileCommitPair {
+		private final ChangedFile changedFile;
+		private final Commit commit;
+
+		public FileCommitPair(ChangedFile changedFile, Commit commit) {
+			this.changedFile = changedFile;
+			this.commit = commit;
+		}
+
+		public ChangedFile getChangedFile() {
+			return changedFile;
+		}
+
+		public Commit getCommit() {
+			return commit;
+		}
 	}
 
-	public Map<String, ChangedFile> mapChangedFilesByPath(List<ChangedFile> changedFiles) {
-		return changedFiles.stream()
-			.collect(Collectors.toMap(ChangedFile::getFilePath, Function.identity(), (v1, v2) -> v1));
-	}
 }
