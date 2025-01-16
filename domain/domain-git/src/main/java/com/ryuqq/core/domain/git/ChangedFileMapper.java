@@ -12,8 +12,8 @@ public class ChangedFileMapper {
 		return new ChangedFile(
 			changedFileDto.getId(),
 			changedFileDto.getCommitId(),
-			changedFileDto.getFilePath(),
 			changedFileDto.getClassName(),
+			changedFileDto.getFilePath(),
 			changedFileDto.getChangeTyp()
 		);
 	}

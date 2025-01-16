@@ -5,6 +5,7 @@ import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.storage.db.git.PullRequestCommand;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PullRequest {
@@ -19,6 +20,7 @@ public class PullRequest {
 	String description;
 	MergeStatus status;
 	ReviewStatus reviewStatus;
+	LocalDateTime createAt;
 	List<PullRequestCommit> commits;
 
 	public PullRequest(long gitProjectId, GitType gitType, long gitPullId, String sourceBranch, String targetBranch, String title,
@@ -38,7 +40,7 @@ public class PullRequest {
 	}
 
 	public PullRequest(Long id, GitType gitType, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
-					   String description, MergeStatus status, ReviewStatus reviewStatus) {
+					   String description, MergeStatus status, ReviewStatus reviewStatus, LocalDateTime createAt) {
 		this.id = id;
 		this.gitType = gitType;
 		this.gitPullId = gitPullId;
@@ -49,6 +51,7 @@ public class PullRequest {
 		this.description = description;
 		this.status = status;
 		this.reviewStatus = reviewStatus;
+		this.createAt = createAt;
 
 	}
 
@@ -98,6 +101,10 @@ public class PullRequest {
 
 	public ReviewStatus getReviewStatus() {
 		return reviewStatus;
+	}
+
+	public LocalDateTime getCreateAt() {
+		return createAt;
 	}
 
 	public List<PullRequestCommit> getCommits() {

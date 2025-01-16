@@ -41,7 +41,8 @@ public class PullRequestQueryDslRepository implements PullRequestQueryRepository
 					pullRequestEntity.title.coalesce(""),
 					pullRequestEntity.description.coalesce(""),
 					pullRequestEntity.status,
-					pullRequestEntity.reviewStatus
+					pullRequestEntity.reviewStatus,
+					pullRequestEntity.createAt
 				)
 			)
 			.from(pullRequestEntity)
@@ -78,10 +79,16 @@ public class PullRequestQueryDslRepository implements PullRequestQueryRepository
 	}
 
 	private BooleanExpression gitTypeEq(GitType gitType){
+		if(gitType == null){
+			return null;
+		}
 		return pullRequestEntity.gitType.eq(gitType);
 	}
 
 	private BooleanExpression reviewStatusEq(ReviewStatus reviewStatus){
+		if(reviewStatus == null){
+			return null;
+		}
 		return pullRequestEntity.reviewStatus.eq(reviewStatus);
 	}
 

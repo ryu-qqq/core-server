@@ -6,12 +6,12 @@ import com.ryuqq.core.storage.db.git.PullRequestChangedFileCommand;
 
 public class PullRequestChangedFile {
 
-	Long id;
-	long pullRequestId;
-	long changedFileId;
-	String filePath;
-	ChangeType changeType;
-	ReviewStatus reviewStatus;
+	private Long id;
+	private long pullRequestId;
+	private long changedFileId;
+	private final String filePath;
+	private final ChangeType changeType;
+	private ReviewStatus reviewStatus;
 
 	public PullRequestChangedFile(String filePath, ChangeType changeType) {
 		this.filePath = filePath;
@@ -30,4 +30,27 @@ public class PullRequestChangedFile {
 		return new PullRequestChangedFileCommand(pullRequestId, changedFileId, filePath, changeType, reviewStatus);
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public long getPullRequestId() {
+		return pullRequestId;
+	}
+
+	public long getChangedFileId() {
+		return changedFileId;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public ChangeType getChangeType() {
+		return changeType;
+	}
+
+	public ReviewStatus getReviewStatus() {
+		return reviewStatus;
+	}
 }

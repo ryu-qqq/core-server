@@ -4,6 +4,8 @@ import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.enums.ReviewStatus;
 
+import java.time.LocalDateTime;
+
 public record PullRequestSummaryResponseDto(
 	long id,
 	long gitPullId,
@@ -13,5 +15,6 @@ public record PullRequestSummaryResponseDto(
 	String targetBranch,
 	String title,
 	MergeStatus status,
-	ReviewStatus reviewStatus
+	ReviewStatus reviewStatus,
+	LocalDateTime createAt
 ) {}

@@ -40,7 +40,8 @@ public class PullRequestContextFetchService {
 						c.getTargetBranch(),
 						c.getTitle(),
 						c.getStatus(),
-						c.getReviewStatus()
+						c.getReviewStatus(),
+						c.getCreateAt()
 				)
 			).toList();
 

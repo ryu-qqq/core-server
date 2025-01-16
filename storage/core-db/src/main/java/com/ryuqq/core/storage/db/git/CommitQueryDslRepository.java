@@ -25,12 +25,12 @@ public class CommitQueryDslRepository implements CommitQueryRepository{
 	}
 
 	@Override
-	public List<CommitDto> fetchByGitCommitIdIn(List<String> gitCommitIds) {
+	public List<CommitDto> fetchByBranchIdAndFilePathIn(long branchId, List<String> filePaths) {
 		return queryFactory
 			.from(commitEntity)
 			.innerJoin(changedFileEntity)
-			.on(changedFileEntity.commitId.eq(commitEntity.id))
-			.where(gitCommitIdIn(gitCommitIds))
+				.on(changedFileEntity.commitId.eq(commitEntity.id))
+			.where(branchIdEq(branchId), filePathIn(filePaths))
 			.transform(
 				GroupBy.groupBy(commitEntity.id).list(
 					new QCommitDto(
@@ -55,8 +55,12 @@ public class CommitQueryDslRepository implements CommitQueryRepository{
 			);
 	}
 
-	private BooleanExpression gitCommitIdIn(List<String> gitCommitIds) {
-		return commitEntity.gitCommitId.in(gitCommitIds);
+	private BooleanExpression branchIdEq(long branchId){
+		return commitEntity.branchId.eq(branchId);
+	}
+
+	private BooleanExpression filePathIn(List<String> gitCommitIds) {
+		return changedFileEntity.filePath.in(gitCommitIds);
 	}
 
 }

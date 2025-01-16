@@ -7,6 +7,7 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,11 +30,13 @@ public class TraceIdFilter extends OncePerRequestFilter {
 		MDC.put("traceId", traceId);
 
 		response.setHeader(TRACE_ID_HEADER, traceId);
-		ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
+		RequestWrapper requestWrapper = new RequestWrapper(request);
+		ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(response);
 
 		try {
-			filterChain.doFilter(wrappedRequest, response); // 다음 필터 또는 서블릿 실행
+			filterChain.doFilter(requestWrapper, wrappedResponse);
 		} finally {
+			wrappedResponse.copyBodyToResponse();
 			MDC.clear(); // 요청 처리 후 MDC 정리
 		}
 	}

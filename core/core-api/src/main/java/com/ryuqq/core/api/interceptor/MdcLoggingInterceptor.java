@@ -1,17 +1,22 @@
 package com.ryuqq.core.api.interceptor;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import com.ryuqq.core.api.filter.RequestWrapper;
 import com.ryuqq.core.utils.TraceIdHolder;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +27,8 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
+		IOException {
 		String traceId = TraceIdHolder.getTraceId();
 
 		if (handler instanceof HandlerMethod handlerMethod) {
@@ -33,6 +39,8 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 				+ methodName;
 
 			MDC.put("handler", handlerInfo);
+
+			loggingClientInfo(request);
 
 			Map<String, String> requestParams = getRequestParameters(request);
 			log.info("[TraceId: {}] Handler: {}, Request Params: {}", traceId, handlerInfo, requestParams);
@@ -60,6 +68,42 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 
 	}
 
+	private void loggingClientInfo(HttpServletRequest request) {
+		if (request instanceof RequestWrapper wrapper) {
+			String userAgent = wrapper.getHeader("User-Agent");
+			String clientIp = getClientIp(wrapper);
+			String traceId = TraceIdHolder.getTraceId();
+			String queryString = request.getQueryString();
+			String uri = request.getRequestURI() + (queryString != null ? "?" + queryString : "");
+			log.info("Request: traceId ={}, method={}, uri={}, headers={}, clientIp={}, userAgent={}",
+				traceId,
+				request.getMethod(),
+				uri,
+				getHeaders(wrapper),
+				clientIp,
+				userAgent
+			);
+
+		}
+
+	}
+
+	private String getClientIp(RequestWrapper request) {
+		String clientIp = request.getHeader("X-Forwarded-For");
+		if (clientIp == null || clientIp.isEmpty()) {
+			clientIp = request.getRemoteAddr();
+		}
+		return clientIp;
+	}
+
+	private String getHeaders(RequestWrapper request) {
+		StringBuilder headers = new StringBuilder();
+		request.getHeaderNames().asIterator().forEachRemaining(headerName ->
+			headers.append(headerName).append("=").append(request.getHeader(headerName)).append(", ")
+		);
+		return headers.toString();
+	}
+
 
 
 	/**
@@ -67,10 +111,12 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 	 */
 	private Map<String, String> getRequestParameters(HttpServletRequest request) {
 		Map<String, String> params = new HashMap<>();
-		Enumeration<String> parameterNames = request.getParameterNames();
-		while (parameterNames.hasMoreElements()) {
-			String paramName = parameterNames.nextElement();
-			params.put(paramName, request.getParameter(paramName));
+		if(request instanceof RequestWrapper wrapper) {
+			Enumeration<String> parameterNames = wrapper.getParameterNames();
+			while (parameterNames.hasMoreElements()) {
+				String paramName = parameterNames.nextElement();
+				params.put(paramName, wrapper.getParameter(paramName));
+			}
 		}
 		return params;
 	}
@@ -78,13 +124,34 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 	/**
 	 * 요청 본문(Request Body)을 문자열로 반환
 	 */
-	private String getRequestBody(HttpServletRequest request) {
-		if(request instanceof ContentCachingRequestWrapper) {
-			ContentCachingRequestWrapper wrapper = (ContentCachingRequestWrapper) request;
-			byte[] content = wrapper.getContentAsByteArray();
-			return new String(content, StandardCharsets.UTF_8); // UTF-8로 변환
+	private String getRequestBody(HttpServletRequest request) throws IOException {
+		if(request instanceof RequestWrapper wrapper) {
+			String contentType = wrapper.getContentType();
+			boolean visible = isVisible(MediaType.valueOf(contentType == null ? "application/json" : contentType));
+			if (visible) {
+				byte[] content = wrapper.getContentAsByteArray();
+				if (content.length > 0) {
+					return new String(content, wrapper.getCharacterEncoding() != null ? wrapper.getCharacterEncoding() : StandardCharsets.UTF_8.name());
+				}
+			}
+			return "";
 		}
 		return "";
 	}
+
+	private boolean isVisible(MediaType mediaType) {
+		final List<MediaType> VISIBLE_TYPES = Arrays.asList(
+			MediaType.valueOf("text/*"),
+			MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON,
+			MediaType.APPLICATION_XML,
+			MediaType.valueOf("application/*+json"),
+			MediaType.valueOf("application/*+xml"),
+			MediaType.MULTIPART_FORM_DATA
+		);
+
+		return VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+	}
+
 
 }
