@@ -3,6 +3,7 @@ package com.ryuqq.core.api.controller.v1.git.resolver;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.ryuqq.core.api.controller.v1.git.request.GitHubWebhookRequestDto;
+import com.ryuqq.core.api.filter.RequestWrapper;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -31,13 +32,17 @@ public class GitHubEventResolver implements HandlerMethodArgumentResolver {
 			throw new IllegalArgumentException("Missing required header: X-GitHub-Event");
 		}
 
-
 		HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 		if (request == null) {
 			throw new IllegalStateException("Unable to retrieve HttpServletRequest");
 		}
 
-		String payload = request.getReader().lines().reduce("", String::concat);
+		String payload;
+		if (request instanceof RequestWrapper wrapper) {
+			payload = new String(wrapper.getContentAsByteArray(), request.getCharacterEncoding());
+		} else {
+			payload = request.getReader().lines().reduce("", String::concat);
+		}
 
 		return GitHubEventFactory.getEventInfo(eventType, payload);
 	}
