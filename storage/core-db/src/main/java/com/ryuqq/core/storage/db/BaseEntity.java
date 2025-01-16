@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
+import com.ryuqq.core.enums.ReviewStatus;
+
 @MappedSuperclass
 public abstract class BaseEntity {
 

@@ -114,4 +114,9 @@ public class PullRequestEntity extends BaseEntity {
 		return status;
 	}
 
+
+	public void updateReviewStatus(ReviewStatus reviewStatus) {
+		this.reviewStatus = reviewStatus;
+	}
+
 }
