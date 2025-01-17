@@ -1,14 +1,14 @@
 package com.ryuqq.core.api.controller.v1.git.mapper;
 
-import com.ryuqq.core.domain.git.ChangedFile;
-import com.ryuqq.core.domain.git.ChangedFileFactory;
-import com.ryuqq.core.enums.ChangeType;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.domain.git.ChangedFile;
+import com.ryuqq.core.domain.git.ChangedFileFactory;
+import com.ryuqq.core.enums.ChangeType;
 
 @Component
 public class GitChangedFileCreateAdapter {

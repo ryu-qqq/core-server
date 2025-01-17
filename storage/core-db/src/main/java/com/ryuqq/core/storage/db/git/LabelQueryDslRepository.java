@@ -1,17 +1,16 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.LabelDto;
-import com.ryuqq.core.storage.db.git.dto.QLabelDto;
+import static com.ryuqq.core.storage.db.git.QLabelEntity.labelEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QLabelEntity.labelEntity;
+import com.ryuqq.core.storage.db.git.dto.LabelDto;
+import com.ryuqq.core.storage.db.git.dto.QLabelDto;
 
 @Repository
 public class LabelQueryDslRepository implements LabelQueryRepository {

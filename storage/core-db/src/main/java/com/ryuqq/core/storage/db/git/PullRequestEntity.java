@@ -1,16 +1,16 @@
 package com.ryuqq.core.storage.db.git;
 
+import com.ryuqq.core.enums.GitType;
+import com.ryuqq.core.enums.MergeStatus;
+import com.ryuqq.core.enums.ReviewStatus;
+import com.ryuqq.core.storage.db.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-
-import com.ryuqq.core.enums.GitType;
-import com.ryuqq.core.enums.MergeStatus;
-import com.ryuqq.core.enums.ReviewStatus;
-import com.ryuqq.core.storage.db.BaseEntity;
 
 @Table(name = "PULL_REQUEST")
 @Entity

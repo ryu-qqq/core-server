@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.git;
 
-import com.ryuqq.core.storage.db.git.dto.PullRequestDto;
-
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.dto.PullRequestDto;
 
 @Component
 public class PullRequestMapper {

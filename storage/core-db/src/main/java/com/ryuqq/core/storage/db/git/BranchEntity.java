@@ -4,7 +4,6 @@ import com.ryuqq.core.storage.db.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
 @Table(name = "BRANCH")

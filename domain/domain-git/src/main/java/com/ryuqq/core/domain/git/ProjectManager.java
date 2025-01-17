@@ -1,10 +1,9 @@
 package com.ryuqq.core.domain.git;
 
-import com.ryuqq.core.enums.GitType;
-
-import java.util.Optional;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.enums.GitType;
 
 @Component
 public class ProjectManager {
@@ -19,7 +18,7 @@ public class ProjectManager {
 
 	public long findOrRegisterProject(Project project) {
 		return projectFinder.fetchByGitProjectIdAndGitType(project.getGitProjectId(), GitType.GIT_HUB).getId();
-		
+
 	}
 
 

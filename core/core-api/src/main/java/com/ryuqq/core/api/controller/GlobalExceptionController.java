@@ -1,6 +1,7 @@
 package com.ryuqq.core.api.controller;
 
 
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -19,14 +20,10 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import com.ryuqq.core.api.payload.ApiResponse;
 import com.ryuqq.core.api.payload.ErrorMessage;
-import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.utils.TraceIdHolder;
 
 import jakarta.validation.ConstraintViolationException;
-
-import static com.ryuqq.core.enums.LogLevel.ERROR;
-import static com.ryuqq.core.enums.LogLevel.WARN;
 
 @RestControllerAdvice
 @RestController

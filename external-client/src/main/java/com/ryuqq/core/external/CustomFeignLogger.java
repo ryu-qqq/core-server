@@ -1,20 +1,20 @@
 package com.ryuqq.core.external;
 
-import com.ryuqq.core.logging.ExternalRequestLogEntry;
-import com.ryuqq.core.utils.TraceIdHolder;
-
-import org.slf4j.LoggerFactory;
-
-import feign.Logger;
-import feign.Request;
-import feign.Response;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
+
+import org.slf4j.LoggerFactory;
+
+import com.ryuqq.core.logging.ExternalRequestLogEntry;
+import com.ryuqq.core.utils.TraceIdHolder;
+
+import feign.Logger;
+import feign.Request;
+import feign.Response;
 
 public class CustomFeignLogger extends Logger {
 

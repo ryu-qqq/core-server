@@ -1,9 +1,9 @@
 package com.ryuqq.core.domain.git;
 
+import org.springframework.stereotype.Component;
+
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.ReviewStatus;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class PullRequestCommitAggregate {

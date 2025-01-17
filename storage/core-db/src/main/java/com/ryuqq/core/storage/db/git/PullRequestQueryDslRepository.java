@@ -1,11 +1,8 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.enums.GitType;
-import com.ryuqq.core.enums.ReviewStatus;
-import com.ryuqq.core.enums.Sort;
-import com.ryuqq.core.storage.db.git.dto.PullRequestDto;
-import com.ryuqq.core.storage.db.git.dto.PullRequestStorageFilterDto;
-import com.ryuqq.core.storage.db.git.dto.QPullRequestDto;
+import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
+import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
+import static com.ryuqq.core.storage.db.git.QPullRequestEntity.pullRequestEntity;
 
 import java.util.List;
 
@@ -14,9 +11,12 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
-import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
-import static com.ryuqq.core.storage.db.git.QPullRequestEntity.pullRequestEntity;
+import com.ryuqq.core.enums.GitType;
+import com.ryuqq.core.enums.ReviewStatus;
+import com.ryuqq.core.enums.Sort;
+import com.ryuqq.core.storage.db.git.dto.PullRequestDto;
+import com.ryuqq.core.storage.db.git.dto.PullRequestStorageFilterDto;
+import com.ryuqq.core.storage.db.git.dto.QPullRequestDto;
 
 @Repository
 public class PullRequestQueryDslRepository implements PullRequestQueryRepository {

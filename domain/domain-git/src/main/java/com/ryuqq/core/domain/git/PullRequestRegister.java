@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.git;
 
-import com.ryuqq.core.storage.db.git.PullRequestPersistenceRepository;
-
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.PullRequestPersistenceRepository;
 
 @Component
 public class PullRequestRegister {

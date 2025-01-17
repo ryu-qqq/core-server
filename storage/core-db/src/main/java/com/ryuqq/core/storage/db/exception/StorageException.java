@@ -1,8 +1,8 @@
 package com.ryuqq.core.storage.db.exception;
 
-import com.ryuqq.core.enums.ErrorType;
-
 import org.springframework.validation.BindingResult;
+
+import com.ryuqq.core.enums.ErrorType;
 
 public class StorageException extends RuntimeException {
 

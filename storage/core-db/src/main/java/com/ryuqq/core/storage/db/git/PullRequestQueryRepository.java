@@ -1,9 +1,9 @@
 package com.ryuqq.core.storage.db.git;
 
+import java.util.List;
+
 import com.ryuqq.core.storage.db.git.dto.PullRequestDto;
 import com.ryuqq.core.storage.db.git.dto.PullRequestStorageFilterDto;
-
-import java.util.List;
 
 public interface PullRequestQueryRepository {
 

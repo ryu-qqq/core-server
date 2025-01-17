@@ -1,9 +1,9 @@
 package com.ryuqq.core.api.controller.v1.git.request;
 
-import com.ryuqq.core.enums.MergeStatus;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.ryuqq.core.enums.MergeStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record GitHubPullRequestEventDto(

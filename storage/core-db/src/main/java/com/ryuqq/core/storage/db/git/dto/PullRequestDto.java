@@ -1,12 +1,12 @@
 package com.ryuqq.core.storage.db.git.dto;
 
-import com.ryuqq.core.enums.GitType;
-import com.ryuqq.core.enums.MergeStatus;
-import com.ryuqq.core.enums.ReviewStatus;
-
 import java.time.LocalDateTime;
 
 import com.querydsl.core.annotations.QueryProjection;
+
+import com.ryuqq.core.enums.GitType;
+import com.ryuqq.core.enums.MergeStatus;
+import com.ryuqq.core.enums.ReviewStatus;
 
 public class PullRequestDto {
 	private long id;

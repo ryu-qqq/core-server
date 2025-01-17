@@ -25,7 +25,6 @@ public class CoreDataSourceConfig {
 		return new HikariConfig();
 	}
 
-
 	@Bean
 	public HikariDataSource coreDataSource(@Qualifier("coreHikariConfig") HikariConfig config) {
 		return new HikariDataSource(config);
@@ -34,9 +33,7 @@ public class CoreDataSourceConfig {
 	@Bean
 	public DataSource dataSource(DataSource dataSource) {
 		SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
-
 		loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
-
 		return ProxyDataSourceBuilder.create(dataSource)
 			.name("PROXY-DS")
 			.listener(loggingListener)

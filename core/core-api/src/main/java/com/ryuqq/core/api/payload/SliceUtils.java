@@ -1,9 +1,9 @@
 package com.ryuqq.core.api.payload;
 
-import com.ryuqq.core.enums.Sort;
-
 import java.util.Collections;
 import java.util.List;
+
+import com.ryuqq.core.enums.Sort;
 
 public class SliceUtils {
 
