@@ -1,12 +1,12 @@
 package com.ryuqq.core.api.controller.v1.git.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.api.controller.v1.git.response.PullRequestUpdatedResponseDto;
 import com.ryuqq.core.domain.git.PullRequestUpdater;
 import com.ryuqq.core.enums.ReviewStatus;
 
-import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PullRequestCommandService {

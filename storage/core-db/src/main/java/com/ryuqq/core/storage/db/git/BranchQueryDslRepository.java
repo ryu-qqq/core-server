@@ -1,7 +1,7 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.BranchDto;
-import com.ryuqq.core.storage.db.git.dto.QBranchDto;
+import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
+import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
 
 import java.util.Optional;
 
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
-import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
+import com.ryuqq.core.storage.db.git.dto.BranchDto;
+import com.ryuqq.core.storage.db.git.dto.QBranchDto;
 
 @Repository
 public class BranchQueryDslRepository implements BranchQueryRepository{

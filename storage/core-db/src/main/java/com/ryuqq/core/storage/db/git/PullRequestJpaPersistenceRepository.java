@@ -1,9 +1,9 @@
 package com.ryuqq.core.storage.db.git;
 
+import org.springframework.stereotype.Repository;
+
 import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.storage.db.exception.DataNotFoundException;
-
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class PullRequestJpaPersistenceRepository implements PullRequestPersistenceRepository{

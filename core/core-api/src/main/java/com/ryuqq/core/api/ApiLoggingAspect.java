@@ -7,8 +7,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
-import com.ryuqq.core.logging.SimpleLogEntry;
 import com.ryuqq.core.logging.LogEntryFactory;
+import com.ryuqq.core.logging.SimpleLogEntry;
 
 @Aspect
 @Component

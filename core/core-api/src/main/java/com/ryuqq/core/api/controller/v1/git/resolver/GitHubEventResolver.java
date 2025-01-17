@@ -1,16 +1,16 @@
 package com.ryuqq.core.api.controller.v1.git.resolver;
 
-import jakarta.servlet.http.HttpServletRequest;
-
-import com.ryuqq.core.api.controller.v1.git.request.GitHubWebhookRequestDto;
-import com.ryuqq.core.api.filter.RequestWrapper;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import com.ryuqq.core.api.controller.v1.git.request.GitHubWebhookRequestDto;
+import com.ryuqq.core.api.filter.RequestWrapper;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class GitHubEventResolver implements HandlerMethodArgumentResolver {

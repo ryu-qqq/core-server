@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.exception;
 
-import com.ryuqq.core.enums.ErrorType;
-
 import org.springframework.validation.BindingResult;
+
+import com.ryuqq.core.enums.ErrorType;
 
 public class DomainException extends RuntimeException {
 

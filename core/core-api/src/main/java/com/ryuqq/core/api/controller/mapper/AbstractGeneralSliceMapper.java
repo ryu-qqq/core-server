@@ -1,11 +1,11 @@
 package com.ryuqq.core.api.controller.mapper;
 
-import com.ryuqq.core.api.payload.Slice;
-import com.ryuqq.core.api.payload.SliceUtils;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.api.payload.Slice;
+import com.ryuqq.core.api.payload.SliceUtils;
 
 @Component
 public abstract class AbstractGeneralSliceMapper <T> implements GeneralSliceMapper<T> {

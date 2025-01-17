@@ -1,11 +1,11 @@
 package com.ryuqq.core.api.controller.v1.git.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.ryuqq.core.api.controller.v1.git.request.GitHubPullRequestEventDto;
 import com.ryuqq.core.domain.git.PullRequest;
 import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.ReviewStatus;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class GitPullRequestCreateAdapter {

@@ -1,13 +1,13 @@
 package com.ryuqq.core.api.controller.v1.git.service;
 
+import org.springframework.stereotype.Component;
+
 import com.ryuqq.core.api.controller.v1.git.mapper.GitPullRequestCreateAdapter;
 import com.ryuqq.core.api.controller.v1.git.request.GitHubPullRequestEventDto;
 import com.ryuqq.core.api.controller.v1.git.request.GitHubWebhookRequestDto;
 import com.ryuqq.core.api.controller.v1.git.response.GitHubPullRequestEventResponseDto;
 import com.ryuqq.core.domain.git.PullRequest;
 import com.ryuqq.core.domain.git.PullRequestAggregateRoot;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class GitHubPullRequestEventHandler implements GitHubWebhookHandler<GitHubPullRequestEventDto, GitHubPullRequestEventResponseDto>{

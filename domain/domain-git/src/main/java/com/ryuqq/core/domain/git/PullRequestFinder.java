@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain.git;
 
-import com.ryuqq.core.storage.db.git.PullRequestQueryRepository;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.PullRequestQueryRepository;
 
 @Component
 public class PullRequestFinder {

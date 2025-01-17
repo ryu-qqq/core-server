@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.git;
 
-import com.ryuqq.core.storage.db.git.dto.ChangedFileDto;
-
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.storage.db.git.dto.ChangedFileDto;
 
 @Component
 public class ChangedFileMapper {

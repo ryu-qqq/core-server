@@ -1,8 +1,7 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.CommitDto;
-import com.ryuqq.core.storage.db.git.dto.QChangedFileDto;
-import com.ryuqq.core.storage.db.git.dto.QCommitDto;
+import static com.ryuqq.core.storage.db.git.QChangedFileEntity.changedFileEntity;
+import static com.ryuqq.core.storage.db.git.QCommitEntity.commitEntity;
 
 import java.util.List;
 
@@ -12,8 +11,9 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QChangedFileEntity.changedFileEntity;
-import static com.ryuqq.core.storage.db.git.QCommitEntity.commitEntity;
+import com.ryuqq.core.storage.db.git.dto.CommitDto;
+import com.ryuqq.core.storage.db.git.dto.QChangedFileDto;
+import com.ryuqq.core.storage.db.git.dto.QCommitDto;
 
 @Repository
 public class CommitQueryDslRepository implements CommitQueryRepository{

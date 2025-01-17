@@ -1,12 +1,12 @@
 package com.ryuqq.core.api.controller.v1.git.mapper;
 
-import com.ryuqq.core.api.controller.mapper.AbstractGeneralSliceMapper;
-import com.ryuqq.core.api.controller.v1.git.response.PullRequestSummaryResponseDto;
-import com.ryuqq.core.api.payload.Slice;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.api.controller.mapper.AbstractGeneralSliceMapper;
+import com.ryuqq.core.api.controller.v1.git.response.PullRequestSummaryResponseDto;
+import com.ryuqq.core.api.payload.Slice;
 
 @Component
 public class PullRequestSummarySliceMapper extends AbstractGeneralSliceMapper<PullRequestSummaryResponseDto> {

@@ -1,11 +1,11 @@
 package com.ryuqq.core.external;
 
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
+import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.utils.TraceIdHolder;
 
-import org.springframework.stereotype.Component;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 
 @Component
 public class FeignRequestLoggingInterceptor implements RequestInterceptor {

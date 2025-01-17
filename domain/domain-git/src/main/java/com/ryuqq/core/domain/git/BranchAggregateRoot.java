@@ -1,12 +1,12 @@
 package com.ryuqq.core.domain.git;
 
-import jakarta.transaction.Transactional;
-
-import com.ryuqq.core.enums.GitType;
-
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.enums.GitType;
+
+import jakarta.transaction.Transactional;
 
 @Component
 public class BranchAggregateRoot {

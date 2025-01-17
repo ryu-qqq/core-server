@@ -1,13 +1,13 @@
 package com.ryuqq.core.external.git;
 
-import com.ryuqq.core.external.GlobalFeignConfig;
-import com.ryuqq.core.external.git.response.GitHubCommitResponse;
-
 import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.ryuqq.core.external.GlobalFeignConfig;
+import com.ryuqq.core.external.git.response.GitHubCommitResponse;
 
 @FeignClient(
 	name = "githubApiClient",

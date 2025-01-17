@@ -1,9 +1,9 @@
 package com.ryuqq.core.storage.db.git.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
+
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.ReviewStatus;
-
-import com.querydsl.core.annotations.QueryProjection;
 
 public class PullRequestChangedFileDto {
 

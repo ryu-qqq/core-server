@@ -1,12 +1,12 @@
 package com.ryuqq.core.domain.git;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.enums.ReviewStatus;
 import com.ryuqq.core.storage.db.git.PullRequestCommand;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class PullRequest {
 	Long id;

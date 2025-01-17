@@ -1,5 +1,7 @@
 package com.ryuqq.core.api.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -7,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ryuqq.core.api.controller.v1.git.resolver.GitHubEventResolver;
 import com.ryuqq.core.api.interceptor.MdcLoggingInterceptor;
-
-import java.util.List;
 
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {

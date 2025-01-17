@@ -1,10 +1,10 @@
 package com.ryuqq.core.external.git;
 
-import com.ryuqq.core.external.git.response.GitHubCommitResponse;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.external.git.response.GitHubCommitResponse;
 
 @Component
 public class GitHubDataFetcher {

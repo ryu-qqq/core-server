@@ -1,9 +1,8 @@
 package com.ryuqq.core.storage.db.git.dto;
 
-import com.ryuqq.core.enums.ChangeType;
-
-
 import com.querydsl.core.annotations.QueryProjection;
+
+import com.ryuqq.core.enums.ChangeType;
 
 public class ChangedFileDto {
 

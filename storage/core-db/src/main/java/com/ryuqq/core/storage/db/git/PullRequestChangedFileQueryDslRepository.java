@@ -1,7 +1,10 @@
 package com.ryuqq.core.storage.db.git;
 
-import com.ryuqq.core.storage.db.git.dto.PullRequestChangedFileDto;
-import com.ryuqq.core.storage.db.git.dto.QPullRequestChangedFileDto;
+import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
+import static com.ryuqq.core.storage.db.git.QChangedFileEntity.changedFileEntity;
+import static com.ryuqq.core.storage.db.git.QCommitEntity.commitEntity;
+import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
+import static com.ryuqq.core.storage.db.git.QPullRequestChangedFileEntity.pullRequestChangedFileEntity;
 
 import java.util.List;
 
@@ -10,11 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.ryuqq.core.storage.db.git.QBranchEntity.branchEntity;
-import static com.ryuqq.core.storage.db.git.QChangedFileEntity.changedFileEntity;
-import static com.ryuqq.core.storage.db.git.QCommitEntity.commitEntity;
-import static com.ryuqq.core.storage.db.git.QProjectEntity.projectEntity;
-import static com.ryuqq.core.storage.db.git.QPullRequestChangedFileEntity.pullRequestChangedFileEntity;
+import com.ryuqq.core.storage.db.git.dto.PullRequestChangedFileDto;
+import com.ryuqq.core.storage.db.git.dto.QPullRequestChangedFileDto;
 
 @Repository
 public class PullRequestChangedFileQueryDslRepository implements PullRequestChangedFileQueryRepository {

@@ -17,7 +17,7 @@ public class TestCoreDataSourceConfig {
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDatabaseBuilder()
-			.setType(EmbeddedDatabaseType.H2) // 테스트용 H2 메모리 데이터베이스 사용
+			.setType(EmbeddedDatabaseType.H2)
 			.build();
 	}
 

@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain.git;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 @Component
 public class PullRequestAggregateRoot {
