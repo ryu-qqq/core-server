@@ -1,7 +1,6 @@
 dependencies {
 	api project(':core:core-enum')
 	api project(':storage:core-db')
-	api project(':storage:core-cache')
 
 	api project(":support:logging")
 	api("jakarta.transaction:jakarta.transaction-api")

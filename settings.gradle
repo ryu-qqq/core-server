@@ -20,7 +20,7 @@ include 'domain:domain-git'
 
 //storage
 include 'storage:core-db'
-//include 'storage:core-cache'
+include 'storage:core-cache'
 include 'storage:core-index'
 
 // support
