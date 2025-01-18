@@ -15,4 +15,3 @@ public class CoreException extends RuntimeException {
 		return errorType;
 	}
 }
-
