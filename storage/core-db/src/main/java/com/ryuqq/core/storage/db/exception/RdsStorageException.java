@@ -1,8 +1,7 @@
 package com.ryuqq.core.storage.db.exception;
 
-import com.ryuqq.core.enums.ErrorType;
 
-import java.util.Map;
+import com.ryuqq.core.enums.ErrorType;
 
 public class RdsStorageException extends RuntimeException {
 
