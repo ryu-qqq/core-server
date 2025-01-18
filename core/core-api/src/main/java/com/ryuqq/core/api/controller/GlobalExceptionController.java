@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 @RestController
@@ -83,5 +84,16 @@ public class GlobalExceptionController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(errorMessage));
 	}
 
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<ApiResponse<?>> handleNoHandlerFoundException(NoHandlerFoundException ex) {
+		String traceId = TraceIdHolder.getTraceId();
 
+		log.warn("NoHandlerFoundException: TraceId={} HTTP Method={} URL={}", traceId, ex.getHttpMethod(), ex.getRequestURL());
+
+		ErrorMessage errorMessage = new ErrorMessage(
+			ErrorType.NOT_FOUND_ERROR,
+			String.format("No handler found for %s %s", ex.getHttpMethod(), ex.getRequestURL())
+		);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(errorMessage));
+	}
 }
