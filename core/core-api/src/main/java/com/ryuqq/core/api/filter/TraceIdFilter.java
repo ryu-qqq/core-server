@@ -36,7 +36,7 @@ public class TraceIdFilter extends OncePerRequestFilter {
 			filterChain.doFilter(requestWrapper, wrappedResponse);
 		} finally {
 			wrappedResponse.copyBodyToResponse();
-			MDC.clear(); // 요청 처리 후 MDC 정리
+			MDC.clear();
 		}
 	}
 }

@@ -24,19 +24,23 @@ public class BranchQueryDslRepository implements BranchQueryRepository{
 
 	@Override
 	public Optional<BranchDto> fetchByProjectIdAndBranchName(long projectId, String branchName) {
-		return Optional.empty();
-		// return Optional.ofNullable(
-		// 					queryFactory.select(
-		// 							new QBranchDto()
-		// 						)
-		// 						.from(branchEntity)
-		// 						.innerJoin(projectEntity)
-		// 							.on(projectEntity.id.eq(branchEntity.projectId))
-		// 						.where(
-		// 							gitProjectIdEq(gitProjectId), branchNameEq(branchName)
-		// 						)
-		// 						.fetchOne()
-		// 				);
+		return Optional.ofNullable(
+							queryFactory.select(
+									new QBranchDto(
+										branchEntity.id,
+										branchEntity.projectId,
+										branchEntity.branchName,
+										branchEntity.baseBranchName
+									)
+								)
+								.from(branchEntity)
+								.innerJoin(projectEntity)
+									.on(projectEntity.id.eq(branchEntity.projectId))
+								.where(
+									projectIdEq(projectId), branchNameEq(branchName)
+								)
+								.fetchOne()
+						);
 	}
 
 
@@ -64,6 +68,10 @@ public class BranchQueryDslRepository implements BranchQueryRepository{
 
 	private BooleanExpression gitProjectIdEq(long gitProjectId) {
 		return projectEntity.gitProjectId.eq(gitProjectId);
+	}
+
+	private BooleanExpression projectIdEq(long projectId) {
+		return branchEntity.projectId.eq(projectId);
 	}
 
 	private BooleanExpression branchNameEq(String branchName) {

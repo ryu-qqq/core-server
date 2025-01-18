@@ -15,31 +15,10 @@ public class PullRequestCommitHelper {
 			.flatMap(commit -> commit.getChangedFiles().stream()
 				.map(changedFile -> new FileCommitPair(changedFile, commit)))
 			.collect(Collectors.toMap(
-				pair -> pair.getChangedFile().getFilePath(),
+				pair -> pair.getFilePath(),
 				Function.identity(),
 				(existing, replacement) -> existing // Handle duplicate filePath if needed
 			));
-	}
-
-
-
-
-	protected static class FileCommitPair {
-		private final ChangedFile changedFile;
-		private final Commit commit;
-
-		public FileCommitPair(ChangedFile changedFile, Commit commit) {
-			this.changedFile = changedFile;
-			this.commit = commit;
-		}
-
-		public ChangedFile getChangedFile() {
-			return changedFile;
-		}
-
-		public Commit getCommit() {
-			return commit;
-		}
 	}
 
 }

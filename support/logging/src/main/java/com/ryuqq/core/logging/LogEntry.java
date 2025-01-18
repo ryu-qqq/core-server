@@ -4,4 +4,6 @@ public interface LogEntry {
 
 	String getTraceId();
 	String getLayer();
+	String toString();
+
 }

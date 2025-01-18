@@ -27,8 +27,4 @@ public class LabelValidator {
 		return new LabelValidationResult(invalidLabels);
 	}
 
-
-
-
-
 }

@@ -2,10 +2,12 @@ bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
-    implementation project(":core:core-batch")
+	implementation project(":core:core-batch")
     implementation project(":core:core-enum")
+
     implementation project(":support:logging")
 	implementation project(":support:utils")
+	implementation project(":support:alert")
 
 	implementation project(":domain:domain-git")
 	implementation project(":external-client:git-hub")
