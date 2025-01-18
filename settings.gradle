@@ -17,6 +17,7 @@ include 'core:core-enum'
 
 //domain
 include 'domain:domain-git'
+include 'domain:domain-product'
 
 //storage
 include 'storage:core-db'

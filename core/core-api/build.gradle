@@ -10,6 +10,9 @@ dependencies {
 	implementation project(":support:alert")
 
 	implementation project(":domain:domain-git")
+	implementation project(":domain:domain-product")
+
+
 	implementation project(":external-client:git-hub")
 
 
