@@ -1,6 +1,5 @@
 package com.ryuqq.core.logging;
 
-import com.ryuqq.core.utils.JsonUtils;
 
 /**
  * 외부 요청을 로깅하기 위한 LogEntry

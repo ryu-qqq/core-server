@@ -1,11 +1,11 @@
 package com.ryuqq.core.storage.db;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.ryuqq.core.alert.AbstractSlackNotificationService;
 import com.ryuqq.core.alert.AlertMessage;
 import com.ryuqq.core.logging.AopLogEntry;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 @Service
 public class RdsErrorSlackNotificationService extends AbstractSlackNotificationService<AopLogEntry> {
