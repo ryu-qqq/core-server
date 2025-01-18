@@ -1,3 +1,5 @@
+bootJar.enabled = true
+jar.enabled = false
 
 dependencies {
     implementation project(":core:core-batch")
