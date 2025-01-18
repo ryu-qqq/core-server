@@ -17,8 +17,7 @@ sudo docker pull rsw2/set-of-core-server:latest
 # 도커 run (여기서 환경 변수를 통해 프로파일 지정)
 docker run -d -p 80:8088 \
     -e SPRING_PROFILES_ACTIVE=prod \
-    -e STORAGE_DATASOURCE_CORE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
-    -e STORAGE_DATASOURCE_CORE_JDBC_URL=jdbc:mysql://hanni.cfacertspqbw.ap-northeast-2.rds.amazonaws.com:3307/hanni \
+    -e STORAGE_DATASOURCE_CORE_JDBC_URL=jdbc:mysql://hanni.cfacertspqbw.ap-northeast-2.rds.amazonaws.com:3306/hanni \
     -e STORAGE_DATASOURCE_CORE_USERNAME=admin \
     -e STORAGE_DATASOURCE_CORE_PASSWORD=Tpxhvm1234!! \
     -v /var/log/spring:/var/log/spring \
