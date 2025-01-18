@@ -5,6 +5,7 @@ spring:
     import:
       - logging.yml
       - db-core.yml
+      - slack.yml
 #      - cache-core.yml
 #      - batch-core.yml
 #      - external-core.yml

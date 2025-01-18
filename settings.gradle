@@ -26,6 +26,7 @@ include 'storage:core-index'
 // support
 include 'support:logging'
 include 'support:utils'
+include 'support:alert'
 
 //external
 include 'external-client:git-hub'

@@ -46,7 +46,7 @@ public class CustomFeignLogger extends Logger {
 			0
 		);
 
-		log.info("Feign Request Log: {}", logEntry.toJson());
+		log.info("Feign Request Log: {}", logEntry.toString());
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class CustomFeignLogger extends Logger {
 			elapsedTime
 		);
 
-		log.info("Feign Response Log: {}", logEntry.toJson());
+		log.info("Feign Response Log: {}", logEntry.toString());
 
 		return response.toBuilder().body(responseBody.getBytes(StandardCharsets.UTF_8)).build();
 	}

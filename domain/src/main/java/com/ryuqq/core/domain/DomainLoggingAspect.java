@@ -1,62 +1,81 @@
 package com.ryuqq.core.domain;
 
+import com.ryuqq.core.domain.exception.DomainException;
+import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.LogEntryFactory;
+import com.ryuqq.core.storage.db.exception.RdsStorageException;
+import com.ryuqq.core.utils.AopUtils;
+import com.ryuqq.core.utils.TraceIdHolder;
+
+import java.util.Map;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
-import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.logging.SimpleLogEntry;
 
 @Aspect
 @Component
-public class DomainLoggingAspect extends AbstractLayerLoggingAspect  {
+public class DomainLoggingAspect  {
 
+	private final DomainErrorSlackNotificationService slackNotificationService;
+
+	private static final Logger log = LoggerFactory.getLogger(DomainLoggingAspect.class);
 	private static final String DOMAIN_LAYER = "DOMAIN";
 
-	@Pointcut("execution(* com.ryuqq.core.domain..*(..))")
-	public void domainLayerMethods() {
+	public DomainLoggingAspect(DomainErrorSlackNotificationService slackNotificationService) {
+		this.slackNotificationService = slackNotificationService;
 	}
+
+	@Pointcut("execution(* com.ryuqq.core.domain..*(..)) && !within(com.ryuqq.core.domain.DomainErrorSlackNotificationService)")
+	public void domainLayerMethods() {}
 
 	@Around("domainLayerMethods()")
 	public Object logDomainLayer(ProceedingJoinPoint joinPoint) throws Throwable {
-		return logExecution(joinPoint);
+		String traceId = TraceIdHolder.getTraceId();
+		String className = joinPoint.getTarget().getClass().getSimpleName();
+		String methodName = joinPoint.getSignature().getName();
+		Map<String, Object> args = AopUtils.extractArgs(joinPoint);
+		long startTime = System.currentTimeMillis();
+
+		try {
+			return joinPoint.proceed();
+		} catch (RdsStorageException e) {
+			throw e;
+
+		}catch (DomainException e) {
+			logError(createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime));
+			throw e;
+
+		} catch (Exception e) {
+			DomainException domainException = new DomainException(
+				String.format("Unexpected error in %s.%s", className, methodName),
+				e
+			);
+			logError(createLogEntry(traceId, className, methodName, args, domainException, System.currentTimeMillis() - startTime));
+			throw domainException;
+		}
 	}
 
-	@Override
-	protected String createPreLogMessage(String traceId, String className, String methodName, Object[] args) {
-		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
+	private AopLogEntry createLogEntry(String traceId, String className, String methodName, Map<String, Object> args, Throwable exception, long executionTime) {
+		return LogEntryFactory.createAopLogEntry(
 			traceId,
 			DOMAIN_LAYER,
 			className,
 			methodName,
 			args,
-			null,
-			0L
-		);
-
-		return simpleLogEntry.toJson();
-	}
-
-	@Override
-	protected String createPostLogMessage(String traceId, String className, String methodName, Object[] args,
-										  Object result, long executionTime) {
-
-		Object safeResult = extractSafeResult(result);
-
-		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
-			traceId,
-			DOMAIN_LAYER,
-			className,
-			methodName,
-			args,
-			safeResult,
+			exception,
 			executionTime
 		);
-
-		return simpleLogEntry.toJson();
 	}
+
+	private void logError(AopLogEntry logEntry) {
+		log.error(logEntry.toString(), logEntry.exception());
+		slackNotificationService.sendErrorAlert(logEntry);
+	}
+
 
 }

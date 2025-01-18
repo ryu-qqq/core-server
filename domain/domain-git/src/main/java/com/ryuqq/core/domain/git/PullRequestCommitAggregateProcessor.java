@@ -21,15 +21,15 @@ public class PullRequestCommitAggregateProcessor {
 
 		commits.forEach(c -> commitAggregate.saveCommit(c.getId(), pullRequestId));
 
-		Map<String, PullRequestCommitHelper.FileCommitPair> fileCommitMap =  pullRequestCommitHelper.mapPullRequestCommitsByGitCommitId(commits);
+		Map<String, FileCommitPair> fileCommitMap =  pullRequestCommitHelper.mapPullRequestCommitsByGitCommitId(commits);
 
 		pullRequestCommits.forEach(pullRequestCommit -> {
 			String filePath = pullRequestCommit.getFilePath();
-			PullRequestCommitHelper.FileCommitPair fileCommitPair = fileCommitMap.get(filePath);
+			FileCommitPair fileCommitPair = fileCommitMap.get(filePath);
 
 			if (fileCommitPair != null) {
-				ChangedFile changedFile = fileCommitPair.getChangedFile();
-				Commit commit = fileCommitPair.getCommit();
+				ChangedFile changedFile = fileCommitPair.changedFile();
+				Commit commit = fileCommitPair.commit();
 
 				commitAggregate.saveChangedFile(pullRequestId, changedFile.getId(), filePath, pullRequestCommit.getChangeType());
 				commitAggregate.saveReviewExecution(commit.getId(), changedFile.getId());

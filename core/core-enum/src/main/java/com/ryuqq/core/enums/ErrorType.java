@@ -2,7 +2,7 @@ package com.ryuqq.core.enums;
 
 public enum ErrorType {
 
-	DEFAULT_ERROR(500, ErrorCode.E500, "An unexpected error has occurred.",
+	UNEXPECTED_ERROR(500, ErrorCode.E500, "An unexpected error has occurred.",
 		LogLevel.ERROR),
 
 	NOT_FOUND_ERROR(404, ErrorCode.E404, "Resource not found.",
@@ -11,7 +11,14 @@ public enum ErrorType {
 	BAD_REQUEST_ERROR(400, ErrorCode.E400, "Bad Request",
 		LogLevel.WARN),
 
-	;
+	INVALID_INPUT_ERROR(422, ErrorCode.E422, "Invalid input provided.",
+		LogLevel.WARN),
+
+	DATABASE_CONNECTION_ERROR(503, ErrorCode.E503, "Database connection issue.",
+		LogLevel.ERROR),
+
+	SLOW_QUERY_DETECTED(200, ErrorCode.E200, "Slow query detected.",
+		LogLevel.WARN);
 
 	private final int status;
 
@@ -38,7 +45,7 @@ public enum ErrorType {
 				return NOT_FOUND_ERROR;
 			}
 			default -> {
-				return DEFAULT_ERROR;
+				return UNEXPECTED_ERROR;
 			}
 		}
 	}

@@ -25,10 +25,6 @@ public record ExternalRequestLogEntry(
 	long executionTime
 ) implements LogEntry {
 
-	public String toJson() {
-		return JsonUtils.toJson(this);
-	}
-
 	@Override
 	public String getTraceId() {
 		return traceId;
@@ -37,5 +33,42 @@ public record ExternalRequestLogEntry(
 	@Override
 	public String getLayer() {
 		return layer;
+	}
+
+	@Override
+	public String toString() {
+		return "ExternalRequestLogEntry{"
+			+
+			"traceId='"
+			+ traceId
+			+ '\''
+			+
+			", layer='"
+			+ layer
+			+ '\''
+			+
+			", url='"
+			+ url
+			+ '\''
+			+
+			", httpMethod='"
+			+ httpMethod
+			+ '\''
+			+
+			", requestBody='"
+			+ requestBody
+			+ '\''
+			+
+			", responseBody='"
+			+ responseBody
+			+ '\''
+			+
+			", statusCode="
+			+ statusCode
+			+
+			", executionTime="
+			+ executionTime
+			+
+			'}';
 	}
 }

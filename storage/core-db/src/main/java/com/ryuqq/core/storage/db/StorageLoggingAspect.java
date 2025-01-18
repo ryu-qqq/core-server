@@ -1,64 +1,97 @@
 package com.ryuqq.core.storage.db;
 
+import com.ryuqq.core.enums.ErrorType;
+import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.LogEntryFactory;
+import com.ryuqq.core.logging.SqlLogEntry;
+import com.ryuqq.core.storage.db.exception.RdsStorageException;
+import com.ryuqq.core.storage.db.exception.SlowQueryException;
+import com.ryuqq.core.utils.AopUtils;
+import com.ryuqq.core.utils.TraceIdHolder;
+
+import java.util.Map;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.ryuqq.core.logging.AbstractLayerLoggingAspect;
-import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.logging.SimpleLogEntry;
 
 @Aspect
 @Component
-public class StorageLoggingAspect extends AbstractLayerLoggingAspect  {
+public class StorageLoggingAspect {
 
-	protected static final String STORAGE_LAYER = "STORAGE";
+	private final RdsErrorSlackNotificationService slackNotificationService;
 
+	private static final Logger log = LoggerFactory.getLogger(StorageLoggingAspect.class);
+	private static final String STORAGE_LAYER = "STORAGE";
 
-	@Pointcut("execution(* com.ryuqq.core.storage.db..*(..)) "
-		+ "&& !within(com.ryuqq.core.storage.db.config..*)")
-	public void storageLayerMethods() {
+	public StorageLoggingAspect(RdsErrorSlackNotificationService slackNotificationService) {
+		this.slackNotificationService = slackNotificationService;
 	}
 
-	@Around("storageLayerMethods()")
-	public Object logStorageLayer(ProceedingJoinPoint joinPoint) throws Throwable {
-		return logExecution(joinPoint);
+	@Pointcut("execution(* com.ryuqq.core.storage.db..*(..)) && @annotation(org.springframework.stereotype.Repository)")
+	public void repositoryMethods() {}
+
+	@Around("repositoryMethods()")
+	public Object handleStorageLayerExceptions(ProceedingJoinPoint joinPoint) throws Throwable {
+		String traceId = TraceIdHolder.getTraceId();
+		String className = joinPoint.getTarget().getClass().getSimpleName();
+		String methodName = joinPoint.getSignature().getName();
+		Map<String, Object> args = AopUtils.extractArgs(joinPoint);
+		long startTime = System.currentTimeMillis();
+
+		try {
+			return joinPoint.proceed();
+		} catch (SlowQueryException e) {
+			logError(createLogEntry(className, methodName, e));
+			return null;
+		} catch (RdsStorageException e) {
+			logError(createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime));
+			throw e;
+		} catch (Exception e) {
+			RdsStorageException wrappedException = new RdsStorageException(
+				String.format("Unexpected error in %s.%s", className, methodName), ErrorType.UNEXPECTED_ERROR, e
+			);
+			logError(createLogEntry(traceId, className, methodName, args, wrappedException, System.currentTimeMillis() - startTime));
+			throw wrappedException;
+		}
 	}
 
-	@Override
-	protected String createPreLogMessage(String traceId, String className, String methodName, Object[] args) {
-		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
+	private AopLogEntry createLogEntry(String traceId, String className, String methodName, Map<String, Object> args, Throwable exception, long executionTime) {
+		return LogEntryFactory.createAopLogEntry(
 			traceId,
 			STORAGE_LAYER,
 			className,
 			methodName,
 			args,
-			null,
-			0L
-		);
-
-		return simpleLogEntry.toJson();
-	}
-
-	@Override
-	protected String createPostLogMessage(String traceId, String className, String methodName, Object[] args,
-										  Object result, long executionTime) {
-
-		Object safeResult = extractSafeResult(result);
-
-		SimpleLogEntry simpleLogEntry = LogEntryFactory.createLogEntry(
-			traceId,
-			STORAGE_LAYER,
-			className,
-			methodName,
-			args,
-			safeResult,
+			exception,
 			executionTime
 		);
-
-		return simpleLogEntry.toJson();
 	}
+
+	private AopLogEntry createLogEntry(String className, String methodName, SlowQueryException e) {
+		SqlLogEntry logEntry = e.getSqlLogEntry();
+
+		return LogEntryFactory.createAopLogEntry(
+			logEntry.traceId(),
+			STORAGE_LAYER,
+			className,
+			methodName,
+			logEntry.args(),
+			e,
+			logEntry.executionTime()
+		);
+	}
+
+
+	private void logError(AopLogEntry logEntry) {
+		log.error(logEntry.toString(), logEntry.exception());
+		slackNotificationService.sendErrorAlert(logEntry);
+	}
+
+
 
 }

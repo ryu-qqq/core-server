@@ -14,7 +14,7 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import com.ryuqq.core.storage.db.SlowQueryListener;
+import com.ryuqq.core.storage.db.QueryListener;
 
 @Configuration
 public class CoreDataSourceConfig {
@@ -37,7 +37,7 @@ public class CoreDataSourceConfig {
 		return ProxyDataSourceBuilder.create(dataSource)
 			.name("PROXY-DS")
 			.listener(loggingListener)
-			.listener(new SlowQueryListener(500))
+			.listener(new QueryListener(100, 500))
 			.build();
 	}
 
