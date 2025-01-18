@@ -48,11 +48,11 @@ spring:
 
 storage:
   datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3307/hanni
-      username: admin
-      password: Tpxhvm1234!!
+      core:
+          driver-class-name: ${STORAGE_DATASOURCE_CORE_DRIVER_CLASS_NAME}
+          jdbc-url: ${STORAGE_DATASOURCE_CORE_JDBC_URL}
+          username: ${STORAGE_DATASOURCE_CORE_USERNAME}
+          password: ${STORAGE_DATASOURCE_CORE_PASSWORD}
       maximum-pool-size: 5
       connection-timeout: 1100
       keepalive-time: 30000
@@ -94,11 +94,11 @@ spring:
 
 storage:
   datasource:
-    core:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://hanni.cfacertspqbw.ap-northeast-2.rds.amazonaws.com:3307/hanni
-      username: admin
-      password: Tpxhvm1234!!
+      core:
+          driver-class-name: ${STORAGE_DATASOURCE_CORE_DRIVER_CLASS_NAME}
+          jdbc-url: ${STORAGE_DATASOURCE_CORE_JDBC_URL}
+          username: ${STORAGE_DATASOURCE_CORE_USERNAME}
+          password: ${STORAGE_DATASOURCE_CORE_PASSWORD}
       maximum-pool-size: 15
       connection-timeout: 1100
       keepalive-time: 30000
