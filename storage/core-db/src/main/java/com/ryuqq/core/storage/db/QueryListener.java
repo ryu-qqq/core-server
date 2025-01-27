@@ -55,12 +55,12 @@ public class QueryListener implements QueryExecutionListener {
 				: null;
 
 			SqlLogEntry logEntry = createLogEntry(execInfo, queryInfo, traceId, executionTime, errorMessage, logLevel, "AFTER");
+			log(logLevel, logEntry);
 
 			if (logLevel == LogLevel.ERROR) {
 				notifyCriticalAlert(logEntry);
 			}
 
-			log(logLevel, logEntry);
 		}
 	}
 

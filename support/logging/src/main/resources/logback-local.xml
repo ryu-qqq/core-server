@@ -1,27 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <!-- Console Logging -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [traceId=%X{traceId}] %-5level %logger{36}.%M - %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
+	<!-- Console Logging -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [traceId=%X{traceId}] %-5level %logger{36}.%M - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
 
-    <!-- Logstash Logging -->
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>localhost:5044</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"appname":"core-server","profile":"local"}</customFields>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
+	<!-- Logstash Logging -->
+	<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>localhost:5044</destination>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"appname":"core-server","profile":"local"}</customFields>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
 
-    <!-- Root Logger -->
-    <root level="error">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="LOGSTASH" />
-    </root>
+	<!-- JSON File Appenders for External Clients -->
+	<appender name="GitHubJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/git-hub.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<logLevel/>
+				<threadName/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/git-hub.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="OcoJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/oco.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<logLevel/>
+				<threadName/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/oco.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="SellicJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/sellic.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<logLevel/>
+				<threadName/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/sellic.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="BuymaJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/buyma.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<logLevel/>
+				<threadName/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/buyma.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+
+	<!-- Loggers for External Clients -->
+	<logger name="external-client.git-hub" level="INFO" additivity="false">
+		<appender-ref ref="GitHubJson" />
+	</logger>
+
+	<logger name="external-client.oco" level="INFO" additivity="false">
+		<appender-ref ref="OcoJson" />
+	</logger>
+
+	<logger name="external-client.sellic" level="INFO" additivity="false">
+		<appender-ref ref="SellicJson" />
+	</logger>
+
+	<logger name="external-client.buyma" level="INFO" additivity="false">
+		<appender-ref ref="BuymaJson" />
+	</logger>
+
+	<!-- Root Logger -->
+	<root level="error">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="LOGSTASH" />
+	</root>
 
 </configuration>

@@ -3,7 +3,6 @@ package com.ryuqq.core.domain.git;
 import java.util.Objects;
 
 import com.ryuqq.core.enums.GitType;
-import com.ryuqq.core.storage.db.git.ProjectCommand;
 
 public class Project {
 
@@ -15,17 +14,7 @@ public class Project {
 	private final String owner;
 	private final String description;
 
-	public Project(Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
-		this.gitProjectId = gitProjectId;
-		this.gitType = gitType;
-		this.repositoryName = name;
-
-		this.repositoryUrl = repositoryUrl;
-		this.owner = owner;
-		this.description = description;
-	}
-
-	public Project(Long id, Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
+	private Project(Long id, Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
 		this.id = id;
 		this.gitProjectId = gitProjectId;
 		this.gitType = gitType;
@@ -35,8 +24,17 @@ public class Project {
 		this.description = description;
 	}
 
+
+	public static Project create(Long id, Long gitProjectId, GitType gitType, String name, String repositoryUrl, String owner, String description) {
+		return new Project(id, gitProjectId, gitType, name, repositoryUrl, owner, description);
+	}
+
+
 	public ProjectCommand toCommand() {
-		return new ProjectCommand(id, gitProjectId, gitType, repositoryName, repositoryUrl, owner, description);
+		if(id != null){
+			return new UpdateProjectCommand(id, gitProjectId, gitType, repositoryName, repositoryUrl, owner, description);
+		}
+		return new CreateProjectCommand(gitProjectId, gitType, repositoryName, repositoryUrl, owner, description);
 	}
 
 	public Long getId() {

@@ -6,7 +6,6 @@ import java.util.List;
 import com.ryuqq.core.enums.GitType;
 import com.ryuqq.core.enums.MergeStatus;
 import com.ryuqq.core.enums.ReviewStatus;
-import com.ryuqq.core.storage.db.git.PullRequestCommand;
 
 public class PullRequest {
 	Long id;
@@ -23,23 +22,21 @@ public class PullRequest {
 	LocalDateTime createAt;
 	List<PullRequestCommit> commits;
 
-	public PullRequest(long gitProjectId, GitType gitType, long gitPullId, String sourceBranch, String targetBranch, String title,
-					   String description, MergeStatus status, ReviewStatus reviewStatus, List<PullRequestCommit> commits) {
-		this.id = 0L;
-		this.branchId = 0L;
+	private PullRequest(GitType gitType, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
+						String description, MergeStatus status, ReviewStatus reviewStatus, LocalDateTime createAt) {
 		this.gitType = gitType;
-		this.gitProjectId = gitProjectId;
 		this.gitPullId = gitPullId;
+		this.branchId = branchId;
 		this.sourceBranch = sourceBranch;
 		this.targetBranch = targetBranch;
 		this.title = title;
 		this.description = description;
 		this.status = status;
 		this.reviewStatus = reviewStatus;
-		this.commits = commits;
+		this.createAt = createAt;
 	}
 
-	public PullRequest(Long id, GitType gitType, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
+	private PullRequest(Long id, GitType gitType, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
 					   String description, MergeStatus status, ReviewStatus reviewStatus, LocalDateTime createAt) {
 		this.id = id;
 		this.gitType = gitType;
@@ -52,11 +49,19 @@ public class PullRequest {
 		this.status = status;
 		this.reviewStatus = reviewStatus;
 		this.createAt = createAt;
+	}
 
+	public static PullRequest create(Long id, GitType gitType, long gitPullId, long branchId, String sourceBranch, String targetBranch, String title,
+									 String description, MergeStatus status, ReviewStatus reviewStatus, LocalDateTime createAt){
+
+		return new PullRequest(id, gitType, gitPullId, branchId, sourceBranch, targetBranch, title, description, status, reviewStatus, createAt);
 	}
 
 	public PullRequestCommand toCommand(long branchId){
-		return new PullRequestCommand(id, gitPullId, gitType, branchId, sourceBranch, targetBranch, title, description, status, reviewStatus);
+		if(id != null){
+			return new UpdatePullRequestCommand(id, gitPullId, gitType, branchId, sourceBranch, targetBranch, title, description, status, reviewStatus);
+		}
+		return new CreatePullRequestCommand(gitPullId, gitType, branchId, sourceBranch, targetBranch, title, description, status, reviewStatus);
 	}
 
 	public Long getId() {

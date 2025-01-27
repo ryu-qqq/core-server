@@ -2,7 +2,6 @@ package com.ryuqq.core.domain.git;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.storage.db.git.PullRequestCommitPersistenceRepository;
 
 @Component
 public class PullRequestCommitRegister {

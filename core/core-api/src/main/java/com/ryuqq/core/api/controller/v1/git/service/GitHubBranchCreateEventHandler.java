@@ -1,6 +1,6 @@
 package com.ryuqq.core.api.controller.v1.git.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.api.controller.v1.git.mapper.GitBranchCreateAdapter;
 import com.ryuqq.core.api.controller.v1.git.request.GitHubBranchCreateEventRequestDto;
@@ -10,7 +10,7 @@ import com.ryuqq.core.domain.git.Branch;
 import com.ryuqq.core.domain.git.BranchAggregateRoot;
 import com.ryuqq.core.enums.GitType;
 
-@Component
+@Service
 public class GitHubBranchCreateEventHandler implements GitHubWebhookHandler<GitHubBranchCreateEventRequestDto, GitHubBranchCreateEventResponseDto>{
 
 	private final GitBranchCreateAdapter gitBranchCreateAdapter;

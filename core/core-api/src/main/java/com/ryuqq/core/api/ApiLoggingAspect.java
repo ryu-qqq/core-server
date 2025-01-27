@@ -14,8 +14,8 @@ import com.ryuqq.core.api.exception.CoreException;
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.LogContext;
 import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.storage.db.exception.RdsStorageException;
 import com.ryuqq.core.utils.AopUtils;
 import com.ryuqq.core.utils.TraceIdHolder;
 
@@ -23,16 +23,16 @@ import com.ryuqq.core.utils.TraceIdHolder;
 @Component
 public class ApiLoggingAspect   {
 
-	private final ApiErrorSlackNotificationService slackNotificationService;
+	private final ErrorSlackNotificationService slackNotificationService;
 
 	private static final Logger log = LoggerFactory.getLogger(ApiLoggingAspect.class);
 	private static final String API_LAYER = "API";
 
-	public ApiLoggingAspect(ApiErrorSlackNotificationService slackNotificationService) {
+	public ApiLoggingAspect(ErrorSlackNotificationService slackNotificationService) {
 		this.slackNotificationService = slackNotificationService;
 	}
 
-	@Pointcut("within(@org.springframework.stereotype.Service *) && !within(com.ryuqq.core.api.ApiErrorSlackNotificationService)")
+	@Pointcut("within(@org.springframework.stereotype.Service *) && !within(com.ryuqq.core.api.ErrorSlackNotificationService)")
 	public void apiLayerMethods() {}
 
 	@Around("apiLayerMethods()")
@@ -43,11 +43,19 @@ public class ApiLoggingAspect   {
 		Map<String, Object> args = AopUtils.extractArgs(joinPoint);
 		long startTime = System.currentTimeMillis();
 
+		boolean isTopLevelCall = LogContext.isTopLevelCall();
+
+		if (isTopLevelCall) {
+			LogContext.initialize(traceId, API_LAYER, className, methodName, args);
+		}
+
 		try {
 			return joinPoint.proceed();
-		} catch (RdsStorageException e) {
-			throw new CoreException("서버에 잠시 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.", ErrorType.UNEXPECTED_ERROR, e);
-		} catch (DomainException e) {
+		}  catch (DomainException e) {
+			throw e;
+		}catch (CoreException e) {
+			AopLogEntry aopLogEntry = createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(aopLogEntry);
 			throw e;
 		} catch (Exception e) {
 			CoreException wrappedException = new CoreException(
@@ -55,8 +63,18 @@ public class ApiLoggingAspect   {
 				ErrorType.UNEXPECTED_ERROR,
 				e
 			);
-			logError(createLogEntry(traceId, className, methodName, args, wrappedException, System.currentTimeMillis() - startTime));
+			AopLogEntry logEntry = createLogEntry(traceId, className, methodName, args, wrappedException,
+				System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(logEntry);
+
 			throw wrappedException;
+		} finally {
+			if (LogContext.getCurrentLogEntry() != null && LogContext.getCurrentThrowable() != null) {
+				String nestedLog = LogContext.generateNestedLogString();
+				log.error(nestedLog);
+				slackNotificationService.sendErrorAlert(LogContext.getNestedLogEntries());
+				LogContext.finalizeEntry();
+			}
 		}
 	}
 
@@ -72,9 +90,6 @@ public class ApiLoggingAspect   {
 		);
 	}
 
-	private void logError(AopLogEntry logEntry) {
-		log.error(logEntry.toString(), logEntry.exception());
-		slackNotificationService.sendErrorAlert(logEntry);
-	}
+
 
 }

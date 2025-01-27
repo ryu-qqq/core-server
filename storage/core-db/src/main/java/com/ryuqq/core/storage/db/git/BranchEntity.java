@@ -28,6 +28,7 @@ public class BranchEntity extends BaseEntity {
 	}
 
 	public BranchEntity(long id, long projectId, String branchName, String baseBranchName) {
+		this.id = id;
 		this.projectId = projectId;
 		this.branchName = branchName;
 		this.baseBranchName = baseBranchName;

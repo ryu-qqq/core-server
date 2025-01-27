@@ -1,32 +1,15 @@
 package com.ryuqq.core.domain.git;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.storage.db.git.ChangedFileCommand;
 
 public class ChangedFile {
 	private Long id;
-	private long commitId;
+	private Long commitId;
 	private final String className;
 	private final String filePath;
 	private final ChangeType changeType;
 
-	protected ChangedFile(String className, String filePath, ChangeType changeType) {
-		this.id = 0L;
-		this.commitId = 0L;
-		this.className = className;
-		this.filePath = filePath;
-		this.changeType = changeType;
-	}
-
-	protected ChangedFile(long commitId, String className, String filePath, ChangeType changeType) {
-		this.id = 0L;
-		this.commitId = commitId;
-		this.className = className;
-		this.filePath = filePath;
-		this.changeType = changeType;
-	}
-
-	public ChangedFile(long id, long commitId, String className, String filePath, ChangeType changeType) {
+	private ChangedFile(Long id, Long commitId, String className, String filePath, ChangeType changeType) {
 		this.id = id;
 		this.commitId = commitId;
 		this.className = className;
@@ -34,8 +17,21 @@ public class ChangedFile {
 		this.changeType = changeType;
 	}
 
+	public static ChangedFile create(String className, String filePath, ChangeType changeType) {
+		return new ChangedFile(null, null, className, filePath, changeType);
+	}
+
+	public static ChangedFile create(Long id, long commitId, String className, String filePath, ChangeType changeType) {
+		return new ChangedFile(id, commitId, className, filePath, changeType);
+	}
+
+
 	protected ChangedFileCommand toCommand(long commitId){
-		return new ChangedFileCommand(id, commitId, className, filePath, changeType);
+		if(id != null){
+			return new UpdateChangedFileCommand(id, commitId, className, filePath, changeType);
+		}
+
+		return new CreateChangedFileCommand(commitId, className, filePath, changeType);
 	}
 
 	public Long getId() {

@@ -7,7 +7,7 @@ public class RdsStorageException extends RuntimeException {
 
 	private final ErrorType errorType;
 
-	public RdsStorageException(String message, ErrorType errorType, Throwable cause) {
+	public RdsStorageException(ErrorType errorType, String message, Throwable cause) {
 		super(errorType.getMessage() + " " + message, cause);
 		this.errorType = errorType;
 	}
@@ -17,7 +17,7 @@ public class RdsStorageException extends RuntimeException {
 		this.errorType = errorType;
 	}
 
-	public RdsStorageException(String message, ErrorType errorType) {
+	public RdsStorageException(ErrorType errorType, String message) {
 		super(message);
 		this.errorType = errorType;
 	}

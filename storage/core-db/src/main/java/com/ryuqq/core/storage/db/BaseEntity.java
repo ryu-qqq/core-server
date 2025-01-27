@@ -23,7 +23,7 @@ public abstract class BaseEntity {
 
     @CreationTimestamp
     @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "UPDATED_AT", nullable = false)
@@ -37,8 +37,8 @@ public abstract class BaseEntity {
 		return deleted;
 	}
 
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
 	public LocalDateTime getUpdatedAt() {

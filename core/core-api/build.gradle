@@ -2,25 +2,35 @@ bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
+
+	implementation project(":domain:domain-git")
+	implementation project(":domain:domain-product")
+	implementation project(":domain:domain-brand")
+	implementation project(":domain:domain-category")
+	implementation project(":domain:domain-external")
+
 	implementation project(":core:core-batch")
     implementation project(":core:core-enum")
+	implementation project(':core:core-events')
 
     implementation project(":support:logging")
 	implementation project(":support:utils")
 	implementation project(":support:alert")
 
-	implementation project(":domain:domain-git")
-	implementation project(":domain:domain-product")
+	implementation project(":external-client:sellic")
+	implementation project(":external-client:oco")
 
-
-	implementation project(":external-client:git-hub")
-
+	//implementation project(":external-client:git-hub")
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework:spring-tx'
+
 
 	testImplementation testFixtures(project(":tests:unit-tests"))
 	testImplementation testFixtures(project(":tests:api-docs"))
+	testImplementation(testFixtures(project(":support:utils")))
+
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'io.rest-assured:spring-mock-mvc'
 

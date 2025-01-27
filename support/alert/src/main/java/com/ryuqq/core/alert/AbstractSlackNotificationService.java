@@ -22,7 +22,7 @@ public abstract class AbstractSlackNotificationService<T> {
 	 */
 	public void notifySlack(T payload) {
 		try {
-			String channel = determineChannel(payload);
+			String channel = determineChannel();
 			String formattedMessage = formatMessage(payload);
 			SlackNotifier.sendMessage(token, channel, formattedMessage);
 			log.info("Slack message sent to channel '{}' successfully.", channel);
@@ -34,12 +34,11 @@ public abstract class AbstractSlackNotificationService<T> {
 
 
 	protected void handleNotificationError(T payload, Exception e) {
-		// 기본 구현: 로그만 남김
 		log.warn("Notification failed for payload: {}", payload, e);
 	}
 
 
-	protected String determineChannel(T payload) {
+	protected String determineChannel() {
 		return SlackConstants.ERROR_CHANNEL;
 	}
 

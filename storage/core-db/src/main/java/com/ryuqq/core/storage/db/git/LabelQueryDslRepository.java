@@ -13,7 +13,7 @@ import com.ryuqq.core.storage.db.git.dto.LabelDto;
 import com.ryuqq.core.storage.db.git.dto.QLabelDto;
 
 @Repository
-public class LabelQueryDslRepository implements LabelQueryRepository {
+public class LabelQueryDslRepository  {
 
 	private final JPAQueryFactory queryFactory;
 
@@ -21,7 +21,6 @@ public class LabelQueryDslRepository implements LabelQueryRepository {
 		this.queryFactory = queryFactory;
 	}
 
-	@Override
 	public List<LabelDto> fetchByLabelIn(List<String> names){
 		return queryFactory
 			.select(new QLabelDto(

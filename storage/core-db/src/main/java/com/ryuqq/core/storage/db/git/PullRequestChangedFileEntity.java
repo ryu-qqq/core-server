@@ -45,9 +45,9 @@ public class PullRequestChangedFileEntity extends BaseEntity {
 
 	public PullRequestChangedFileEntity(long id, long pullRequestId, long changedFileId, String filePath, ChangeType changeType,
 										ReviewStatus reviewStatus) {
+		this.id = id;
 		this.changedFileId = changedFileId;
 		this.reviewStatus = reviewStatus;
-		this.id = id;
 		this.pullRequestId = pullRequestId;
 		this.filePath = filePath;
 		this.changeType = changeType;

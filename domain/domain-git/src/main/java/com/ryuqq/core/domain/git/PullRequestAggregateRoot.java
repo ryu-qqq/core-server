@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.transaction.Transactional;
 
 @Component
 public class PullRequestAggregateRoot {
@@ -22,7 +21,6 @@ public class PullRequestAggregateRoot {
 		this.commitFinder = commitFinder;
 	}
 
-	@Transactional
 	public long processPullRequest(PullRequest pullRequest) {
 		Branch branch = branchFinder.fetchByGitProjectIdAndBranchName(pullRequest.gitProjectId, pullRequest.sourceBranch);
 		long pullRequestId = savePullRequest(branch.getId(), pullRequest);

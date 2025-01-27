@@ -44,6 +44,11 @@ root/
 │   └── bdd-tests/                   # 비즈니스 로직 자연어 처리 문서화
 │   └── unit-tests/                   # 단위 테스트
 ├── external-client/                 # 외부 API 요청, 응답 로직 모듈
+│   └── buyma/                       # buyma
+│   └── oco/                         # oco
+│   └── sellic/                      # sellic
+│   └── git-hub/                     # git hub
+
 ├── build.gradle                     # Gradle 빌드 설정 파일
 ├── gradle.properties                # Gradle 프로퍼티 파일 (의존성 버전 관리)
 └── settings.gradle                  # Gradle 설정 파일

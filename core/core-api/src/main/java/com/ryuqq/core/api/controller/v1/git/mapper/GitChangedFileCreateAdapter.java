@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.git.ChangedFile;
-import com.ryuqq.core.domain.git.ChangedFileFactory;
 import com.ryuqq.core.enums.ChangeType;
 
 @Component
@@ -35,7 +34,7 @@ public class GitChangedFileCreateAdapter {
 		}
 
 		return fileChangeMap.entrySet().stream()
-			.map(entry -> ChangedFileFactory.create(extractClassName(entry.getKey()), entry.getKey(), entry.getValue()))
+			.map(entry -> ChangedFile.create(extractClassName(entry.getKey()), entry.getKey(), entry.getValue()))
 			.toList();
 	}
 
