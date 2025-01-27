@@ -3,6 +3,7 @@ package com.ryuqq.core.domain.product.core;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.events.ProductGroupSyncRequiredEvent;
+import com.ryuqq.core.events.ProductGroupSyncUpdateRequiredEvent;
 import com.ryuqq.core.events.RealTimeUpdateEvent;
 
 @Component
@@ -23,7 +24,6 @@ public class ProductGroupContextEventHandler {
 		);
 	}
 
-
 	public void handleEvents(long sellerId, long productGroupId, long brandId, long categoryId, UpdateDecision decision) {
 		if (productGroupContextEventChecker.shouldPublishEvent(sellerId, decision)) {
 			decision.getRealTimeUpdates().forEach(event -> {
@@ -32,7 +32,9 @@ public class ProductGroupContextEventHandler {
 		}
 
 		if (decision.hasUpdates(false)) {
-			handleEvents(sellerId, productGroupId, brandId, categoryId);
+			productGroupEventPublisher.publishEvent(
+				new ProductGroupSyncUpdateRequiredEvent(sellerId, productGroupId, brandId, categoryId)
+			);
 		}
 	}
 

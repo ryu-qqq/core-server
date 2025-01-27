@@ -5,6 +5,6 @@ import com.ryuqq.core.domain.product.ProductDetailDescription;
 public class ProductDetailDescriptionDomainMapper {
 
 	public static ProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {
-		return ProductDetailDescription.create(dto.getDetailDescription());
+		return ProductDetailDescription.create(dto.getProductGroupId(), dto.getDetailDescription());
 	}
 }

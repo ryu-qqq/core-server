@@ -16,6 +16,10 @@ public class ProductDetailDescription {
 		return new ProductDetailDescription(null, detailDescription);
 	}
 
+	public static ProductDetailDescription create(Long productGroupId, String detailDescription){
+		return new ProductDetailDescription(productGroupId, detailDescription);
+	}
+
 	public ProductDetailDescription assignProductGroupId(Long productGroupId) {
 		return new ProductDetailDescription(productGroupId, detailDescription);
 	}
