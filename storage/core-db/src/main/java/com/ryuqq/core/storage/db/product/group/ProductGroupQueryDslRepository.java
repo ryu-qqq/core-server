@@ -104,7 +104,7 @@ public class ProductGroupQueryDslRepository {
 						),
 						new QProductDetailDescriptionDto(
 							productDetailDescriptionEntity.productGroupId,
-							productDetailDescriptionEntity.detailDescription
+							productDetailDescriptionEntity.detailDescription.coalesce("")
 						)
 					)
 				)
