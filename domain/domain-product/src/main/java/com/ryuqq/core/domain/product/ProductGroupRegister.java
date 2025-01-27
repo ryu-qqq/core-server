@@ -19,7 +19,7 @@ public class ProductGroupRegister {
 	}
 
 	public void update(ProductGroup productGroup) {
-		productGroupPersistenceRepository.save(ProductGroupCommandFactory.createCommandFrom(productGroup));
+		productGroupPersistenceRepository.update(ProductGroupCommandFactory.createCommandFrom(productGroup));
 	}
 
 }

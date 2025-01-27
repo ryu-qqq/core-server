@@ -6,6 +6,7 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.ryuqq.core.events.ProductGroupSyncRequiredEvent;
+import com.ryuqq.core.events.ProductGroupSyncUpdateRequiredEvent;
 import com.ryuqq.core.events.RealTimeUpdateEvent;
 
 @Component
@@ -26,7 +27,7 @@ public class ExternalProductGroupEventHandler {
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	@Async(value = "asyncThreadPoolTaskExecutor")
-	public void handleBatchUpdateRequiredEvent(ProductGroupSyncRequiredEvent event) {
+	public void handleBatchUpdateRequiredEvent(ProductGroupSyncUpdateRequiredEvent event) {
 		externalProductGroupDomainService.updateExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
 	}
