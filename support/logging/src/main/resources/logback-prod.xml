@@ -84,26 +84,6 @@
 		</rollingPolicy>
 	</appender>
 
-	<appender name="BuymaJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/log/spring/sellic.log</file>
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<timestamp>
-					<timeZone>UTC</timeZone>
-				</timestamp>
-				<logLevel/>
-				<threadName/>
-				<loggerName/>
-				<message/>
-				<mdc/>
-			</providers>
-		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/var/log/spring/buyma.log.%d{yyyy-MM-dd}.json</fileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-	</appender>
-
 
 	<!-- Loggers for External Clients -->
 	<logger name="external-client.git-hub" level="INFO" additivity="false">
@@ -118,9 +98,7 @@
 		<appender-ref ref="SellicJson" />
 	</logger>
 
-	<logger name="external-client.buyma" level="INFO" additivity="false">
-		<appender-ref ref="BuymaJson" />
-	</logger>
+
 
 
 	<root level="error">
