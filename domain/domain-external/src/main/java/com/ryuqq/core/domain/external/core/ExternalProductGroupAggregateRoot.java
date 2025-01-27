@@ -43,7 +43,9 @@ public class ExternalProductGroupAggregateRoot {
 			siteRequestQueueManager.addRequest(productGroup.getSiteId(), productGroup)
 		);
 
-		siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, SiteName.SELLIC), ProductDomainEventType.PRODUCT_GROUP_REGISTER);
+		SiteName siteName= externalProductGroups.getFirst().getSiteName();
+
+		siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP_REGISTER);
 
 	}
 
