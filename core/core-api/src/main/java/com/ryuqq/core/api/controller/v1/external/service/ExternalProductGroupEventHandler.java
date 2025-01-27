@@ -19,21 +19,21 @@ public class ExternalProductGroupEventHandler {
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async(value = "asyncThreadPoolTaskExecutor")
+	@Async("virtualThreadExecutor")
 	public void handleProductGroupRegisteredEvent(ProductGroupSyncRequiredEvent event) {
 		externalProductGroupDomainService.registerExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async(value = "asyncThreadPoolTaskExecutor")
+	@Async("virtualThreadExecutor")
 	public void handleBatchUpdateRequiredEvent(ProductGroupSyncUpdateRequiredEvent event) {
 		externalProductGroupDomainService.updateExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async(value = "asyncThreadPoolTaskExecutor")
+	@Async("virtualThreadExecutor")
 	public void handleRealTimeUpdateEvent(RealTimeUpdateEvent event) {
 		externalProductGroupDomainService.requestExternalSite(
 			event.sellerId(), event.productGroupId(), event.productDomainEventType()
