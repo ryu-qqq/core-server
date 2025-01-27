@@ -30,6 +30,7 @@ include 'storage:core-index'
 
 // support
 include 'support:logging'
+include 'support:monitoring'
 include 'support:utils'
 include 'support:alert'
 
