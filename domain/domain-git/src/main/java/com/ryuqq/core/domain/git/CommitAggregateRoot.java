@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.transaction.Transactional;
 
 @Component
 public class CommitAggregateRoot {
@@ -18,7 +17,6 @@ public class CommitAggregateRoot {
 		this.changedFileRegister = changedFileRegister;
 	}
 
-	@Transactional
 	public long processCommits(long gitProjectId, String branchName, List<Commit> commits) {
 		Branch branch = branchFinder.fetchByGitProjectIdAndBranchName(gitProjectId, branchName);
 		commits.forEach(commit -> {

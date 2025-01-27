@@ -17,6 +17,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.ryuqq.core.api.exception.CoreException;
 import com.ryuqq.core.api.payload.ApiResponse;
 import com.ryuqq.core.api.payload.ErrorMessage;
+import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.utils.TraceIdHolder;
 
@@ -74,13 +75,9 @@ public class GlobalExceptionController {
 		return ResponseEntity.status(HttpStatus.valueOf(ex.getErrorType().getStatus())).body(ApiResponse.error(errorMessage));
 	}
 
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException ex) {
-		String traceId = TraceIdHolder.getTraceId();
-
-		log.error("RuntimeException: TraceId={} Message={}", traceId, ex.getMessage(), ex);
-
-		ErrorMessage errorMessage = new ErrorMessage(ErrorType.UNEXPECTED_ERROR, "An unexpected runtime error occurred.");
+	@ExceptionHandler(DomainException.class)
+	public ResponseEntity<ApiResponse<?>> handleDomainException(DomainException ex) {
+		ErrorMessage errorMessage = new ErrorMessage(ex.getErrorType(), ex.getMessage());
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(errorMessage));
 	}
 

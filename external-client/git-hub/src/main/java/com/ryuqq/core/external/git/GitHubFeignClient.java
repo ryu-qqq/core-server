@@ -6,14 +6,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.ryuqq.core.external.GlobalFeignConfig;
 import com.ryuqq.core.external.git.response.GitHubCommitResponse;
 
 @FeignClient(
 	name = "githubApiClient",
-	url = "https://api.github.com",
-	configuration = GlobalFeignConfig.class
-
+	url = "https://api.github.com"
 )
 public interface GitHubFeignClient {
 

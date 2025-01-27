@@ -6,12 +6,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.LogContext;
 import com.ryuqq.core.logging.LogEntryFactory;
 import com.ryuqq.core.logging.SqlLogEntry;
 import com.ryuqq.core.storage.db.exception.RdsStorageException;
@@ -23,16 +22,9 @@ import com.ryuqq.core.utils.TraceIdHolder;
 @Component
 public class StorageLoggingAspect {
 
-	private final RdsErrorSlackNotificationService slackNotificationService;
-
-	private static final Logger log = LoggerFactory.getLogger(StorageLoggingAspect.class);
 	private static final String STORAGE_LAYER = "STORAGE";
 
-	public StorageLoggingAspect(RdsErrorSlackNotificationService slackNotificationService) {
-		this.slackNotificationService = slackNotificationService;
-	}
-
-	@Pointcut("execution(* com.ryuqq.core.storage.db..*(..)) && @annotation(org.springframework.stereotype.Repository)")
+	@Pointcut("execution(* com.ryuqq.core.storage.db..*(..))")
 	public void repositoryMethods() {}
 
 	@Around("repositoryMethods()")
@@ -46,16 +38,20 @@ public class StorageLoggingAspect {
 		try {
 			return joinPoint.proceed();
 		} catch (SlowQueryException e) {
-			logError(createLogEntry(className, methodName, e));
+			AopLogEntry slowQueryLogEntry = createLogEntry(className, methodName, e);
+			LogContext.addNestedLogEntry(slowQueryLogEntry);
 			return null;
 		} catch (RdsStorageException e) {
-			logError(createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime));
+			AopLogEntry aopLogEntry = createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(aopLogEntry);
 			throw e;
 		} catch (Exception e) {
-			RdsStorageException wrappedException = new RdsStorageException(
-				String.format("Unexpected error in %s.%s", className, methodName), ErrorType.UNEXPECTED_ERROR, e
+			RdsStorageException wrappedException = new RdsStorageException(ErrorType.UNEXPECTED_ERROR,
+				String.format("Unexpected error in %s.%s", className, methodName), e
 			);
-			logError(createLogEntry(traceId, className, methodName, args, wrappedException, System.currentTimeMillis() - startTime));
+			AopLogEntry unexpectedErrorLogEntry = createLogEntry(traceId, className, methodName, args, wrappedException, System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(unexpectedErrorLogEntry);
+
 			throw wrappedException;
 		}
 	}
@@ -84,12 +80,6 @@ public class StorageLoggingAspect {
 			e,
 			logEntry.executionTime()
 		);
-	}
-
-
-	private void logError(AopLogEntry logEntry) {
-		log.error(logEntry.toString(), logEntry.exception());
-		slackNotificationService.sendErrorAlert(logEntry);
 	}
 
 

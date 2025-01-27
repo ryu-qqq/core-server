@@ -16,7 +16,7 @@ import com.ryuqq.core.storage.db.git.dto.QChangedFileDto;
 import com.ryuqq.core.storage.db.git.dto.QCommitDto;
 
 @Repository
-public class CommitQueryDslRepository implements CommitQueryRepository{
+public class CommitQueryDslRepository {
 
 	private final JPAQueryFactory queryFactory;
 
@@ -24,7 +24,6 @@ public class CommitQueryDslRepository implements CommitQueryRepository{
 		this.queryFactory = queryFactory;
 	}
 
-	@Override
 	public List<CommitDto> fetchByBranchIdAndFilePathIn(long branchId, List<String> filePaths) {
 		return queryFactory
 			.from(commitEntity)

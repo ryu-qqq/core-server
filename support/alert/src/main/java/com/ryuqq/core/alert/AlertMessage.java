@@ -15,14 +15,16 @@ public record AlertMessage(
 	public String formatForSlack() {
 		return String.format(
 			"""
-				*%s*
-				- *Trace ID*: %s
-				- *Layer*: %s
-				- *Class*: %s
-				- *Method*: %s
-				- *Error*: %s
-				- *Arguments*: %s
-				""",
+			*Error Report Summary*
+			-------------------------------
+			*Trace ID*: %s
+			*Layer*: %s
+			*Class*: %s
+			*Method*: %s
+			*Error*: %s
+			*Arguments*: %s
+			-------------------------------
+			""",
 			title, traceId, layer, className, methodName, errorMessage, args
 		);
 	}

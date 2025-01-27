@@ -2,6 +2,8 @@ package com.ryuqq.core.logging;
 
 import java.util.Map;
 
+import com.ryuqq.core.utils.ToStringUtils;
+
 /**
  * AOP 로그 엔트리 구현체
  *
@@ -21,6 +23,7 @@ public record AopLogEntry(
 	Map<String, Object> args,
 	Throwable exception,
 	long executionTime
+
 ) implements LogEntry {
 
 	@Override
@@ -35,22 +38,12 @@ public record AopLogEntry(
 
 	@Override
 	public String toString() {
-		return "AopLogEntry{" +
-			"traceId='" + traceId + '\'' +
-			", layer='" + layer + '\'' +
-			", className='" + className + '\'' +
-			", methodName='" + methodName + '\'' +
-			", args=" + formatParams(args) +
-			", exception=" + (exception != null ? exception.getMessage() : "null") +
-			", executionTime=" + executionTime +
-			'}';
-	}
-
-	private String formatParams(Map<String, Object> params) {
-		if (params == null || params.isEmpty()) {
-			return "[]";
-		}
-		return params.toString();
+		return "- Trace ID: " + traceId + "\n" +
+			"- Layer: " + layer + "\n" +
+			"- Class: " + className + "\n" +
+			"- Method: " + methodName + "\n" +
+			"- Error: " + (exception != null ? exception.getMessage() : "None") + "\n" +
+			"- Arguments: " + ToStringUtils.formatParams(args) + "\n";
 	}
 
 }

@@ -6,9 +6,8 @@ spring:
       - logging.yml
       - db-core.yml
       - slack.yml
-#      - cache-core.yml
-#      - batch-core.yml
-#      - external-core.yml
+      - sellic.yml
+      - oco.yml
 
   web.resources.add-mappings: false
   profiles:
@@ -37,7 +36,3 @@ spring:
             on-profile: prod
 
 ---
-#
-#spring:
-#  profiles: dev
-#

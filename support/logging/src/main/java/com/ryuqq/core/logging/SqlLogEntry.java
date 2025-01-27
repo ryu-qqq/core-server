@@ -11,8 +11,6 @@ import com.ryuqq.core.utils.ToStringUtils;
  * @param traceId         트레이스 ID
  * @param layer           로깅 대상 레이어
  * @param sql             실행된 SQL 쿼리
- * @param className		  클래스 이름
- * @param methodName	  메서드 이름
  * @param args          바인딩된 파라미터
  * @param executionTime   실행 시간 (ms)
  * @param errorMessage    에러 메시지 (옵션)

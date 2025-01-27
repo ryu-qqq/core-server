@@ -6,7 +6,6 @@ import com.ryuqq.core.api.controller.v1.git.response.PullRequestUpdatedResponseD
 import com.ryuqq.core.domain.git.PullRequestUpdater;
 import com.ryuqq.core.enums.ReviewStatus;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class PullRequestCommandService {
@@ -17,7 +16,6 @@ public class PullRequestCommandService {
 		this.pullRequestUpdater = pullRequestUpdater;
 	}
 
-	@Transactional
 	public PullRequestUpdatedResponseDto updateReviewStatusById(long pullRequestId, ReviewStatus reviewStatus){
 		pullRequestUpdater.updateReviewStatusById(pullRequestId, reviewStatus);
 		return new PullRequestUpdatedResponseDto(pullRequestId);

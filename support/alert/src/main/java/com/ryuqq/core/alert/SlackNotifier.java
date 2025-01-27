@@ -10,6 +10,7 @@ import com.slack.api.Slack;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
+import com.slack.api.methods.response.chat.ChatPostMessageResponse;
 
 @Component
 public class SlackNotifier {
@@ -30,11 +31,19 @@ public class SlackNotifier {
 			.build();
 
 		try {
-			methodsClient.chatPostMessage(request);
+			ChatPostMessageResponse chatPostMessageResponse = methodsClient.chatPostMessage(request);
+			if(!chatPostMessageResponse.isOk()) {
+				log.error("Failed to send Slack alert to channel '{}'.", chatPostMessageResponse.getError());
+				throw new RuntimeException(chatPostMessageResponse.getError());
+			}
+
 			log.info("Slack alert sent successfully to channel '{}'.", channel);
+
 		} catch (SlackApiException | IOException e) {
 			log.error("Failed to send Slack alert to channel '{}'.", channel, e);
 			throw new RuntimeException("Slack alert failed", e);
 		}
 	}
+
+
 }

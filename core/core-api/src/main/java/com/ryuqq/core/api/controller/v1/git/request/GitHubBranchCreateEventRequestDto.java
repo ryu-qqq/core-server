@@ -17,12 +17,4 @@ public record GitHubBranchCreateEventRequestDto(
 		return repository().projectId();
 	}
 
-	public String getBranchName(){
-		return branchName;
-	}
-
-	public String baseBranchName(){
-		return baseBranchName;
-	}
-
 }

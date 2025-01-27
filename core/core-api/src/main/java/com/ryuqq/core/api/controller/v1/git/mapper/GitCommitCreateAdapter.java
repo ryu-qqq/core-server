@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.git.request.GitHubCommit;
 import com.ryuqq.core.domain.git.Commit;
-import com.ryuqq.core.domain.git.CommitFactory;
 
 @Component
 public class GitCommitCreateAdapter {
@@ -20,7 +19,7 @@ public class GitCommitCreateAdapter {
 	public List<Commit> createCommitRequestDto(List<GitHubCommit> commits) {
 		return commits.stream()
 			.sorted((c1, c2) -> c2.getCreateAt().compareTo(c1.getCreateAt()))
-			.map(commit -> CommitFactory.create(
+			.map(commit -> Commit.create(
 				commit.gitCommitId(),
 				commit.getAuthor(),
 				commit.commitMessage(),

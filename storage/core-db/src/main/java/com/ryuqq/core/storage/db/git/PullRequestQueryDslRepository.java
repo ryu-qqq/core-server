@@ -42,7 +42,7 @@ public class PullRequestQueryDslRepository implements PullRequestQueryRepository
 					pullRequestEntity.description.coalesce(""),
 					pullRequestEntity.status,
 					pullRequestEntity.reviewStatus,
-					pullRequestEntity.createAt
+					pullRequestEntity.createdAt
 				)
 			)
 			.from(pullRequestEntity)

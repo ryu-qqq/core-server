@@ -26,12 +26,12 @@ public class PullRequestCommitAggregate {
 	}
 
 	public void saveChangedFile(long pullRequestId, long changedFileId, String filePath, ChangeType changeType) {
-		PullRequestChangedFile pullRequestChangedFile = new PullRequestChangedFile(pullRequestId, changedFileId, filePath, changeType, ReviewStatus.PENDING);
+		PullRequestChangedFile pullRequestChangedFile = PullRequestChangedFile.create(null, pullRequestId, changedFileId, filePath, changeType, ReviewStatus.PENDING);
 		pullRequestChangedFileRegister.register(pullRequestChangedFile);
 	}
 
 	public void saveReviewExecution(long commitId, long changedFileId){
-		reviewExecutionRegister.register(ReviewExecutionFactory.create(commitId, changedFileId));
+		reviewExecutionRegister.register(ReviewExecution.create(commitId, changedFileId, 0L, null, null));
 
 	}
 }

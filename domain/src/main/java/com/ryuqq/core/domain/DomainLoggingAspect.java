@@ -11,9 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.exception.DomainException;
+import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.LogContext;
 import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.storage.db.exception.RdsStorageException;
 import com.ryuqq.core.utils.AopUtils;
 import com.ryuqq.core.utils.TraceIdHolder;
 
@@ -21,16 +22,11 @@ import com.ryuqq.core.utils.TraceIdHolder;
 @Component
 public class DomainLoggingAspect  {
 
-	private final DomainErrorSlackNotificationService slackNotificationService;
 
 	private static final Logger log = LoggerFactory.getLogger(DomainLoggingAspect.class);
 	private static final String DOMAIN_LAYER = "DOMAIN";
 
-	public DomainLoggingAspect(DomainErrorSlackNotificationService slackNotificationService) {
-		this.slackNotificationService = slackNotificationService;
-	}
-
-	@Pointcut("execution(* com.ryuqq.core.domain..*(..)) && !within(com.ryuqq.core.domain.DomainErrorSlackNotificationService)")
+	@Pointcut("execution(* com.ryuqq.core.domain..*(..)) ")
 	public void domainLayerMethods() {}
 
 	@Around("domainLayerMethods()")
@@ -43,19 +39,18 @@ public class DomainLoggingAspect  {
 
 		try {
 			return joinPoint.proceed();
-		} catch (RdsStorageException e) {
+		} catch ( DomainException e) {
+			AopLogEntry aopLogEntry = createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(aopLogEntry);
 			throw e;
-
-		}catch (DomainException e) {
-			logError(createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime));
-			throw e;
-
 		} catch (Exception e) {
 			DomainException domainException = new DomainException(
+				ErrorType.UNEXPECTED_ERROR,
 				String.format("Unexpected error in %s.%s", className, methodName),
 				e
 			);
-			logError(createLogEntry(traceId, className, methodName, args, domainException, System.currentTimeMillis() - startTime));
+			AopLogEntry unexpectedErrorLogEntry = createLogEntry(traceId, className, methodName, args, domainException, System.currentTimeMillis() - startTime);
+			LogContext.addNestedLogEntry(unexpectedErrorLogEntry);
 			throw domainException;
 		}
 	}
@@ -70,11 +65,6 @@ public class DomainLoggingAspect  {
 			exception,
 			executionTime
 		);
-	}
-
-	private void logError(AopLogEntry logEntry) {
-		log.error(logEntry.toString(), logEntry.exception());
-		slackNotificationService.sendErrorAlert(logEntry);
 	}
 
 

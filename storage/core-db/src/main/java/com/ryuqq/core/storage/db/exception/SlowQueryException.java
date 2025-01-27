@@ -8,7 +8,7 @@ public class SlowQueryException extends RdsStorageException {
 	private final SqlLogEntry sqlLogEntry;
 
 	public SlowQueryException(ErrorType errorType, SqlLogEntry sqlLogEntry) {
-		super(errorType.getMessage(), errorType);
+		super(errorType, errorType.getMessage());
 		this.sqlLogEntry = sqlLogEntry;
 	}
 
