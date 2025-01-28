@@ -42,19 +42,14 @@ public class SiteRequestProcessorExecutor {
 
 			SiteRequestProcessor processor = processorProvider.getProcessor(externalSite);
 
-			while (!queue.isEmpty()) {
-				ExternalProductGroup productGroup = queue.poll();
-				if (productGroup != null) {
-					try {
-						ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, productGroup);
-
-						responseHandler.handleResponse(productDomainEventType, productGroup, response);
-					} catch (Exception e) {
-						log.error("Failed to process request for product group: {}", productGroup.getProductGroupId(), e);
-						responseHandler.handleFailure(productGroup, e);
-					}
+			queue.forEach(productGroup -> {
+				try {
+					ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, productGroup);
+					responseHandler.handleResponse(productDomainEventType, productGroup, response);
+				} catch (Exception e) {
+					responseHandler.handleFailure(productGroup, e);
 				}
-			}
+			});
 		});
 	}
 

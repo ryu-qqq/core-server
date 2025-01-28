@@ -241,7 +241,7 @@ public class ExternalProductGroupQueryDslRepository {
 			.where(
 				siteIdIn(siteIds), productGroupIdIn(productGroupIds), statusEq(status)
 			)
-			.limit(10)
+			.limit(1)
 			.orderBy(externalProductGroupEntity.productGroupId.desc())
 			.fetch();
 	}

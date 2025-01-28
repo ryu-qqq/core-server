@@ -5,13 +5,11 @@ plugins {
 
 dependencies {
 
-
 	compileOnly("org.springframework:spring-context")
 	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 	implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
 	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-
 
 	testFixturesImplementation  "org.jeasy:easy-random-core:${easyRandomVersions}"
 

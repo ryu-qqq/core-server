@@ -9,6 +9,7 @@ import com.ryuqq.core.domain.category.DefaultCategory;
 import com.ryuqq.core.domain.category.core.CategoryQueryInterface;
 import com.ryuqq.core.domain.external.core.ExternalCategoryMapping;
 import com.ryuqq.core.domain.external.core.ExternalCategoryQueryInterface;
+import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.external.ExternalSiteException;
 
 @Component
@@ -34,6 +35,7 @@ public class SellicCategoryConverter {
 		externalCategoryIdOpt = findExternalCategoryId(siteId, parentCategoryIds);
 
 		return externalCategoryIdOpt.orElseThrow(() -> new ExternalSiteException(
+			ErrorType.NOT_FOUND_ERROR,
 			String.format("External Category Not Found Site Id : %s, Category Id : %s", siteId, categoryId)
 		));
 	}

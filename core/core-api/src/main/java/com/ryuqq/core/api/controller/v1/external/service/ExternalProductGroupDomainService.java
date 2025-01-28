@@ -31,4 +31,8 @@ public class ExternalProductGroupDomainService {
 		externalProductGroupAggregateRoot.requestExternalSite(sellerId, productGroupId, productDomainEventType);
 	}
 
+	public void updateFailedExternalProductGroup(long siteId, long productGroupId){
+		externalProductGroupAggregateRoot.updateExternalProductGroupFailed(siteId, productGroupId);
+	}
+
 }

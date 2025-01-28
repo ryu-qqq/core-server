@@ -12,8 +12,15 @@ public class DomainException extends RuntimeException {
 	}
 
 	public DomainException(ErrorType errorType, String message, Throwable cause) {
-		super(message, cause);
+		super(appendOriginalMessage(message, cause), cause);
 		this.errorType = errorType;
+	}
+
+	private static String appendOriginalMessage(String message, Throwable cause) {
+		if (cause == null || cause.getMessage() == null) {
+			return message;
+		}
+		return message + " | Cause: \n" + cause.getMessage();
 	}
 
 	public ErrorType getErrorType() {

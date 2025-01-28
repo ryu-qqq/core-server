@@ -3,13 +3,12 @@
 dependencies {
 	implementation project(":support:utils")
 	implementation project(":support:logging")
-	implementation project(":support:alert")
 
 	api project(":domain:domain-external")
 	api project(":domain:domain-category")
 	api project(":domain:domain-brand")
 	api project(":domain:domain-product")
 
-	api 'org.springframework.cloud:spring-cloud-starter-openfeign' // Feign Client
-	api 'com.fasterxml.jackson.core:jackson-databind' // JSON 파싱
+	api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	api 'com.fasterxml.jackson.core:jackson-databind'
 }

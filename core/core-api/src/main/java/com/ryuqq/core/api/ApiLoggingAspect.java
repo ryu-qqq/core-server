@@ -1,61 +1,41 @@
 package com.ryuqq.core.api;
 
-import java.util.Map;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.exception.CoreException;
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
-import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.events.SlackErrorAlertMessageEvent;
 import com.ryuqq.core.logging.LogContext;
-import com.ryuqq.core.logging.LogEntryFactory;
-import com.ryuqq.core.utils.AopUtils;
-import com.ryuqq.core.utils.TraceIdHolder;
+import com.ryuqq.core.logging.LogContextManager;
+import com.ryuqq.core.logging.QueryLogger;
 
 @Aspect
 @Component
 public class ApiLoggingAspect   {
 
-	private final ErrorSlackNotificationService slackNotificationService;
+	private final static String API_LAYER = "API";
+	private final ApiEventPublisher apiEventPublisher;
 
-	private static final Logger log = LoggerFactory.getLogger(ApiLoggingAspect.class);
-	private static final String API_LAYER = "API";
-
-	public ApiLoggingAspect(ErrorSlackNotificationService slackNotificationService) {
-		this.slackNotificationService = slackNotificationService;
+	public ApiLoggingAspect(ApiEventPublisher apiEventPublisher) {
+		this.apiEventPublisher = apiEventPublisher;
 	}
 
-	@Pointcut("within(@org.springframework.stereotype.Service *) && !within(com.ryuqq.core.api.ErrorSlackNotificationService)")
-	public void apiLayerMethods() {}
-
-	@Around("apiLayerMethods()")
+	@Around("execution(* com.ryuqq.core.api.controller.v1..*(..)) ")
 	public Object logApiLayer(ProceedingJoinPoint joinPoint) throws Throwable {
-		String traceId = TraceIdHolder.getTraceId();
-		String className = joinPoint.getTarget().getClass().getSimpleName();
-		String methodName = joinPoint.getSignature().getName();
-		Map<String, Object> args = AopUtils.extractArgs(joinPoint);
 		long startTime = System.currentTimeMillis();
 
-		boolean isTopLevelCall = LogContext.isTopLevelCall();
-
-		if (isTopLevelCall) {
-			LogContext.initialize(traceId, API_LAYER, className, methodName, args);
-		}
+		LogContextManager.initialize(joinPoint, API_LAYER);
+		Throwable caughtException = null; // 예외를 저장할 변수
 
 		try {
 			return joinPoint.proceed();
-		}  catch (DomainException e) {
-			throw e;
-		}catch (CoreException e) {
-			AopLogEntry aopLogEntry = createLogEntry(traceId, className, methodName, args, e, System.currentTimeMillis() - startTime);
-			LogContext.addNestedLogEntry(aopLogEntry);
+		} catch (CoreException | DomainException e) {
+			LogContextManager.logToContext(joinPoint, e, startTime, API_LAYER);
+			caughtException = e;
 			throw e;
 		} catch (Exception e) {
 			CoreException wrappedException = new CoreException(
@@ -63,33 +43,25 @@ public class ApiLoggingAspect   {
 				ErrorType.UNEXPECTED_ERROR,
 				e
 			);
-			AopLogEntry logEntry = createLogEntry(traceId, className, methodName, args, wrappedException,
-				System.currentTimeMillis() - startTime);
-			LogContext.addNestedLogEntry(logEntry);
-
+			LogContextManager.logToContext(joinPoint, wrappedException, startTime, API_LAYER);
+			caughtException = wrappedException;
 			throw wrappedException;
 		} finally {
-			if (LogContext.getCurrentLogEntry() != null && LogContext.getCurrentThrowable() != null) {
-				String nestedLog = LogContext.generateNestedLogString();
-				log.error(nestedLog);
-				slackNotificationService.sendErrorAlert(LogContext.getNestedLogEntries());
-				LogContext.finalizeEntry();
+			if (caughtException != null) {
+				LogContext.getLogEntries()
+					.stream()
+					.filter(entry -> entry.getLogLevel().isLogRequired())
+					.forEach(QueryLogger::log);
+
+				String nestedLog = LogContextManager.finalizeAndLog();
+				if (nestedLog != null && !nestedLog.isEmpty()) {
+					apiEventPublisher.publish(new SlackErrorAlertMessageEvent(nestedLog));
+				}
 			}
+
+			LogContextManager.clear();
 		}
+
 	}
-
-	private AopLogEntry createLogEntry(String traceId, String className, String methodName, Map<String, Object> args, Throwable exception, long executionTime) {
-		return LogEntryFactory.createAopLogEntry(
-			traceId,
-			API_LAYER,
-			className,
-			methodName,
-			args,
-			exception,
-			executionTime
-		);
-	}
-
-
 
 }

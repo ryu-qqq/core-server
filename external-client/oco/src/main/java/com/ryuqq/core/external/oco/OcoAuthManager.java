@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.external.ExternalSiteException;
 import com.ryuqq.core.external.oco.request.OcoTokenRequestDto;
 import com.ryuqq.core.external.oco.response.OcoResponse;
@@ -58,10 +59,10 @@ public class OcoAuthManager {
 				this.token = response.apiResult().token();
 				this.expiryTime = Instant.now().plusSeconds(72000);
 			} else {
-				throw new ExternalSiteException("Failed to fetch token from OCO - Invalid response");
+				throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR, "Failed to fetch token from OCO - Invalid response");
 			}
 		} catch (Exception e) {
-			throw new ExternalSiteException("Error fetching token from OCO", e);
+			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  "Error fetching token from OCO", e);
 		}
 	}
 
