@@ -100,4 +100,14 @@ public class ExternalProductGroupAggregateRoot {
 		});
 	}
 
+	public void updateExternalProductGroupFailed(long siteId, long productGroupId) {
+
+		ExternalProductGroup externalProductGroup = externalProductGroupFinder.fetchBySiteIdAndProductGroupId(siteId,
+			productGroupId);
+
+		ExternalProductGroup failedExternalProductGroup = ExternalProductGroupResponseFactory.failStatus(externalProductGroup);
+		externalProductGroupRegister.update(failedExternalProductGroup);
+	}
+
+
 }

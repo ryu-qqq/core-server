@@ -9,6 +9,7 @@ import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.domain.external.core.ExternalMallProductGroupRequestResponse;
 import com.ryuqq.core.domain.external.core.SiteRequestProcessor;
 import com.ryuqq.core.domain.external.core.UpdateTypeHandler;
+import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.enums.SiteName;
 import com.ryuqq.core.external.ExternalSiteException;
@@ -32,7 +33,7 @@ public class OcoSiteRequestProcessor implements SiteRequestProcessor {
 		UpdateTypeHandler handler = updateHandlers.stream()
 			.filter(h -> h.supports(SiteName.OCO, productDomainEventType))
 			.findFirst()
-			.orElseThrow(() -> new ExternalSiteException("No handler found for update type: " + productDomainEventType));
+			.orElseThrow(() -> new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  "No handler found for update type: " + productDomainEventType));
 
 		return handler.handle(externalProductGroup);
 	}

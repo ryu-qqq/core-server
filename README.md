@@ -31,13 +31,18 @@ root/
 │   ├── core-batch/                  # 공통 배치 구성 요소 및 인터페이스 모듈
 │   └── core-enum/                   # 공통 Enum 정의 모듈
 ├── domain/                          # 도메인 모듈 폴더
-│   └── core-domain/                 # 도메인 비즈니스 로직 모듈
+│   └── core-product/                 # 도메인 비즈니스 로직 모듈
+│   └── core-external/                 # 도메인 비즈니스 로직 모듈
+│   └── core-git/                 # 도메인 비즈니스 로직 모듈
+│   └── core-brand/                 # 도메인 비즈니스 로직 모듈
+│   └── core-category/                 # 도메인 비즈니스 로직 모듈
 ├── storage/                         # 데이터 저장소 관련 모듈
 │   ├── core-db/                     # RDS 접근 및 엔티티 관리 모듈
 │   ├── core-cache/                  # 캐시 관리 모듈
 │   └── core-index/                  # NOSQL 관리 모듈
 ├── support/                         # 지원 모듈 폴더
 │   ├── logging/                     # 로깅 모듈
+│   ├── monitoring/                     # 로깅 모듈
 │   └── utils/                       # 공통 유틸리티 모듈
 ├── tests/                           # 테스트 모듈 폴더
 │   └── api-docs/                    # API 문서화 및 테스트 모듈

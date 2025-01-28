@@ -1,64 +1,118 @@
 package com.ryuqq.core.logging;
 
 import java.util.Map;
+import java.util.Objects;
 
-import org.springframework.boot.logging.LogLevel;
+import com.ryuqq.core.enums.LogLevel;
 
-import com.ryuqq.core.utils.ToStringUtils;
+
 /**
  * SQL 로그 엔트리 구현체
- *
- * @param traceId         트레이스 ID
- * @param layer           로깅 대상 레이어
- * @param sql             실행된 SQL 쿼리
- * @param args          바인딩된 파라미터
- * @param executionTime   실행 시간 (ms)
- * @param errorMessage    에러 메시지 (옵션)
- * @param logLevel        로그 레벨 (예: INFO, WARN, ERROR)
- * @param dataSourceName  데이터 소스 이름
- * @param connectionId    연결 ID
- * @param isolationLevel  트랜잭션 격리 수준
- * @param queryPhase      쿼리 실행 단계 (BEFORE, AFTER)
  */
-public record SqlLogEntry(
-	String traceId,
-	String layer,
-	String sql,
-	Map<String, Object> args,
-	long executionTime,
-	String errorMessage,
-	LogLevel logLevel,
-	String dataSourceName,
-	String connectionId,
-	int isolationLevel,
-	String queryPhase
-) implements LogEntry {
+public final class SqlLogEntry extends AbstractLogEntry {
 
-	@Override
-	public String getTraceId() {
-		return traceId;
+	private final String sql;
+	private final Map<String, Object> args;
+	private final long executionTime;
+	private final String errorMessage;
+	private final LogLevel logLevel;
+	private final String dataSourceName;
+	private final String connectionId;
+	private final int isolationLevel;
+	private final String queryPhase;
+
+	SqlLogEntry(String traceId, String layer, String sql, Map<String, Object> args, long executionTime,
+				String errorMessage, LogLevel logLevel, String dataSourceName, String connectionId,
+				int isolationLevel, String queryPhase) {
+		super(traceId, layer);
+		this.sql = sql;
+		this.args = args;
+		this.executionTime = executionTime;
+		this.errorMessage = errorMessage;
+		this.logLevel = logLevel;
+		this.dataSourceName = dataSourceName;
+		this.connectionId = connectionId;
+		this.isolationLevel = isolationLevel;
+		this.queryPhase = queryPhase;
+	}
+
+	public String getSql() {
+		return sql;
+	}
+
+	public Map<String, Object> getArgs() {
+		return args;
+	}
+
+	public long getExecutionTime() {
+		return executionTime;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public LogLevel getLogLevel() {
+		return logLevel;
+	}
+
+	public String getDataSourceName() {
+		return dataSourceName;
+	}
+
+	public String getConnectionId() {
+		return connectionId;
+	}
+
+	public int getIsolationLevel() {
+		return isolationLevel;
+	}
+
+	public String getQueryPhase() {
+		return queryPhase;
 	}
 
 	@Override
-	public String getLayer() {
-		return layer;
+	public boolean equals(Object object) {
+		if (this
+			== object) return true;
+		if (object
+			== null
+			|| getClass()
+			!= object.getClass()) return false;
+		SqlLogEntry that = (SqlLogEntry) object;
+		return executionTime
+			== that.executionTime
+			&& isolationLevel
+			== that.isolationLevel
+			&& Objects.equals(sql, that.sql)
+			&& Objects.equals(args, that.args)
+			&& Objects.equals(errorMessage, that.errorMessage)
+			&& logLevel
+			== that.logLevel
+			&& Objects.equals(dataSourceName, that.dataSourceName)
+			&& Objects.equals(connectionId, that.connectionId)
+			&& Objects.equals(queryPhase, that.queryPhase);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(sql, args, executionTime, errorMessage, logLevel, dataSourceName, connectionId,
+			isolationLevel,
+			queryPhase);
 	}
 
 	@Override
 	public String toString() {
-		return "SqlLogEntry{" +
-			"traceId='" + traceId + '\'' +
-			", layer='" + layer + '\'' +
-			", sql='" + sql + '\'' +
-			", args=" + ToStringUtils.formatParams(args) +
-			", executionTime=" + executionTime +
-			", errorMessage='" + errorMessage + '\'' +
-			", logLevel=" + logLevel +
-			", dataSourceName='" + dataSourceName + '\'' +
-			", connectionId='" + connectionId + '\'' +
-			", isolationLevel=" + isolationLevel +
-			", queryPhase='" + queryPhase + '\'' +
-			'}';
+		return super.toString() +
+			"- SQL: " + truncate(sql) + "\n" +
+			"- Args: " + truncate(args.toString()) + "\n" +
+			"- Execution Time: " + executionTime + "ms\n" +
+			"- Error: " + errorMessage + "\n" +
+			"- Data Source: " + dataSourceName + "\n" +
+			"- Connection ID: " + connectionId + "\n" +
+			"- Isolation Level: " + isolationLevel + "\n" +
+			"- Query Phase: " + queryPhase + "\n";
 	}
 
 }

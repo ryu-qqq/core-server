@@ -3,10 +3,11 @@ package com.ryuqq.core.alert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
-@Service
-public abstract class AbstractSlackNotificationService<T> {
+import com.ryuqq.core.api.NotificationService;
+
+
+public abstract class AbstractSlackNotificationService<T> implements NotificationService<T> {
 
 	private static final Logger log = LoggerFactory.getLogger(AbstractSlackNotificationService.class);
 
@@ -16,10 +17,7 @@ public abstract class AbstractSlackNotificationService<T> {
 		this.token = token;
 	}
 
-	/**
-	 * Slack 메시지를 전송하는 템플릿 메서드
-	 * @param payload 메시지 페이로드
-	 */
+
 	public void notifySlack(T payload) {
 		try {
 			String channel = determineChannel();

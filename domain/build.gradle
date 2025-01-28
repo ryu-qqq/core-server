@@ -3,7 +3,6 @@ dependencies {
 	api project(':core:core-enum')
 	api project(':core:core-events')
 
-	implementation project(":support:alert")
 	implementation project(":support:logging")
 	implementation project(":support:utils")
 

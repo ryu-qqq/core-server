@@ -3,7 +3,6 @@ package com.ryuqq.core.external.oco;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.ryuqq.core.external.CustomFeignLogger;
 import com.ryuqq.core.external.FeignRequestLoggingInterceptor;
 
 import feign.Logger;
@@ -30,7 +29,7 @@ public class OcoConfig {
 
 	@Bean
 	public Logger ocoFeignLogger() {
-		return new CustomFeignLogger();
+		return new OcoFeignLogger();
 	}
 
 	@Bean

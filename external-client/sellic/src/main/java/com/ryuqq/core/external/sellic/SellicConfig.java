@@ -3,7 +3,6 @@ package com.ryuqq.core.external.sellic;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.ryuqq.core.external.CustomFeignLogger;
 import com.ryuqq.core.external.FeignRequestLoggingInterceptor;
 
 import feign.Logger;
@@ -19,7 +18,7 @@ public class SellicConfig {
 
 	@Bean
 	public Logger sellicFeignLogger() {
-		return new CustomFeignLogger();
+		return new SellicFeignLogger();
 	}
 
 	@Bean

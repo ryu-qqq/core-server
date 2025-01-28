@@ -31,7 +31,4 @@ public class MdcContextPropagatingExecutorService {
 		});
 	}
 
-	public void shutdown() {
-		delegate.shutdown();
-	}
 }
