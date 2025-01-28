@@ -1,10 +1,10 @@
 package com.ryuqq.core.logging;
 
-import com.ryuqq.core.utils.TraceIdHolder;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ryuqq.core.utils.TraceIdHolder;
 
 public class LogFormatter {
 
