@@ -11,6 +11,6 @@ public class BuyMaRequestInterceptor implements RequestInterceptor {
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
 		requestTemplate.header("X-Buyma-Personal-Shopper-Api-Access-Token", accessToken);
-
 	}
+
 }

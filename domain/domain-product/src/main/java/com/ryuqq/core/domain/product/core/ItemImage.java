@@ -5,6 +5,4 @@ import com.ryuqq.core.enums.ProductImageType;
 public interface ItemImage {
 	ProductImageType getProductImageType();
 	String getImageUrl();
-
-
 }
