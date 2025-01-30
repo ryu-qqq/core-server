@@ -1,3 +1,5 @@
+package com.ryuqq.core.external.buyma;
+
 import org.springframework.beans.factory.annotation.Value;
 
 import feign.RequestInterceptor;

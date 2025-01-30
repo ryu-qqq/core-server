@@ -1,11 +1,11 @@
-package helper;
+package com.ryuqq.core.external.buyma.helper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import com.ryuqq.core.domain.Money;
 
-public class BuymaPriceHelper {
+public class BuyMaPriceHelper {
 
 	/**
 	 * 최종 가격을 계산합니다.

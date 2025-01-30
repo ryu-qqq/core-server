@@ -1,11 +1,15 @@
+package com.ryuqq.core.external.buyma;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import request.BuyMaProductInsertRequestWrapperDto;
-import request.BuyMaProductStockUpdateRequestWrapperDto;
-import response.BuyMaResponse;
+import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestWrapperDto;
+import com.ryuqq.core.external.buyma.request.BuyMaProductStockUpdateRequestWrapperDto;
+import com.ryuqq.core.external.buyma.response.BuyMaResponse;
+
+
 
 @FeignClient(name = "buyMaClient", url = "${buyMa.host-url}", configuration = BuyMaConfig.class)
 public interface BuyMaClient {

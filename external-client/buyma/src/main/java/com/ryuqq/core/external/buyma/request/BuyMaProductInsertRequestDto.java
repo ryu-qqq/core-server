@@ -1,4 +1,4 @@
-package request;
+package com.ryuqq.core.external.buyma.request;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
