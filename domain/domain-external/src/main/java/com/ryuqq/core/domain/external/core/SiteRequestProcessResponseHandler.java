@@ -1,5 +1,9 @@
 package com.ryuqq.core.domain.external.core;
 
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.ryuqq.core.domain.exception.AsyncDomainException;
 import com.ryuqq.core.domain.external.ExternalProduct;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
@@ -8,10 +12,6 @@ import com.ryuqq.core.domain.external.ExternalProductRegister;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.events.ExternalProductGroupFailedEvent;
-
-import java.util.List;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class SiteRequestProcessResponseHandler {
