@@ -21,13 +21,13 @@ public class BuyMaProductInsertRequestDto {
         private String comments;
 
         @JsonProperty("brand_id")
-        private int brandId;
+        private long brandId;
 
         @JsonProperty("brand_name")
         private String brandName;
 
         @JsonProperty("category_id")
-        private int categoryId;
+        private long categoryId;
 
         @JsonProperty("price")
         private int price;
@@ -58,7 +58,7 @@ public class BuyMaProductInsertRequestDto {
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("id")
-        private  Integer id;
+        private Long id;
 
         @JsonProperty("duty")
         private String duty;
@@ -67,7 +67,7 @@ public class BuyMaProductInsertRequestDto {
         private String colorSizeComment;
 
 
-        public BuyMaProductInsertRequestDto(String styleCode, long productGroupId, String name, String comments, String brandId, String brandName, String categoryId, int price, int referencePrice, List<BuyMaImageInsertRequestDto> images, List<BuyMaVariantInsertRequestDto> variants, List<BuyMaOptionInsertRequestDto> options, String id, String colorSizeComment) {
+        public BuyMaProductInsertRequestDto(String styleCode, long productGroupId, String name, String comments, String brandId, String brandName, String categoryId, int price, int referencePrice, List<BuyMaImageInsertRequestDto> images, List<BuyMaVariantInsertRequestDto> variants, List<BuyMaOptionInsertRequestDto> options, Long id, String colorSizeComment) {
                 this.referenceNumber = DEFAULT_REFERENCE_NUMBER(styleCode, productGroupId);
                 this.control = "publish";
                 this.name = name;
@@ -84,7 +84,7 @@ public class BuyMaProductInsertRequestDto {
                 this.shippingMethods = DEFAULT_SHIPPING_METHODS();
                 this.variants = variants;
                 this.options = options;
-                this.id = id != null ? Integer.parseInt(id) : null;
+                this.id = id != null ? id : null;
                 this.duty = "included";
                 this.colorSizeComment = colorSizeComment;
         }
@@ -114,9 +114,9 @@ public class BuyMaProductInsertRequestDto {
 		private String control;
 		private String name;
 		private String comments;
-		private int brandId;
+		private Long brandId;
 		private String brandName;
-		private int categoryId;
+		private Long categoryId;
 		private int price;
 		private int referencePrice;
 		private String availableUntil;
@@ -126,7 +126,7 @@ public class BuyMaProductInsertRequestDto {
 		private List<BuyMaShippingMethodDto> shippingMethods;
 		private List<BuyMaVariantInsertRequestDto> variants;
 		private List<BuyMaOptionInsertRequestDto> options;
-		private Integer id;
+		private Long id;
 		private String duty;
 		private String colorSizeComment;
 
@@ -150,7 +150,7 @@ public class BuyMaProductInsertRequestDto {
 			return this;
 		}
 
-		public Builder brandId(int brandId) {
+		public Builder brandId(Long brandId) {
 			this.brandId = brandId;
 			return this;
 		}
@@ -160,7 +160,7 @@ public class BuyMaProductInsertRequestDto {
 			return this;
 		}
 
-		public Builder categoryId(int categoryId) {
+		public Builder categoryId(Long categoryId) {
 			this.categoryId = categoryId;
 			return this;
 		}
@@ -210,7 +210,7 @@ public class BuyMaProductInsertRequestDto {
 			return this;
 		}
 
-		public Builder id(Integer id) {
+		public Builder id(Long id) {
 			this.id = id;
 			return this;
 		}
