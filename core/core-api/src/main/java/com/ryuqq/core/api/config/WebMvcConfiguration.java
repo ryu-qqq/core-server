@@ -7,6 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ryuqq.core.api.controller.v1.external.resolver.BuyMaEventResolver;
 import com.ryuqq.core.api.controller.v1.git.resolver.GitHubEventResolver;
 import com.ryuqq.core.api.interceptor.MdcLoggingInterceptor;
 
@@ -21,6 +22,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new GitHubEventResolver());
+		resolvers.add(new BuyMaEventResolver());
+
 	}
 
 }

@@ -12,7 +12,9 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import com.ryuqq.core.enums.SiteName;
 import com.ryuqq.core.enums.SiteType;
+import com.ryuqq.core.storage.db.external.dto.ExternalSiteDto;
 import com.ryuqq.core.storage.db.external.dto.ExternalSiteSellerRelationDto;
 import com.ryuqq.core.storage.db.external.dto.QExternalSiteDto;
 import com.ryuqq.core.storage.db.external.dto.QExternalSiteSellerRelationDto;
@@ -76,6 +78,20 @@ public class ExternalSiteQueryDslRepository  {
 			);
 	}
 
+	public Optional<ExternalSiteDto> fetchBySiteName(SiteName siteName){
+		return Optional.ofNullable(queryFactory
+				.select(
+					new QExternalSiteDto(
+						externalSiteSellerEntity.siteId,
+						siteEntity.name
+					)
+				)
+			.from(siteEntity)
+			.where(siteNameEq(siteName))
+			.fetchOne()
+		);
+	}
+
 	private BooleanExpression sellerIdEq(long sellerId){
 		return externalSiteSellerEntity.sellerId.eq(sellerId);
 	}
@@ -86,6 +102,10 @@ public class ExternalSiteQueryDslRepository  {
 
 	private BooleanExpression syncSiteType(){
 		return siteEntity.siteType.eq(SiteType.SYNC);
+	}
+
+	private BooleanExpression siteNameEq(SiteName siteName){
+		return siteEntity.name.eq(siteName);
 	}
 
 }

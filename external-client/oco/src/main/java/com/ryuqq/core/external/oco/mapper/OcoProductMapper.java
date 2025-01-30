@@ -70,7 +70,7 @@ public class OcoProductMapper {
 		Item item = itemContext.getItem();
 		ItemNoticeInfo noticeInfo = itemContext.getNoticeInfo();
 		ItemDeliveryInfo deliveryInfo = itemContext.getDeliveryInfo();
-		OcoPrice price = OcoPriceHelper.calculateFinalPrice(item.getPrice().getRegularPrice(), item.getPrice().geCurrentPrice());
+		OcoPrice price = OcoPriceHelper.calculateFinalPrice(item.getPrice().getRegularPrice(), item.getPrice().getCurrentPrice());
 		List<OcoImageInsertRequestDto> images = OcoImageInsertFactory.toOcoImages(itemContext.getItemImages());
 		List<OcoOptionContext> optionContexts = ocoOptionConverter.generateOptionContext(
 			externalProductGroup.getProductGroupId(), externalProductGroup.getExternalProductGroupId());

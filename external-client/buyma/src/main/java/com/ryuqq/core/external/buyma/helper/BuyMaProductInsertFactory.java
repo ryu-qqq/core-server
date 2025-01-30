@@ -9,13 +9,12 @@ import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.external.buyma.request.BuyMaImageInsertRequestDto;
 import com.ryuqq.core.external.buyma.request.BuyMaOptionInsertRequestDto;
 import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestDto;
-import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestWrapperDto;
 import com.ryuqq.core.external.buyma.request.BuyMaShippingMethodDto;
 import com.ryuqq.core.external.buyma.request.BuyMaVariantInsertRequestDto;
 
 public class BuyMaProductInsertFactory {
 
-	public static BuyMaProductInsertRequestWrapperDto createInsertRequestDto(
+	public static BuyMaProductInsertRequestDto createInsertRequestDto(
 		ExternalProductGroup externalProductGroup,
 		String productGroupName,
 		String styleCode,
@@ -29,7 +28,7 @@ public class BuyMaProductInsertFactory {
 		List<BuyMaImageInsertRequestDto> images,
 		String colorSizeComment
 	) {
-		BuyMaProductInsertRequestDto buyMaProductInsertRequestDto = new BuyMaProductInsertRequestDto.Builder()
+		return new BuyMaProductInsertRequestDto.Builder()
 			.buyingAreaId(2002003001)
 			.shippingAreaId(2002003001)
 			.availableUntil(LocalDateTime.now().plusDays(90).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
@@ -48,11 +47,8 @@ public class BuyMaProductInsertFactory {
 			.brandId(brandId)
 			.brandName(brandName)
 			.categoryId(categoryId)
-			.referenceNumber(DEFAULT_REFERENCE_NUMBER(styleCode, externalProductGroup.getProductGroupId()))
+			.referenceNumber(BuyMaReferenceNumberHelper.getDefaultReferenceNumber(styleCode, externalProductGroup.getProductGroupId()))
 			.build();
-
-
-		return new BuyMaProductInsertRequestWrapperDto(buyMaProductInsertRequestDto);
 	}
 
 	private static List<BuyMaShippingMethodDto> DEFAULT_SHIPPING_METHODS(){
@@ -60,17 +56,6 @@ public class BuyMaProductInsertFactory {
 			new BuyMaShippingMethodDto(984481),
 			new BuyMaShippingMethodDto(984491)
 		);
-	}
-
-	private static String DEFAULT_REFERENCE_NUMBER(String styleCode, long productGroupId) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(productGroupId);
-
-		if (styleCode != null && !styleCode.isEmpty()) {
-			sb.append("_");
-			sb.append(styleCode);
-		}
-		return sb.toString();
 	}
 
 }

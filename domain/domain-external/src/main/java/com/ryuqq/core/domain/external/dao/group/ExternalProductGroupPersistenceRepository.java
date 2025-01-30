@@ -8,4 +8,5 @@ public interface ExternalProductGroupPersistenceRepository {
 	void saveAll(List<ExternalProductGroupCommand> externalProductGroupCommands);
 	void update(ExternalProductGroupCommand externalProductGroupCommand);
 	void updateAll(List<ExternalProductGroupCommand> externalProductGroupCommands);
+
 }

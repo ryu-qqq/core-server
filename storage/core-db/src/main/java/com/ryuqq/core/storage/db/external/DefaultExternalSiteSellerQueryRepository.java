@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.domain.external.ExternalSiteSellerRelation;
 import com.ryuqq.core.domain.external.dao.site.ExternalSiteQueryRepository;
+import com.ryuqq.core.enums.SiteName;
+import com.ryuqq.core.storage.db.exception.DataNotFoundException;
 
 @Repository
 public class DefaultExternalSiteSellerQueryRepository implements ExternalSiteQueryRepository {
@@ -41,6 +43,13 @@ public class DefaultExternalSiteSellerQueryRepository implements ExternalSiteQue
 				return new ExternalSiteSellerRelation(e.getSellerId(), e.getSellerName(), externalSites);
 			})
 			.toList();
+	}
+
+	@Override
+	public ExternalSite fetchBySiteName(SiteName siteName) {
+		return externalSiteQueryDslRepository.fetchBySiteName(siteName)
+			.map(e -> new ExternalSite(e.getSiteId(), e.getSiteName()))
+			.orElseThrow(() -> new DataNotFoundException(String.format("Site Not found Site Name : %s", siteName)));
 	}
 
 }

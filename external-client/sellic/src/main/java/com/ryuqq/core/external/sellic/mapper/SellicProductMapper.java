@@ -49,7 +49,7 @@ public class SellicProductMapper {
 		Price price = item.getPrice();
 		List<? extends ItemImage> itemImages = itemContext.getItemImages();
 
-		SellicPrice sellicPrice = SellicPriceHelper.calculateFinalPrice(price.getRegularPrice(), price.geCurrentPrice());
+		SellicPrice sellicPrice = SellicPriceHelper.calculateFinalPrice(price.getRegularPrice(), price.getCurrentPrice());
 		List<SellicImage> sellicImages = SellicImageInsertFactory.toSellicImages(itemImages);
 		SellicOptionContext sellicOptionContext = sellicOptionConverter.generateOptionContext(externalProductGroup.getProductGroupId());
 		String externalCategoryId = resolveCategoryId(externalProductGroup);
