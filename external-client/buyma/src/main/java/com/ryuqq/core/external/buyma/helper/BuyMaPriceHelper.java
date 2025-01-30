@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import com.ryuqq.core.domain.Money;
+import com.ryuqq.core.external.buyma.BuyMaPrice;
 
 public class BuyMaPriceHelper {
 
@@ -15,7 +16,7 @@ public class BuyMaPriceHelper {
 	 * @return 최종 외부 몰 가격 (배송비 포함).
 	 */
 
-	public static BigDecimal calculateFinalPrice(BigDecimal currentPrice, BigDecimal exchangeRate) {
+	public static BuyMaPrice calculateFinalPrice(BigDecimal currentPrice, BigDecimal exchangeRate) {
 
 		Money currentMoney = Money.wons(currentPrice);
 
@@ -30,7 +31,7 @@ public class BuyMaPriceHelper {
 			? calculateAdjustedPrice(currentMoney, normalizedExchangeRate)
 			: basePrice;
 
-		return ensureHundredsPlaceIs900(finalPrice);
+		return new BuyMaPrice(ensureHundredsPlaceIs900(finalPrice));
 	}
 
 	/**

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface Price {
 	BigDecimal getRegularPrice();
-	BigDecimal geCurrentPrice();
+	BigDecimal getCurrentPrice();
 	BigDecimal getSalePrice();
 	BigDecimal getDirectDiscountPrice();
 	int getDirectDiscountRate();

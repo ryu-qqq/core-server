@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestWrapperDto;
 import com.ryuqq.core.external.buyma.request.BuyMaProductStockUpdateRequestWrapperDto;
-import com.ryuqq.core.external.buyma.response.BuyMaResponse;
+import com.ryuqq.core.external.buyma.response.BuyMaProductInsertResponseDto;
 
 
 
@@ -15,9 +15,9 @@ import com.ryuqq.core.external.buyma.response.BuyMaResponse;
 public interface BuyMaClient {
 
 	@PostMapping("/api/v1/products.json")
-	ResponseEntity<Object> insertProduct(@RequestBody BuyMaProductInsertRequestWrapperDto product);
+	ResponseEntity<BuyMaProductInsertResponseDto> insertProduct(@RequestBody BuyMaProductInsertRequestWrapperDto product);
 
 	@PostMapping("/api/v1/products/variants.json")
-	ResponseEntity<BuyMaResponse<?>> updateStock(@RequestBody BuyMaProductStockUpdateRequestWrapperDto variant);
+	ResponseEntity<BuyMaProductInsertResponseDto> updateStock(@RequestBody BuyMaProductStockUpdateRequestWrapperDto variant);
 
 }

@@ -63,11 +63,6 @@ public class DefaultPrice implements Price {
 		return regularPrice.getAmount();
 	}
 
-	@Override
-	public BigDecimal geCurrentPrice() {
-		return currentPrice.getAmount();
-	}
-
 	public BigDecimal getCurrentPrice() {
 		return currentPrice.getAmount();
 	}
