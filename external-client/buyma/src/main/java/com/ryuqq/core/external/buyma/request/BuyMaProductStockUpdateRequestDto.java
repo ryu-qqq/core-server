@@ -1,4 +1,4 @@
-package request;
+package com.ryuqq.core.external.buyma.request;
 
 import java.util.List;
 

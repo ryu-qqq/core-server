@@ -1,4 +1,4 @@
-package response;
+package com.ryuqq.core.external.buyma.response;
 
 import java.time.LocalDateTime;
 import java.util.Map;

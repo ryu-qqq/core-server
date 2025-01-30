@@ -1,18 +1,15 @@
-package helper;
+package com.ryuqq.core.external.buyma.helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.ryuqq.core.domain.product.core.ItemImage;
+import com.ryuqq.core.external.buyma.request.BuyMaImageInsertRequestDto;
 
-import request.BuyMaImageInsertRequestDto;
 
-@Component
 public class BuyMaImageInsertFactory {
 
-	public List<BuyMaImageInsertRequestDto> generateImageContext(List<? extends ItemImage> itemImage){
+	public static List<BuyMaImageInsertRequestDto> toBuyMaImages(List<? extends ItemImage> itemImage){
 		List<BuyMaImageInsertRequestDto> buyMaImageInsertRequests = new ArrayList<>();
 		int imageSortCounter = 2;
 
