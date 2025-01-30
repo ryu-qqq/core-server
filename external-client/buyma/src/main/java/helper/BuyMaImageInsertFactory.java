@@ -1,14 +1,13 @@
 package helper;
 
-import request.BuyMaImageInsertRequestDto;
-
-import com.ryuqq.core.domain.product.core.ItemImage;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.ryuqq.core.domain.product.core.ItemImage;
+
+import request.BuyMaImageInsertRequestDto;
 
 @Component
 public class BuyMaImageInsertFactory {
