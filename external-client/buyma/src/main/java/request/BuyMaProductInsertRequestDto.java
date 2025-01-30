@@ -109,6 +109,149 @@ public class BuyMaProductInsertRequestDto {
         }
 
 
+	public static class Builder {
+		private String referenceNumber;
+		private String control;
+		private String name;
+		private String comments;
+		private int brandId;
+		private String brandName;
+		private int categoryId;
+		private int price;
+		private int referencePrice;
+		private String availableUntil;
+		private int buyingAreaId;
+		private int shippingAreaId;
+		private List<BuyMaImageInsertRequestDto> images;
+		private List<BuyMaShippingMethodDto> shippingMethods;
+		private List<BuyMaVariantInsertRequestDto> variants;
+		private List<BuyMaOptionInsertRequestDto> options;
+		private Integer id;
+		private String duty;
+		private String colorSizeComment;
+
+		public Builder referenceNumber(String referenceNumber) {
+			this.referenceNumber = referenceNumber;
+			return this;
+		}
+
+		public Builder control(String control) {
+			this.control = control;
+			return this;
+		}
+
+		public Builder name(String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder comments(String comments) {
+			this.comments = comments;
+			return this;
+		}
+
+		public Builder brandId(int brandId) {
+			this.brandId = brandId;
+			return this;
+		}
+
+		public Builder brandName(String brandName) {
+			this.brandName = brandName;
+			return this;
+		}
+
+		public Builder categoryId(int categoryId) {
+			this.categoryId = categoryId;
+			return this;
+		}
+
+		public Builder price(int price) {
+			this.price = price;
+			return this;
+		}
+
+		public Builder referencePrice(int referencePrice) {
+			this.referencePrice = referencePrice;
+			return this;
+		}
+
+		public Builder availableUntil(String availableUntil) {
+			this.availableUntil = availableUntil;
+			return this;
+		}
+
+		public Builder buyingAreaId(int buyingAreaId) {
+			this.buyingAreaId = buyingAreaId;
+			return this;
+		}
+
+		public Builder shippingAreaId(int shippingAreaId) {
+			this.shippingAreaId = shippingAreaId;
+			return this;
+		}
+
+		public Builder images(List<BuyMaImageInsertRequestDto> images) {
+			this.images = images;
+			return this;
+		}
+
+		public Builder shippingMethods(List<BuyMaShippingMethodDto> shippingMethods) {
+			this.shippingMethods = shippingMethods;
+			return this;
+		}
+
+		public Builder variants(List<BuyMaVariantInsertRequestDto> variants) {
+			this.variants = variants;
+			return this;
+		}
+
+		public Builder options(List<BuyMaOptionInsertRequestDto> options) {
+			this.options = options;
+			return this;
+		}
+
+		public Builder id(Integer id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder duty(String duty) {
+			this.duty = duty;
+			return this;
+		}
+
+		public Builder colorSizeComment(String colorSizeComment) {
+			this.colorSizeComment = colorSizeComment;
+			return this;
+		}
+
+		public BuyMaProductInsertRequestDto build() {
+			return new BuyMaProductInsertRequestDto(this);
+		}
+	}
+
+	private BuyMaProductInsertRequestDto(Builder builder) {
+		this.referenceNumber = builder.referenceNumber;
+		this.control = builder.control;
+		this.name = builder.name;
+		this.comments = builder.comments;
+		this.brandId = builder.brandId;
+		this.brandName = builder.brandName;
+		this.categoryId = builder.categoryId;
+		this.price = builder.price;
+		this.referencePrice = builder.referencePrice;
+		this.availableUntil = builder.availableUntil;
+		this.buyingAreaId = builder.buyingAreaId;
+		this.shippingAreaId = builder.shippingAreaId;
+		this.images = builder.images;
+		this.shippingMethods = builder.shippingMethods;
+		this.variants = builder.variants;
+		this.options = builder.options;
+		this.id = builder.id;
+		this.duty = builder.duty;
+		this.colorSizeComment = builder.colorSizeComment;
+	}
+
 
 
 
