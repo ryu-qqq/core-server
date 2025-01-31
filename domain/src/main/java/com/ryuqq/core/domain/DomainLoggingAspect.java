@@ -5,6 +5,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.exception.DataNotFoundException;
+import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.logging.AopLogEntry;
 import com.ryuqq.core.logging.AopLogEntryFactory;
 import com.ryuqq.core.logging.LogContextManager;
@@ -19,15 +21,8 @@ public class DomainLoggingAspect {
 	public Object logDomainLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 		long startTime = System.currentTimeMillis();
 
-		AopLogEntry startLogEntry = AopLogEntryFactory.createAopLogEntryWhenStart(joinPoint, DOMAIN_LAYER);
-		LogContextManager.logToContext(startLogEntry);
-
 		try {
-			Object result = joinPoint.proceed();
-
-			AopLogEntry successLogEntry = AopLogEntryFactory.createAopLogEntryWhenSuccess(joinPoint, startTime, DOMAIN_LAYER);
-			LogContextManager.logToContext(successLogEntry);
-			return result;
+			return joinPoint.proceed();
 		} catch (Exception e) {
 			AopLogEntry errorLogEntry = AopLogEntryFactory.createAopLogEntryWhenFailed(joinPoint, e, startTime, DOMAIN_LAYER);
 			LogContextManager.logToContext(errorLogEntry);

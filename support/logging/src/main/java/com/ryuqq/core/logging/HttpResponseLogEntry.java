@@ -33,7 +33,7 @@ public class HttpResponseLogEntry implements LogEntry{
 
 	@Override
 	public LogLevel getLogLevel() {
-		return null;
+		return logLevel;
 	}
 
 	public int getStatus() {

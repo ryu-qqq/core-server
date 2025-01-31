@@ -18,8 +18,8 @@ public class ProductGroupContextAggregateRoot {
 		this.productGroupContextUpdater = productGroupContextUpdater;
 	}
 
-	public void registerProductGroupContext(ProductGroupContext productGroupContext){
-		productGroupContextRegister.registerProductGroupContext(productGroupContext);
+	public long registerProductGroupContext(ProductGroupContext productGroupContext){
+		return productGroupContextRegister.registerProductGroupContext(productGroupContext);
 	}
 
 	public UpdateDecision updateProductGroupContext(long productGroupId, ProductGroupContext productGroupContext) {

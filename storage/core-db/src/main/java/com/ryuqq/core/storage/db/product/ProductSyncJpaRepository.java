@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProductSyncJpaRepository extends JpaRepository<ProductSyncEntity, Long> {
 
 	Optional<ProductSyncEntity> findByProductGroupId(long productGroupId);
+
 }

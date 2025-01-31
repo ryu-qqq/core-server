@@ -13,19 +13,16 @@ public class ProductGroupContextRegister {
 	private final ProductGroupDomainHandler productGroupDomainHandler;
 	private final ProductGroupImageDomainHandler productGroupImageDomainHandler;
 	private final ProductDomainHandler productDomainHandler;
-	private final ProductSyncPersistenceRepository productSyncPersistenceRepository;
 
 	public ProductGroupContextRegister(ProductGroupDomainHandler productGroupDomainHandler,
 									   ProductGroupImageDomainHandler productGroupImageDomainHandler,
-									   ProductDomainHandler productDomainHandler,
-									   ProductSyncPersistenceRepository productSyncPersistenceRepository) {
+									   ProductDomainHandler productDomainHandler) {
 		this.productGroupDomainHandler = productGroupDomainHandler;
 		this.productGroupImageDomainHandler = productGroupImageDomainHandler;
 		this.productDomainHandler = productDomainHandler;
-		this.productSyncPersistenceRepository = productSyncPersistenceRepository;
 	}
 
-	public void registerProductGroupContext(ProductGroupContext productGroupContext){
+	public long registerProductGroupContext(ProductGroupContext productGroupContext){
 
 		ProductGroupContext assignProductGroupIdContext = saveProductGroupAndAssignProductGroupId(productGroupContext);
 
@@ -37,9 +34,7 @@ public class ProductGroupContextRegister {
 
 		productDomainHandler.handleProductDomain(assignProductGroupIdContext.getProducts());
 
-		ProductSyncCommand productSyncCommand = new DefaultProductSyncCommand(productGroupContext.getProductGroupId(), SyncStatus.APPROVED);
-		productSyncPersistenceRepository.save(productSyncCommand);
-
+		return assignProductGroupIdContext.getProductGroupId();
 	}
 
 	private ProductGroupContext saveProductGroupAndAssignProductGroupId(ProductGroupContext productGroupContext){
