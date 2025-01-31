@@ -38,8 +38,8 @@ public class Money {
 		return new Money(this.amount.subtract(money.amount));
 	}
 
-	public Money times(double percent) {
-		return new Money(this.amount.multiply(BigDecimal.valueOf(percent)));
+	public Money times(BigDecimal percent) {
+		return new Money(this.amount.multiply(percent).setScale(0, RoundingMode.HALF_UP)); // 소수점 반올림 적용
 	}
 
 	public BigDecimal divide(Money divisor, int scale, RoundingMode roundingMode) {

@@ -9,10 +9,9 @@ public class SellicPriceHelper {
 
     public static SellicPrice calculateFinalPrice(BigDecimal regularPrice, BigDecimal currentPrice) {
 		Money currentMoney = Money.wons(currentPrice);
-
-		int newCurrentPrice = currentMoney.times(1.375).getAmount().intValue();
-        int newRegularPrice = Math.max(regularPrice.intValueExact(), newCurrentPrice);
-        return new SellicPrice(newRegularPrice, newRegularPrice);
+		int newCurrentPrice = currentMoney.times(BigDecimal.valueOf(1.375)).getAmount().intValue();
+		int newRegularPrice = Math.max(regularPrice.intValueExact(), newCurrentPrice);
+		return new SellicPrice(newRegularPrice, newRegularPrice);
     }
 
 }
