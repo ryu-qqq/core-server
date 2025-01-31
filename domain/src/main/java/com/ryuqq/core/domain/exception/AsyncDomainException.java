@@ -4,7 +4,8 @@ import com.ryuqq.core.enums.ErrorType;
 
 public class AsyncDomainException extends DomainException{
 
-	public AsyncDomainException(ErrorType errorType, String message, Throwable cause) {
-		super(errorType, message, cause);
+	public AsyncDomainException(ErrorType errorType, Throwable cause) {
+		super(errorType, cause);
 	}
+
 }

@@ -1,6 +1,5 @@
 package com.ryuqq.core.domain.external.core;
 
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;

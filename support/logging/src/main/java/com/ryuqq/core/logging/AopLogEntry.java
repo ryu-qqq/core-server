@@ -26,7 +26,6 @@ public final class AopLogEntry extends AbstractLogEntry {
 	private final String processId;
 	private final String applicationName;
 
-
 	AopLogEntry(String traceId, String layer, String className, String methodName, Map<String, Object> args,
 				Throwable exception, long executionTime, LogLevel logLevel, String callerData) {
 		super(traceId, layer);
@@ -64,10 +63,13 @@ public final class AopLogEntry extends AbstractLogEntry {
 	}
 
 	private String extractStackTrace(Throwable e) {
+		int MAX_STACKTRACE_LINES = 5;  // 표시할 최대 줄 수
 		return Arrays.stream(e.getStackTrace())
+			.limit(MAX_STACKTRACE_LINES)  // ⚡️ 최대 5줄까지만 저장
 			.map(StackTraceElement::toString)
-			.collect(Collectors.joining("\n"));
+			.collect(Collectors.joining("\n")) + "\n... 생략됨";
 	}
+
 
 	public String getHostName() {
 		try {

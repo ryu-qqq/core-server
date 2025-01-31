@@ -14,18 +14,19 @@ dependencies {
 	implementation project(':core:core-events')
 
 
-	implementation project(":support:logging")
+	api project(":support:logging")
 	implementation project(":support:monitoring")
 	implementation project(":support:utils")
 
 	runtimeOnly project(":support:alert")
 	runtimeOnly project(":external-client:sellic")
 	runtimeOnly project(":external-client:oco")
+	runtimeOnly project(":external-client:buyma")
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework:spring-tx'
-
 
 	testImplementation testFixtures(project(":tests:unit-tests"))
 	testImplementation testFixtures(project(":tests:api-docs"))

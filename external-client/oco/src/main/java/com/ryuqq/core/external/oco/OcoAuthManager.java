@@ -62,7 +62,7 @@ public class OcoAuthManager {
 				throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR, "Failed to fetch token from OCO - Invalid response");
 			}
 		} catch (Exception e) {
-			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  "Error fetching token from OCO", e);
+			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  "Error fetching token from OCO");
 		}
 	}
 

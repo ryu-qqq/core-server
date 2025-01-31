@@ -5,63 +5,34 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.api.exception.CoreException;
-import com.ryuqq.core.domain.exception.DomainException;
-import com.ryuqq.core.enums.ErrorType;
-import com.ryuqq.core.events.SlackErrorAlertMessageEvent;
-import com.ryuqq.core.logging.LogContext;
+import com.ryuqq.core.logging.AopLogEntry;
+import com.ryuqq.core.logging.AopLogEntryFactory;
 import com.ryuqq.core.logging.LogContextManager;
-import com.ryuqq.core.logging.QueryLogger;
 
 @Aspect
 @Component
-public class ApiLoggingAspect   {
+public class ApiLoggingAspect {
 
 	private final static String API_LAYER = "API";
-	private final ApiEventPublisher apiEventPublisher;
-
-	public ApiLoggingAspect(ApiEventPublisher apiEventPublisher) {
-		this.apiEventPublisher = apiEventPublisher;
-	}
 
 	@Around("execution(* com.ryuqq.core.api.controller.v1..*(..)) ")
-	public Object logApiLayer(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object logDomainLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 		long startTime = System.currentTimeMillis();
 
-		LogContextManager.initialize(joinPoint, API_LAYER);
-		Throwable caughtException = null;
+		AopLogEntry startLogEntry = AopLogEntryFactory.createAopLogEntryWhenStart(joinPoint, API_LAYER);
+		LogContextManager.logToContext(startLogEntry);
 
 		try {
-			return joinPoint.proceed();
-		} catch (CoreException | DomainException e) {
-			LogContextManager.logToContext(joinPoint, e, startTime, API_LAYER);
-			caughtException = e;
-			throw e;
+			Object result = joinPoint.proceed();
+			AopLogEntry successLogEntry = AopLogEntryFactory.createAopLogEntryWhenSuccess(joinPoint, startTime, API_LAYER);
+			LogContextManager.logToContext(successLogEntry);
+			return result;
 		} catch (Exception e) {
-			CoreException wrappedException = new CoreException(
-				"서버에 잠시 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-				ErrorType.UNEXPECTED_ERROR,
-				e
-			);
-			LogContextManager.logToContext(joinPoint, wrappedException, startTime, API_LAYER);
-			caughtException = wrappedException;
-			throw wrappedException;
-		} finally {
-			if (caughtException != null) {
-				LogContext.getLogEntries()
-					.stream()
-					.filter(entry -> entry.getLogLevel().isLogRequired())
-					.forEach(QueryLogger::log);
-
-				String nestedLog = LogContextManager.finalizeAndLog();
-				if (nestedLog != null && !nestedLog.isEmpty()) {
-					apiEventPublisher.publish(new SlackErrorAlertMessageEvent(nestedLog));
-				}
-			}
-
-			LogContextManager.clear();
+			AopLogEntry errorLogEntry = AopLogEntryFactory.createAopLogEntryWhenFailed(joinPoint, e, startTime, API_LAYER);
+			LogContextManager.logToContext(errorLogEntry);
+			throw e;
 		}
-
 	}
+
 
 }

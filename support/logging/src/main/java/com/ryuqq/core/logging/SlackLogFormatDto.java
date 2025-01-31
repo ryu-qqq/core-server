@@ -3,19 +3,19 @@ package com.ryuqq.core.logging;
 import java.util.Map;
 import java.util.Objects;
 
-public class AopLogEntryDto {
+public class SlackLogFormatDto {
 	private final String className;
 	private final String methodName;
 	private final Map<String, Object> args;
 	private final long executionTime;
 	private final String exceptionMessage;
-	private final String stackTrace;
+	private final String filteredStackTrace;
 	private final String callerData;
 	private final String hostName;
 	private final String processId;
 	private final String applicationName;
 
-	public AopLogEntryDto(String className, String methodName, Map<String, Object> args, long executionTime, String exceptionMessage,
+	public SlackLogFormatDto(String className, String methodName, Map<String, Object> args, long executionTime, String exceptionMessage,
 						  String stackTrace, String callerData, String hostName, String processId,
 						  String applicationName) {
 		this.className = className;
@@ -23,7 +23,7 @@ public class AopLogEntryDto {
 		this.args = args;
 		this.executionTime = executionTime;
 		this.exceptionMessage = exceptionMessage;
-		this.stackTrace = stackTrace;
+		this.filteredStackTrace = filterStackTrace(stackTrace);
 		this.callerData = callerData;
 		this.hostName = hostName;
 		this.processId = processId;
@@ -50,12 +50,13 @@ public class AopLogEntryDto {
 		return exceptionMessage;
 	}
 
-	public String getStackTrace() {
-		return stackTrace;
-	}
 
 	public String getCallerData() {
 		return callerData;
+	}
+
+	public String getFilteredStackTrace() {
+		return filteredStackTrace;
 	}
 
 	public String getHostName() {
@@ -70,6 +71,27 @@ public class AopLogEntryDto {
 		return applicationName;
 	}
 
+
+	private String filterStackTrace(String stackTrace) {
+		if (stackTrace == null || stackTrace.isEmpty()) return "No stack trace available.";
+
+		String[] lines = stackTrace.split("\n");
+		StringBuilder filtered = new StringBuilder();
+		int count = 0;
+
+		for (String line : lines) {
+			if (line.contains("com.ryuqq.core") || line.contains("java.") || line.contains("org.springframework.")) {
+				filtered.append(line.trim()).append("\n");
+				if (++count >= 5) break;  // 상위 5개만 표시
+			}
+		}
+
+		if (filtered.isEmpty()) {
+			return "Filtered stack trace is empty.";
+		}
+		return filtered.toString();
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this
@@ -78,14 +100,14 @@ public class AopLogEntryDto {
 			== null
 			|| getClass()
 			!= object.getClass()) return false;
-		AopLogEntryDto that = (AopLogEntryDto) object;
+		SlackLogFormatDto that = (SlackLogFormatDto) object;
 		return executionTime
 			== that.executionTime
 			&& Objects.equals(className, that.className)
 			&& Objects.equals(methodName, that.methodName)
 			&& Objects.equals(args, that.args)
 			&& Objects.equals(exceptionMessage, that.exceptionMessage)
-			&& Objects.equals(stackTrace, that.stackTrace)
+			&& Objects.equals(filteredStackTrace, that.filteredStackTrace)
 			&& Objects.equals(callerData, that.callerData)
 			&& Objects.equals(hostName, that.hostName)
 			&& Objects.equals(processId, that.processId)
@@ -94,38 +116,53 @@ public class AopLogEntryDto {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(className, methodName, args, executionTime, exceptionMessage, stackTrace, callerData,
-			hostName,
-			processId, applicationName);
+		return Objects.hash(className, methodName, args, executionTime, exceptionMessage, filteredStackTrace,
+			callerData,
+			hostName, processId, applicationName);
 	}
 
 	@Override
 	public String toString() {
-		return String.format(
-			"""
-				{
-				  "className": "%s",
-				  "methodName": "%s",
-				  "args": %s,
-				  "executionTime": %d ms,
-				  "exceptionMessage": "%s",
-				  "stackTrace": "%s",
-				  "callerData": "%s",
-				  "hostName": "%s",
-				  "processId": "%s",
-				  "applicationName": "%s"
-				}""",
-			className,
-			methodName,
-			args != null ? args.toString() : "null",
-			executionTime,
-			exceptionMessage != null ? exceptionMessage.replaceAll("\n", " ") : "No exception message",
-			stackTrace != null ? stackTrace.replaceAll("\n", " ") : "No stack trace",
-			callerData,
-			hostName,
-			processId,
-			applicationName
-		);
+		return "SlackLogFormatDto{"
+			+
+			"className='"
+			+ className
+			+ '\''
+			+
+			", methodName='"
+			+ methodName
+			+ '\''
+			+
+			", args="
+			+ args
+			+
+			", executionTime="
+			+ executionTime
+			+
+			", exceptionMessage='"
+			+ exceptionMessage
+			+ '\''
+			+
+			", filteredStackTrace='"
+			+ filteredStackTrace
+			+ '\''
+			+
+			", callerData='"
+			+ callerData
+			+ '\''
+			+
+			", hostName='"
+			+ hostName
+			+ '\''
+			+
+			", processId='"
+			+ processId
+			+ '\''
+			+
+			", applicationName='"
+			+ applicationName
+			+ '\''
+			+
+			'}';
 	}
-
 }

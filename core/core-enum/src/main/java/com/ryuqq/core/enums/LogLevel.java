@@ -6,4 +6,5 @@ public enum LogLevel {
 	public boolean isLogRequired(){
 		return this.equals(ERROR) || this.equals(WARN);
 	}
+
 }

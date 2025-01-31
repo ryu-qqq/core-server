@@ -14,7 +14,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.ryuqq.core.api.exception.CoreException;
 import com.ryuqq.core.api.payload.ApiResponse;
 import com.ryuqq.core.api.payload.ErrorMessage;
-import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.enums.ErrorType;
 
 @RestControllerAdvice
@@ -45,22 +44,14 @@ public class GlobalExceptionController {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ApiResponse<?>> handleUnexpectedException(Exception ex) {
-
 		ErrorMessage errorMessage = new ErrorMessage(ErrorType.UNEXPECTED_ERROR, "An unexpected error occurred.");
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(errorMessage));
 	}
 
 	@ExceptionHandler(CoreException.class)
-	public ResponseEntity<ApiResponse<?>> handleCoreException(CoreException ex) {
-
+	public ResponseEntity<ApiResponse<?>> handleApplicationException(CoreException ex) {
 		ErrorMessage errorMessage = new ErrorMessage(ex.getErrorType(), ex.getMessage());
-		return ResponseEntity.status(HttpStatus.valueOf(ex.getErrorType().getStatus())).body(ApiResponse.error(errorMessage));
-	}
-
-	@ExceptionHandler(DomainException.class)
-	public ResponseEntity<ApiResponse<?>> handleDomainException(DomainException ex) {
-		ErrorMessage errorMessage = new ErrorMessage(ex.getErrorType(), ex.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(errorMessage));
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(errorMessage));
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)

@@ -49,8 +49,7 @@ public class SiteRequestProcessResponseHandler {
 	}
 
 	public void handleFailure(ExternalProductGroup productGroup, Exception e) {
-		AsyncDomainException asyncDomainException = new AsyncDomainException(ErrorType.UNEXPECTED_ERROR,
-			"Failed to process product group with ID: " + productGroup.getProductGroupId(), e);
+		AsyncDomainException asyncDomainException = new AsyncDomainException(ErrorType.UNEXPECTED_ERROR, e);
 
 		eventPublisher.publishEvent(new ExternalProductGroupFailedEvent(productGroup.getSiteId(), productGroup.getProductGroupId(), asyncDomainException));
 		throw asyncDomainException;
