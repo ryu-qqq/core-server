@@ -24,6 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class MdcLoggingInterceptor implements HandlerInterceptor {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	private static final String HEALTH_CHECKER = "HealthCheckController.fetchHealth";
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
@@ -33,20 +34,20 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 		if (handler instanceof HandlerMethod handlerMethod) {
 			String controllerName = handlerMethod.getBeanType().getSimpleName();
 			String methodName = handlerMethod.getMethod().getName();
-			String handlerInfo = controllerName
-				+ "."
-				+ methodName;
+			String handlerInfo = controllerName + "." + methodName;
 
-			MDC.put("handler", handlerInfo);
+			if(!HEALTH_CHECKER.equals(handlerInfo)) {
+				MDC.put("handler", handlerInfo);
 
-			loggingClientInfo(request);
+				loggingClientInfo(request);
 
-			Map<String, String> requestParams = getRequestParameters(request);
-			log.info("[TraceId: {}] Handler: {}, Request Params: {}", traceId, handlerInfo, requestParams);
+				Map<String, String> requestParams = getRequestParameters(request);
+				log.info("[TraceId: {}] Handler: {}, Request Params: {}", traceId, handlerInfo, requestParams);
 
-			String requestBody = getRequestBody(request);
-			if (!requestBody.isEmpty()) {
-				log.info("[TraceId: {}] Handler: {}, Request Body: {}", traceId, handlerInfo, requestBody);
+				String requestBody = getRequestBody(request);
+				if (!requestBody.isEmpty()) {
+					log.info("[TraceId: {}] Handler: {}, Request Body: {}", traceId, handlerInfo, requestBody);
+				}
 			}
 		}
 

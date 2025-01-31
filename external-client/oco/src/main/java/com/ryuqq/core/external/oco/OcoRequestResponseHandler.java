@@ -20,6 +20,11 @@ public class OcoRequestResponseHandler {
 		}
 
 		if (response.getHttpStatus().is2xxSuccessful()) {
+
+			if(response.responseStatus().statusCode() != 200){
+				throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  response.responseStatus().returnMessage());
+			}
+
 			T t = response.apiResult();
 			if (t != null) {
 				String message = response.getMessage();
@@ -33,6 +38,10 @@ public class OcoRequestResponseHandler {
 			} else {
 				throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  OCO_DATA_NULL_MSG);
 			}
+		}
+
+		if(response.responseStatus() != null){
+			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR,  response.responseStatus().returnMessage());
 		}
 
 		throw new IllegalStateException(OCO_SERVER_ERROR_MSG);
