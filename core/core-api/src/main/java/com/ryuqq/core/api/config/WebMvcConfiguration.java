@@ -33,7 +33,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new GitHubEventResolver());
 		resolvers.add(new BuyMaEventResolver());
-
 	}
 
 }

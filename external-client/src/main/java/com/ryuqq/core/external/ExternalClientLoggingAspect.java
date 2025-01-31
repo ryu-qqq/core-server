@@ -19,15 +19,8 @@ public class ExternalClientLoggingAspect {
 	public Object logExternalClientLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 		long startTime = System.currentTimeMillis();
 
-		AopLogEntry startLogEntry = AopLogEntryFactory.createAopLogEntryWhenStart(joinPoint, EXTERNAL_CLIENT_LAYER);
-		LogContextManager.logToContext(startLogEntry);
-
 		try {
-			Object result = joinPoint.proceed();
-
-			AopLogEntry successLogEntry = AopLogEntryFactory.createAopLogEntryWhenSuccess(joinPoint, startTime, EXTERNAL_CLIENT_LAYER);
-			LogContextManager.logToContext(successLogEntry);
-			return result;
+			return joinPoint.proceed();
 		} catch (Exception e) {
 			AopLogEntry errorLogEntry = AopLogEntryFactory.createAopLogEntryWhenFailed(joinPoint, e, startTime, EXTERNAL_CLIENT_LAYER);
 			LogContextManager.logToContext(errorLogEntry);

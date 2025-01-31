@@ -19,14 +19,8 @@ public class ApiLoggingAspect {
 	public Object logDomainLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 		long startTime = System.currentTimeMillis();
 
-		AopLogEntry startLogEntry = AopLogEntryFactory.createAopLogEntryWhenStart(joinPoint, API_LAYER);
-		LogContextManager.logToContext(startLogEntry);
-
 		try {
-			Object result = joinPoint.proceed();
-			AopLogEntry successLogEntry = AopLogEntryFactory.createAopLogEntryWhenSuccess(joinPoint, startTime, API_LAYER);
-			LogContextManager.logToContext(successLogEntry);
-			return result;
+			return joinPoint.proceed();
 		} catch (Exception e) {
 			AopLogEntry errorLogEntry = AopLogEntryFactory.createAopLogEntryWhenFailed(joinPoint, e, startTime, API_LAYER);
 			LogContextManager.logToContext(errorLogEntry);
