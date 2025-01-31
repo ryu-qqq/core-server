@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.MdcContextPropagatingExecutorService;
@@ -41,7 +42,6 @@ public class SiteRequestProcessorExecutor {
 			}
 
 			SiteRequestProcessor processor = processorProvider.getProcessor(externalSite);
-
 			queue.forEach(productGroup -> {
 				try {
 					ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, productGroup);
