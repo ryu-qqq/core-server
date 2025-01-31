@@ -5,8 +5,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.exception.DataNotFoundException;
-import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.logging.AopLogEntry;
 import com.ryuqq.core.logging.AopLogEntryFactory;
 import com.ryuqq.core.logging.LogContextManager;
