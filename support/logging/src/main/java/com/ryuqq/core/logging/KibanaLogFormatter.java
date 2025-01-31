@@ -1,28 +1,37 @@
 package com.ryuqq.core.logging;
 
+import com.ryuqq.core.utils.TraceIdHolder;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.ryuqq.core.utils.TraceIdHolder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class KibanaLogFormatter {
+
+	private static final ObjectMapper objectMapper = new ObjectMapper();
+
 
 	public static String formatForKibana(List<LogEntry> logEntries) {
 		List<KibanaLogEntryDto> entryDtos = logEntries.stream()
 			.map(LogEntryConverter::convertToKibanaDto)
 			.toList();
 
-		return entryDtos.stream()
-			.map(KibanaLogEntryDto::toString)
-			.collect(Collectors.joining(",\n"));
+		try {
+			return objectMapper.writeValueAsString(entryDtos); // ✅ 한 번에 JSON 변환
+		} catch (JsonProcessingException e) {
+			return "{ \"error\": \"Failed to serialize log entries\" }";
+		}
 	}
 
-	/** ✅ 내부 클래스: LogEntry 변환 전담 */
+
 	private static class LogEntryConverter {
 
-		/** ✅ 모든 LogEntry를 Kibana DTO로 변환 */
+
 		private static KibanaLogEntryDto convertToKibanaDto(LogEntry entry) {
 			return switch (entry) {
 				case AopLogEntry log -> convertAopLog(log);
@@ -124,7 +133,7 @@ public class KibanaLogFormatter {
 			);
 		}
 
-		/** 스택 트레이스 줄이기 */
+
 		private static String formatStackTrace(String stackTrace) {
 			if (stackTrace == null || stackTrace.isEmpty()) {
 				return "No stack trace available.";
@@ -133,11 +142,13 @@ public class KibanaLogFormatter {
 			return String.join("\n", List.of(lines).subList(0, Math.min(lines.length, 3)));
 		}
 
-		private static Map<String, Object> convertMapToObject(Map<String, String> stringMap) {
-			return stringMap.entrySet().stream()
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		}
 
+		private static Map<String, Object> convertMapToObject(Map<String, String> stringMap) {
+			return Optional.ofNullable(stringMap)
+				.map(map -> map.entrySet().stream()
+					.collect(Collectors.toMap(Map.Entry::getKey, e -> (Object) e.getValue())))
+				.orElse(null);
+		}
 	}
 
 }

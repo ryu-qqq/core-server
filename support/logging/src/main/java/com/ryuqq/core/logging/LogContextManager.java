@@ -24,4 +24,13 @@ public class LogContextManager {
 		return LogContext.getLogEntries();
 	}
 
+	public static <T extends LogEntry> T getFirstLogEntry(Class<T> logEntryType) {
+		return LogContext.getLogEntries().stream()
+			.filter(logEntryType::isInstance)
+			.map(logEntryType::cast)
+			.reduce((first, second) -> first)
+			.orElse(null);
+	}
+
+
 }

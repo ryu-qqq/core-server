@@ -12,13 +12,16 @@ public class HttpResponseLogEntry implements LogEntry{
 	private final LogLevel logLevel;
 	private final int status;
 	private final String body;
+	private final long executionTime;
 
-	protected HttpResponseLogEntry(int status, String body) {
+
+	protected HttpResponseLogEntry(int status, String body, long executionTime) {
 		this.traceId = TraceIdHolder.getTraceId();
 		this.layer = "HTTP";
 		this.logLevel = status == 200 ? LogLevel.INFO : LogLevel.ERROR;
 		this.status = status;
 		this.body = body;
+		this.executionTime = executionTime;
 	}
 
 	@Override
@@ -34,6 +37,10 @@ public class HttpResponseLogEntry implements LogEntry{
 	@Override
 	public LogLevel getLogLevel() {
 		return logLevel;
+	}
+
+	public long getExecutionTime() {
+		return executionTime;
 	}
 
 	public int getStatus() {

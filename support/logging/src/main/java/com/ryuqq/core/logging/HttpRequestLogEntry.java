@@ -14,6 +14,8 @@ public class HttpRequestLogEntry implements LogEntry {
 	private final Map<String, String> parameters;
 	private final String requestBody;
 	private final String clientIp;
+	private final long startTime;
+
 
 	protected HttpRequestLogEntry(String httpMethod, String requestUri, Map<String, String> headers, Map<String, String> parameters, String requestBody, String clientIp) {
 		this.traceId = TraceIdHolder.getTraceId();
@@ -24,6 +26,7 @@ public class HttpRequestLogEntry implements LogEntry {
 		this.parameters = parameters;
 		this.requestBody = requestBody;
 		this.clientIp = clientIp;
+		this.startTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -63,6 +66,10 @@ public class HttpRequestLogEntry implements LogEntry {
 
 	public String getClientIp() {
 		return clientIp;
+	}
+
+	public long getStartTime() {
+		return startTime;
 	}
 
 	@Override
