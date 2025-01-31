@@ -3,6 +3,8 @@ dependencies {
 	implementation "net.ttddyy:datasource-proxy:${datasourceProxyVersion}"
 
 	implementation project(':core:core-enum')
+	implementation project(':core:core-events')
+
 	implementation project(":support:utils")
 
 	implementation "ch.qos.logback:logback-classic:${logbackVersion}"

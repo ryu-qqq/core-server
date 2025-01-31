@@ -58,7 +58,7 @@ public class ProductGroupContextCommandService {
 	private void validate(ProductGroupContextCommandRequestDto productGroupContextCommandRequestDto, boolean updated){
 		ValidationResult result = centralValidator.validate(productGroupContextCommandRequestDto, updated);
 		if(result.hasErrors()){
-			throw new CoreException(result.getErrorsToString(), ErrorType.BAD_REQUEST_ERROR);
+			throw new CoreException(ErrorType.BAD_REQUEST_ERROR, result.getErrorsToString());
 		}
 	}
 

@@ -7,7 +7,7 @@ import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 
 import com.ryuqq.core.enums.LogLevel;
-import com.ryuqq.core.logging.QueryLogger;
+import com.ryuqq.core.logging.LogContextManager;
 import com.ryuqq.core.logging.SqlLogEntry;
 import com.ryuqq.core.logging.SqlLogEntryFactory;
 import com.ryuqq.core.utils.TraceIdHolder;
@@ -30,7 +30,7 @@ public class QueryListener implements QueryExecutionListener {
 		String traceId = TraceIdHolder.getTraceId();
 		for (QueryInfo queryInfo : queryInfoList) {
 			SqlLogEntry logEntry = SqlLogEntryFactory.createLogEntry(execInfo, queryInfo, traceId, 0, null, LogLevel.INFO, "BEFORE");
-			QueryLogger.log(logEntry);
+			LogContextManager.logToContext(logEntry);
 		}
 	}
 
@@ -49,12 +49,9 @@ public class QueryListener implements QueryExecutionListener {
 			};
 
 			metricsCollector.collect(execInfo.getDataSourceName(), queryInfoList, executionTime);
-
 			SqlLogEntry logEntry = SqlLogEntryFactory.createLogEntry(execInfo, queryInfo, traceId, executionTime, errorMessage, logLevel, "AFTER");
-			QueryLogger.log(logEntry);
-
+			LogContextManager.logToContext(logEntry);
 		}
 	}
-
 
 }

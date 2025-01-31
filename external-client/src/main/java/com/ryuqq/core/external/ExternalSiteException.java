@@ -6,14 +6,13 @@ public class ExternalSiteException extends RuntimeException {
 
 	private final ErrorType errorType;
 
-
-	public ExternalSiteException(ErrorType errorType,String message) {
+	public ExternalSiteException(ErrorType errorType, String message) {
 		super(message);
 		this.errorType = errorType;
 	}
 
-	public ExternalSiteException(ErrorType errorType, String message, Throwable cause) {
-		super(errorType.getMessage() + " " + message + (cause != null ? " | Cause: \n" + cause.getMessage() : ""), cause);
+	public ExternalSiteException(ErrorType errorType, Throwable cause) {
+		super(cause);
 		this.errorType = errorType;
 	}
 

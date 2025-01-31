@@ -1,39 +1,34 @@
 package com.ryuqq.core.logging;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class LogContext {
 
-	private static final ThreadLocal<Deque<AopLogEntry>> logEntryStack = ThreadLocal.withInitial(ArrayDeque::new);
+	private static final ThreadLocal<Deque<LogEntry>> logEntryStack = ThreadLocal.withInitial(ConcurrentLinkedDeque::new);
 
-	public static void initialize(AopLogEntry entry) {
+	private LogContext() {
+	}
+
+	/** 로그 컨텍스트 초기화 */
+	static void initialize() {
+		logEntryStack.get().clear();
+	}
+
+	/** 로그 추가 */
+	static void addEntry(LogEntry entry) {
 		logEntryStack.get().push(entry);
 	}
 
-	public static void addEntry(AopLogEntry entry) {
-		logEntryStack.get().push(entry);
+	/** 현재 로그 엔트리 목록 가져오기 */
+	static List<LogEntry> getLogEntries() {
+		return List.copyOf(logEntryStack.get());
 	}
 
-	public static Deque<AopLogEntry> getLogEntries() {
-		return new ArrayDeque<>(logEntryStack.get());
-	}
-
-	public static void clear() {
+	/** 로그 컨텍스트 제거 */
+	static void clear() {
 		logEntryStack.remove();
 	}
-
-
-	public static String generateNestedLogString() {
-		List<AopLogEntry> list = getLogEntries().stream()
-			.filter(entry -> entry.getLogLevel().isLogRequired())
-			.toList();
-
-		return LogFormatter.formatNestedLog(list);
-
-
-	}
-
 
 }
