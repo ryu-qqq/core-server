@@ -2,7 +2,6 @@ package com.ryuqq.core.logging;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.ryuqq.core.utils.TraceIdHolder;
 
@@ -24,7 +23,10 @@ public class LogFormatter {
 	}
 
 	private static String formatAopLogEntry(AopLogEntry logEntry) {
-		// 필요하다면 AOP 로그 단일 엔트리 형식화 로직 추가
+		if(logEntry.getLogLevel().isLogRequired()){
+			return ErrorLogFormatter.formatErrorAopLogEntry(logEntry);
+		}
+
 		return String.format("Class: %s, Method: %s, Args: %s, ExecutionTime: %d ms",
 			logEntry.getClassName(),
 			logEntry.getMethodName(),
@@ -39,7 +41,12 @@ public class LogFormatter {
 				entry.getMethodName(),
 				entry.getArgs(),
 				entry.getExecutionTime(),
-				entry.getException() != null ? entry.getException().getMessage() : null
+				entry.getException() != null ? entry.getException().getMessage() : null,
+				entry.getStackTrace(),
+				entry.getCallerData(),
+				entry.getHostName(),
+				entry.getProcessId(),
+				entry.getApplicationName()
 			))
 			.toList();
 
@@ -57,17 +64,27 @@ public class LogFormatter {
 
 		return String.format(
 			"""
-				:pushpin: **TRACE ID**: %s
-				:rocket: **START**: %s.%s (ExecutionTime: %d ms)
-				:stopwatch: **LONGEST**: %s.%s (ExecutionTime: %d ms)
-				:checkered_flag: **END**: %s.%s (ExecutionTime: %d ms)
-				:warning: **EXCEPTION**: %s
+			:pushpin: **TRACE ID**: `%s`
+			:rocket: **START**: `%s.%s` (ExecutionTime: `%d ms`)
+			:stopwatch: **LONGEST**: `%s.%s` (ExecutionTime: `%d ms`)
+			:checkered_flag: **END**: `%s.%s` (ExecutionTime: `%d ms`)
+			:warning: **EXCEPTION**: ```%s```
+			:computer: **Host**: `%s`
+			:gear: **Process ID**: `%s`
+			:factory: **Application**: `%s`
+			```java
+			%s
+			```
 			""",
 			TraceIdHolder.getTraceId(),
 			firstEntry.getClassName(), firstEntry.getMethodName(), firstEntry.getExecutionTime(),
 			longestEntry.getClassName(), longestEntry.getMethodName(), longestEntry.getExecutionTime(),
 			lastEntry.getClassName(), lastEntry.getMethodName(), lastEntry.getExecutionTime(),
-			exceptionMessage
+			exceptionMessage,
+			lastEntry.getHostName(),
+			lastEntry.getProcessId(),
+			lastEntry.getApplicationName(),
+			lastEntry.getStackTrace()
 		);
 	}
 
@@ -76,11 +93,8 @@ public class LogFormatter {
 			return "No exception message available.";
 		}
 
-		return List.of(exceptionMessage.split("\\| Cause:"))
-			.stream()
-			.distinct()
-			.map(String::trim)
-			.collect(Collectors.joining(" | Cause: "));
+		return exceptionMessage.replaceAll("\n", " ");
 	}
+
 
 }

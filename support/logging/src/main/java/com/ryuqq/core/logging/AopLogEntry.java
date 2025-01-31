@@ -1,7 +1,12 @@
 package com.ryuqq.core.logging;
 
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.ryuqq.core.enums.LogLevel;
 
@@ -15,9 +20,15 @@ public final class AopLogEntry extends AbstractLogEntry {
 	private final Throwable exception;
 	private final long executionTime;
 	private final LogLevel logLevel;
+	private final String stackTrace;
+	private final String callerData;
+	private final String hostName;
+	private final String processId;
+	private final String applicationName;
+
 
 	AopLogEntry(String traceId, String layer, String className, String methodName, Map<String, Object> args,
-				Throwable exception, long executionTime, LogLevel logLevel) {
+				Throwable exception, long executionTime, LogLevel logLevel, String callerData) {
 		super(traceId, layer);
 		this.className = className;
 		this.methodName = methodName;
@@ -25,6 +36,11 @@ public final class AopLogEntry extends AbstractLogEntry {
 		this.exception = exception;
 		this.executionTime = executionTime;
 		this.logLevel = logLevel;
+		this.stackTrace = (exception != null) ? extractStackTrace(exception) : null;
+		this.callerData = callerData;
+		this.hostName = getHostName();
+		this.processId = getProcessId();
+		this.applicationName = System.getProperty("spring.application.name", "UNKNOWN_APP");
 	}
 
 	public String getClassName() {
@@ -47,9 +63,39 @@ public final class AopLogEntry extends AbstractLogEntry {
 		return executionTime;
 	}
 
+	private String extractStackTrace(Throwable e) {
+		return Arrays.stream(e.getStackTrace())
+			.map(StackTraceElement::toString)
+			.collect(Collectors.joining("\n"));
+	}
+
+	public String getHostName() {
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return "UNKNOWN_HOST";
+		}
+	}
+
+	public String getProcessId() {
+		return ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+	}
+
 	@Override
 	public LogLevel getLogLevel() {
 		return logLevel;
+	}
+
+	public String getStackTrace() {
+		return stackTrace;
+	}
+
+	public String getCallerData() {
+		return callerData;
+	}
+
+	public String getApplicationName() {
+		return applicationName;
 	}
 
 	@Override
@@ -66,22 +112,35 @@ public final class AopLogEntry extends AbstractLogEntry {
 			&& Objects.equals(className, that.className)
 			&& Objects.equals(methodName, that.methodName)
 			&& Objects.equals(args, that.args)
-			&& Objects.equals(exception, that.exception);
+			&& Objects.equals(exception, that.exception)
+			&& logLevel
+			== that.logLevel
+			&& Objects.equals(stackTrace, that.stackTrace)
+			&& Objects.equals(callerData, that.callerData)
+			&& Objects.equals(hostName, that.hostName)
+			&& Objects.equals(processId, that.processId)
+			&& Objects.equals(applicationName, that.applicationName);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(className, methodName, args, exception, executionTime);
+		return Objects.hash(className, methodName, args, exception, executionTime, logLevel, stackTrace, callerData,
+			hostName, processId, applicationName);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() +
-			"- Class: " + className + "\n" +
-			"- Method: " + methodName + "\n" +
-			"- Arguments: " + truncate(args.toString()) + "\n" +
-			"- Execution Time: " + executionTime + "ms\n" +
-			"- Exception: " + formatException(exception) + "\n";
+		return "AopLogEntry{" +
+			"className='" + className + '\'' +
+			", methodName='" + methodName + '\'' +
+			", executionTime=" + executionTime +
+			", logLevel=" + logLevel +
+			", stackTrace='" + stackTrace + '\'' +
+			", callerData='" + callerData + '\'' +
+			", hostName='" + hostName + '\'' +
+			", processId='" + processId + '\'' +
+			", applicationName='" + applicationName + '\'' +
+			'}';
 	}
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-	<!-- JSON File Appender -->
-	<appender name="JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!-- 🔥 공통 Encoder 설정 (JSON 포맷) -->
+	<appender name="JSON_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/var/log/spring/spring-core-server.log</file>
 		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
 			<providers>
@@ -14,16 +14,95 @@
 				<loggerName/>
 				<message/>
 				<mdc/>
+				<stackTrace/>
+				<callerData/>
+				<hostName/>
+				<processId/>
+				<contextName/>
 			</providers>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>/var/log/spring/spring-core-server.log.%d{yyyy-MM-dd}.json</fileNamePattern>
 			<maxHistory>30</maxHistory>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy" />
 		</rollingPolicy>
 	</appender>
 
+	<!-- 🔥 ERROR 로그 (별도 파일) -->
+	<appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/spring/spring-core-server-error.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp/>
+				<logLevel/>
+				<threadName/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+				<stackTrace/>
+				<callerData/>
+				<hostName/>
+				<processId/>
+				<contextName/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/var/log/spring/spring-core-server-error.log.%d{yyyy-MM-dd}.json</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- 🔥 SLOW QUERY 로그 (별도 파일) -->
+	<appender name="SLOW_QUERY_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/spring/spring-core-server-slowquery.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp/>
+				<logLevel/>
+				<loggerName/>
+				<message/>
+				<mdc/>
+				<hostName/>
+				<processId/>
+			</providers>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/var/log/spring/spring-core-server-slowquery.log.%d{yyyy-MM-dd}.json</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- 🔥 비동기 처리 (AsyncAppender) - 성능 최적화 -->
+	<appender name="ASYNC_JSON" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>5000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="JSON_APPENDER"/>
+	</appender>
+
+	<appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>1000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="ERROR_APPENDER"/>
+	</appender>
+
+	<appender name="ASYNC_SLOW_QUERY" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>1000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="SLOW_QUERY_APPENDER"/>
+	</appender>
+
+	<!-- 🔥 로그 레벨별 설정 -->
+	<logger name="SLOW_QUERY" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_SLOW_QUERY"/>
+	</logger>
+
+	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_SLOW_QUERY"/>
+	</logger>
+
+	<!-- 🔥 기본 로그 설정 -->
 	<root level="info">
-		<appender-ref ref="JSON" />
+		<appender-ref ref="ASYNC_JSON"/>
+		<appender-ref ref="ASYNC_ERROR"/>
 	</root>
+
 </configuration>

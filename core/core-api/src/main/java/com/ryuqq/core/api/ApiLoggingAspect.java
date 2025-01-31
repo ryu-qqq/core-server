@@ -29,7 +29,7 @@ public class ApiLoggingAspect   {
 		long startTime = System.currentTimeMillis();
 
 		LogContextManager.initialize(joinPoint, API_LAYER);
-		Throwable caughtException = null; // 예외를 저장할 변수
+		Throwable caughtException = null;
 
 		try {
 			return joinPoint.proceed();

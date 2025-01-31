@@ -20,10 +20,15 @@ public final class SqlLogEntry extends AbstractLogEntry {
 	private final String connectionId;
 	private final int isolationLevel;
 	private final String queryPhase;
+	private final int affectedRows;
+	private final long threadId;
+	private final String dbUser;
+	private final String transactionStatus;
 
 	SqlLogEntry(String traceId, String layer, String sql, Map<String, Object> args, long executionTime,
 				String errorMessage, LogLevel logLevel, String dataSourceName, String connectionId,
-				int isolationLevel, String queryPhase) {
+				int isolationLevel, String queryPhase, int affectedRows, long threadId, String dbUser,
+				String transactionStatus) {
 		super(traceId, layer);
 		this.sql = sql;
 		this.args = args;
@@ -34,6 +39,10 @@ public final class SqlLogEntry extends AbstractLogEntry {
 		this.connectionId = connectionId;
 		this.isolationLevel = isolationLevel;
 		this.queryPhase = queryPhase;
+		this.affectedRows = affectedRows;
+		this.threadId = threadId;
+		this.dbUser = dbUser;
+		this.transactionStatus = transactionStatus;
 	}
 
 	public String getSql() {
@@ -105,10 +114,13 @@ public final class SqlLogEntry extends AbstractLogEntry {
 	@Override
 	public String toString() {
 		return super.toString() +
-			"- SQL: " + truncate(sql) + "\n" +
-			"- Args: " + truncate(args.toString()) + "\n" +
+			"- SQL: " + sql + "\n" +
+			"- Args: " + args + "\n" +
 			"- Execution Time: " + executionTime + "ms\n" +
-			"- Error: " + errorMessage + "\n" +
+			"- Affected Rows: " + affectedRows + "\n" +
+			"- Thread ID: " + threadId + "\n" +
+			"- DB User: " + dbUser + "\n" +
+			"- Transaction Status: " + transactionStatus + "\n" +
 			"- Data Source: " + dataSourceName + "\n" +
 			"- Connection ID: " + connectionId + "\n" +
 			"- Isolation Level: " + isolationLevel + "\n" +
