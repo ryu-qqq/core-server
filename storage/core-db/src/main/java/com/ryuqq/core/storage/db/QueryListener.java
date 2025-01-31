@@ -42,15 +42,19 @@ public class QueryListener implements QueryExecutionListener {
 		for (QueryInfo queryInfo : queryInfoList) {
 			LogLevel logLevel = QueryPerformanceEvaluator.evaluate(executionTime, slowQueryThresholdMs, criticalQueryThresholdMs);
 
-			String errorMessage = logLevel == LogLevel.ERROR ? "Critical slow query detected"
-				: logLevel == LogLevel.WARN ? "Slow query detected"
-				: null;
+			String errorMessage = switch (logLevel) {
+				case ERROR -> "⚠️ Critical slow query detected!";
+				case WARN -> "⚠️ Slow query detected!";
+				default -> null;
+			};
 
-			metricsCollector.collect(queryInfoList, executionTime);
+			metricsCollector.collect(execInfo.getDataSourceName(), queryInfoList, executionTime);
 
-			SqlLogEntry logEntry = SqlLogEntryFactory.createLogEntry(execInfo, queryInfo, traceId, 0, errorMessage, LogLevel.INFO, "AFTER");
+			SqlLogEntry logEntry = SqlLogEntryFactory.createLogEntry(execInfo, queryInfo, traceId, executionTime, errorMessage, logLevel, "AFTER");
 			QueryLogger.log(logEntry);
 
 		}
 	}
+
+
 }

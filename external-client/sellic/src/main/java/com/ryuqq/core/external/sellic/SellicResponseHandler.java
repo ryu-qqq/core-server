@@ -10,7 +10,7 @@ import com.ryuqq.core.external.sellic.response.SellicResponse;
 public class SellicResponseHandler {
 
 	private static final String SELLIC_SERVER_ERROR_MSG = "Failed communication data";
-	private static final String SELLIC_RESULT_ERROR_MSG = "eroor";
+	private static final String SELLIC_RESULT_ERROR_MSG = "error";
 
 
 	public SellicResponse handleResponse(SellicResponse response) {

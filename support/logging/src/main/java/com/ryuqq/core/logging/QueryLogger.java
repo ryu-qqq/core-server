@@ -13,7 +13,9 @@ public class QueryLogger {
 		String formattedLog = LogFormatter.format(logEntry);
 		if (formattedLog != null && !formattedLog.isEmpty()) {
 			switch (logEntry.getLogLevel()) {
-				case ERROR -> log.error(formattedLog);
+				case ERROR -> {
+					log.error("\n{}", formattedLog);
+				}
 				case WARN -> log.warn(formattedLog);
 				case INFO -> log.info(formattedLog);
 			}

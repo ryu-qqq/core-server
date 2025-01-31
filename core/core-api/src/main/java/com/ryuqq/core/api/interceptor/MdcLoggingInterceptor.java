@@ -59,13 +59,14 @@ public class MdcLoggingInterceptor implements HandlerInterceptor {
 								Exception ex) throws Exception {
 		String traceId = TraceIdHolder.getTraceId();
 
-		log.info("[TraceId: {}] Completed Request: {}, Status: {}", traceId, request.getRequestURI(),
-			response.getStatus());
+		if(!request.getRequestURI().equals("/health")){
+			log.info("[TraceId: {}] Completed Request: {}, Status: {}", traceId, request.getRequestURI(),
+				response.getStatus());
+		}
 		if (ex
 			!= null) {
 			log.error("[TraceId: {}] Exception: {}", traceId, ex.getMessage(), ex);
 		}
-
 	}
 
 	private void loggingClientInfo(HttpServletRequest request) {

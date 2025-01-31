@@ -20,7 +20,8 @@ public class LogContextManager {
 			AopUtils.extractArgs(joinPoint),
 			null,
 			0,
-			LogLevel.INFO
+			LogLevel.INFO,
+			extractCallerData(joinPoint)
 		));
 	}
 
@@ -44,7 +45,8 @@ public class LogContextManager {
 			AopUtils.extractArgs(joinPoint),
 			exception,
 			executionTime,
-			LogLevel.ERROR
+			LogLevel.ERROR,
+			extractCallerData(joinPoint)
 		);
 
 		LogContext.addEntry(logEntry);
@@ -52,6 +54,10 @@ public class LogContextManager {
 
 	public static void clear() {
 		LogContext.clear();
+	}
+
+	private static String extractCallerData(ProceedingJoinPoint joinPoint) {
+		return joinPoint.getSignature().toShortString();
 	}
 
 }

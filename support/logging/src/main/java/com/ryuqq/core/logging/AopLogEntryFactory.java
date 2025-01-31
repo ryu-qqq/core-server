@@ -14,9 +14,12 @@ public class AopLogEntryFactory {
 		Map<String, Object> args,
 		Throwable exception,
 		long executionTime,
-		LogLevel logLevel
+		LogLevel logLevel,
+		String callerData
+
 	) {
-		return new AopLogEntry(traceId, layer, className, methodName, args, exception, executionTime, logLevel);
+		return new AopLogEntry(traceId, layer, className, methodName, args, exception,
+			executionTime, logLevel, callerData);
 	}
 
 }

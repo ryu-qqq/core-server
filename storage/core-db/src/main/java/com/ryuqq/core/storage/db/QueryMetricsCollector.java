@@ -18,12 +18,24 @@ public class QueryMetricsCollector {
 		this.meterRegistry = meterRegistry;
 	}
 
-	public void collect(List<QueryInfo> queryInfoList, long executionTime) {
-		String queryGroup = QueryGrouper.groupQueries(queryInfoList); // 쿼리 유형별 그룹화
+	public void collect(String dataSource, List<QueryInfo> queryInfoList, long executionTime) {
+		String queryGroup = QueryGrouper.groupQueries(queryInfoList);
+		String queryType = determineQueryType(queryInfoList.getFirst().getQuery());
+
 		Timer.builder("db.query.execution.time")
-			.tag("queryGroup", queryGroup) // 정규화된 쿼리 그룹 태그 추가
+			.tag("queryGroup", queryGroup)
+			.tag("queryType", queryType)
+			.tag("dataSource", dataSource)
 			.register(meterRegistry)
-			.record(executionTime, java.util.concurrent.TimeUnit.MILLISECONDS); // 실행 시간 기록
+			.record(executionTime, java.util.concurrent.TimeUnit.MILLISECONDS);
+	}
+
+	private String determineQueryType(String sql) {
+		if (sql.trim().toUpperCase().startsWith("SELECT")) return "SELECT";
+		if (sql.trim().toUpperCase().startsWith("INSERT")) return "INSERT";
+		if (sql.trim().toUpperCase().startsWith("UPDATE")) return "UPDATE";
+		if (sql.trim().toUpperCase().startsWith("DELETE")) return "DELETE";
+		return "UNKNOWN";
 	}
 
 }

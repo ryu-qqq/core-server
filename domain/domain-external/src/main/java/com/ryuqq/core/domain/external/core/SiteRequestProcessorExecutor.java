@@ -32,16 +32,20 @@ public class SiteRequestProcessorExecutor {
 	}
 
 	public void processRequests(ExternalSite externalSite, ProductDomainEventType productDomainEventType) {
-		executorService.submit(() -> {
-			BlockingQueue<ExternalProductGroup> queue = queueManager.getQueue(externalSite.siteId());
+		BlockingQueue<ExternalProductGroup> queue = queueManager.getQueue(externalSite.siteId());
 
-			if (queue == null || queue.isEmpty()) {
-				log.info("No requests to process for site: {}", externalSite.siteName());
-				return;
-			}
+		if (queue == null || queue.isEmpty()) {
+			log.info("No requests to process for site: {}", externalSite.siteName());
+			return;
+		}
 
-			SiteRequestProcessor processor = processorProvider.getProcessor(externalSite);
-			queue.forEach(productGroup -> {
+		SiteRequestProcessor processor = processorProvider.getProcessor(externalSite);
+
+		while (!queue.isEmpty()) {
+			ExternalProductGroup productGroup = queue.poll();
+			if (productGroup == null) continue;
+
+			executorService.submit(() -> {
 				try {
 					ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, productGroup);
 					responseHandler.handleResponse(productDomainEventType, productGroup, response);
@@ -49,7 +53,7 @@ public class SiteRequestProcessorExecutor {
 					responseHandler.handleFailure(productGroup, e);
 				}
 			});
-		});
+		}
 	}
 
 }

@@ -61,9 +61,7 @@ public class ExternalProductGroupJdbcRepository {
 			"DISPLAYED = :displayed, " +
 			"UPDATED_AT = :updatedAt " +
 			"WHERE PRODUCT_GROUP_ID = :productGroupId " +
-			"AND SITE_ID = :siteId " +
-			"AND EXTERNAL_PRODUCT_GROUP_ID IS NOT NULL " +
-			"AND EXTERNAL_PRODUCT_GROUP_ID != 0";
+			"AND SITE_ID = :siteId ";
 
 		List<Map<String, Object>> batchValues = externalProductGroupEntities.stream()
 			.map(group -> {
