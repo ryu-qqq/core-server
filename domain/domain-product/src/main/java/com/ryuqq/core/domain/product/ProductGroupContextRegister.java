@@ -2,10 +2,6 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.sync.DefaultProductSyncCommand;
-import com.ryuqq.core.domain.product.dao.sync.ProductSyncCommand;
-import com.ryuqq.core.domain.product.dao.sync.ProductSyncPersistenceRepository;
-import com.ryuqq.core.enums.SyncStatus;
 
 @Component
 public class ProductGroupContextRegister {
