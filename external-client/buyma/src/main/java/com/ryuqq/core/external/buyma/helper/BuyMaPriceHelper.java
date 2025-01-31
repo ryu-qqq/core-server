@@ -43,7 +43,7 @@ public class BuyMaPriceHelper {
 	 */
 	private static BigDecimal calculateBasePrice(Money currentPrice, BigDecimal exchangeRate) {
 		return currentPrice
-			.times(1.1)
+			.times(BigDecimal.valueOf(1.1))
 			.divide(Money.wons(exchangeRate), 0, RoundingMode.CEILING)
 			.divide(BigDecimal.valueOf(1000), RoundingMode.CEILING)
 			.multiply(BigDecimal.valueOf(1000));
@@ -59,7 +59,7 @@ public class BuyMaPriceHelper {
 	 */
 	private static BigDecimal calculateAdjustedPrice(Money currentPrice, BigDecimal exchangeRate) {
 		return currentPrice
-			.times(1.1)
+			.times(BigDecimal.valueOf(1.1))
 			.divide(Money.wons(exchangeRate), 0, RoundingMode.CEILING)
 			.multiply(BigDecimal.valueOf(1.1))
 			.multiply(BigDecimal.valueOf(1.1))

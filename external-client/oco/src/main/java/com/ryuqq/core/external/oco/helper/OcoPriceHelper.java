@@ -12,7 +12,7 @@ public class OcoPriceHelper {
 		Money regularMoney = Money.wons(regularPrice);
 		Money currentMoney = Money.wons(currentPrice);
 
-		Money newCurrentPrice = currentMoney.times(1.25);
+		Money newCurrentPrice = currentMoney.times(BigDecimal.valueOf(1.25));
 		Money newRegularPrice = regularMoney.isGreaterThan(newCurrentPrice) ? regularMoney : newCurrentPrice;
         return new OcoPrice(newRegularPrice.getAmount(), newCurrentPrice.getAmount());
     }
