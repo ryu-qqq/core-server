@@ -63,8 +63,8 @@ public final class ExternalRequestLogEntry extends AbstractLogEntry {
 		return super.toString() +
 			"- URL: " + url + "\n" +
 			"- HTTP Method: " + httpMethod + "\n" +
-			"- Request Body: " + truncate(requestBody) + "\n" +
-			"- Response Body: " + truncate(responseBody) + "\n" +
+			"- Request Body: " + requestBody + "\n" +
+			"- Response Body: " + responseBody + "\n" +
 			"- Status Code: " + statusCode + "\n" +
 			"- Execution Time: " + executionTime + "ms\n";
 	}

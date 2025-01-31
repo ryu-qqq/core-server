@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class QueryLogger {
 
-	private static final Logger log = LoggerFactory.getLogger(QueryLogger.class);
+	private static final Logger log = LoggerFactory.getLogger("SLOW_QUERY");
 
 	private QueryLogger() {}
 
