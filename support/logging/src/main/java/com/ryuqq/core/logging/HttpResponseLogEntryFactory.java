@@ -6,8 +6,8 @@ public class HttpResponseLogEntryFactory {
 	private HttpResponseLogEntryFactory() {
 	}
 
-	public static HttpResponseLogEntry createHttpResponseLogEntry(int status, String body) {
-		return new HttpResponseLogEntry(status, body);
+	public static HttpResponseLogEntry createHttpResponseLogEntry(int status, String body, long executionTime) {
+		return new HttpResponseLogEntry(status, body, executionTime);
 	}
 
 }

@@ -58,6 +58,7 @@ public class LogContextInterceptor implements HandlerInterceptor {
 					requestBody,
 					clientIp
 				);
+
 				LogContextManager.logToContext(requestLogEntry);
 			}
 		}
@@ -71,7 +72,10 @@ public class LogContextInterceptor implements HandlerInterceptor {
 				String responseBody = getResponseBody(wrappedResponse);
 				int status = wrappedResponse.getStatus();
 
-				HttpResponseLogEntry responseLogEntry = HttpResponseLogEntryFactory.createHttpResponseLogEntry(status, responseBody);
+				HttpRequestLogEntry requestLogEntry = LogContextManager.getFirstLogEntry(HttpRequestLogEntry.class);
+				long executionTime = requestLogEntry != null ? System.currentTimeMillis() - requestLogEntry.getStartTime() : -1;
+
+				HttpResponseLogEntry responseLogEntry = HttpResponseLogEntryFactory.createHttpResponseLogEntry(status, responseBody, executionTime);
 				LogContextManager.logToContext(responseLogEntry);
 
 				wrappedResponse.copyBodyToResponse();

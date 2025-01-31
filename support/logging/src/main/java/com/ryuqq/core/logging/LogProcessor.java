@@ -36,7 +36,6 @@ public class LogProcessor {
 		}
 	}
 
-
 	private void handleSqlLog(SqlLogEntry sqlLog) {
 		String format = SqlLogFormatter.format(sqlLog);
 		switch (sqlLog.getLogLevel()) {
