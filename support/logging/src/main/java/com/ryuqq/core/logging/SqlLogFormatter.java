@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SqlLogFormatter {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
-	private static final int ARGS_TRUNCATE_THRESHOLD = 500;
 
 	public static String format(SqlLogEntry logEntry) {
 		Map<String, Object> logMap = switch (logEntry.getLogLevel()) {
@@ -43,7 +42,7 @@ public class SqlLogFormatter {
 		Map<String, Object> logMap = new HashMap<>();
 		logMap.put("level", "WARN");
 		logMap.put("traceId", logEntry.getTraceId());
-		logMap.put("sql", truncate(logEntry.getSql()));
+		logMap.put("sql", logEntry.getSql());
 		logMap.put("executionTime", logEntry.getExecutionTime());
 		logMap.put("dataSource", logEntry.getDataSourceName());
 		logMap.put("connectionId", logEntry.getConnectionId());
@@ -73,6 +72,6 @@ public class SqlLogFormatter {
 		} catch (JsonProcessingException e) {
 			return "{ \"error\": \"Failed to serialize args\" }";
 		}
-		return argsJson.length() > ARGS_TRUNCATE_THRESHOLD ? argsJson.substring(0, ARGS_TRUNCATE_THRESHOLD) + "..." : args;
+		return argsJson;
 	}
 }
