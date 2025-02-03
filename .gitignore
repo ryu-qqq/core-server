@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 **/src/**/db-core.yml
 **/src/**/git-hub.yml
+support/alert/src/main/resources/slack.yml
 
 ### STS ###
 .apt_generated
