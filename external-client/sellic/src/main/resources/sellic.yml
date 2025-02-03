@@ -1,4 +1,4 @@
 sellic:
-    host-url: 'http://api.sellic.co.kr/openapi'
-    customer_id: '1012'
-    api_key: '6790qy09-6642-ac64-zzj3-92jficnw1a50'
+    host-url: 'your key'
+    customer_id: 'your key'
+    api_key: 'your key'
