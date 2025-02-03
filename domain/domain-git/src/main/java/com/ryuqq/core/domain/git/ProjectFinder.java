@@ -2,25 +2,19 @@ package com.ryuqq.core.domain.git;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.exception.DataNotFoundException;
 import com.ryuqq.core.enums.GitType;
-import com.ryuqq.core.storage.db.git.ProjectQueryRepository;
 
 @Component
 public class ProjectFinder {
 
-	private final ProjectMapper projectMapper;
 	private final ProjectQueryRepository projectQueryRepository;
 
-	public ProjectFinder(ProjectMapper projectMapper, ProjectQueryRepository projectQueryRepository) {
-		this.projectMapper = projectMapper;
+	public ProjectFinder(ProjectQueryRepository projectQueryRepository) {
 		this.projectQueryRepository = projectQueryRepository;
 	}
 
 	public Project fetchByGitProjectIdAndGitType(long gitProjectId, GitType gitType) {
-		return projectQueryRepository.fetchByGitProjectIdAndGitType(gitProjectId, gitType)
-			.map(projectMapper::toDomain)
-			.orElseThrow(() -> new DataNotFoundException(String.format("Project not found %s, Git Type %s", gitProjectId, gitType)));
+		return projectQueryRepository.fetchByGitProjectIdAndGitType(gitProjectId, gitType);
 	}
 
 }

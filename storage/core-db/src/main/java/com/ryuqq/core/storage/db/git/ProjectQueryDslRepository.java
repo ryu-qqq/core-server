@@ -14,7 +14,7 @@ import com.ryuqq.core.storage.db.git.dto.ProjectDto;
 import com.ryuqq.core.storage.db.git.dto.QProjectDto;
 
 @Repository
-public class ProjectQueryDslRepository implements ProjectQueryRepository {
+public class ProjectQueryDslRepository {
 
 	private final JPAQueryFactory queryFactory;
 
@@ -22,7 +22,6 @@ public class ProjectQueryDslRepository implements ProjectQueryRepository {
 		this.queryFactory = queryFactory;
 	}
 
-	@Override
 	public Optional<ProjectDto> fetchByGitProjectIdAndGitType(long gitProjectId, GitType gitType) {
 		return Optional.ofNullable(
 			queryFactory.select(

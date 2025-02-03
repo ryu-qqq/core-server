@@ -1,12 +1,10 @@
 dependencies {
-	api project(':core:core-enum')
-	api project(':storage:core-db')
 
-	implementation project(":support:alert")
+	api project(':core:core-enum')
+	api project(':core:core-events')
+
 	implementation project(":support:logging")
 	implementation project(":support:utils")
-
-	api("jakarta.transaction:jakarta.transaction-api")
 
 	compileOnly("org.springframework:spring-context")
 }

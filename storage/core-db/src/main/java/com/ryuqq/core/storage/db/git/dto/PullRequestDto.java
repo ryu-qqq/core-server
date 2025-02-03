@@ -19,13 +19,13 @@ public class PullRequestDto {
 	private String description;
 	private MergeStatus status;
 	private ReviewStatus reviewStatus;
-	private LocalDateTime createAt;
+	private LocalDateTime createdAt;
 
 	@QueryProjection
 	public PullRequestDto(long id, GitType gitType, long gitPullId, long branchId, String sourceBranch,
 						  String targetBranch,
 						  String title, String description, MergeStatus status, ReviewStatus reviewStatus,
-						  LocalDateTime createAt) {
+						  LocalDateTime createdAt) {
 		this.id = id;
 		this.gitType = gitType;
 		this.gitPullId = gitPullId;
@@ -36,7 +36,7 @@ public class PullRequestDto {
 		this.description = description;
 		this.status = status;
 		this.reviewStatus = reviewStatus;
-		this.createAt = createAt;
+		this.createdAt = createdAt;
 	}
 
 
@@ -81,7 +81,7 @@ public class PullRequestDto {
 		return reviewStatus;
 	}
 
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 }

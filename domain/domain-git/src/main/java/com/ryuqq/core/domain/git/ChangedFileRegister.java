@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.storage.db.git.ChangedFilePersistenceRepository;
-
 @Component
 public class ChangedFileRegister {
 

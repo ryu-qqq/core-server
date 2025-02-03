@@ -14,7 +14,7 @@ import com.ryuqq.core.storage.db.git.dto.BranchDto;
 import com.ryuqq.core.storage.db.git.dto.QBranchDto;
 
 @Repository
-public class BranchQueryDslRepository implements BranchQueryRepository{
+public class BranchQueryDslRepository {
 
 	private final JPAQueryFactory queryFactory;
 
@@ -22,7 +22,6 @@ public class BranchQueryDslRepository implements BranchQueryRepository{
 		this.queryFactory = queryFactory;
 	}
 
-	@Override
 	public Optional<BranchDto> fetchByProjectIdAndBranchName(long projectId, String branchName) {
 		return Optional.ofNullable(
 							queryFactory.select(
@@ -44,7 +43,7 @@ public class BranchQueryDslRepository implements BranchQueryRepository{
 	}
 
 
-	@Override
+
 	public Optional<BranchDto> fetchByGitProjectIdAndBranchName(long gitProjectId, String branchName) {
 		return Optional.ofNullable(
 							queryFactory.select(

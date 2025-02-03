@@ -2,7 +2,6 @@ package com.ryuqq.core.domain.git;
 
 import java.util.Objects;
 
-import com.ryuqq.core.storage.db.git.BranchCommand;
 
 public class Branch {
 	private Long id;
@@ -29,7 +28,10 @@ public class Branch {
 	}
 
 	public BranchCommand toCommand() {
-		return new BranchCommand(null, projectId, branchName, baseBranchName);
+		if(id != null){
+			return new UpdateBranchCommand(id, projectId, branchName, baseBranchName);
+		}
+		return new CreateBranchCommand(projectId, branchName, baseBranchName);
 	}
 
 	public Long getId() {

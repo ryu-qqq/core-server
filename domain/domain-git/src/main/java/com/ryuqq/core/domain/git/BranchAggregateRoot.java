@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.enums.GitType;
 
-import jakarta.transaction.Transactional;
 
 @Component
 public class BranchAggregateRoot {
@@ -21,7 +20,6 @@ public class BranchAggregateRoot {
 	}
 
 
-	@Transactional
 	public long fetchOrRegisterBranch(long gitProjectId, GitType gitType, Branch branch) {
 		Project project = projectFinder.fetchByGitProjectIdAndGitType(gitProjectId, gitType);
 		Optional<Branch> existingBranch = branchFinder.fetchByProjectIdAndBranchName(project.getId(), branch.getBranchName());

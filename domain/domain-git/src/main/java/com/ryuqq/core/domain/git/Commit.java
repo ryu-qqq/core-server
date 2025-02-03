@@ -1,42 +1,20 @@
 package com.ryuqq.core.domain.git;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.ryuqq.core.storage.db.git.CommitCommand;
+import java.util.Objects;
 
 public class Commit {
 	private Long id;
-	private long branchId;
+	private Long branchId;
 	private String gitCommitId;
 	private String author;
 	private String commitMessage;
 	private LocalDateTime timestamp;
 	private List<ChangedFile> changedFiles;
 
-	protected Commit(String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
-				  List<ChangedFile> changedFiles) {
-		this.id = 0L;
-		this.branchId = 0L;
-		this.gitCommitId = gitCommitId;
-		this.author = author;
-		this.commitMessage = commitMessage;
-		this.timestamp = timestamp;
-		this.changedFiles = changedFiles;
-	}
-
-	protected Commit(long branchId, String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
-					 List<ChangedFile> changedFiles) {
-		this.id = 0L;
-		this.branchId = branchId;
-		this.gitCommitId = gitCommitId;
-		this.author = author;
-		this.commitMessage = commitMessage;
-		this.timestamp = timestamp;
-		this.changedFiles = changedFiles;
-	}
-
-	protected Commit(Long id, long branchId, String gitCommitId, String author, String commitMessage,
+	private Commit(Long id, Long branchId, String gitCommitId, String author, String commitMessage,
 				  LocalDateTime timestamp,
 				  List<ChangedFile> changedFiles) {
 		this.id = id;
@@ -48,8 +26,21 @@ public class Commit {
 		this.changedFiles = changedFiles;
 	}
 
+	public static Commit create(String gitCommitId, String author, String commitMessage, LocalDateTime timestamp,
+								List<ChangedFile> changedFiles){
+
+		return new Commit(null, null, gitCommitId, author, commitMessage, timestamp, changedFiles);
+	}
+
+	public static Commit create(Long id, long branchId, String gitCommitId, String author, String commitMessage, LocalDateTime timestamp, List<ChangedFile> changedFiles) {
+		return new Commit(null, branchId, gitCommitId, author, commitMessage, timestamp, changedFiles);
+	}
+
 	public CommitCommand toCommand(long branchId){
-		return new CommitCommand(id, branchId, gitCommitId, author, commitMessage, timestamp);
+		if(id != null){
+			return new UpdateCommitCommand(id, branchId, gitCommitId, author, commitMessage, timestamp);
+		}
+		return new CreateCommitCommand(branchId, gitCommitId, author, commitMessage, timestamp);
 	}
 
 	public Long getId() {
@@ -78,5 +69,60 @@ public class Commit {
 
 	public List<ChangedFile> getChangedFiles() {
 		return changedFiles;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this
+			== object) return true;
+		if (object
+			== null
+			|| getClass()
+			!= object.getClass()) return false;
+		Commit commit = (Commit) object;
+		return branchId
+			== commit.branchId
+			&& Objects.equals(id, commit.id)
+			&& Objects.equals(gitCommitId, commit.gitCommitId)
+			&& Objects.equals(author, commit.author)
+			&& Objects.equals(commitMessage, commit.commitMessage)
+			&& Objects.equals(timestamp, commit.timestamp)
+			&& Objects.equals(changedFiles, commit.changedFiles);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, branchId, gitCommitId, author, commitMessage, timestamp, changedFiles);
+	}
+
+	@Override
+	public String toString() {
+		return "Commit{"
+			+
+			"id="
+			+ id
+			+
+			", branchId="
+			+ branchId
+			+
+			", gitCommitId='"
+			+ gitCommitId
+			+ '\''
+			+
+			", author='"
+			+ author
+			+ '\''
+			+
+			", commitMessage='"
+			+ commitMessage
+			+ '\''
+			+
+			", timestamp="
+			+ timestamp
+			+
+			", changedFiles="
+			+ changedFiles
+			+
+			'}';
 	}
 }

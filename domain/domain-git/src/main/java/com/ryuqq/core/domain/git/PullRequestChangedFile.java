@@ -2,7 +2,6 @@ package com.ryuqq.core.domain.git;
 
 import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.ReviewStatus;
-import com.ryuqq.core.storage.db.git.PullRequestChangedFileCommand;
 
 public class PullRequestChangedFile {
 
@@ -13,12 +12,10 @@ public class PullRequestChangedFile {
 	private final ChangeType changeType;
 	private ReviewStatus reviewStatus;
 
-	public PullRequestChangedFile(String filePath, ChangeType changeType) {
-		this.filePath = filePath;
-		this.changeType = changeType;
-	}
 
-	public PullRequestChangedFile(long pullRequestId, long changedFileId, String filePath, ChangeType changeType, ReviewStatus reviewStatus) {
+
+	private PullRequestChangedFile(Long id, long pullRequestId, long changedFileId, String filePath, ChangeType changeType, ReviewStatus reviewStatus) {
+		this.id = id;
 		this.pullRequestId = pullRequestId;
 		this.changedFileId = changedFileId;
 		this.filePath = filePath;
@@ -26,9 +23,18 @@ public class PullRequestChangedFile {
 		this.reviewStatus = reviewStatus;
 	}
 
-	public PullRequestChangedFileCommand toCommand(){
-		return new PullRequestChangedFileCommand(pullRequestId, changedFileId, filePath, changeType, reviewStatus);
+	public static PullRequestChangedFile create(Long id, long pullRequestId, long changedFileId, String filePath, ChangeType changeType, ReviewStatus reviewStatus) {
+		return new PullRequestChangedFile(id, pullRequestId, changedFileId, filePath, changeType, reviewStatus);
 	}
+
+	public PullRequestChangedFileCommand toCommand(){
+		if(id != null){
+			return new UpdatePullRequestChangedFileCommand(id, pullRequestId, changedFileId, filePath, changeType, reviewStatus);
+		}
+		return new CreatePullRequestChangedFileCommand(pullRequestId, changedFileId, filePath, changeType, reviewStatus);
+
+	}
+
 
 	public Long getId() {
 		return id;

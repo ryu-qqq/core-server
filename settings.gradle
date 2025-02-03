@@ -14,10 +14,14 @@ rootProject.name = 'core-server'
 include 'core:core-api'
 include 'core:core-batch'
 include 'core:core-enum'
+include 'core:core-events'
 
 //domain
 include 'domain:domain-git'
 include 'domain:domain-product'
+include 'domain:domain-brand'
+include 'domain:domain-category'
+include 'domain:domain-external'
 
 //storage
 include 'storage:core-db'
@@ -26,11 +30,17 @@ include 'storage:core-index'
 
 // support
 include 'support:logging'
+include 'support:monitoring'
 include 'support:utils'
 include 'support:alert'
 
 //external
 include 'external-client:git-hub'
+include 'external-client:oco'
+include 'external-client:sellic'
+include 'external-client:buyma'
+
+
 
 //tests
 include 'tests:api-docs'

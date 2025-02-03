@@ -1,7 +1,6 @@
 package com.ryuqq.core.domain.git;
 
 import com.ryuqq.core.enums.ChangeType;
-import com.ryuqq.core.storage.db.git.PullRequestCommitCommand;
 
 public class PullRequestCommit {
 	Long id;

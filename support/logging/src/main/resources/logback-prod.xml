@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
-	<!-- JSON File Appender -->
-	<appender name="JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="JSON_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/var/log/spring/spring-core-server.log</file>
 		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
 			<providers>
-				<timestamp>
-					<timeZone>UTC</timeZone>
-				</timestamp>
+				<timestamp><timeZone>UTC</timeZone><fieldName>@timestamp</fieldName></timestamp>
 				<logLevel/>
 				<threadName/>
 				<loggerName/>
 				<message/>
 				<mdc/>
+				<stackTrace/>
+				<callerData/>
+				<hostName/>
+				<processId/>
+				<contextName/>
 			</providers>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/var/log/spring/spring-core-server.log.%d{yyyy-MM-dd}.%i.json</fileNamePattern>
-			<maxHistory>30</maxHistory>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
+			<fileNamePattern>/var/log/spring/spring-core-server.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>14</maxHistory>
+			<totalSizeCap>5GB</totalSizeCap>
 		</rollingPolicy>
 	</appender>
 
+	<appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/spring/spring-core-server-error.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"/>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/var/log/spring/spring-core-server-error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>14</maxHistory>
+			<totalSizeCap>2GB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
 
-	<root level="error">
-		<appender-ref ref="JSON" />
+	<appender name="SLOW_QUERY_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/spring/spring-core-server-slowquery.log</file>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"/>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/var/log/spring/spring-core-server-slowquery.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>14</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="ASYNC_JSON" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>10000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="JSON_APPENDER"/>
+	</appender>
+
+	<appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>5000</queueSize>
+		<appender-ref ref="ERROR_APPENDER"/>
+	</appender>
+
+	<appender name="ASYNC_SLOW_QUERY" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>3000</queueSize>
+		<appender-ref ref="SLOW_QUERY_APPENDER"/>
+	</appender>
+
+	<!-- 로그 레벨 설정 -->
+	<logger name="ASYNC_SLOW_QUERY" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_SLOW_QUERY"/>
+	</logger>
+
+	<root level="info">
+		<appender-ref ref="ASYNC_JSON"/>
+		<appender-ref ref="ASYNC_ERROR"/>
 	</root>
+
 </configuration>

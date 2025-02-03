@@ -1,5 +1,5 @@
-export DOCKER_ID='rsw2@connectly.co.kr'
-export DOCKER_PASSWORD='Ff@20122104'
+export DOCKER_ID='your key'
+export DOCKER_PASSWORD='your key'
 
 echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_ID} --password-stdin
 

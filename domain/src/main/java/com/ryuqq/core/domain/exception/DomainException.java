@@ -1,13 +1,23 @@
 package com.ryuqq.core.domain.exception;
 
+import com.ryuqq.core.enums.ErrorType;
+
 public class DomainException extends RuntimeException {
 
-	public DomainException(String message) {
+	private final ErrorType errorType;
+
+	public DomainException(ErrorType errorType, String message) {
 		super(message);
+		this.errorType = errorType;
 	}
 
-	public DomainException(String message, Throwable cause) {
-		super(message, cause);
+	public DomainException(ErrorType errorType, Throwable cause) {
+		super(cause);
+		this.errorType = errorType;
+	}
+
+	public ErrorType getErrorType() {
+		return errorType;
 	}
 
 }

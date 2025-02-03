@@ -6,12 +6,12 @@ import com.ryuqq.core.enums.ChangeType;
 import com.ryuqq.core.enums.ReviewStatus;
 
 public class PullRequestChangedFileDto {
-
+	private long id;
 	private final String repositoryName;
 	private final String owner;
-	long pullRequestId;
-	long commitId;
-	long changedFileId;
+	private long pullRequestId;
+	private long commitId;
+	private long changedFileId;
 	private final String className;
 	private final String filePath;
 	private final ChangeType changeTyp;
@@ -19,8 +19,9 @@ public class PullRequestChangedFileDto {
 
 
 	@QueryProjection
-	public PullRequestChangedFileDto(String repositoryName, String owner, long pullRequestId, long commitId, long changedFileId, String className,
+	public PullRequestChangedFileDto(long id, String repositoryName, String owner, long pullRequestId, long commitId, long changedFileId, String className,
 									 String filePath, ChangeType changeTyp, ReviewStatus reviewStatus) {
+		this.id = id;
 		this.repositoryName = repositoryName;
 		this.owner = owner;
 		this.pullRequestId = pullRequestId;
@@ -30,6 +31,10 @@ public class PullRequestChangedFileDto {
 		this.filePath = filePath;
 		this.changeTyp = changeTyp;
 		this.reviewStatus = reviewStatus;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getRepositoryName() {

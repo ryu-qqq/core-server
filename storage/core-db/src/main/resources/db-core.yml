@@ -48,12 +48,12 @@ spring:
 
 storage:
   datasource:
-      core:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbc-url: jdbc:mysql://localhost:3307/hanni
-          username: admin
-          password: Tpxhvm1234!!
-      maximum-pool-size: 5
+    core:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3307/hanni
+      username: admin
+      password: Tpxhvm1234!!
+      maximum-pool-size: 20
       connection-timeout: 1100
       keepalive-time: 30000
       validation-timeout: 1000
@@ -71,6 +71,7 @@ storage:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
+        leak-detection-threshold: 5000
 ---
 
 spring:
@@ -117,4 +118,5 @@ storage:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
+        leak-detection-threshold: 5000
 ---
