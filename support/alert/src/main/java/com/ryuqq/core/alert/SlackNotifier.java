@@ -37,7 +37,6 @@ public class SlackNotifier {
 				throw new RuntimeException(chatPostMessageResponse.getError());
 			}
 
-			log.info("Slack alert sent successfully to channel '{}'.", channel);
 
 		} catch (SlackApiException | IOException e) {
 			log.error("Failed to send Slack alert to channel '{}'.", channel, e);

@@ -16,10 +16,16 @@ public class SellicResponseFactory {
 		BigDecimal regularPrice,
 		BigDecimal currentPrice
 	) {
+
+		String externalProductGroupId = externalProductGroup.getExternalProductGroupId();
+		if (externalProductGroupId == null || externalProductGroupId.isEmpty()) {
+			externalProductGroupId = sellicResponse.productId();
+		}
+
 		return new SellicProductGroupRequestResponse(
 			externalProductGroup.getSiteId(),
 			externalProductGroup.getProductGroupId(),
-			sellicResponse.productId(),
+			externalProductGroupId,
 			SyncStatus.APPROVED,
 			productName,
 			regularPrice,

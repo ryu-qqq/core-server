@@ -13,6 +13,7 @@ public class ExternalProductGroupDto {
 	private final long siteId;
 	private final SiteName siteName;
 	private final String sellerName;
+	private final long sellerId;
 	private final long productGroupId;
 	private final long brandId;
 	private final String externalBrandId;
@@ -28,8 +29,8 @@ public class ExternalProductGroupDto {
 	private final boolean displayed;
 
 	@QueryProjection
-	public ExternalProductGroupDto(long id, long siteId, SiteName siteName, String sellerName, long productGroupId, long brandId,
-								   String externalBrandId,
+	public ExternalProductGroupDto(long id, long siteId, SiteName siteName, String sellerName, long sellerId,
+								   long productGroupId, long brandId, String externalBrandId,
 								   long categoryId, String externalCategoryId, String externalProductGroupId,
 								   String productName, BigDecimal regularPrice, BigDecimal currentPrice,
 								   SyncStatus status,
@@ -38,6 +39,7 @@ public class ExternalProductGroupDto {
 		this.siteId = siteId;
 		this.siteName = siteName;
 		this.sellerName = sellerName;
+		this.sellerId = sellerId;
 		this.productGroupId = productGroupId;
 		this.brandId = brandId;
 		this.externalBrandId = externalBrandId;
@@ -91,6 +93,10 @@ public class ExternalProductGroupDto {
 
 	public String getSellerName() {
 		return sellerName;
+	}
+
+	public long getSellerId() {
+		return sellerId;
 	}
 
 	public String getProductName() {

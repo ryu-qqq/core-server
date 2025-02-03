@@ -10,6 +10,7 @@ public record CreateExternalProductGroupCommand(
 	String externalProductGroupId,
 	long brandId,
 	long categoryId,
+	long sellerId,
 	String productName,
 	BigDecimal regularPrice,
 	BigDecimal currentPrice,

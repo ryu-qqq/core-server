@@ -7,6 +7,8 @@ import com.ryuqq.core.utils.TraceIdHolder;
 
 public class SlackLogFormatter {
 
+	private static final int STACK_TRACE_LIMIT = 10;
+
 	public static String formatForSlack(List<AopLogEntry> logEntries) {
 		if (logEntries.isEmpty()) {
 			return ":warning: No error log entries available.";
@@ -18,8 +20,8 @@ public class SlackLogFormatter {
 				entry.getMethodName(),
 				entry.getArgs(),
 				entry.getExecutionTime(),
-				entry.getException() != null ? entry.getException().getMessage() : null,
-				entry.getStackTrace(),
+				entry.getErrorMessage(),
+				formatStackTrace(entry.getStackTrace()),
 				entry.getCallerData(),
 				entry.getHostName(),
 				entry.getProcessId(),
@@ -32,8 +34,6 @@ public class SlackLogFormatter {
 		SlackLogFormatDto longestEntry = entryDtos.stream()
 			.max(Comparator.comparing(SlackLogFormatDto::getExecutionTime))
 			.orElse(firstEntry);
-
-		String exceptionMessage = formatExceptionMessage(lastEntry.getExceptionMessage());
 
 		return String.format(
 			"""
@@ -54,7 +54,7 @@ public class SlackLogFormatter {
 			firstEntry.getClassName(), firstEntry.getMethodName(), firstEntry.getExecutionTime(),
 			longestEntry.getClassName(), longestEntry.getMethodName(), longestEntry.getExecutionTime(),
 			lastEntry.getClassName(), lastEntry.getMethodName(), lastEntry.getExecutionTime(),
-			exceptionMessage,
+			lastEntry.getExceptionMessage(),
 			lastEntry.getFilteredStackTrace(),
 			lastEntry.getHostName(),
 			lastEntry.getProcessId(),
@@ -62,11 +62,21 @@ public class SlackLogFormatter {
 		);
 	}
 
-	private static String formatExceptionMessage(String exceptionMessage) {
-		if (exceptionMessage == null || exceptionMessage.isEmpty()) {
+
+	private static String formatExceptionMessage(Throwable exception) {
+		if (exception == null) {
 			return "No exception message available.";
 		}
-		return exceptionMessage.replaceAll("\n", " ");
+		return exception.getClass().getName() + ": " + exception.getMessage();
 	}
+
+	private static String formatStackTrace(String stackTrace) {
+		if (stackTrace == null || stackTrace.isEmpty()) {
+			return "No stack trace available.";
+		}
+		String[] lines = stackTrace.split("\n");
+		return String.join("\n", List.of(lines).subList(0, Math.min(lines.length, STACK_TRACE_LIMIT)));
+	}
+
 
 }

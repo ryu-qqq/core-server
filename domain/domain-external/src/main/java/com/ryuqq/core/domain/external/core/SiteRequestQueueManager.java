@@ -5,17 +5,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 
 @Component
 public class SiteRequestQueueManager {
-	private static final Logger log = LoggerFactory.getLogger(SiteRequestQueueManager.class);
 
-	private static final int DEFAULT_QUEUE_CAPACITY = 500; // 큐의 최대 크기 설정
+	private static final int DEFAULT_QUEUE_CAPACITY = 1000;
 
 	private final Map<Long, BlockingQueue<ExternalProductGroup>> siteQueues = new ConcurrentHashMap<>();
 
@@ -31,7 +28,7 @@ public class SiteRequestQueueManager {
 	}
 
 	private void handleQueueOverflow(long siteId, ExternalProductGroup productGroup) {
-		log.error("Queue overflow for site ID: {}, Product Group ID: {}", siteId, productGroup.getProductGroupId());
+		throw new RuntimeException(String.format("Queue overflow for site ID: {}, Product Group ID: %d, %d", siteId, productGroup.getProductGroupId()));
 	}
 
 }

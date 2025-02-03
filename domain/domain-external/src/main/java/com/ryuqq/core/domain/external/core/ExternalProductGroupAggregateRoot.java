@@ -38,20 +38,21 @@ public class ExternalProductGroupAggregateRoot {
 		List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchBySiteIdAndStatus(siteId,
 			status);
 
-		externalProductGroups.forEach(productGroup ->
-			siteRequestQueueManager.addRequest(productGroup.getSiteId(), productGroup)
-		);
+		if(!externalProductGroups.isEmpty()){
+			externalProductGroups.forEach(productGroup ->
+				siteRequestQueueManager.addRequest(productGroup.getSiteId(), productGroup)
+			);
 
-		SiteName siteName= externalProductGroups.getFirst().getSiteName();
-
-		siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP_REGISTER);
+			SiteName siteName= externalProductGroups.getFirst().getSiteName();
+			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP);
+		}
 
 	}
 
 	public void registerExternalProductGroupWaitingStatus(long sellerId, long productGroupId, long brandId, long categoryId){
 		externalSiteSellerRelationFinder.fetchBySellerId(sellerId).ifPresent(e -> {
 			List<ExternalProductGroup> externalProductGroups = e.externalSites().stream().map(
-				site -> ExternalProductGroup.create(site.siteId(), site.siteName(), productGroupId, brandId, categoryId, SyncStatus.WAITING)
+				site -> ExternalProductGroup.create(site.siteId(), site.siteName(), productGroupId, brandId, categoryId, sellerId, SyncStatus.WAITING)
 			).toList();
 
 			externalProductGroupRegister.register(externalProductGroups);

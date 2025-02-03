@@ -31,6 +31,9 @@ public class ExternalProductGroupEntity extends BaseEntity {
 	@Column(name = "CATEGORY_ID", nullable = false)
 	private long categoryId;
 
+	@Column(name = "SELLER_ID", nullable = false)
+	private Long sellerId;
+
     @Column(name = "PRODUCT_NAME", nullable = true)
     private String productName;
 
@@ -57,7 +60,7 @@ public class ExternalProductGroupEntity extends BaseEntity {
     protected ExternalProductGroupEntity() {}
 
 	public ExternalProductGroupEntity(long siteId, long productGroupId, String externalProductGroupId, long brandId,
-									  long categoryId,
+									  long categoryId, Long sellerId,
 									  String productName,
 									  BigDecimal regularPrice, BigDecimal currentPrice, SyncStatus status,
 									  boolean fixedPrice, boolean soldOut, boolean displayed) {
@@ -66,6 +69,7 @@ public class ExternalProductGroupEntity extends BaseEntity {
 		this.externalProductGroupId = externalProductGroupId;
 		this.brandId = brandId;
 		this.categoryId = categoryId;
+		this.sellerId = sellerId;
 		this.productName = productName;
 		this.regularPrice = regularPrice;
 		this.currentPrice = currentPrice;
@@ -76,7 +80,7 @@ public class ExternalProductGroupEntity extends BaseEntity {
 	}
 
 	public ExternalProductGroupEntity(Long id, long siteId, long productGroupId, String externalProductGroupId,
-									  long brandId, long categoryId,
+									  long brandId, long categoryId, Long sellerId,
 									  String productName,
 									  BigDecimal regularPrice, BigDecimal currentPrice, SyncStatus status,
 									  boolean fixedPrice, boolean soldOut, boolean displayed) {
@@ -87,6 +91,7 @@ public class ExternalProductGroupEntity extends BaseEntity {
 		this.externalProductGroupId = externalProductGroupId;
 		this.brandId = brandId;
 		this.categoryId = categoryId;
+		this.sellerId = sellerId;
 		this.productName = productName;
 		this.regularPrice = regularPrice;
 		this.currentPrice = currentPrice;
@@ -110,6 +115,10 @@ public class ExternalProductGroupEntity extends BaseEntity {
 
 	public long getCategoryId() {
 		return categoryId;
+	}
+
+	public Long getSellerId() {
+		return sellerId;
 	}
 
 	public String getExternalProductGroupId() {

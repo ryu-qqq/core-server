@@ -38,6 +38,7 @@ public class ExternalProductGroupQueryDslRepository {
 				.on(siteEntity.id.eq(externalProductGroupEntity.siteId))
 			.innerJoin(externalSiteSellerEntity)
 				.on(externalSiteSellerEntity.siteId.eq(siteEntity.id))
+				.on(externalSiteSellerEntity.sellerId.eq(externalProductGroupEntity.sellerId))
 			.leftJoin(externalBrandEntity)
 				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
 				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
@@ -53,6 +54,7 @@ public class ExternalProductGroupQueryDslRepository {
 						externalProductGroupEntity.siteId,
 						siteEntity.name,
 						externalSiteSellerEntity.sellerName,
+						externalProductGroupEntity.sellerId,
 						externalProductGroupEntity.productGroupId,
 						externalProductGroupEntity.brandId,
 						externalBrandEntity.externalBrandId,
@@ -82,6 +84,7 @@ public class ExternalProductGroupQueryDslRepository {
 					externalProductGroupEntity.siteId,
 					siteEntity.name,
 					externalSiteSellerEntity.sellerName,
+					externalProductGroupEntity.sellerId,
 					externalProductGroupEntity.productGroupId,
 					externalProductGroupEntity.brandId,
 					externalBrandEntity.externalBrandId,
@@ -101,6 +104,7 @@ public class ExternalProductGroupQueryDslRepository {
 				.on(siteEntity.id.eq(externalProductGroupEntity.siteId))
 			.innerJoin(externalSiteSellerEntity)
 				.on(externalSiteSellerEntity.siteId.eq(siteEntity.id))
+				.on(externalSiteSellerEntity.sellerId.eq(externalProductGroupEntity.sellerId))
 			.leftJoin(externalBrandEntity)
 				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
 				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
@@ -116,6 +120,7 @@ public class ExternalProductGroupQueryDslRepository {
 							externalProductGroupEntity.siteId,
 							siteEntity.name,
 							externalSiteSellerEntity.sellerName,
+							externalProductGroupEntity.sellerId,
 							externalProductGroupEntity.productGroupId,
 							externalProductGroupEntity.brandId,
 							externalBrandEntity.externalBrandId,
@@ -142,6 +147,7 @@ public class ExternalProductGroupQueryDslRepository {
 						externalProductGroupEntity.siteId,
 						siteEntity.name,
 						externalSiteSellerEntity.sellerName,
+						externalProductGroupEntity.sellerId,
 						externalProductGroupEntity.productGroupId,
 						externalProductGroupEntity.brandId,
 						externalBrandEntity.externalBrandId,
@@ -158,15 +164,16 @@ public class ExternalProductGroupQueryDslRepository {
 					))
 				.from(externalProductGroupEntity)
 				.innerJoin(siteEntity)
-				.on(siteEntity.id.eq(externalProductGroupEntity.siteId))
+					.on(siteEntity.id.eq(externalProductGroupEntity.siteId))
 				.innerJoin(externalSiteSellerEntity)
-				.on(externalSiteSellerEntity.siteId.eq(siteEntity.id))
+					.on(externalSiteSellerEntity.siteId.eq(siteEntity.id))
+					.on(externalSiteSellerEntity.sellerId.eq(externalProductGroupEntity.sellerId))
 				.leftJoin(externalBrandEntity)
-				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
-				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
+					.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
+					.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
 				.leftJoin(externalCategoryEntity)
-				.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.brandId))
-				.on(externalCategoryEntity.siteId.eq(externalProductGroupEntity.siteId))
+					.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.brandId))
+					.on(externalCategoryEntity.siteId.eq(externalProductGroupEntity.siteId))
 				.where(
 					productGroupIdEq(productGroupId), siteIdEq(siteId)
 				).transform(
@@ -176,6 +183,7 @@ public class ExternalProductGroupQueryDslRepository {
 							externalProductGroupEntity.siteId,
 							siteEntity.name,
 							externalSiteSellerEntity.sellerName,
+							externalProductGroupEntity.sellerId,
 							externalProductGroupEntity.productGroupId,
 							externalProductGroupEntity.brandId,
 							externalBrandEntity.externalBrandId,
@@ -202,6 +210,7 @@ public class ExternalProductGroupQueryDslRepository {
 				.on(siteEntity.id.eq(externalProductGroupEntity.siteId))
 			.innerJoin(externalSiteSellerEntity)
 				.on(externalSiteSellerEntity.siteId.eq(siteEntity.id))
+				.on(externalSiteSellerEntity.sellerId.eq(externalProductGroupEntity.sellerId))
 			.leftJoin(externalBrandEntity)
 				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
 				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
@@ -216,6 +225,7 @@ public class ExternalProductGroupQueryDslRepository {
 							externalProductGroupEntity.siteId,
 							siteEntity.name,
 							externalSiteSellerEntity.sellerName,
+							externalProductGroupEntity.sellerId,
 							externalProductGroupEntity.productGroupId,
 							externalProductGroupEntity.brandId,
 							externalBrandEntity.externalBrandId,
@@ -235,11 +245,26 @@ public class ExternalProductGroupQueryDslRepository {
 	}
 
 	private List<Long> fetchExternalProductGroupIds(List<Long> siteIds, List<Long> productGroupIds, SyncStatus status) {
+		List<Long> temp = List.of(
+			502279L,
+			502287L,
+			502288L,
+			502291L,
+			502292L,
+			502328L,
+			502329L,
+			502342L,
+			502353L,
+			502359L,
+			502360L
+		);
+
+
 		return queryFactory
 			.select(externalProductGroupEntity.id)
 			.from(externalProductGroupEntity)
 			.where(
-				siteIdIn(siteIds), productGroupIdIn(productGroupIds), statusEq(status)
+				siteIdIn(siteIds), productGroupIdIn(temp), statusEq(status)
 			)
 			.limit(100)
 			.orderBy(externalProductGroupEntity.productGroupId.desc())
@@ -271,7 +296,6 @@ public class ExternalProductGroupQueryDslRepository {
 	}
 
 	private BooleanExpression externalProductGroupIdIn(List<Long> externalProductGroupIds) {
-		if(externalProductGroupIds == null || externalProductGroupIds.isEmpty()) return null;
 		return externalProductGroupEntity.id.in(externalProductGroupIds);
 	}
 
