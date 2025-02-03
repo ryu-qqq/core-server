@@ -82,7 +82,7 @@ public class SlackLogFormatDto {
 		for (String line : lines) {
 			if (line.contains("com.ryuqq.core") || line.contains("java.") || line.contains("org.springframework.")) {
 				filtered.append(line.trim()).append("\n");
-				if (++count >= 5) break;  // 상위 5개만 표시
+				if (++count >= 10) break;  // 상위 5개만 표시
 			}
 		}
 

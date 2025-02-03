@@ -10,6 +10,7 @@ public interface ExternalProductGroupCommand{
 	long productGroupId();
 	long brandId();
 	long categoryId();
+	long sellerId();
 	String externalProductGroupId();
 	String productName();
 	BigDecimal regularPrice();

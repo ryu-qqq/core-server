@@ -9,6 +9,7 @@ import com.ryuqq.core.enums.SyncStatus;
 public class ExternalProductGroup {
 	private final long siteId;
 	private final SiteName siteName;
+	private final long sellerId;
 	private final String sellerName;
 	private final long productGroupId;
 	private final String externalProductGroupId;
@@ -25,7 +26,7 @@ public class ExternalProductGroup {
 	private final boolean displayed;
 
 	private ExternalProductGroup(long siteId, SiteName siteName, String sellerName, long productGroupId, String externalProductGroupId,
-								 long brandId, String externalBrandId, long categoryId, String externalCategoryId,
+								 long brandId, String externalBrandId, long categoryId, String externalCategoryId, long sellerId,
 								 String productName, BigDecimal regularPrice, BigDecimal currentPrice, SyncStatus status,
 								 boolean fixedPrice, boolean soldOut, boolean displayed) {
 		this.siteId = siteId;
@@ -37,6 +38,7 @@ public class ExternalProductGroup {
 		this.externalBrandId = externalBrandId;
 		this.categoryId = categoryId;
 		this.externalCategoryId = externalCategoryId;
+		this.sellerId = sellerId;
 		this.productName = productName;
 		this.regularPrice = regularPrice;
 		this.currentPrice = currentPrice;
@@ -46,17 +48,17 @@ public class ExternalProductGroup {
 		this.displayed = displayed;
 	}
 
-	public static ExternalProductGroup create(long siteId, SiteName siteName, long productGroupId, long brandId, long categoryId, SyncStatus status) {
+	public static ExternalProductGroup create(long siteId, SiteName siteName, long productGroupId, long brandId, long categoryId,  long sellerId, SyncStatus status) {
 		return new ExternalProductGroup(siteId, siteName, null, productGroupId, null, brandId, null,
-			categoryId, null, null, BigDecimal.ZERO, BigDecimal.ZERO, status, false, false, true);
+			categoryId, null, sellerId, null, BigDecimal.ZERO, BigDecimal.ZERO, status, false, false, true);
 	}
 
 	public static ExternalProductGroup create(long siteId, SiteName siteName, String sellerName, long productGroupId, String externalProductGroupId,
-											  long brandId, String externalBrandId, long categoryId, String externalCategoryId,
+											  long brandId, String externalBrandId, long categoryId, String externalCategoryId,  long sellerId,
 											  String productName, BigDecimal regularPrice, BigDecimal currentPrice, SyncStatus status,
 											  boolean fixedPrice, boolean soldOut, boolean displayed) {
 		return new ExternalProductGroup(siteId, siteName, sellerName, productGroupId, externalProductGroupId, brandId, externalBrandId,
-			categoryId, externalCategoryId, productName, regularPrice, currentPrice, status, fixedPrice, soldOut, displayed);
+			categoryId, externalCategoryId, sellerId, productName, regularPrice, currentPrice, status, fixedPrice, soldOut, displayed);
 	}
 
 	public long getSiteId() {
@@ -89,6 +91,10 @@ public class ExternalProductGroup {
 
 	public String getExternalCategoryId() {
 		return externalCategoryId;
+	}
+
+	public long getSellerId() {
+		return sellerId;
 	}
 
 	public String getProductName() {
@@ -147,28 +153,72 @@ public class ExternalProductGroup {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(siteId, siteName, productGroupId, externalProductGroupId, brandId, externalBrandId,
-			categoryId, externalCategoryId, productName, regularPrice, currentPrice, status, fixedPrice, soldOut, displayed);
+		return Objects.hash(siteId, siteName, sellerId, sellerName, productGroupId, externalProductGroupId, brandId,
+			externalBrandId, categoryId, externalCategoryId, productName, regularPrice, currentPrice, status,
+			fixedPrice,
+			soldOut, displayed);
 	}
 
 	@Override
 	public String toString() {
-		return "ExternalProductGroup{" +
-			"siteId=" + siteId +
-			", siteName=" + siteName +
-			", productGroupId=" + productGroupId +
-			", externalProductGroupId='" + externalProductGroupId + '\'' +
-			", brandId=" + brandId +
-			", externalBrandId='" + externalBrandId + '\'' +
-			", categoryId=" + categoryId +
-			", externalCategoryId='" + externalCategoryId + '\'' +
-			", productName='" + productName + '\'' +
-			", regularPrice=" + regularPrice +
-			", currentPrice=" + currentPrice +
-			", status=" + status +
-			", fixedPrice=" + fixedPrice +
-			", soldOut=" + soldOut +
-			", displayed=" + displayed +
+		return "ExternalProductGroup{"
+			+
+			"siteId="
+			+ siteId
+			+
+			", siteName="
+			+ siteName
+			+
+			", sellerId="
+			+ sellerId
+			+
+			", sellerName='"
+			+ sellerName
+			+ '\''
+			+
+			", productGroupId="
+			+ productGroupId
+			+
+			", externalProductGroupId='"
+			+ externalProductGroupId
+			+ '\''
+			+
+			", brandId="
+			+ brandId
+			+
+			", externalBrandId='"
+			+ externalBrandId
+			+ '\''
+			+
+			", categoryId="
+			+ categoryId
+			+
+			", externalCategoryId='"
+			+ externalCategoryId
+			+ '\''
+			+
+			", productName='"
+			+ productName
+			+ '\''
+			+
+			", regularPrice="
+			+ regularPrice
+			+
+			", currentPrice="
+			+ currentPrice
+			+
+			", status="
+			+ status
+			+
+			", fixedPrice="
+			+ fixedPrice
+			+
+			", soldOut="
+			+ soldOut
+			+
+			", displayed="
+			+ displayed
+			+
 			'}';
 	}
 
@@ -182,6 +232,7 @@ public class ExternalProductGroup {
 		private String externalBrandId;
 		private long categoryId;
 		private String externalCategoryId;
+		private long sellerId;
 		private String productName;
 		private BigDecimal regularPrice;
 		private BigDecimal currentPrice;
@@ -202,6 +253,7 @@ public class ExternalProductGroup {
 			this.externalBrandId = existingGroup.getExternalBrandId();
 			this.categoryId = existingGroup.getCategoryId();
 			this.externalCategoryId = existingGroup.getExternalCategoryId();
+			this.sellerId = existingGroup.getSellerId();
 			this.productName = existingGroup.getProductName();
 			this.regularPrice = existingGroup.getRegularPrice();
 			this.currentPrice = existingGroup.getCurrentPrice();
@@ -251,6 +303,11 @@ public class ExternalProductGroup {
 			return this;
 		}
 
+		public Builder sellerId(long sellerId) {
+			this.sellerId = sellerId;
+			return this;
+		}
+
 		public Builder productName(String productName) {
 			this.productName = productName;
 			return this;
@@ -293,7 +350,7 @@ public class ExternalProductGroup {
 
 		public ExternalProductGroup build() {
 			return new ExternalProductGroup(siteId, siteName, sellerName, productGroupId, externalProductGroupId, brandId, externalBrandId,
-				categoryId, externalCategoryId, productName, regularPrice, currentPrice, status, fixedPrice, soldOut, displayed);
+				categoryId, externalCategoryId, sellerId, productName, regularPrice, currentPrice, status, fixedPrice, soldOut, displayed);
 		}
 	}
 }

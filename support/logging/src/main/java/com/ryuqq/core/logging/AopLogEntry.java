@@ -18,6 +18,7 @@ public final class AopLogEntry extends AbstractLogEntry {
 	private final String methodName;
 	private final Map<String, Object> args;
 	private final Throwable exception;
+	private final String errorMessage;
 	private final long executionTime;
 	private final LogLevel logLevel;
 	private final String stackTrace;
@@ -33,6 +34,7 @@ public final class AopLogEntry extends AbstractLogEntry {
 		this.methodName = methodName;
 		this.args = args;
 		this.exception = exception;
+		this.errorMessage = (exception != null) ? exception.getMessage() : null;
 		this.executionTime = executionTime;
 		this.logLevel = logLevel;
 		this.stackTrace = (exception != null) ? extractStackTrace(exception) : null;
@@ -56,6 +58,10 @@ public final class AopLogEntry extends AbstractLogEntry {
 
 	public Throwable getException() {
 		return exception;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 	public long getExecutionTime() {
@@ -115,6 +121,7 @@ public final class AopLogEntry extends AbstractLogEntry {
 			&& Objects.equals(methodName, that.methodName)
 			&& Objects.equals(args, that.args)
 			&& Objects.equals(exception, that.exception)
+			&& Objects.equals(errorMessage, that.errorMessage)
 			&& logLevel
 			== that.logLevel
 			&& Objects.equals(stackTrace, that.stackTrace)
@@ -126,24 +133,7 @@ public final class AopLogEntry extends AbstractLogEntry {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(className, methodName, args, exception, executionTime, logLevel, stackTrace, callerData,
-			hostName, processId, applicationName);
+		return Objects.hash(className, methodName, args, exception, errorMessage, executionTime, logLevel, stackTrace,
+			callerData, hostName, processId, applicationName);
 	}
-
-	@Override
-	public String toString() {
-		return "AopLogEntry{" +
-			"className='" + className + '\'' +
-			", methodName='" + methodName + '\'' +
-			", executionTime=" + executionTime +
-			", logLevel=" + logLevel +
-			", stackTrace='" + stackTrace + '\'' +
-			", callerData='" + callerData + '\'' +
-			", hostName='" + hostName + '\'' +
-			", processId='" + processId + '\'' +
-			", applicationName='" + applicationName + '\'' +
-			'}';
-	}
-
-
 }

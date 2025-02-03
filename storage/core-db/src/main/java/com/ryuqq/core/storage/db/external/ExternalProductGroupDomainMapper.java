@@ -19,6 +19,7 @@ public class ExternalProductGroupDomainMapper {
 			externalProductGroupDto.getExternalBrandId(),
 			externalProductGroupDto.getCategoryId(),
 			externalProductGroupDto.getExternalCategoryId(),
+			externalProductGroupDto.getSellerId(),
 			externalProductGroupDto.getProductName(),
 			externalProductGroupDto.getRegularPrice(),
 			externalProductGroupDto.getCurrentPrice(),

@@ -35,7 +35,6 @@ public class SiteRequestProcessorExecutor {
 		BlockingQueue<ExternalProductGroup> queue = queueManager.getQueue(externalSite.siteId());
 
 		if (queue == null || queue.isEmpty()) {
-			log.info("No requests to process for site: {}", externalSite.siteName());
 			return;
 		}
 

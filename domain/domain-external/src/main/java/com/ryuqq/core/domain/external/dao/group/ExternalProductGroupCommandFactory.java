@@ -11,6 +11,7 @@ public class ExternalProductGroupCommandFactory {
 			externalProductGroup.getExternalProductGroupId(),
 			externalProductGroup.getBrandId(),
 			externalProductGroup.getCategoryId(),
+			externalProductGroup.getSellerId(),
 			externalProductGroup.getProductName(),
 			externalProductGroup.getRegularPrice(),
 			externalProductGroup.getCurrentPrice(),

@@ -8,10 +8,7 @@ import com.ryuqq.core.api.controller.v1.product.validator.CentralValidator;
 import com.ryuqq.core.api.controller.v1.product.validator.ValidationResult;
 import com.ryuqq.core.api.exception.CoreException;
 import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.domain.product.dao.sync.DefaultProductSyncCommand;
-import com.ryuqq.core.domain.product.dao.sync.ProductSyncPersistenceRepository;
 import com.ryuqq.core.enums.ErrorType;
-import com.ryuqq.core.enums.SyncStatus;
 
 @Service
 public class ProductGroupContextCommandService {
@@ -19,33 +16,19 @@ public class ProductGroupContextCommandService {
 	private final CentralValidator centralValidator;
 	private final ProductGroupContextFactory productGroupContextFactory;
 	private final ProductGroupContextDomainService productGroupContextDomainService;
-	private final ProductSyncPersistenceRepository productSyncPersistenceRepository;
 
 	public ProductGroupContextCommandService(CentralValidator centralValidator,
 											 ProductGroupContextFactory productGroupContextFactory,
-											 ProductGroupContextDomainService productGroupContextDomainService,
-											 ProductSyncPersistenceRepository productSyncPersistenceRepository) {
+											 ProductGroupContextDomainService productGroupContextDomainService) {
 		this.centralValidator = centralValidator;
 		this.productGroupContextFactory = productGroupContextFactory;
 		this.productGroupContextDomainService = productGroupContextDomainService;
-		this.productSyncPersistenceRepository = productSyncPersistenceRepository;
 	}
 
 	public long registerProductGroupContext(ProductGroupContextCommandRequestDto requestDto){
-		try{
-			validate(requestDto, false);
-
-			ProductGroupContext productGroupContext = productGroupContextFactory.createFromDto(requestDto);
-
-			productGroupContextDomainService.registerProductGroupContext(productGroupContext);
-
-			return requestDto.productGroup().productGroupId();
-		}catch (Exception e){
-			DefaultProductSyncCommand defaultProductSyncCommand = new DefaultProductSyncCommand(
-				requestDto.productGroup().productGroupId(), SyncStatus.FAILED);
-			productSyncPersistenceRepository.save(defaultProductSyncCommand);
-			return 0L;
-		}
+		validate(requestDto, false);
+		ProductGroupContext productGroupContext = productGroupContextFactory.createFromDto(requestDto);
+		return productGroupContextDomainService.registerProductGroupContext(productGroupContext);
 	}
 
 	public long updateProductGroupContext(long productGroupId, ProductGroupContextCommandRequestDto requestDto){
@@ -61,5 +44,6 @@ public class ProductGroupContextCommandService {
 			throw new CoreException(ErrorType.BAD_REQUEST_ERROR, result.getErrorsToString());
 		}
 	}
+
 
 }

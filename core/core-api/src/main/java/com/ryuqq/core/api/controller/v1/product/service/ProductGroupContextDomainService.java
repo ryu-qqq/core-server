@@ -23,26 +23,25 @@ public class ProductGroupContextDomainService {
 	}
 
 	@Transactional
-	public void registerProductGroupContext(ProductGroupContext productGroupContext) {
+	public long registerProductGroupContext(ProductGroupContext productGroupContext) {
 		long productGroupId = productGroupContextAggregateRoot.registerProductGroupContext(productGroupContext);
 		productGroupContextEventHandler.handleEvents(
 			productGroupContext.getSellerId(), productGroupId,
 			productGroupContext.getBrandId(), productGroupContext.getCategoryId()
 		);
+		return productGroupId;
 	}
 
 	@Transactional
 	public void updateProductGroupContext(long productGroupId, ProductGroupContext productGroupContext) {
-		try{
-			UpdateDecision updateDecision = productGroupContextAggregateRoot.updateProductGroupContext(productGroupId,
-				productGroupContext);
 
-			productGroupContextEventHandler.handleEvents(
-				productGroupContext.getSellerId(), productGroupContext.getProductGroupId(),
-				productGroupContext.getBrandId(), productGroupContext.getCategoryId(),
-				updateDecision);
-		}catch (Exception e) {
-			registerProductGroupContext(productGroupContext);
-		}
+		UpdateDecision updateDecision = productGroupContextAggregateRoot.updateProductGroupContext(productGroupId,
+			productGroupContext);
+
+		productGroupContextEventHandler.handleEvents(
+			productGroupContext.getSellerId(), productGroupContext.getProductGroupId(),
+			productGroupContext.getBrandId(), productGroupContext.getCategoryId(),
+			updateDecision);
+
 	}
 }
