@@ -7,7 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = {
 		"com.ryuqq.core",
-		"com.ryuqq.core.external"
+		"com.ryuqq.core.external",
+		"com.monikit.starter"
 })
 public class CoreServerApplication {
 

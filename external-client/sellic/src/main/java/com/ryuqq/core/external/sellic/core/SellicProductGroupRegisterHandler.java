@@ -3,6 +3,7 @@ package com.ryuqq.core.external.sellic.core;
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.core.UpdateTypeHandler;
@@ -17,7 +18,7 @@ import com.ryuqq.core.external.sellic.request.SellicProductInsertRequestDto;
 import com.ryuqq.core.external.sellic.response.SellicProductGroupRequestResponse;
 import com.ryuqq.core.external.sellic.response.SellicResponse;
 
-@Component
+@Service
 public class SellicProductGroupRegisterHandler  implements UpdateTypeHandler {
 
 	private final SellicProductMapper sellicProductMapper;

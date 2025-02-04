@@ -9,15 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
-import net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener;
-import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import com.ryuqq.core.storage.db.QueryListener;
-import com.ryuqq.core.storage.db.QueryMetricsCollector;
 
 @Configuration
 public class CoreDataSourceConfig {
@@ -30,21 +24,9 @@ public class CoreDataSourceConfig {
 	}
 
 	@Bean
-	public HikariDataSource coreDataSource(@Qualifier("coreHikariConfig") HikariConfig config) {
+	public HikariDataSource dataSource(@Qualifier("coreHikariConfig") HikariConfig config) {
 		return new HikariDataSource(config);
 	}
-
-	@Bean
-	public DataSource dataSource(DataSource dataSource, QueryMetricsCollector metricsCollector) {
-		SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
-		loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
-		return ProxyDataSourceBuilder.create(dataSource)
-			.name("PROXY-DS")
-			.listener(loggingListener)
-			.listener(new QueryListener(200, 500, metricsCollector))
-			.build();
-	}
-
 
 	@Bean
 	public JdbcTemplate jdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
@@ -55,5 +37,20 @@ public class CoreDataSourceConfig {
 	public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
+
+
+	// @Bean
+	// public DataSource dataSource(DataSource dataSource, QueryMetricsCollector metricsCollector) {
+	// 	SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
+	// 	loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
+	// 	return ProxyDataSourceBuilder.create(dataSource)
+	// 		.name("PROXY-DS")
+	// 		.listener(loggingListener)
+	// 		.listener(new QueryListener(200, 500, metricsCollector))
+	// 		.build();
+	// }
+
+
+
 
 }
