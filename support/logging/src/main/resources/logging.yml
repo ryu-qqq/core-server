@@ -2,6 +2,16 @@ logging:
   level:
     root: INFO  # 기본 로그 레벨 설정
 
+monikit:
+    logging:
+        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
+        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
+        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
+        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
+
+    metrics:
+        enabled: true
+
 ---
 
 spring:
@@ -13,6 +23,17 @@ logging:
   config: classpath:logback-local.xml  # 로컬 환경에서 사용
 
 
+monikit:
+    logging:
+        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
+        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
+        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
+        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
+
+    metrics:
+        enabled: true
+
+
 ---
 
 spring:
@@ -22,3 +43,14 @@ spring:
 
 logging:
   config: classpath:logback-prod.xml  # 프로덕션 환경에서 사용
+
+
+monikit:
+    logging:
+        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
+        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
+        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
+        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
+
+    metrics:
+        enabled: true

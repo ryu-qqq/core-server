@@ -1,17 +1,17 @@
 package com.ryuqq.core.domain.external.core;
 
-import java.util.concurrent.BlockingQueue;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.ryuqq.core.domain.MdcContextPropagatingExecutorService;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
-@Component
+import java.util.concurrent.BlockingQueue;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+@Service
 public class SiteRequestProcessorExecutor {
 
 	private static final Logger log = LoggerFactory.getLogger(SiteRequestProcessorExecutor.class);

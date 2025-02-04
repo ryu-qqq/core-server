@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 seconds">
+<configuration scan="false">
 
 	<!-- Console Logging -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,10 +18,15 @@
 		</encoder>
 	</appender>
 
-	<!-- Root Logger -->
-	<root level="error">
+	<!-- Root Logger 설정을 DEBUG로 변경 -->
+	<root level="DEBUG"> <!-- root level을 DEBUG로 변경 -->
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="LOGSTASH" />
 	</root>
+
+	<!-- com.monikit 패키지 로그를 DEBUG로 설정 -->
+	<logger name="com.monikit" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
 
 </configuration>

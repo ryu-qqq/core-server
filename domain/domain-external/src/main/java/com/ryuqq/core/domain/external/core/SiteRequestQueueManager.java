@@ -1,15 +1,15 @@
 package com.ryuqq.core.domain.external.core;
 
+import com.ryuqq.core.domain.external.ExternalProductGroup;
+
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.external.ExternalProductGroup;
-
-@Component
+@Service
 public class SiteRequestQueueManager {
 
 	private static final int DEFAULT_QUEUE_CAPACITY = 1000;
