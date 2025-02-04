@@ -44,7 +44,7 @@ public class ExternalProductGroupAggregateRoot {
 			);
 
 			SiteName siteName= externalProductGroups.getFirst().getSiteName();
-			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP);
+			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP_REGISTER);
 		}
 
 	}

@@ -245,28 +245,13 @@ public class ExternalProductGroupQueryDslRepository {
 	}
 
 	private List<Long> fetchExternalProductGroupIds(List<Long> siteIds, List<Long> productGroupIds, SyncStatus status) {
-		List<Long> temp = List.of(
-			502279L,
-			502287L,
-			502288L,
-			502291L,
-			502292L,
-			502328L,
-			502329L,
-			502342L,
-			502353L,
-			502359L,
-			502360L
-		);
-
-
 		return queryFactory
 			.select(externalProductGroupEntity.id)
 			.from(externalProductGroupEntity)
 			.where(
-				siteIdIn(siteIds), productGroupIdIn(temp), statusEq(status)
+				siteIdIn(siteIds), productGroupIdIn(productGroupIds), statusEq(status)
 			)
-			.limit(100)
+			.limit(1)
 			.orderBy(externalProductGroupEntity.productGroupId.desc())
 			.fetch();
 	}
