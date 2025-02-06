@@ -32,7 +32,7 @@ public class ProductGroupContextDomainMapperHandler {
 					mapper.map(fieldValue, builder);
 				}
 			} catch (IllegalAccessException e) {
-				throw new CoreException(ErrorType.UNEXPECTED_ERROR, "Failed to access field: " + field.getName(), e);
+				throw new CoreException(ErrorType.UNEXPECTED_ERROR, e);
 			}
 		}
 

@@ -10,7 +10,7 @@ public interface UpdateChecker<T, U>  {
 	 * @return UpdateDecision (업데이트 여부 및 변경 필드 정보)
 	 */
 
-	UpdateDecision checkUpdates(T existing, U updated);
+	UpdateDecision checkUpdates(long productGroupId, T existing, U updated);
 	boolean supports(Object fieldValue); // 추가
 
 

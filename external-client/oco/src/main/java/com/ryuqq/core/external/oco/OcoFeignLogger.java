@@ -1,12 +1,7 @@
 package com.ryuqq.core.external.oco;
 
-import com.ryuqq.core.enums.SiteName;
-import com.ryuqq.core.external.AbstractFeignLogger;
+import com.monikit.starter.FeignLogger;
 
-public class OcoFeignLogger extends AbstractFeignLogger {
+public class OcoFeignLogger extends FeignLogger {
 
-	@Override
-	protected String getServiceName() {
-		return SiteName.OCO.name();
-	}
 }

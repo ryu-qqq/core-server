@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.exception.CoreException;
+import com.ryuqq.core.domain.ErrorTypeExtractor;
 import com.ryuqq.core.enums.ErrorType;
 
 @Aspect
@@ -19,10 +20,15 @@ public class ApiExceptionWrapperAspect {
 			return joinPoint.proceed();
 		} catch (CoreException e) {
 			throw e;
+		} catch (RuntimeException e) {
+			ErrorType errorType = ErrorTypeExtractor.extractErrorType(e);
+			if (errorType != null) {
+				throw new CoreException(errorType, e);
+			}
+			throw new CoreException(ErrorType.UNEXPECTED_ERROR, e);
 		} catch (Exception e) {
-			throw new CoreException(ErrorType.UNEXPECTED_ERROR, "서버 내부 오류 발생", e);
+			throw new CoreException(ErrorType.UNEXPECTED_ERROR, e);
 		}
 	}
-
 
 }

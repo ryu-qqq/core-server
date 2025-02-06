@@ -1,7 +1,7 @@
 buyMa:
-    host-url: 'your key'
-    clientId: 'your key'
-    secretKey: 'your key'
-    code: 'your key'
-    accessToken: 'your key'
-    refreshToken: 'your key'
+    host-url: 'your_key'
+    clientId: 'your_key'
+    secretKey: 'your_key'
+    code: 'your_key'
+    accessToken: 'your_key'
+    refreshToken: 'your_key'

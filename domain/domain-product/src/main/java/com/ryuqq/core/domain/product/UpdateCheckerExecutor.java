@@ -14,12 +14,13 @@ public class UpdateCheckerExecutor {
 		this.updateCheckerProvider = updateCheckerProvider;
 	}
 
-	public <T> void executeChecker(UpdateDecision decision, T existingField, T updatedField) {
+	public <T> void executeChecker(UpdateDecision decision, long productGroupId, T existingField, T updatedField) {
 		updateCheckerProvider.findChecker(existingField)
 			.ifPresent(checker -> {
 				@SuppressWarnings("unchecked")
 				UpdateChecker<T, T> castedChecker = (UpdateChecker<T, T>) checker;
-				decision.merge(castedChecker.checkUpdates(existingField, updatedField));
+				decision.merge(castedChecker.checkUpdates(productGroupId, existingField, updatedField));
 			});
 	}
+
 }

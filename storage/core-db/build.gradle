@@ -6,8 +6,6 @@ dependencies {
 	implementation project(":domain:domain-category")
 	implementation project(":domain:domain-external")
 
-	implementation "net.ttddyy:datasource-proxy:${datasourceProxyVersion}"
-
 	// QueryDSL
     implementation "com.querydsl:querydsl-sql:${queryDslVersion}"
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"

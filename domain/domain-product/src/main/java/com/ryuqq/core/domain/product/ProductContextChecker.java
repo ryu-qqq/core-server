@@ -23,7 +23,7 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 	}
 
 	@Override
-	public UpdateDecision checkUpdates(ProductContextBundle existing, ProductContextBundle updated) {
+	public UpdateDecision checkUpdates(long productGroupId, ProductContextBundle existing, ProductContextBundle updated) {
 
 		UpdateDecision decision = new UpdateDecision();
 		List<ProductContext> changedProductContext = new ArrayList<>();
@@ -53,7 +53,8 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 
 		if(!changedProductContext.isEmpty()){
 			ProductContextBundle productContextBundle = new ProductContextBundle(changedProductContext);
-			decision.addUpdate(productContextBundle, ProductDomainEventType.STOCK, true);
+			ProductContextBundle assignedProductGroupIdBundle = productContextBundle.assignProductGroupId(productGroupId);
+			decision.addUpdate(assignedProductGroupIdBundle, ProductDomainEventType.STOCK, true);
 		}
 
 		return decision;
@@ -107,13 +108,9 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 		return newProductContext.assignOptions(updatedOptions);
 	}
 
-
 	@Override
 	public boolean supports(Object fieldValue) {
-		if (fieldValue instanceof List<?> list && !list.isEmpty()) {
-			return list.getFirst() instanceof ProductContext;
-		}
-		return false;
+		return fieldValue instanceof ProductContextBundle;
 	}
 
 }

@@ -6,5 +6,5 @@ import com.ryuqq.core.domain.category.DefaultCategory;
 
 public interface CategoryQueryInterface {
 
-	List<DefaultCategory> fetchRecursiveByIds(long categoryId, boolean isParentRelation);
+	List<? extends Category> fetchRecursiveByIds(long categoryId, boolean isParentRelation);
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.product.core.UpdateProcessor;
 
 @Component
-public class ProductGroupImageUpdateProcessor implements UpdateProcessor<ProductGroupImage> {
+public class ProductGroupImageUpdateProcessor implements UpdateProcessor<ProductGroupImageBundle> {
 
 	private final ProductGroupImageRegister productGroupImageRegister;
 
@@ -15,12 +15,12 @@ public class ProductGroupImageUpdateProcessor implements UpdateProcessor<Product
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductGroupImage.class.equals(domainType);
+		return ProductGroupImageBundle.class.equals(domainType);
 	}
 
 	@Override
-	public void processUpdate(ProductGroupImage entity) {
-		productGroupImageRegister.update(entity);
+	public void processUpdate(ProductGroupImageBundle entity) {
+		entity.getImages().forEach(productGroupImageRegister::update);
 
 	}
 

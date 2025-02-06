@@ -48,7 +48,7 @@ public class OptionDetailJdbcRepository {
 			"SET OPTION_GROUP_ID = :optionGroupId, " +
 			" OPTION_VALUE = :optionValue, " +
 			"UPDATED_AT = :updatedAt, " +
-			"DELETED = :deleteYn " +
+			"DELETED = :deleted " +
 			"WHERE ID = :id";
 
 		List<Map<String, Object>> batchValues = optionDetailEntities.stream()

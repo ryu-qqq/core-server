@@ -38,19 +38,4 @@ public class CoreDataSourceConfig {
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
 
-
-	// @Bean
-	// public DataSource dataSource(DataSource dataSource, QueryMetricsCollector metricsCollector) {
-	// 	SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
-	// 	loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
-	// 	return ProxyDataSourceBuilder.create(dataSource)
-	// 		.name("PROXY-DS")
-	// 		.listener(loggingListener)
-	// 		.listener(new QueryListener(200, 500, metricsCollector))
-	// 		.build();
-	// }
-
-
-
-
 }

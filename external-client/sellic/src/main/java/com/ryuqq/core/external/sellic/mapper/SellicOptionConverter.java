@@ -53,7 +53,8 @@ public class SellicOptionConverter {
 
 	private String resolveOptionName(OptionType optionType, List<? extends Sku> skus, boolean isFirstOption) {
 		if (optionType.isSingleOption()) {
-			return "단품";
+			if(isFirstOption) return "단품";
+			return "";
 		}
 
 		return skus.stream()

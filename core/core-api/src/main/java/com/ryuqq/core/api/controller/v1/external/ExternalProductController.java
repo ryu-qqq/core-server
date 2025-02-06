@@ -42,4 +42,5 @@ public class ExternalProductController {
 		return ResponseEntity.ok(ApiResponse.success(handler.handle(requestDto)));
 	}
 
+
 }

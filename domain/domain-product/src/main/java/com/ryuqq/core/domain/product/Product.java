@@ -39,6 +39,11 @@ public class Product {
 		return new Product(id, productGroupId, soldOut, displayed, quantity, additionalPrice, deleted);
 	}
 
+	public Product assignIdAndProductGroupId(Long id, Long productGroupId) {
+		return new Product(id, productGroupId, soldOut, displayed, quantity, additionalPrice, deleted);
+	}
+
+
 	public Product assignProductGroupId(Long productGroupId) {
 		return new Product(this.id, productGroupId, soldOut, displayed, quantity, additionalPrice, deleted);
 	}

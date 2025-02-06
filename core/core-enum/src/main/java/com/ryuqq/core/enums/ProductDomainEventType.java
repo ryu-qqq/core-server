@@ -9,6 +9,4 @@ public enum ProductDomainEventType {
 	PRODUCT_GROUP,
 	PRODUCT_GROUP_REGISTER,
 
-
-
 }

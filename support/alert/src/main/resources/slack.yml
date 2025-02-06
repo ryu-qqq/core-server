@@ -1,4 +1,4 @@
 slack:
-    token: 'your key'
+    token: 'your_key'
     channel:
         error: '#1_error_notification'
