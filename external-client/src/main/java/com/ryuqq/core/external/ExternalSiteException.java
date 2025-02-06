@@ -19,4 +19,5 @@ public class ExternalSiteException extends RuntimeException {
 	public ErrorType getErrorType() {
 		return errorType;
 	}
+
 }

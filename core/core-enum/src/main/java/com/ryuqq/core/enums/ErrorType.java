@@ -14,7 +14,10 @@ public enum ErrorType {
 	INVALID_INPUT_ERROR(422, ErrorCode.E422, "Invalid input provided.",
 		LogLevel.WARN),
 
-	DATABASE_CONNECTION_ERROR(503, ErrorCode.E503, "Database connection issue.",
+	DATABASE_TRANSIENT_ERROR(503, ErrorCode.E503, "Database transient issue.",
+		LogLevel.ERROR),
+
+	DATABASE_PERMANENT_ERROR(503, ErrorCode.E503, "Database permanent issue.",
 		LogLevel.ERROR),
 
 	SLOW_QUERY_DETECTED(200, ErrorCode.E200, "Slow query detected.",
@@ -50,7 +53,6 @@ public enum ErrorType {
 		}
 	}
 
-
 	public int getStatus() {
 		return status;
 	}
@@ -66,4 +68,9 @@ public enum ErrorType {
 	public LogLevel getLogLevel() {
 		return logLevel;
 	}
+
+	public boolean emergency(){
+		return code.emergency();
+	}
+
 }

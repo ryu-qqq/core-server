@@ -41,7 +41,7 @@ public class ProductGroupImageJdbcRepository {
                 "SET IMAGE_URL = :imageUrl, " +
                 "ORIGIN_URL = :originUrl, " +
                 "PRODUCT_GROUP_IMAGE_TYPE = :productGroupImageType, " +
-                "DELETED = :deleteYn, " +
+                "DELETED = :deleted, " +
 				"UPDATED_AT = :updatedAt " +
 				"WHERE ID = :id";
 

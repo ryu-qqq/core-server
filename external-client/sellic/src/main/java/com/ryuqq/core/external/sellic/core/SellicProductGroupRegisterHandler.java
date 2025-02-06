@@ -2,7 +2,6 @@ package com.ryuqq.core.external.sellic.core;
 
 import java.math.BigDecimal;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;

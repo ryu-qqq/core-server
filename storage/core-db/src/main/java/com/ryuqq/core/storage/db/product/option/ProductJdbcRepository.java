@@ -56,7 +56,7 @@ public class ProductJdbcRepository {
                 " QUANTITY = :quantity, " +
                 " ADDITIONAL_PRICE = :additionalPrice, " +
                 " DELETED = :deleted, " +
-				" UPDATED_AT = :updateAt, " +
+				" UPDATED_AT = :updateAt " +
                 " WHERE ID = :productId ";
 
         List<Map<String, Object>> batchValues = productEntities.stream()

@@ -1,5 +1,9 @@
 package com.ryuqq.core.external.sellic.core;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.domain.external.core.ExternalMallProductGroupRequestResponse;
@@ -9,10 +13,6 @@ import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.enums.SiteName;
 import com.ryuqq.core.external.ExternalSiteException;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class SellicSiteRequestProcessor implements SiteRequestProcessor {

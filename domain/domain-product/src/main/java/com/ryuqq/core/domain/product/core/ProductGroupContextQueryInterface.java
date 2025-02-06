@@ -6,4 +6,5 @@ public interface ProductGroupContextQueryInterface {
 
 	ItemContext fetchByProductGroupId(Long productGroupId);
 	List<? extends ItemContext> fetchByProductGroupIds(List<Long> productGroupIds);
+
 }

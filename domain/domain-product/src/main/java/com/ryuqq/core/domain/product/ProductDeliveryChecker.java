@@ -12,7 +12,7 @@ import com.ryuqq.core.enums.ProductDomainEventType;
 public class ProductDeliveryChecker implements UpdateChecker<ProductDelivery, ProductDelivery> {
 
 	@Override
-	public UpdateDecision checkUpdates(ProductDelivery existing, ProductDelivery updated) {
+	public UpdateDecision checkUpdates(long productGroupId, ProductDelivery existing, ProductDelivery updated) {
 		UpdateDecision decision = new UpdateDecision();
 
 		boolean anyChangeDetected = hasUpdates(existing, updated);

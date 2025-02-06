@@ -3,8 +3,14 @@ package com.ryuqq.core.alert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.monikit.core.ErrorLogNotifier;
+import com.monikit.core.ExceptionLog;
+
+import com.ryuqq.core.logging.ExceptionLogFormatter;
+
 @Component
-public class ErrorSlackNotificationService extends AbstractSlackNotificationService<String> {
+public class ErrorSlackNotificationService extends AbstractSlackNotificationService<String> implements
+	ErrorLogNotifier {
 
 	public ErrorSlackNotificationService(@Value("${slack.token}") String token) {
 		super(token);
@@ -17,12 +23,12 @@ public class ErrorSlackNotificationService extends AbstractSlackNotificationServ
         Below are the detailed error logs:
         -------------------------------
         """;
-
 		String errorFooter = """
+
+
         -------------------------------
         *End of Error Report*
         """;
-
 		return errorHeader + message + errorFooter;
 	}
 
@@ -30,4 +36,11 @@ public class ErrorSlackNotificationService extends AbstractSlackNotificationServ
 	public void notify(String payload) {
 		notifySlack(payload);
 	}
+
+	@Override
+	public void onErrorLogDetected(ExceptionLog logEntry) {
+		String exceptionLog = ExceptionLogFormatter.formatExceptionLog(logEntry);
+		notifySlack(exceptionLog);
+	}
+
 }

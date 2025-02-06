@@ -1,4 +1,4 @@
 sellic:
-    host-url: 'your key'
-    customer_id: 'your key'
-    api_key: 'your key'
+    host-url: 'your_key'
+    customer_id: 'your_key'
+    api_key: 'your_key'

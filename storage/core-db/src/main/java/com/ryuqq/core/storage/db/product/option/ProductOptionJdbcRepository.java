@@ -40,7 +40,7 @@ public class ProductOptionJdbcRepository {
                 "SET OPTION_GROUP_ID = :optionGroupId, " +
                 " OPTION_DETAIL_ID = :optionDetailId, " +
 				"UPDATED_AT = :updatedAt, " +
-				"DELETED = :deleteYn " +
+				"DELETED = :deleted " +
                 "WHERE PRODUCT_ID = :productId";
 
         List<Map<String, Object>> batchValues = productOptionEntities.stream()
@@ -60,7 +60,7 @@ public class ProductOptionJdbcRepository {
 
     public void softDeleteAll(List<Long> productIds) {
         String sql = "UPDATE PRODUCT_OPTION " +
-                "SET DELETE_YN = :deleteYn, " +
+                "SET DELETED = :deleted, " +
 				"UPDATED_AT = :updatedAt " +
 				"WHERE PRODUCT_ID = :productId ";
 
@@ -69,7 +69,7 @@ public class ProductOptionJdbcRepository {
                     MapSqlParameterSource params = new MapSqlParameterSource()
                             .addValue("productId", Long)
 							.addValue("updatedAt", LocalDateTime.now())
-							.addValue("deleteYn", true);
+							.addValue("deleted", true);
                     return params.getValues();
                 })
                 .toList();

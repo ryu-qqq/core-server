@@ -10,7 +10,6 @@ import com.ryuqq.core.external.FeignRequestLoggingInterceptor;
 
 import feign.Logger;
 import feign.RequestInterceptor;
-import feign.codec.ErrorDecoder;
 
 @Configuration
 @ConfigurationProperties(prefix = "oco")
@@ -25,19 +24,9 @@ public class OcoAuthConfig {
 	}
 
 	@Bean
-	public ErrorDecoder ocoAuthErrorDecoder() {
-		return new OcoAuthErrorDecoder();
-	}
-
-	@Bean
 	@Primary
 	public Logger ocoAuthFeignLogger() {
 		return new OcoAuthFeignLogger();
-	}
-
-	@Bean
-	public Logger.Level ocoAuthFeignLoggerLevel() {
-		return Logger.Level.FULL;
 	}
 
 	@Bean

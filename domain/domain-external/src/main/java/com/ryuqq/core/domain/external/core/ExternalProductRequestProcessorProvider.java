@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain.external.core;
 
-import com.ryuqq.core.domain.external.ExternalSite;
-
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.ryuqq.core.domain.external.ExternalSite;
 
 @Service
 public class ExternalProductRequestProcessorProvider {

@@ -13,7 +13,6 @@ dependencies {
     implementation project(":core:core-enum")
 	implementation project(':core:core-events')
 
-
 	api project(":support:logging")
 	implementation project(":support:monitoring")
 	implementation project(":support:utils")
@@ -22,7 +21,6 @@ dependencies {
 	runtimeOnly project(":external-client:sellic")
 	runtimeOnly project(":external-client:oco")
 	runtimeOnly project(":external-client:buyma")
-
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'

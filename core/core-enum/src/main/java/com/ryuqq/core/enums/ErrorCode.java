@@ -6,7 +6,11 @@ public enum ErrorCode {
 	E404,
 	E422,
 	E500,
-	E503,
+	E503;
 
+
+	public boolean emergency(){
+		return this.equals(E500) || this.equals(E503);
+	}
 
 }

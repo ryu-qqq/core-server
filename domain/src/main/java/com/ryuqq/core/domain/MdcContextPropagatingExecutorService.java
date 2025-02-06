@@ -13,7 +13,7 @@ public class MdcContextPropagatingExecutorService {
 	private final ExecutorService delegate;
 
 	public MdcContextPropagatingExecutorService() {
-		this.delegate = Executors.newVirtualThreadPerTaskExecutor(); // 버추얼 스레드 기반
+		this.delegate = Executors.newVirtualThreadPerTaskExecutor();
 	}
 
 	public void submit(Runnable task) {
@@ -21,7 +21,7 @@ public class MdcContextPropagatingExecutorService {
 		Map<String, String> contextMap = MDC.getCopyOfContextMap();
 		delegate.submit(() -> {
 			if (contextMap != null) {
-				MDC.setContextMap(contextMap); // 복원
+				MDC.setContextMap(contextMap);
 			}
 			try {
 				task.run();

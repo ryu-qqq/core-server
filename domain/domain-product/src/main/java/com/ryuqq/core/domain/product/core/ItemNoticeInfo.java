@@ -13,4 +13,5 @@ public interface ItemNoticeInfo {
 	String getYearMonth();
 	String getAssuranceStandard();
 	String getAsPhone();
+
 }
