@@ -1,6 +1,6 @@
 dependencies {
-	api 'org.springframework.boot:spring-boot-starter-actuator'
-	api 'io.micrometer:micrometer-core'
-	api 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-core'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 }

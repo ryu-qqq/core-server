@@ -13,7 +13,7 @@ public class ProductDetailDescriptionChecker implements
 	UpdateChecker<ProductDetailDescription, ProductDetailDescription> {
 
 	@Override
-	public UpdateDecision checkUpdates(ProductDetailDescription existing, ProductDetailDescription updated) {
+	public UpdateDecision checkUpdates(long productGroupId, ProductDetailDescription existing, ProductDetailDescription updated) {
 		UpdateDecision decision = new UpdateDecision();
 
 		if (hasUpdates(existing, updated)) {

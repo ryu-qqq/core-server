@@ -19,6 +19,12 @@ public class DomainExceptionWrapperAspect {
 			return joinPoint.proceed();
 		} catch (DomainException e) {
 			throw e;
+		} catch (RuntimeException e) {
+			ErrorType errorType = ErrorTypeExtractor.extractErrorType(e);
+			if (errorType != null) {
+				throw new DomainException(errorType, e);
+			}
+			throw new DomainException(ErrorType.UNEXPECTED_ERROR, e);
 		} catch (Exception e) {
 			throw new DomainException(ErrorType.UNEXPECTED_ERROR, e);
 		}

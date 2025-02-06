@@ -16,7 +16,7 @@ import com.ryuqq.core.enums.ProductDomainEventType;
 public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImageBundle, ProductGroupImageBundle> {
 
 	@Override
-	public UpdateDecision checkUpdates(ProductGroupImageBundle existing, ProductGroupImageBundle updated) {
+	public UpdateDecision checkUpdates(long productGroupId, ProductGroupImageBundle existing, ProductGroupImageBundle updated) {
 		UpdateDecision decision = new UpdateDecision();
 
 		List<ProductGroupImage> changedImages = new ArrayList<>();
@@ -29,7 +29,9 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 
 		if(!changedImages.isEmpty()){
 			ProductGroupImageBundle productGroupImageBundle = new ProductGroupImageBundle(changedImages);
-			decision.addUpdate(productGroupImageBundle, ProductDomainEventType.IMAGE,false);
+			ProductGroupImageBundle assignedProductGroupId = productGroupImageBundle.assignProductGroupId(
+				productGroupId);
+			decision.addUpdate(assignedProductGroupId, ProductDomainEventType.IMAGE,false);
 		}
 
 		return decision;
@@ -37,10 +39,7 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 
 	@Override
 	public boolean supports(Object fieldValue) {
-		if (fieldValue instanceof List<?> list && !list.isEmpty()) {
-			return list.getFirst() instanceof ProductGroupImage;
-		}
-		return false;
+		return fieldValue instanceof ProductGroupImageBundle;
 	}
 
 	/**

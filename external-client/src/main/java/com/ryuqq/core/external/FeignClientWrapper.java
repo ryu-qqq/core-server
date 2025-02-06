@@ -17,8 +17,9 @@ public class FeignClientWrapper {
 			ResponseEntity<T> response = feignCall.get();
 			return response.getBody();
 		} catch (FeignException e) {
-			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR, e.getMessage());
+			throw new ExternalSiteException(ErrorType.UNEXPECTED_ERROR, e);
 		}
 	}
+
 
 }

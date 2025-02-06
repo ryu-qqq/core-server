@@ -1,9 +1,13 @@
 management:
+    server:
+        port: 8088
     endpoints:
         web:
             exposure:
-                include: "*"
+                include: "health,info,prometheus,metrics"
     endpoint:
+        health:
+            show-details: always  # 헬스체크 디테일 제공
         prometheus:
             enabled: true
     prometheus:

@@ -47,7 +47,7 @@ public class OptionGroupJdbcRepository {
 		String sql = "UPDATE OPTION_GROUP " +
 			"SET OPTION_NAME = :optionName, " +
 			"UPDATED_AT = :updatedAt, " +
-			"DELETED = :deleteYn " +
+			"DELETED = :deleted " +
 			"WHERE ID = :id";
 
 		List<Map<String, Object>> batchValues = optionGroupEntities.stream()

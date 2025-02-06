@@ -11,8 +11,8 @@ public class CoreException extends RuntimeException {
 		this.errorType = errorType;
 	}
 
-	public CoreException(ErrorType errorType, String message, Throwable cause) {
-		super(message, cause);
+	public CoreException(ErrorType errorType, Throwable cause) {
+		super(cause);
 		this.errorType = errorType;
 	}
 

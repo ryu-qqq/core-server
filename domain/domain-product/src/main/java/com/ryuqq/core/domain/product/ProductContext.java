@@ -83,7 +83,8 @@ public class ProductContext implements Sku {
 	}
 
 	protected ProductContext assignProduct(Product newProduct) {
-		return new ProductContext(newProduct, options, deleted);
+		Product updatedProduct = newProduct.assignIdAndProductGroupId(product.getId(), product.getProductGroupId());
+		return new ProductContext(updatedProduct, options, deleted);
 	}
 
 	protected ProductContext assignOptions(List<OptionContext> newOptions) {

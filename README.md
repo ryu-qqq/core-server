@@ -18,6 +18,7 @@ https://github.com/ryu-qqq/moni-kit
 📌 리드미를 읽고 계시다면, 꼭 한 번 더 확인 부탁드립니다!
 아직 모든 내용이 완성되지 않았지만, 점차 보완해 나갈 예정입니다. ㅠ
 
+[![](https://jitpack.io/v/ryu-qqq/moni-kit.svg)](https://jitpack.io/#ryu-qqq/moni-kit)
 
 
 # CoreServer: 프로젝트 개요

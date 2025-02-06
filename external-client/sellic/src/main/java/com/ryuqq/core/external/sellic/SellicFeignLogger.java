@@ -1,12 +1,8 @@
 package com.ryuqq.core.external.sellic;
 
-import com.ryuqq.core.enums.SiteName;
-import com.ryuqq.core.external.AbstractFeignLogger;
+import com.monikit.starter.FeignLogger;
 
-public class SellicFeignLogger extends AbstractFeignLogger {
 
-	@Override
-	protected String getServiceName() {
-		return SiteName.SELLIC.name();
-	}
+public class SellicFeignLogger extends FeignLogger {
+
 }

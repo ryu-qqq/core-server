@@ -1,13 +1,13 @@
 package com.ryuqq.core.domain.external.core;
 
-import com.ryuqq.core.domain.external.ExternalProductGroup;
-
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.stereotype.Service;
+
+import com.ryuqq.core.domain.external.ExternalProductGroup;
 
 @Service
 public class SiteRequestQueueManager {

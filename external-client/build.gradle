@@ -2,8 +2,8 @@
 
 dependencies {
 	implementation project(":support:utils")
-	implementation project(":support:logging")
 
+	api project(":support:logging")
 	api project(":domain:domain-external")
 	api project(":domain:domain-category")
 	api project(":domain:domain-brand")

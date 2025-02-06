@@ -1,6 +1,5 @@
 dependencies {
 
-	implementation "net.ttddyy:datasource-proxy:${datasourceProxyVersion}"
 
 	implementation project(':core:core-enum')
 	implementation project(':core:core-events')
@@ -8,8 +7,10 @@ dependencies {
 	implementation project(":support:utils")
 
 	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
-    implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}"
+	implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}"
 
 
-	implementation 'com.monikit:monikit-starter:1.0.0'
+	api "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
+	api "com.github.ryu-qqq.moni-kit:monikit-starter:${moniKitVersion}"
+
 }
