@@ -1,0 +1,10 @@
+package com.ryuqq.core.domain.product.coreV2;
+
+public interface ProductCommandBuilder {
+	void withProductGroupCommand(ProductGroupCommand productGroupCommand);
+	void withProductNoticeCommand(ProductNoticeCommand productNoticeCommand);
+	void withProductDeliveryCommand(ProductDeliveryCommand productDeliveryCommand);
+	void withProductDetailDescriptionCommand(ProductDetailDescriptionCommand productDetailDescriptionCommand);
+	void withProductGroupImageContextCommand(ProductGroupImageContextCommand productGroupImageContextCommand);
+	void withProductContextCommand(ProductContextCommand productContextCommand);
+}

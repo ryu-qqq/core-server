@@ -1,30 +1,31 @@
 package com.ryuqq.core.api.controller.v1.product.mapper;
 
+import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
+import com.ryuqq.core.api.exception.CoreException;
+import com.ryuqq.core.domain.product.coreV2.DefaultCreateProductGroupContextCommand;
+import com.ryuqq.core.domain.product.coreV2.ProductGroupContextCommand;
+import com.ryuqq.core.enums.ErrorType;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
-import com.ryuqq.core.api.exception.CoreException;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.enums.ErrorType;
-
 @Component
-public class ProductGroupContextDomainMapperHandler {
+public class CreateProductGroupContextCommandFactory implements ProductGroupContextCommandFactory {
 
 	private final List<DomainMapper<?>> mappers;
 
-	public ProductGroupContextDomainMapperHandler(List<DomainMapper<?>> mappers) {
+	public CreateProductGroupContextCommandFactory(List<DomainMapper<?>> mappers) {
 		this.mappers = mappers;
 	}
 
-	public ProductGroupContext handleToDomain(ProductGroupContextCommandRequestDto dto) {
-		ProductGroupContext.Builder builder = ProductGroupContext.builder();
+	@Override
+	public ProductGroupContextCommand createCommand(ProductGroupContextCommandRequestDto dto) {
+		DefaultCreateProductGroupContextCommand.Builder builder = new DefaultCreateProductGroupContextCommand.Builder();
 
 		for (Field field : getDeclaredFields(dto.getClass())) {
 			field.setAccessible(true);
-
 			try {
 				Object fieldValue = field.get(dto);
 				if (fieldValue != null) {
@@ -39,7 +40,7 @@ public class ProductGroupContextDomainMapperHandler {
 		return builder.build();
 	}
 
-	protected Field[] getDeclaredFields(Class<?> clazz) {
+	private Field[] getDeclaredFields(Class<?> clazz) {
 		return clazz.getDeclaredFields();
 	}
 
@@ -52,6 +53,4 @@ public class ProductGroupContextDomainMapperHandler {
 		}
 		throw new IllegalArgumentException("No suitable mapper found for field value: " + fieldValue);
 	}
-
-
 }
