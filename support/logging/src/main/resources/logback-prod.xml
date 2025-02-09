@@ -12,6 +12,7 @@
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/var/log/spring/core-server.log</file>
 		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<charset>UTF-8</charset>
 			<providers>
 				<timestamp>
 					<timeZone>UTC</timeZone>
@@ -19,8 +20,10 @@
 				<logLevel/>
 				<threadName/>
 				<loggerName/>
-				<message/>
-				<mdc/>
+				<mdc>
+					<includeMdcKey>traceId</includeMdcKey>
+				</mdc>
+				<jsonProvider fieldName="message" writeToMap="true"/>
 			</providers>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

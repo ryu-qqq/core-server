@@ -18,18 +18,28 @@ public class ErrorTypeExtractor {
 		}
 
 		try {
-			Field field = exception.getClass().getDeclaredField("errorType");
-			field.setAccessible(true);  // private 필드 접근 허용
+			Class<?> clazz = exception.getClass();
+			while (clazz != null) {
+				try {
+					Field field = clazz.getDeclaredField("errorType");
+					field.setAccessible(true);  // private 필드 접근 허용
 
-			Object value = field.get(exception);
-			if (value instanceof ErrorType) {
-				return (ErrorType) value;
+					Object value = field.get(exception);
+					if (value instanceof ErrorType) {
+						return (ErrorType) value;
+					}
+					return null;
+				} catch (NoSuchFieldException ignored) {
+					// 부모 클래스로 이동
+					clazz = clazz.getSuperclass();
+				}
 			}
-		} catch (NoSuchFieldException | IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			return null;
 		}
 
 		return null;
 	}
+
 
 }

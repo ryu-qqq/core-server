@@ -8,8 +8,8 @@ import com.ryuqq.core.enums.ProductImageType;
 public class ProductGroupImageContextCommandValidator implements ProductGroupDomainValidator<ProductGroupImageContextCommand> {
 
 	@Override
-	public boolean supports(Object clazz) {
-		return clazz instanceof ProductGroupImageContextCommand;
+	public boolean supports(Class<?> clazz) {
+		return ProductGroupImageContextCommand.class.isAssignableFrom(clazz) || clazz.equals(ProductGroupImageContextCommand.class);
 	}
 
 	@Override

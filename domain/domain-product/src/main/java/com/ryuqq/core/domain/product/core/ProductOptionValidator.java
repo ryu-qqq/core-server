@@ -14,8 +14,8 @@ import com.ryuqq.core.enums.OptionType;
 public class ProductOptionValidator implements ProductGroupDomainValidator<ProductOptionContextCommand> {
 
 	@Override
-	public boolean supports(Object clazz) {
-		return clazz instanceof ProductOptionContextCommand;
+	public boolean supports(Class<?> clazz) {
+		return ProductOptionContextCommand.class.isAssignableFrom(clazz) || clazz.equals(ProductOptionContextCommand.class);
 	}
 
 	@Override

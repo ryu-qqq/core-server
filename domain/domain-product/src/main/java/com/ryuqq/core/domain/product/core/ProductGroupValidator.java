@@ -21,8 +21,8 @@ public class ProductGroupValidator implements ProductGroupDomainValidator<Produc
 	}
 
 	@Override
-	public boolean supports(Object clazz) {
-		return clazz instanceof ProductGroupCommand;
+	public boolean supports(Class<?> clazz) {
+		return ProductGroupCommand.class.isAssignableFrom(clazz) || clazz.equals(ProductGroupCommand.class);
 	}
 
 	@Override

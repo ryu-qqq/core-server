@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductGroupDomainBusinessValidator {
 
-	private final List<ProductGroupDomainValidator<ProductGroupContextCommand>> validators;
+	private final List<ProductGroupDomainValidator<?>> validators;
 
-	public ProductGroupDomainBusinessValidator(List<ProductGroupDomainValidator<ProductGroupContextCommand>> validators) {
+	public ProductGroupDomainBusinessValidator(List<ProductGroupDomainValidator<?>> validators) {
 		this.validators = validators;
 	}
 
@@ -22,8 +22,10 @@ public class ProductGroupDomainBusinessValidator {
 			try {
 				Object fieldValue = field.get(productGroupContextCommand);
 				if (fieldValue != null) {
-					ProductGroupDomainValidator<Object> validator = findMapperOrThrow(fieldValue);
-					validator.validate(field, result, updated);
+					ProductGroupDomainValidator<Object> validator = findMapper(fieldValue);
+					if (validator != null) {
+						validator.validate(field, result, updated);
+					}
 				}
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException("Field access error", e);
@@ -35,13 +37,13 @@ public class ProductGroupDomainBusinessValidator {
 
 
 	@SuppressWarnings("unchecked")
-	protected ProductGroupDomainValidator<Object> findMapperOrThrow(Object fieldValue) {
+	protected ProductGroupDomainValidator<Object> findMapper(Object fieldValue) {
 		for (ProductGroupDomainValidator<?> mapper : validators) {
-			if (mapper.supports(fieldValue)) {
+			if (mapper.supports(fieldValue.getClass())) {
 				return (ProductGroupDomainValidator<Object>) mapper;
 			}
 		}
-		throw new IllegalArgumentException("No suitable mapper found for field value: " + fieldValue);
+		return null;
 	}
 
 }
