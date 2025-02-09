@@ -2,10 +2,11 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
 import com.ryuqq.core.domain.product.core.UpdateProcessor;
 
 @Component
-public class ProductGroupImageUpdateProcessor implements UpdateProcessor<ProductGroupImageBundle> {
+public class ProductGroupImageUpdateProcessor implements UpdateProcessor<ProductGroupImageContextCommand> {
 
 	private final ProductGroupImageRegister productGroupImageRegister;
 
@@ -15,13 +16,12 @@ public class ProductGroupImageUpdateProcessor implements UpdateProcessor<Product
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductGroupImageBundle.class.equals(domainType);
+		return ProductGroupImageContextCommand.class.equals(domainType);
 	}
 
 	@Override
-	public void processUpdate(ProductGroupImageBundle entity) {
-		entity.getImages().forEach(productGroupImageRegister::update);
-
+	public void processUpdate(ProductGroupImageContextCommand productGroupImageContextCommand) {
+		productGroupImageRegister.update(productGroupImageContextCommand.productGroupImageCommands());
 	}
 
 }

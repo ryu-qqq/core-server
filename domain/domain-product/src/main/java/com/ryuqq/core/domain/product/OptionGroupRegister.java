@@ -2,6 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionGroupCommand;
 import com.ryuqq.core.domain.product.dao.options.group.OptionGroupPersistenceRepository;
 
 
@@ -14,8 +15,8 @@ public class OptionGroupRegister {
 		this.optionGroupPersistenceRepository = optionGroupPersistenceRepository;
 	}
 
-	public long register(OptionGroup optionGroup) {
-		return optionGroupPersistenceRepository.save(optionGroup.toCommand());
+	public long register(OptionGroupCommand optionGroupCommand) {
+		return optionGroupPersistenceRepository.save(optionGroupCommand);
 	}
 
 }

@@ -17,6 +17,9 @@ import com.querydsl.sql.SQLExpressions;
 import com.querydsl.sql.SQLTemplates;
 import com.querydsl.sql.Union;
 
+import com.ryuqq.core.storage.db.category.dto.CategoryDto;
+import com.ryuqq.core.storage.db.category.dto.QCategoryDto;
+
 import jakarta.persistence.EntityManager;
 
 @Repository

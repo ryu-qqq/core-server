@@ -2,8 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommand;
-import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommandFactory;
+import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
 import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionPersistenceRepository;
 
 @Component
@@ -16,16 +15,12 @@ public class ProductDetailDescriptionRegister {
 		this.productDetailDescriptionPersistenceRepository = productDetailDescriptionPersistenceRepository;
 	}
 
-	public void register(ProductDetailDescription productDetailDescription){
-		ProductDetailDescriptionCommand commandFrom = ProductDetailDescriptionCommandFactory.createCommandFrom(
-			productDetailDescription);
-		productDetailDescriptionPersistenceRepository.save(commandFrom);
+	public void register(ProductDetailDescriptionCommand productDetailDescriptionCommand){
+		productDetailDescriptionPersistenceRepository.save(productDetailDescriptionCommand);
 	}
 
-	public void update(ProductDetailDescription productDetailDescription){
-		ProductDetailDescriptionCommand commandFrom = ProductDetailDescriptionCommandFactory.createCommandFrom(
-			productDetailDescription);
-		productDetailDescriptionPersistenceRepository.update(commandFrom);
+	public void update(ProductDetailDescriptionCommand productDetailDescriptionCommand){
+		productDetailDescriptionPersistenceRepository.update(productDetailDescriptionCommand);
 	}
 
 }

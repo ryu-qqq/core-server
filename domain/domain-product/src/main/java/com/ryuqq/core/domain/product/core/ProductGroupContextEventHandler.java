@@ -1,41 +1,43 @@
 package com.ryuqq.core.domain.product.core;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.events.ProductGroupSyncRequiredEvent;
-import com.ryuqq.core.events.ProductGroupSyncUpdateRequiredEvent;
 import com.ryuqq.core.events.RealTimeUpdateEvent;
 
-@Component
+@Service
 public class ProductGroupContextEventHandler {
 
-	private final ProductGroupEventPublisher productGroupEventPublisher;
-	private final ProductGroupContextEventChecker productGroupContextEventChecker;
+	private final ProductGroupContextEventPublisher productGroupContextEventPublisher;
 
-	public ProductGroupContextEventHandler(ProductGroupEventPublisher productGroupEventPublisher,
-										   ProductGroupContextEventChecker productGroupContextEventChecker) {
-		this.productGroupEventPublisher = productGroupEventPublisher;
-		this.productGroupContextEventChecker = productGroupContextEventChecker;
+	public ProductGroupContextEventHandler(ProductGroupContextEventPublisher productGroupContextEventPublisher) {
+		this.productGroupContextEventPublisher = productGroupContextEventPublisher;
 	}
 
-	public void handleEvents(long sellerId, long productGroupId, long brandId, long categoryId) {
-		productGroupEventPublisher.publishEvent(
-			new ProductGroupSyncRequiredEvent(sellerId, productGroupId, brandId, categoryId)
+	public void handleEvents(long productGroupId, ProductGroupCommand productGroupCommand){
+		productGroupContextEventPublisher.publish(
+			new ProductGroupSyncRequiredEvent(productGroupCommand.sellerId(), productGroupId,
+				productGroupCommand.brandId(), productGroupCommand.categoryId())
 		);
 	}
 
-	public void handleEvents(long sellerId, long productGroupId, long brandId, long categoryId, UpdateDecision decision) {
-		if (productGroupContextEventChecker.shouldPublishEvent(sellerId, decision)) {
-			decision.getRealTimeUpdates().forEach(event -> {
-				productGroupEventPublisher.publishEvent(new RealTimeUpdateEvent(sellerId, productGroupId, event.productDomainEventType()));
+
+	public void handleEvents(long productGroupId, ProductGroupCommand productGroupCommand, UpdateDecision updateDecision){
+		if (updateDecision.hasUpdates(true)) {
+			updateDecision.getRealTimeUpdates().forEach(event -> {
+				productGroupContextEventPublisher.publish(
+					new RealTimeUpdateEvent(productGroupCommand.sellerId(), productGroupId, event.productDomainEventType())
+				);
 			});
 		}
 
-		if (decision.hasUpdates(false)) {
-			productGroupEventPublisher.publishEvent(
-				new ProductGroupSyncUpdateRequiredEvent(sellerId, productGroupId, brandId, categoryId)
+		if (updateDecision.hasUpdates(false)) {
+			productGroupContextEventPublisher.publish(
+				new ProductGroupSyncRequiredEvent(productGroupCommand.sellerId(), productGroupId,
+					productGroupCommand.brandId(), productGroupCommand.categoryId())
 			);
 		}
+
 	}
 
 }

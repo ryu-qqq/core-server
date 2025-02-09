@@ -1,11 +1,11 @@
 package com.ryuqq.core.storage.db.product.notice;
 
-import com.ryuqq.core.domain.product.ProductNotice;
+import com.ryuqq.core.domain.product.DefaultProductNotice;
 
 public class ProductDomainMapper {
 
-	public static ProductNotice toDomain(ProductNoticeDto dto){
-		return ProductNotice.create(
+	public static DefaultProductNotice toDomain(ProductNoticeDto dto){
+		return DefaultProductNotice.create(
 			dto.getProductGroupId(),
 			dto.getMaterial(),
 			dto.getColor(),

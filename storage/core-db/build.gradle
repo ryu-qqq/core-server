@@ -5,6 +5,7 @@ dependencies {
 	implementation project(":domain:domain-brand")
 	implementation project(":domain:domain-category")
 	implementation project(":domain:domain-external")
+	implementation project(":domain:domain-seller")
 
 	// QueryDSL
     implementation "com.querydsl:querydsl-sql:${queryDslVersion}"

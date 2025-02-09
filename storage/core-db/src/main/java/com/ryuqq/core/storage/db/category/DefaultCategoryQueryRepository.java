@@ -4,17 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.category.CategoryQueryRepository;
-import com.ryuqq.core.domain.category.DefaultCategory;
+import com.ryuqq.core.domain.category.dao.CategoryQueryRepository;
+import com.ryuqq.core.domain.category.dao.CategorySnapshot;
 
 @Repository
 public class DefaultCategoryQueryRepository implements CategoryQueryRepository {
 
-	private final CategoryDomainMapper categoryDomainMapper;
 	private final CategoryQueryDslRepository categoryQueryDslRepository;
 
-	public DefaultCategoryQueryRepository(CategoryDomainMapper categoryDomainMapper, CategoryQueryDslRepository categoryQueryDslRepository) {
-		this.categoryDomainMapper = categoryDomainMapper;
+	public DefaultCategoryQueryRepository(CategoryQueryDslRepository categoryQueryDslRepository) {
 		this.categoryQueryDslRepository = categoryQueryDslRepository;
 	}
 
@@ -24,10 +22,11 @@ public class DefaultCategoryQueryRepository implements CategoryQueryRepository {
 	}
 
 	@Override
-	public List<DefaultCategory> fetchRecursiveByIds(List<Long> categoryIds, boolean isParentRelation) {
+	public List<CategorySnapshot> fetchRecursiveByIds(List<Long> categoryIds, boolean isParentRelation) {
 		return categoryQueryDslRepository.fetchRecursiveByIds(categoryIds, isParentRelation)
 			.stream()
-			.map(categoryDomainMapper::toDomain)
+			.map(CategorySnapshotMapper::toSnapshot)
 			.toList();
 	}
+
 }

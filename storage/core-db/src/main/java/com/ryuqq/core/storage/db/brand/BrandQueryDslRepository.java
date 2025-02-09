@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import com.ryuqq.core.storage.db.brand.dto.BrandDto;
+import com.ryuqq.core.storage.db.brand.dto.QBrandDto;
+
 @Repository
 public class BrandQueryDslRepository  {
 

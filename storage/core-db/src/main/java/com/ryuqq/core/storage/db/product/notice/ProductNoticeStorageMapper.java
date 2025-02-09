@@ -2,7 +2,7 @@ package com.ryuqq.core.storage.db.product.notice;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 
 @Component
 public class ProductNoticeStorageMapper {

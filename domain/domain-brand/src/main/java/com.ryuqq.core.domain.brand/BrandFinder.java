@@ -2,10 +2,13 @@ package com.ryuqq.core.domain.brand;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
+import com.ryuqq.core.domain.brand.dao.BrandQueryRepository;
+import com.ryuqq.core.domain.brand.dao.BrandSnapshot;
 
 @Component
-public class BrandFinder implements BrandQueryInterface {
+class BrandFinder implements BrandQueryInterface {
 
 	private final BrandQueryRepository brandQueryRepository;
 
@@ -17,9 +20,9 @@ public class BrandFinder implements BrandQueryInterface {
 		return brandQueryRepository.existById(id);
 	}
 
-
-	public DefaultBrand fetchById(long id){
-		return brandQueryRepository.fetchById(id);
+	public Brand fetchById(long id){
+		BrandSnapshot brandSnapshot = brandQueryRepository.fetchById(id);
+		return BrandMapper.toBrand(brandSnapshot);
 	}
 
 }

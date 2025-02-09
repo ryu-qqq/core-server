@@ -3,9 +3,8 @@ package com.ryuqq.core.api.controller.v1.product.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupInsertRequestDto;
-import com.ryuqq.core.domain.product.ProductGroup;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.enums.ProductStatus;
+import com.ryuqq.core.domain.product.core.ProductGroupCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 
 @Component
 public class ProductGroupMapper implements DomainMapper<ProductGroupInsertRequestDto> {
@@ -16,26 +15,27 @@ public class ProductGroupMapper implements DomainMapper<ProductGroupInsertReques
 	}
 
 	@Override
-	public ProductGroupContext.Builder map(ProductGroupInsertRequestDto source, ProductGroupContext.Builder builder) {
-		ProductGroup productGroup = ProductGroup.create(
-			source.productGroupId(),
-			source.sellerId(),
-			source.categoryId(),
-			source.brandId(),
-			source.productGroupName(),
-			source.styleCode(),
-			source.productCondition(),
-			source.managementType(),
-			source.optionType(),
-			source.regularPrice(),
-			source.currentPrice(),
-			source.soldOut(),
-			source.displayed(),
-			ProductStatus.WAITING,
-			source.keywords()
-		);
+	public ProductGroupContextCommandBuilder map(ProductGroupInsertRequestDto requestDto, ProductGroupContextCommandBuilder builder) {
 
-		builder.productGroup(productGroup);
+		long productGroupId = builder.getProductGroupId().orElse(requestDto.productGroupId());
+
+		ProductGroupCommand productGroupCommand = ProductGroupCommand.of(
+			productGroupId,
+			requestDto.sellerId(),
+			requestDto.categoryId(),
+			requestDto.brandId(),
+			requestDto.productGroupName(),
+			requestDto.styleCode(),
+			requestDto.productCondition(),
+			requestDto.managementType(),
+			requestDto.optionType(),
+			requestDto.regularPrice(),
+			requestDto.currentPrice(),
+			requestDto.soldOut(),
+			requestDto.displayed(),
+			requestDto.keywords());
+
+		builder.withProductGroupCommand(productGroupCommand);
 		return builder;
 	}
 

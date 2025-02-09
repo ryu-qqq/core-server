@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.product.core.Item;
-import com.ryuqq.core.domain.product.core.ItemContext;
 import com.ryuqq.core.domain.product.core.Price;
+import com.ryuqq.core.domain.product.core.ProductGroup;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
 import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
 import com.ryuqq.core.external.buyma.BuyMaOptionContext;
 import com.ryuqq.core.external.buyma.BuyMaPrice;
@@ -34,11 +34,10 @@ public class BuyMaProductMapper {
 	}
 
 	public BuyMaProductInsertRequestDto toInsetRequestDto(ExternalProductGroup externalProductGroup){
-		ItemContext itemContext = productGroupContextQueryInterface.fetchByProductGroupId(
-			externalProductGroup.getProductGroupId());
+		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(externalProductGroup.getProductGroupId());
 
-		Item item = itemContext.getItem();
-		Price price = item.getPrice();
+		ProductGroup productGroup = productGroupContext.getProductGroup();
+		Price price = productGroup.getPrice();
 
 		BuyMaOptionContext buyMaOptionContext = buyMaOptionMapper.toBuyMaOptionContext(externalProductGroup.getSiteId(),
 			externalProductGroup.getProductGroupId(),
@@ -51,7 +50,7 @@ public class BuyMaProductMapper {
 		return BuyMaProductInsertFactory.createInsertRequestDto(
 			externalProductGroup,
 			externalProductGroup.getProductName(),
-			item.getStyleCode(),
+			productGroup.getStyleCode(),
 			brand.getBrandName(),
 			Long.parseLong(externalProductGroup.getExternalBrandId()),
 			Long.parseLong(externalProductGroup.getExternalCategoryId()),
@@ -59,7 +58,7 @@ public class BuyMaProductMapper {
 			buyMaOptionContext.buyMaOptions(),
 			buyMaPrice.getCurrentPrice(),
 			buyMaPrice.getRegularPrice(),
-			BuyMaImageInsertFactory.toBuyMaImages(itemContext.getItemImages()),
+			BuyMaImageInsertFactory.toBuyMaImages(productGroupContext.getProductGroupImageContext()),
 			buyMaOptionContext.optionComment()
 		);
 

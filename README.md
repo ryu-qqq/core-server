@@ -41,7 +41,7 @@ root/
 │   ├── core-batch/                  # 공통 배치 구성 요소 및 인터페이스 모듈
 │   └── core-enum/                   # 공통 Enum 정의 모듈
 ├── domain/                          # 도메인 모듈 폴더
-│   └── core-product/                 # 도메인 비즈니스 로직 모듈
+│   └── core-defaultProduct/                 # 도메인 비즈니스 로직 모듈
 │   └── core-external/                 # 도메인 비즈니스 로직 모듈
 │   └── core-git/                 # 도메인 비즈니스 로직 모듈
 │   └── core-brand/                 # 도메인 비즈니스 로직 모듈

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.core.OptionGroupCommand;
 import com.ryuqq.core.enums.OptionName;
 
 @Component
@@ -17,15 +19,15 @@ public class OptionGroupHandler {
 		this.optionGroupRegister = optionGroupRegister;
 	}
 
-	public Map<OptionName, Long> registerOptionGroups(List<OptionContext> options) {
-		return options.stream()
+	public Map<OptionName, Long> register(List<? extends OptionContextCommand> productOptionCommands){
+		return productOptionCommands.stream()
 			.collect(Collectors.toMap(
-				OptionContext::getOptionName,
+				OptionContextCommand::optionName,
 				option -> {
-					if (option.getOptionGroupId() != null) {
-						return option.getOptionGroupId();
+					if (option.optionGroupId() >0) {
+						return option.optionGroupId();
 					} else {
-						return optionGroupRegister.register(OptionGroup.create(option.getOptionName()));
+						return optionGroupRegister.register(OptionGroupCommand.of(option.optionName()));
 					}
 				},
 				(existingValue, newValue) -> existingValue

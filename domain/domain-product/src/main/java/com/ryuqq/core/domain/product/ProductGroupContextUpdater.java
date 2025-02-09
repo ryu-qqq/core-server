@@ -2,13 +2,15 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
 import com.ryuqq.core.domain.product.core.UpdateDecision;
 
 @Component
 public class ProductGroupContextUpdater {
 
 	private final ProductGroupContextFinder productGroupContextFinder;
-	private final UpdateCheckerExecutor updateCheckerExecutor; // Executor 추가
+	private final UpdateCheckerExecutor updateCheckerExecutor;
 	private final UpdateDecisionExecutor updateDecisionExecutor;
 
 	public ProductGroupContextUpdater(ProductGroupContextFinder productGroupContextFinder,
@@ -19,27 +21,27 @@ public class ProductGroupContextUpdater {
 		this.updateDecisionExecutor = updateDecisionExecutor;
 	}
 
-	public UpdateDecision updateProductGroupContext(long productGroupId, ProductGroupContext updatedContext) {
-		ProductGroupContext existingContext = productGroupContextFinder.fetchById(productGroupId);
+	public UpdateDecision updateProductGroupContext(long id, ProductGroupContextCommand productGroupContextCommand) {
+		ProductGroupContext productGroupContext = productGroupContextFinder.fetchById(id);
 		UpdateDecision decision = new UpdateDecision();
 
-		compareAndUpdateFields(decision, productGroupId, existingContext, updatedContext);
+		compareAndUpdateFields(decision, productGroupContext, productGroupContextCommand);
 
 		updateDecisionExecutor.execute(decision);
 
 		return decision;
 	}
 
-	private void compareAndUpdateFields(UpdateDecision decision, long productGroupId, ProductGroupContext existingContext, ProductGroupContext updatedContext) {
-		compareField(decision, productGroupId, existingContext.getProductGroup(), updatedContext.getProductGroup());
-		compareField(decision, productGroupId, existingContext.getProductNotice(), updatedContext.getProductNotice());
-		compareField(decision, productGroupId, existingContext.getProductDelivery(), updatedContext.getProductDelivery());
-		compareField(decision, productGroupId, existingContext.getProductDetailDescription(), updatedContext.getProductDetailDescription());
-		compareField(decision, productGroupId, existingContext.getProductGroupImages(), updatedContext.getProductGroupImages());
-		compareField(decision, productGroupId, existingContext.getProducts(), updatedContext.getProducts());
+	private void compareAndUpdateFields(UpdateDecision decision, ProductGroupContext productGroupContext, ProductGroupContextCommand productGroupContextCommand) {
+		compareField(decision, productGroupContext.getProductGroup(), productGroupContextCommand.getProductGroupCommand());
+		compareField(decision, productGroupContext.getProductNotice(), productGroupContextCommand.getProductNoticeCommand());
+		compareField(decision, productGroupContext.getProductDelivery(), productGroupContextCommand.getProductDeliveryCommand());
+		compareField(decision, productGroupContext.getProductDetailDescription(), productGroupContextCommand.getProductDetailDescriptionCommand());
+		compareField(decision, productGroupContext.getProductGroupImageContext(), productGroupContextCommand.getProductGroupImageCommandContextCommand());
+		compareField(decision, productGroupContext.getProductOptionContext(), productGroupContextCommand.getProductCommandContextCommand());
 	}
 
-	private <T> void compareField(UpdateDecision decision, long productGroupId, T existingField, T updatedField) {
-		updateCheckerExecutor.executeChecker(decision, productGroupId, existingField, updatedField);
+	private <T, U> void compareField(UpdateDecision decision, T existingField, U updatedField) {
+		updateCheckerExecutor.executeChecker(decision, existingField, updatedField);
 	}
 }

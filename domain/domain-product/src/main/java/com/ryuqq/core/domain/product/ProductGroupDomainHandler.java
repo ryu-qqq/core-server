@@ -2,6 +2,11 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
+
 @Component
 public class ProductGroupDomainHandler {
 
@@ -17,16 +22,25 @@ public class ProductGroupDomainHandler {
 		this.productNoticeRegister = productNoticeRegister;
 	}
 
-	public long handleProductGroupDomain(ProductGroup productGroup) {
+	public long handle(ProductGroupContextCommand.EssentialProductGroupInfo essentialProductGroupInfo) {
+		long productGroupId = handleProductGroupDomain(essentialProductGroupInfo.productGroupCommand());
+		handleProductDeliveryDomain(productGroupId, essentialProductGroupInfo.productDeliveryCommand());
+		handleProductNoticeDomain(productGroupId, essentialProductGroupInfo.productNoticeCommand());
+		return productGroupId;
+	}
+
+	private long handleProductGroupDomain(ProductGroupCommand productGroup) {
 		return productGroupRegister.register(productGroup);
 	}
 
-	public void handleProductDeliveryDomain(ProductDelivery productDelivery) {
-		productDeliveryRegister.register(productDelivery);
+	private void handleProductDeliveryDomain(long productGroupId, ProductDeliveryCommand productDeliveryCommand) {
+		ProductDeliveryCommand assignedProductDeliveryCommand = productDeliveryCommand.assignProductGroupId(productGroupId);
+		productDeliveryRegister.register(assignedProductDeliveryCommand);
 	}
 
-	public void handleProductNoticeDomain(ProductNotice productNotice) {
-		productNoticeRegister.register(productNotice);
+	private void handleProductNoticeDomain(long productGroupId, ProductNoticeCommand productNoticeCommand) {
+		ProductNoticeCommand assignedProductNoticeCommand = productNoticeCommand.assignProductGroupId(productGroupId);
+		productNoticeRegister.register(assignedProductNoticeCommand);
 	}
 
 }

@@ -3,9 +3,10 @@ package com.ryuqq.core.external.oco.helper;
 import java.util.List;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.product.core.Item;
-import com.ryuqq.core.domain.product.core.ItemDeliveryInfo;
-import com.ryuqq.core.domain.product.core.ItemNoticeInfo;
+import com.ryuqq.core.domain.product.core.ProductDelivery;
+import com.ryuqq.core.domain.product.core.ProductDetailDescription;
+import com.ryuqq.core.domain.product.core.ProductGroup;
+import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.external.oco.OcoOptionContext;
 import com.ryuqq.core.external.oco.OcoPrice;
@@ -16,12 +17,12 @@ public class OcoProductInsertFactory {
 
 	public static OcoProductInsertRequestDto createInsertRequestDto(
 		ExternalProductGroup externalProductGroup,
-		Item item,
-		ItemNoticeInfo noticeInfo,
-		ItemDeliveryInfo deliveryInfo,
+		ProductGroup productGroup,
+		ProductNotice productNotice,
+		ProductDelivery productDelivery,
 		OcoPrice price,
 		List<OcoImageInsertRequestDto> images,
-		String detailDescription,
+		ProductDetailDescription productDetailDescription,
 		List<OcoOptionContext> optionContexts,
 		String externalCategoryId
 	) {
@@ -30,34 +31,34 @@ public class OcoProductInsertFactory {
 			.pgid(Integer.parseInt(externalProductGroup.getExternalBrandId()))
 			.pcid(Integer.parseInt(externalCategoryId))
 			.productType("N")
-			.name(item.getProductGroupName())
-			.madeIn(noticeInfo.getOrigin().getDisplayName())
-			.manufacture(noticeInfo.getMaker())
-			.infoMaterial(noticeInfo.getMaterial())
-			.infoColor(noticeInfo.getColor())
-			.infoAsTel(noticeInfo.getAsPhone())
-			.infoQaTel(noticeInfo.getAsPhone())
-			.infoAddr(deliveryInfo.getDeliveryArea())
-			.code(String.valueOf(item.getId()))
+			.name(productGroup.getProductGroupName())
+			.madeIn(productNotice.getOrigin().getDisplayName())
+			.manufacture(productNotice.getMaker())
+			.infoMaterial(productNotice.getMaterial())
+			.infoColor(productNotice.getColor())
+			.infoAsTel(productNotice.getAsPhone())
+			.infoQaTel(productNotice.getAsPhone())
+			.infoAddr(productDelivery.getDeliveryArea())
+			.code(String.valueOf(productGroup.getId()))
 			.originPrice(price.regularPrice().intValue())
 			.price(price.currentPrice().intValue())
 			.salePriceYn("N")
 			.saleTimeYn("N")
 			.stock(getTotalStock(optionContexts))
 			.keyword("")
-			.soldOut(item.isSoldOut() ? 1 : 0)
-			.findYn(item.isDisplayed() ? "Y" : "N")
+			.soldOut(productGroup.isSoldOut() ? 1 : 0)
+			.findYn(productGroup.isDisplayed() ? "Y" : "N")
 			.useCouponYn("Y")
-			.hidden(item.isDisplayed() ? 0 : 1)
-			.optionYn(item.getOptionType().isMultiOption() ? "Y" : "N")
+			.hidden(productGroup.isDisplayed() ? 0 : 1)
+			.optionYn(productGroup.getOptionType().isMultiOption() ? "Y" : "N")
 			.optionInputYn("N")
-			.optionCount(getOptionLength(item.getOptionType()))
+			.optionCount(getOptionLength(productGroup.getOptionType()))
 			.deliveryPriceFreeYn("Y")
 			.reDeliveryViewYn("N")
 			.listImageFile(images.getFirst().relativePath())
 			.fileList(images)
 			.mainImagePath(images.getFirst().relativePath())
-			.content(detailDescription)
+			.content(productDetailDescription.getDetailDescription())
 			.optionList(optionContexts.stream()
 				.map(OcoOptionContext::ocoOptionInsertRequestDto)
 				.toList())

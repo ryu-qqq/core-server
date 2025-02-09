@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
 import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryPersistenceRepository;
 
 @Repository

@@ -4,32 +4,31 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductDetailDescription;
+import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
 import com.ryuqq.core.domain.product.core.UpdateChecker;
 import com.ryuqq.core.domain.product.core.UpdateDecision;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component
 public class ProductDetailDescriptionChecker implements
-	UpdateChecker<ProductDetailDescription, ProductDetailDescription> {
+	UpdateChecker<ProductDetailDescription, ProductDetailDescriptionCommand> {
 
 	@Override
-	public UpdateDecision checkUpdates(long productGroupId, ProductDetailDescription existing, ProductDetailDescription updated) {
-		UpdateDecision decision = new UpdateDecision();
+	public void checkUpdates(UpdateDecision decision, ProductDetailDescription existing, ProductDetailDescriptionCommand updated) {
 
 		if (hasUpdates(existing, updated)) {
-			decision.addUpdate(updated.assignProductGroupId(existing.getProductGroupId()), ProductDomainEventType.IMAGE,false);
+			decision.addUpdate(updated, ProductDomainEventType.IMAGE,false);
 		}
-
-		return decision;
 	}
 
 	@Override
 	public boolean supports(Object fieldValue) {
-		return fieldValue instanceof ProductDetailDescription;
+		return fieldValue instanceof DefaultProductDetailDescription;
 	}
 
-	private boolean hasUpdates(ProductDetailDescription existing, ProductDetailDescription updated) {
-		return !Objects.equals(existing.getDetailDescription(), updated.getDetailDescription());
+	private boolean hasUpdates(ProductDetailDescription existing, ProductDetailDescriptionCommand updated) {
+		return !Objects.equals(existing.getDetailDescription(), updated.detailDescription());
 	}
 
 }

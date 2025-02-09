@@ -1,5 +1,6 @@
 package com.ryuqq.core.storage.db.product.option;
 
+import static com.ryuqq.core.storage.db.product.group.QProductGroupEntity.productGroupEntity;
 import static com.ryuqq.core.storage.db.product.option.QOptionDetailEntity.optionDetailEntity;
 import static com.ryuqq.core.storage.db.product.option.QOptionGroupEntity.optionGroupEntity;
 import static com.ryuqq.core.storage.db.product.option.QProductEntity.productEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 
 
 @Repository
@@ -28,6 +30,7 @@ public class ProductQueryDslQueryRepository {
 			.select(
 				new QProductContextDto(
 					productEntity.productGroupId,
+					productGroupEntity.optionType,
 					productEntity.id,
 					productEntity.quantity,
 					productEntity.soldOut,
@@ -42,6 +45,8 @@ public class ProductQueryDslQueryRepository {
 				)
 			)
 			.from(productEntity)
+			.innerJoin(productGroupEntity)
+			.on(productEntity.productGroupId.eq(productGroupEntity.id))
 			.leftJoin(productOptionEntity)
 			.on(productOptionEntity.productId.eq(productEntity.id))
 			.on(productOptionEntity.deleted.eq(false))

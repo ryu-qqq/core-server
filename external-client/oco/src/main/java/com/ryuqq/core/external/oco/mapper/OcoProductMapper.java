@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.product.core.Item;
-import com.ryuqq.core.domain.product.core.ItemContext;
-import com.ryuqq.core.domain.product.core.ItemDeliveryInfo;
-import com.ryuqq.core.domain.product.core.ItemNoticeInfo;
+import com.ryuqq.core.domain.product.core.ProductDelivery;
+import com.ryuqq.core.domain.product.core.ProductDetailDescription;
+import com.ryuqq.core.domain.product.core.ProductGroup;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
 import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
+import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.external.oco.OcoOptionContext;
 import com.ryuqq.core.external.oco.OcoPrice;
 import com.ryuqq.core.external.oco.OcoProductGroupInsertRequestContext;
@@ -40,8 +41,8 @@ public class OcoProductMapper {
 		CommonContext commonContext = prepareCommonContext(externalProductGroup);
 
 		OcoProductInsertRequestDto insertRequestDto = OcoProductInsertFactory.createInsertRequestDto(
-			externalProductGroup, commonContext.item, commonContext.noticeInfo, commonContext.deliveryInfo,
-			commonContext.price, commonContext.images, commonContext.itemDescription,
+			externalProductGroup, commonContext.productGroup, commonContext.productNotice, commonContext.productDelivery,
+			commonContext.price, commonContext.images, commonContext.productDetailDescription,
 			commonContext.optionContexts, commonContext.externalCategoryId
 		);
 
@@ -56,8 +57,8 @@ public class OcoProductMapper {
 
 
 		OcoProductInsertRequestDto updateRequestDto = OcoProductInsertFactory.createInsertRequestDto(
-			externalProductGroup, commonContext.item, commonContext.noticeInfo, commonContext.deliveryInfo,
-			commonContext.price, commonContext.images, commonContext.itemDescription,
+			externalProductGroup, commonContext.productGroup, commonContext.productNotice, commonContext.productDelivery,
+			commonContext.price, commonContext.images, commonContext.productDetailDescription,
 			partitionedContexts.getInserts(), commonContext.externalCategoryId
 		);
 
@@ -66,18 +67,18 @@ public class OcoProductMapper {
 
 
 	private CommonContext prepareCommonContext(ExternalProductGroup externalProductGroup) {
-		ItemContext itemContext = productGroupContextQueryInterface.fetchByProductGroupId(externalProductGroup.getProductGroupId());
-		Item item = itemContext.getItem();
-		ItemNoticeInfo noticeInfo = itemContext.getNoticeInfo();
-		ItemDeliveryInfo deliveryInfo = itemContext.getDeliveryInfo();
-		OcoPrice price = OcoPriceHelper.calculateFinalPrice(item.getPrice().getRegularPrice(), item.getPrice().getCurrentPrice());
-		List<OcoImageInsertRequestDto> images = OcoImageInsertFactory.toOcoImages(itemContext.getItemImages());
+		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(externalProductGroup.getProductGroupId());
+		ProductGroup productGroup = productGroupContext.getProductGroup();
+		ProductNotice productNotice = productGroupContext.getProductNotice();
+		ProductDelivery productDelivery = productGroupContext.getProductDelivery();
+		OcoPrice price = OcoPriceHelper.calculateFinalPrice(productGroup.getPrice().getRegularPrice(), productGroup.getPrice().getCurrentPrice());
+		List<OcoImageInsertRequestDto> images = OcoImageInsertFactory.toOcoImages(productGroupContext.getProductGroupImageContext());
 		List<OcoOptionContext> optionContexts = ocoOptionConverter.generateOptionContext(
 			externalProductGroup.getProductGroupId(), externalProductGroup.getExternalProductGroupId());
 		String externalCategoryId = resolveCategoryId(externalProductGroup);
 
-		return new CommonContext(item, noticeInfo, deliveryInfo, price, images,
-			itemContext.getItemDescription(), optionContexts, externalCategoryId);
+		return new CommonContext(productGroup, productNotice, productDelivery, price, images,
+			productGroupContext.getProductDetailDescription(), optionContexts, externalCategoryId);
 	}
 
 	private String resolveCategoryId(ExternalProductGroup externalProductGroup) {
@@ -91,8 +92,8 @@ public class OcoProductMapper {
 	}
 
 
-	private record CommonContext(Item item, ItemNoticeInfo noticeInfo, ItemDeliveryInfo deliveryInfo, OcoPrice price,
-								 List<OcoImageInsertRequestDto> images, String itemDescription,
+	private record CommonContext(ProductGroup productGroup, ProductNotice productNotice, ProductDelivery productDelivery, OcoPrice price,
+								 List<OcoImageInsertRequestDto> images, ProductDetailDescription productDetailDescription,
 								 List<OcoOptionContext> optionContexts, String externalCategoryId) {
 	}
 

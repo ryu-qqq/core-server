@@ -1,13 +1,12 @@
 package com.ryuqq.core.external.oco.mapper;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductContextInterface;
-import com.ryuqq.core.domain.product.core.Sku;
+import com.ryuqq.core.domain.product.core.ProductContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContextQueryInterface;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.external.oco.OcoOptionContext;
 import com.ryuqq.core.external.oco.request.OcoOptionInsertRequestDto;
@@ -15,18 +14,19 @@ import com.ryuqq.core.external.oco.request.OcoOptionInsertRequestDto;
 @Component
 public class OcoOptionConverter {
 
-	private final ProductContextInterface productContextInterface;
+	private final ProductOptionContextQueryInterface productOptionContextQueryInterface;
 	private final OcoOptionMatcher ocoOptionMatcher;
 
-	public OcoOptionConverter(ProductContextInterface productContextInterface, OcoOptionMatcher ocoOptionMatcher) {
-		this.productContextInterface = productContextInterface;
+	public OcoOptionConverter(ProductOptionContextQueryInterface productOptionContextQueryInterface,
+							  OcoOptionMatcher ocoOptionMatcher) {
+		this.productOptionContextQueryInterface = productOptionContextQueryInterface;
 		this.ocoOptionMatcher = ocoOptionMatcher;
 	}
 
 	public List<OcoOptionContext> generateOptionContext(long productGroupId, String externalProductGroupId){
-		List<? extends Sku> skus = fetchSkus(productGroupId);
-		OptionType optionType = determineOptionType(skus);
-		List<OcoOptionContext> ocoOptionContexts = toOcoOptionInsertRequestDto(optionType, skus);
+		ProductOptionContext productOptionContext = fetchProductOptionContext(productGroupId);
+		OptionType optionType = productOptionContext.getOptionType();
+		List<OcoOptionContext> ocoOptionContexts = toOcoOptionInsertRequestDto(optionType, productOptionContext.getProducts());
 
 		if(externalProductGroupId != null){
 			return ocoOptionMatcher.checkUpdates(ocoOptionContexts, externalProductGroupId);
@@ -35,48 +35,34 @@ public class OcoOptionConverter {
 		return ocoOptionContexts;
 	}
 
-	private List<? extends Sku> fetchSkus(long productGroupId) {
-		return Optional.ofNullable(productContextInterface.fetchByProductGroupId(productGroupId))
-			.orElse(Collections.emptyList());
+	private ProductOptionContext fetchProductOptionContext(long productGroupId) {
+		return productOptionContextQueryInterface.fetchByProductGroupId(productGroupId);
 	}
 
 
-	private OptionType determineOptionType(List<? extends Sku> skus) {
-		if (skus.isEmpty()) {
-			return OptionType.SINGLE;
-		}
-
-		int optionSize = skus.getFirst().getVariants().size();
-		return switch (optionSize) {
-			case 0 -> OptionType.SINGLE;
-			case 1 -> OptionType.OPTION_ONE;
-			default -> OptionType.OPTION_TWO;
-		};
-	}
-
-	private List<OcoOptionContext> toOcoOptionInsertRequestDto(OptionType optionType, List<? extends Sku> skus){
-		return skus.stream()
+	private List<OcoOptionContext> toOcoOptionInsertRequestDto(OptionType optionType, List<? extends ProductContext> productContexts){
+		return productContexts.stream()
 			.map(s -> {
 				String optionData1 ="";
 				String optionData2 = "";
 
 				if (optionType.isOneDepthOption()) {
-					optionData1 = s.getVariants().getFirst().getOptionValue();
+					optionData1 = s.getOptions().getFirst().getOptionValue();
 				}
 
 				if (optionType.isTwoDepthOption()) {
-					optionData2 = s.getVariants().getLast().getOptionValue();
+					optionData2 = s.getOptions().getLast().getOptionValue();
 				}
 
 				OcoOptionInsertRequestDto optionInsertRequestDto = new OcoOptionInsertRequestDto.Builder()
 					.optionData1(optionData1)
 					.optionData2(optionData2)
-					.quantity(s.getQuantity())
+					.quantity(s.getProduct().getQuantity())
 					.optionUse("Y")
-					.additionalPrice(s.getAdditionalPrice().intValue())
+					.additionalPrice(s.getProduct().getAdditionalPrice().intValue())
 					.build();
 
-				return new OcoOptionContext(s.getId(), optionInsertRequestDto, false);
+				return new OcoOptionContext(s.getProduct().getId(), optionInsertRequestDto, false);
 
 			})
 			.toList();

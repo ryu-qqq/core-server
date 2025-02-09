@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductInsertRequestDto;
 import com.ryuqq.core.api.controller.v1.product.request.ProductOptionInsertRequestDto;
-import com.ryuqq.core.domain.product.OptionContext;
-import com.ryuqq.core.domain.product.Product;
-import com.ryuqq.core.domain.product.ProductContext;
-import com.ryuqq.core.domain.product.ProductContextBundle;
-import com.ryuqq.core.domain.product.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.core.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
 
 @Component
 public class ProductMapper implements DomainMapper<List<ProductInsertRequestDto>>{
@@ -25,27 +25,30 @@ public class ProductMapper implements DomainMapper<List<ProductInsertRequestDto>
 	}
 
 	@Override
-	public ProductGroupContext.Builder map(List<ProductInsertRequestDto> source, ProductGroupContext.Builder builder) {
-		List<ProductContext> productContexts = source.stream()
-			.map(p -> new ProductContext(
-						Product.create(
-							p.productId(), null,
-							p.soldOut(), p.displayed(),
-							p.quantity(), p.additionalPrice(), false
-						),
-						toOptionContexts(p.options()),
-				false
-					)
-			).toList();
+	public ProductGroupContextCommandBuilder map(List<ProductInsertRequestDto> requestDtos, ProductGroupContextCommandBuilder builder) {
+		long productGroupId = builder.getProductGroupId().orElse(0L);
 
-		ProductContextBundle productContextBundle = new ProductContextBundle(productContexts);
+		List<ProductOptionCommand> productContexts = requestDtos.stream()
+			.map(p ->{
+					ProductCommand productCommand = ProductCommand.of(
+						p.productId(), productGroupId, p.soldOut(),
+						p.displayed(), p.quantity(),
+						p.additionalPrice(), false
+					);
+					return ProductOptionCommand.of(productCommand, false, toOptionContexts(p.options()));
+				}
+			)
+			.toList();
 
-		return builder.products(productContextBundle);
+		ProductOptionContextCommand productOptionContextCommand = ProductOptionContextCommand.of(productGroupId, builder.getOptionType(), productContexts);
+
+		builder.withProductContextCommand(productOptionContextCommand);
+		return builder;
 	}
 
-	private List<OptionContext> toOptionContexts(List<ProductOptionInsertRequestDto> options) {
+	private List<OptionContextCommand> toOptionContexts(List<ProductOptionInsertRequestDto> options) {
 		return options.stream()
-			.map(o -> OptionContext.create(o.optionName(), o.optionValue()))
+			.map(o -> OptionContextCommand.of(0, 0,0, o.optionName(), o.optionValue()))
 			.distinct()
 			.collect(Collectors.toList());
 	}

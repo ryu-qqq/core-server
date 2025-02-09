@@ -3,8 +3,8 @@ package com.ryuqq.core.external.buyma.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.product.core.Item;
-import com.ryuqq.core.domain.product.core.ItemContext;
+import com.ryuqq.core.domain.product.core.ProductGroup;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
 import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
 import com.ryuqq.core.external.buyma.BuyMaOptionContext;
 import com.ryuqq.core.external.buyma.helper.BuyMaReferenceNumberHelper;
@@ -25,16 +25,16 @@ public class BuyMaStockMapper {
 		ExternalProductGroup externalProductGroup) {
 
 
-		ItemContext itemContext = productGroupContextQueryInterface.fetchByProductGroupId(
+		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(
 			externalProductGroup.getProductGroupId());
 
-		Item item = itemContext.getItem();
+		ProductGroup productGroup = productGroupContext.getProductGroup();
 
 		BuyMaOptionContext buyMaOptionContext = buyMaOptionMapper.toBuyMaOptionContext(externalProductGroup.getSiteId(),
 			externalProductGroup.getProductGroupId(), externalProductGroup.getExternalCategoryId());
 
 		return new BuyMaProductStockUpdateRequestDto(
-			BuyMaReferenceNumberHelper.getDefaultReferenceNumber(item.getStyleCode(), item.getId()),
+			BuyMaReferenceNumberHelper.getDefaultReferenceNumber(productGroup.getStyleCode(), productGroup.getId()),
 			buyMaOptionContext.buyMaVariants()
 		);
 

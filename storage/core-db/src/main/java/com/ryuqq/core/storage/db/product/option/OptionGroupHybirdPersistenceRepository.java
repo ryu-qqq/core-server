@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.options.group.OptionGroupCommand;
+import com.ryuqq.core.domain.product.core.OptionGroupCommand;
 import com.ryuqq.core.domain.product.dao.options.group.OptionGroupPersistenceRepository;
 
 @Repository

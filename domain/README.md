@@ -114,8 +114,8 @@ BigDecimal additionalPrice
 ) {}
 
 // 사용 예시
-Product product = Product.createNewProduct(command.productGroupId(), command.quantity(), command.additionalPrice());
-product = product.withQuantity(updateCommand.quantity());
+Product defaultProduct = Product.createNewProduct(command.productGroupId(), command.quantity(), command.additionalPrice());
+defaultProduct = defaultProduct.withQuantity(updateCommand.quantity());
 
 
 ---

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
 import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionPersistenceRepository;
 
 @Repository
@@ -20,24 +20,24 @@ public class ProductOptionJdbcPersistenceRepository implements ProductOptionPers
 	}
 
 	@Override
-	public void save(ProductOptionCommand productOptionCommand) {
-		saveAll(List.of(productOptionCommand));
+	public void save(OptionContextCommand optionContextCommand) {
+		saveAll(List.of(optionContextCommand));
 	}
 
 	@Override
-	public void saveAll(List<ProductOptionCommand> productOptionCommands) {
-		List<ProductOptionEntity> entities = getEntities(productOptionCommands);
+	public void saveAll(List<OptionContextCommand> optionContextCommands) {
+		List<ProductOptionEntity> entities = getEntities(optionContextCommands);
 		productOptionJdbcRepository.batchInsertProductOptions(entities);
 	}
 
 	@Override
-	public void update(ProductOptionCommand productOptionCommand) {
-		updateAll(List.of(productOptionCommand));
+	public void update(OptionContextCommand optionContextCommand) {
+		updateAll(List.of(optionContextCommand));
 	}
 
 	@Override
-	public void updateAll(List<ProductOptionCommand> productOptionCommands) {
-		List<ProductOptionEntity> entities = getEntities(productOptionCommands);
+	public void updateAll(List<OptionContextCommand> optionContextCommands) {
+		List<ProductOptionEntity> entities = getEntities(optionContextCommands);
 		productOptionJdbcRepository.batchUpdateProductOptions(entities);
 	}
 
@@ -46,8 +46,8 @@ public class ProductOptionJdbcPersistenceRepository implements ProductOptionPers
 		productOptionJdbcRepository.softDeleteAll(productIds);
 	}
 
-	private List<ProductOptionEntity> getEntities(List<ProductOptionCommand> productOptionCommands) {
-		return productOptionCommands.stream().map(optionStorageMapper::toEntity).toList();
+	private List<ProductOptionEntity> getEntities(List<OptionContextCommand> optionContextCommands) {
+		return optionContextCommands.stream().map(optionStorageMapper::toEntity).toList();
 	}
 
 

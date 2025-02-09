@@ -43,7 +43,6 @@ public class ExternalProductGroupEventHandler {
 		);
 	}
 
-
 	@EventListener
 	@Async("virtualThreadExecutor")
 	public void handleFailedSyncExternalProductGroup(ExternalProductGroupFailedEvent event){
@@ -51,8 +50,5 @@ public class ExternalProductGroupEventHandler {
 			event.siteId(), event.productGroupId()
 		);
 	}
-
-
-
 
 }

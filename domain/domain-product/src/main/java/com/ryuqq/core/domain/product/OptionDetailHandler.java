@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.core.OptionDetailCommand;
 import com.ryuqq.core.enums.OptionName;
 
 @Component
@@ -17,23 +19,22 @@ public class OptionDetailHandler {
 		this.optionDetailRegister = optionDetailRegister;
 	}
 
-	public Map<String, Long> registerOptionDetails(List<OptionContext> options, Map<OptionName, Long> optionGroupMap) {
-		return options.stream()
+	public Map<String, Long> register(List<? extends OptionContextCommand> productOptionCommands, Map<OptionName, Long> optionGroupMap){
+		return productOptionCommands.stream()
 			.collect(Collectors.toMap(
-				OptionContext::getOptionValue,
+				OptionContextCommand::optionValue,
 				option -> {
-					if (option.getOptionDetailId() != null) {
-						return option.getOptionDetailId();
+					if (option.optionDetailId() > 0) {
+						return option.optionDetailId();
 					} else {
-						Long optionGroupId = optionGroupMap.get(option.getOptionName());
-						OptionDetail newOptionDetail = OptionDetail.create(optionGroupId, option.getOptionValue());
-						return optionDetailRegister.register(newOptionDetail);
+						Long optionGroupId = optionGroupMap.get(option.optionName());
+						OptionDetailCommand optionDetailCommand = OptionDetailCommand.of(optionGroupId,
+							option.optionValue());
+						return optionDetailRegister.register(optionDetailCommand);
 					}
 				},
 				(existingValue, newValue) -> existingValue
 			));
 	}
-
-
 
 }

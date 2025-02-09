@@ -1,6 +1,10 @@
 dependencies {
     api project(':domain')
 
+	implementation project(":domain:domain-brand")
+	implementation project(":domain:domain-category")
+	implementation project(":domain:domain-seller")
+
 	testImplementation(testFixtures(project(":tests:api-docs")))
 	testImplementation(testFixtures(project(":tests:unit-tests")))
 	testImplementation(testFixtures(project(":support:utils")))

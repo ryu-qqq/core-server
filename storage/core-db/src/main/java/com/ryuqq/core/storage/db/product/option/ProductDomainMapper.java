@@ -1,6 +1,7 @@
 package com.ryuqq.core.storage.db.product.option;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -11,28 +12,59 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.OptionContext;
-import com.ryuqq.core.domain.product.Product;
-import com.ryuqq.core.domain.product.ProductContext;
-import com.ryuqq.core.domain.product.ProductContextBundle;
+import com.ryuqq.core.domain.product.DefaultOptionContext;
+import com.ryuqq.core.domain.product.DefaultProduct;
+import com.ryuqq.core.domain.product.DefaultProductContext;
+import com.ryuqq.core.domain.product.DefaultProductOptionContext;
+import com.ryuqq.core.enums.OptionType;
 
 @Component
 public class ProductDomainMapper {
 
-	public ProductContextBundle toDomains(List<ProductContextDto> products) {
-		Map<Long, Set<OptionContext>> groupedOptions = groupOptionsByProductId(products);
+	public DefaultProductOptionContext toDomain(List<ProductContextDto> products) {
+		if (products.isEmpty()) {
+			return new DefaultProductOptionContext(0, OptionType.SINGLE, Collections.emptyList());
+		}
+
+		long productGroupId = products.getFirst().getProductGroupId();
+		OptionType optionType = products.getFirst().getOptionType();
+		List<DefaultProductContext> defaultProductContexts = createProductContexts(products);
+
+		return new DefaultProductOptionContext(productGroupId, optionType, defaultProductContexts);
+	}
+
+	public List<DefaultProductOptionContext> toDomains(List<ProductContextDto> products) {
+		if (products.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Map<String, List<ProductContextDto>> groupedByProductGroup = groupProductsByProductGroupId(products);
+
+		return groupedByProductGroup.entrySet().stream()
+			.map(entry -> {
+				String[] split = entry.getKey().split(",");
+				long productGroupId = Long.parseLong(split[0]);
+				return new DefaultProductOptionContext(productGroupId, OptionType.valueOf(split[1]), createProductContexts(entry.getValue()));
+			})
+			.toList();
+	}
+
+	private Map<String, List<ProductContextDto>> groupProductsByProductGroupId(List<ProductContextDto> products) {
+		return products.stream()
+			.collect(Collectors.groupingBy(p -> p.getOptionGroupId() + "," + p.getOptionType()));
+	}
+
+	private List<DefaultProductContext> createProductContexts(List<ProductContextDto> products) {
+		Map<Long, Set<DefaultOptionContext>> groupedOptions = groupOptionsByProductId(products);
 
 		Map<Long, ProductContextDto> productMap = mapProductsById(products);
 
-		List<ProductContext> productContexts = productMap.values().stream()
+		return productMap.values().stream()
 			.map(dto -> createProductContext(dto, groupedOptions))
-			.sorted(Comparator.comparing(ProductContext::getId))
 			.toList();
-
-		return new ProductContextBundle(productContexts);
 	}
 
-	private Map<Long, Set<OptionContext>> groupOptionsByProductId(List<ProductContextDto> products) {
+	private Map<Long, Set<DefaultOptionContext>> groupOptionsByProductId(List<ProductContextDto> products) {
 		return products.stream()
 			.filter(dto -> dto.getOptionName() != null)
 			.collect(Collectors.groupingBy(
@@ -40,7 +72,7 @@ public class ProductDomainMapper {
 				Collectors.mapping(
 					this::createOptionContext,
 					Collectors.toCollection(() -> new TreeSet<>(
-						Comparator.comparing(OptionContext::getOptionName, Comparator.nullsFirst(Comparator.naturalOrder()))
+						Comparator.comparing(DefaultOptionContext::getOptionName, Comparator.nullsFirst(Comparator.naturalOrder()))
 					))
 				)
 			));
@@ -48,6 +80,7 @@ public class ProductDomainMapper {
 
 	private Map<Long, ProductContextDto> mapProductsById(List<ProductContextDto> products) {
 		return products.stream()
+			.sorted(Comparator.comparing(ProductContextDto::getProductId))
 			.collect(Collectors.toMap(
 				ProductContextDto::getProductId,
 				Function.identity(),
@@ -55,12 +88,12 @@ public class ProductDomainMapper {
 			));
 	}
 
-	private ProductContext createProductContext(ProductContextDto dto, Map<Long, Set<OptionContext>> groupedOptions) {
+	private DefaultProductContext createProductContext(ProductContextDto dto, Map<Long, Set<DefaultOptionContext>> groupedOptions) {
 		Long productId = dto.getProductId();
-		List<OptionContext> options = new ArrayList<>(groupedOptions.getOrDefault(productId, Set.of()));
+		List<DefaultOptionContext> options = new ArrayList<>(groupedOptions.getOrDefault(productId, Set.of()));
 
-		return new ProductContext(
-			Product.create(
+		return new DefaultProductContext(
+			new DefaultProduct(
 				dto.getProductId(),
 				dto.getProductGroupId(),
 				dto.isSoldOutYn(),
@@ -74,14 +107,15 @@ public class ProductDomainMapper {
 		);
 	}
 
-	private OptionContext createOptionContext(ProductContextDto dto) {
-		return OptionContext.create(
+	private DefaultOptionContext createOptionContext(ProductContextDto dto) {
+		return new DefaultOptionContext(
 			dto.getProductOptionId(),
 			dto.getOptionGroupId(),
 			dto.getOptionDetailId(),
 			dto.getProductId(),
 			dto.getOptionName(),
-			dto.getOptionValue()
+			dto.getOptionValue(),
+			false
 		);
 	}
 

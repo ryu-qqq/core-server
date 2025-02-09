@@ -3,8 +3,8 @@ package com.ryuqq.core.api.controller.v1.product.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductNoticeInsertRequestDto;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.domain.product.ProductNotice;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 
 @Component
 public class ProductNoticeMapper implements DomainMapper<ProductNoticeInsertRequestDto> {
@@ -15,20 +15,23 @@ public class ProductNoticeMapper implements DomainMapper<ProductNoticeInsertRequ
 	}
 
 	@Override
-	public ProductGroupContext.Builder map(ProductNoticeInsertRequestDto source, ProductGroupContext.Builder builder) {
-		ProductNotice productNotice = ProductNotice.create(
-			source.material(),
-			source.color(),
-			source.size(),
-			source.maker(),
-			source.origin(),
-			source.washingMethod(),
-			source.yearMonth(),
-			source.assuranceStandard(),
-			source.asPhone()
-		);
+	public ProductGroupContextCommandBuilder map(ProductNoticeInsertRequestDto requestDto, ProductGroupContextCommandBuilder builder) {
+		long productGroupId = builder.getProductGroupId().orElse(0L);
 
-		builder.productNotice(productNotice);
+		ProductNoticeCommand productNoticeCommand = ProductNoticeCommand.of(
+			productGroupId,
+			requestDto.material(),
+			requestDto.color(),
+			requestDto.size(),
+			requestDto.maker(),
+			requestDto.origin(),
+			requestDto.washingMethod(),
+			requestDto.yearMonth(),
+			requestDto.assuranceStandard(),
+			requestDto.asPhone());
+
+		builder.withProductNoticeCommand(productNoticeCommand);
 		return builder;
 	}
+
 }

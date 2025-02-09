@@ -2,6 +2,8 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
+
 
 @Component
 public class ProductGroupContextRegister {
@@ -18,24 +20,11 @@ public class ProductGroupContextRegister {
 		this.productDomainHandler = productDomainHandler;
 	}
 
-	public long registerProductGroupContext(ProductGroupContext productGroupContext){
-
-		ProductGroupContext assignProductGroupIdContext = saveProductGroupAndAssignProductGroupId(productGroupContext);
-
-		productGroupDomainHandler.handleProductDeliveryDomain(assignProductGroupIdContext.getProductDelivery());
-		productGroupDomainHandler.handleProductNoticeDomain(assignProductGroupIdContext.getProductNotice());
-
-		productGroupImageDomainHandler.handleProductImageDomain(assignProductGroupIdContext.getProductGroupImages());
-		productGroupImageDomainHandler.handleProductDetailDescriptionDomain(assignProductGroupIdContext.getProductDetailDescription());
-
-		productDomainHandler.handleProductDomain(assignProductGroupIdContext.getProducts());
-
-		return assignProductGroupIdContext.getProductGroupId();
-	}
-
-	private ProductGroupContext saveProductGroupAndAssignProductGroupId(ProductGroupContext productGroupContext){
-		long productGroupId = productGroupDomainHandler.handleProductGroupDomain(productGroupContext.getProductGroup());
-		return productGroupContext.assignProductGroupId(productGroupId);
+	public long registerProductGroupContext(ProductGroupContextCommand productGroupContextCommand){
+		long productGroupId = productGroupDomainHandler.handle(productGroupContextCommand.getEssentialProductGroupInfo());
+		productGroupImageDomainHandler.handle(productGroupId, productGroupContextCommand.getEssentialProductImageInfo());
+		productDomainHandler.handle(productGroupId, productGroupContextCommand.getProductCommandContextCommand());
+		return productGroupId;
 	}
 
 }

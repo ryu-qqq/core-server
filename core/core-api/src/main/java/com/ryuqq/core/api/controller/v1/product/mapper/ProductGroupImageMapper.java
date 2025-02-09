@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupImageRequestDto;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.domain.product.ProductGroupImage;
-import com.ryuqq.core.domain.product.ProductGroupImageBundle;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
 
 @Component
 public class ProductGroupImageMapper implements DomainMapper<List<ProductGroupImageRequestDto>> {
@@ -20,23 +20,25 @@ public class ProductGroupImageMapper implements DomainMapper<List<ProductGroupIm
 		return false;
 	}
 
-
 	@Override
-	public ProductGroupContext.Builder map(List<ProductGroupImageRequestDto> source,
-										   ProductGroupContext.Builder builder) {
+	public ProductGroupContextCommandBuilder map(List<ProductGroupImageRequestDto> requestDto,
+												 ProductGroupContextCommandBuilder builder) {
+		long productGroupId = builder.getProductGroupId().orElse(0L);
 
-		List<ProductGroupImage> productGroupImages = source.stream()
-			.map(p -> ProductGroupImage.create(
+		List<ProductGroupImageCommand> productGroupImageCommands = requestDto.stream()
+			.map(p -> ProductGroupImageCommand.of(
+				productGroupId,
 				p.productImageType(),
 				p.imageUrl(),
-				p.imageUrl(),
-				false
-			)).toList();
+				p.imageUrl()
+			))
+			.toList();
 
-		ProductGroupImageBundle productGroupImageBundle = new ProductGroupImageBundle(productGroupImages);
+		ProductGroupImageContextCommand productGroupImageContextCommand = ProductGroupImageContextCommand.of(
+			productGroupImageCommands);
 
-		return builder.productGroupImages(productGroupImageBundle);
+		builder.withProductGroupImageContextCommand(productGroupImageContextCommand);
+		return builder;
 	}
-
 
 }

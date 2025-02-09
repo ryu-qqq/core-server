@@ -2,6 +2,8 @@ package com.ryuqq.core.domain.product.dao.notice;
 
 import java.util.List;
 
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
+
 public interface ProductNoticePersistenceRepository {
 
 	void save(ProductNoticeCommand productNoticeCommand);

@@ -1,49 +1,38 @@
 package com.ryuqq.core.api.controller.v1.product.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextFactory;
+import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextCommandFactory;
+import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextCommandFactoryProvider;
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
-import com.ryuqq.core.api.controller.v1.product.validator.CentralValidator;
-import com.ryuqq.core.api.controller.v1.product.validator.ValidationResult;
-import com.ryuqq.core.api.exception.CoreException;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.enums.ErrorType;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandInterface;
 
 @Service
 public class ProductGroupContextCommandService {
 
-	private final CentralValidator centralValidator;
-	private final ProductGroupContextFactory productGroupContextFactory;
-	private final ProductGroupContextDomainService productGroupContextDomainService;
+	private final ProductGroupContextCommandFactoryProvider productGroupContextCommandFactoryProvider;
+	private final ProductGroupContextCommandInterface productGroupContextCommandInterface;
 
-	public ProductGroupContextCommandService(CentralValidator centralValidator,
-											 ProductGroupContextFactory productGroupContextFactory,
-											 ProductGroupContextDomainService productGroupContextDomainService) {
-		this.centralValidator = centralValidator;
-		this.productGroupContextFactory = productGroupContextFactory;
-		this.productGroupContextDomainService = productGroupContextDomainService;
+	public ProductGroupContextCommandService(
+		ProductGroupContextCommandFactoryProvider productGroupContextCommandFactoryProvider,
+		ProductGroupContextCommandInterface productGroupContextCommandInterface) {
+		this.productGroupContextCommandFactoryProvider = productGroupContextCommandFactoryProvider;
+		this.productGroupContextCommandInterface = productGroupContextCommandInterface;
 	}
 
+	@Transactional
 	public long registerProductGroupContext(ProductGroupContextCommandRequestDto requestDto){
-		validate(requestDto, false);
-		ProductGroupContext productGroupContext = productGroupContextFactory.createFromDto(requestDto);
-		return productGroupContextDomainService.registerProductGroupContext(productGroupContext);
+		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider(false);
+		ProductGroupContextCommand productGroupContext = provider.createCommand(null, requestDto);
+		return productGroupContextCommandInterface.save(productGroupContext);
 	}
 
+	@Transactional
 	public long updateProductGroupContext(long productGroupId, ProductGroupContextCommandRequestDto requestDto){
-		validate(requestDto, true);
-		ProductGroupContext productGroupContext = productGroupContextFactory.createFromDto(requestDto);
-		productGroupContextDomainService.updateProductGroupContext(productGroupId, productGroupContext);
-		return productGroupId;
+		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider(true);
+		ProductGroupContextCommand productGroupContext = provider.createCommand(productGroupId, requestDto);
+		return productGroupContextCommandInterface.update(productGroupId, productGroupContext);
 	}
-
-	private void validate(ProductGroupContextCommandRequestDto productGroupContextCommandRequestDto, boolean updated){
-		ValidationResult result = centralValidator.validate(productGroupContextCommandRequestDto, updated);
-		if(result.hasErrors()){
-			throw new CoreException(ErrorType.BAD_REQUEST_ERROR, result.getErrorsToString());
-		}
-	}
-
-
 }

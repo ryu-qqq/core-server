@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.group.ProductGroupCommandFactory;
+import com.ryuqq.core.domain.product.core.ProductGroupCommand;
 import com.ryuqq.core.domain.product.dao.group.ProductGroupPersistenceRepository;
 
 @Component
@@ -14,12 +14,12 @@ public class ProductGroupRegister {
 		this.productGroupPersistenceRepository = productGroupPersistenceRepository;
 	}
 
-	public long register(ProductGroup productGroup) {
-		return productGroupPersistenceRepository.save(ProductGroupCommandFactory.createCommandFrom(productGroup));
+	public long register(ProductGroupCommand productGroupCommand) {
+		return productGroupPersistenceRepository.save(productGroupCommand);
 	}
 
-	public void update(ProductGroup productGroup) {
-		productGroupPersistenceRepository.update(ProductGroupCommandFactory.createCommandFrom(productGroup));
+	public void update(ProductGroupCommand productGroupCommand) {
+		productGroupPersistenceRepository.update(productGroupCommand);
 	}
 
 }

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.product.core.Item;
-import com.ryuqq.core.domain.product.core.ItemContext;
-import com.ryuqq.core.domain.product.core.ItemImage;
-import com.ryuqq.core.domain.product.core.ItemNoticeInfo;
 import com.ryuqq.core.domain.product.core.Price;
+import com.ryuqq.core.domain.product.core.ProductDetailDescription;
+import com.ryuqq.core.domain.product.core.ProductGroup;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
 import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
+import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.external.sellic.SellicImage;
 import com.ryuqq.core.external.sellic.SellicOptionContext;
 import com.ryuqq.core.external.sellic.SellicOrigin;
@@ -42,21 +42,21 @@ public class SellicProductMapper {
 	}
 
 	public SellicProductInsertRequestDto toRequestDto(ExternalProductGroup externalProductGroup) {
-		ItemContext itemContext = productGroupContextQueryInterface.fetchByProductGroupId(externalProductGroup.getProductGroupId());
+		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(
+			externalProductGroup.getProductGroupId());
 		Brand brand = brandQueryInterface.fetchById(externalProductGroup.getBrandId());
-		Item item = itemContext.getItem();
-		ItemNoticeInfo noticeInfo = itemContext.getNoticeInfo();
-		Price price = item.getPrice();
-		List<? extends ItemImage> itemImages = itemContext.getItemImages();
+		ProductGroup productGroup = productGroupContext.getProductGroup();
+		ProductNotice productNotice = productGroupContext.getProductNotice();
+		Price price = productGroup.getPrice();
 
-		List<SellicImage> sellicImages = SellicImageInsertFactory.toSellicImages(itemImages);
+		List<SellicImage> sellicImages = SellicImageInsertFactory.toSellicImages(productGroupContext.getProductGroupImageContext());
 		SellicPrice sellicPrice = SellicPriceHelper.calculateFinalPrice(price.getRegularPrice(), price.getCurrentPrice());
 
 		SellicOptionContext sellicOptionContext = sellicOptionConverter.generateOptionContext(externalProductGroup.getProductGroupId());
 		String externalCategoryId = resolveCategoryId(externalProductGroup);
 
 		return buildRequestDto(
-			item, noticeInfo, sellicPrice, sellicImages, itemContext.getItemDescription(), sellicOptionContext, externalCategoryId, brand, externalProductGroup
+			productGroup, productNotice, sellicPrice, sellicImages, productGroupContext.getProductDetailDescription(), sellicOptionContext, externalCategoryId, brand, externalProductGroup
 		);
 	}
 
@@ -73,21 +73,21 @@ public class SellicProductMapper {
 
 
 	private SellicProductInsertRequestDto buildRequestDto(
-		Item item, ItemNoticeInfo noticeInfo, SellicPrice sellicPrice, List<SellicImage> sellicImages, String detailDescription,
+		ProductGroup productGroup, ProductNotice productNotice, SellicPrice sellicPrice, List<SellicImage> sellicImages, ProductDetailDescription productDetailDescription,
 		SellicOptionContext sellicOptionContext, String externalCategoryId, Brand brand, ExternalProductGroup externalProductGroup
 	) {
 		return new SellicProductInsertRequestDto.Builder()
-			.productName(item.getProductGroupName())
-			.ownCode(String.valueOf(item.getId()))
-			.origin(SellicOrigin.of(noticeInfo.getOrigin().getDisplayName()))
+			.productName(productGroup.getProductGroupName())
+			.ownCode(String.valueOf(productGroup.getId()))
+			.origin(SellicOrigin.of(productNotice.getOrigin().getDisplayName()))
 			.categoryId(Integer.parseInt(externalCategoryId))
 			.supplierName(externalProductGroup.getSellerName())
-			.saleStatus(item.isSoldOut() ? 2002 : 2000)
+			.saleStatus(productGroup.isSoldOut() ? 2002 : 2000)
 			.deliveryChargeType(1296)
 			.deliveryFee("0")
 			.tax(0)
 			.brand(brand.getBrandName())
-			.detailNote(detailDescription)
+			.detailNote(productDetailDescription.getDetailDescription())
 			.marketPrice(sellicPrice.regularPrice())
 			.salePrice(sellicPrice.currentPrice())
 			.image1(getImageOrDefault(sellicImages, 0))
@@ -98,15 +98,15 @@ public class SellicProductMapper {
 			.image6(getImageOrDefault(sellicImages, 5))
 			.image7(getImageOrDefault(sellicImages, 6))
 			.notifyCode("1")
-			.notify1(noticeInfo.getMaterial())
-			.notify2(noticeInfo.getColor())
-			.notify3(noticeInfo.getSize())
-			.notify4(noticeInfo.getMaker())
-			.notify5(noticeInfo.getOrigin().getDisplayName())
-			.notify6(noticeInfo.getWashingMethod())
-			.notify7(noticeInfo.getYearMonth())
-			.notify8(noticeInfo.getAssuranceStandard())
-			.notify9(noticeInfo.getAsPhone())
+			.notify1(productNotice.getMaterial())
+			.notify2(productNotice.getColor())
+			.notify3(productNotice.getSize())
+			.notify4(productNotice.getMaker())
+			.notify5(productNotice.getOrigin().getDisplayName())
+			.notify6(productNotice.getWashingMethod())
+			.notify7(productNotice.getYearMonth())
+			.notify8(productNotice.getAssuranceStandard())
+			.notify9(productNotice.getAsPhone())
 			.optionName1(sellicOptionContext.optionName1())
 			.optionName2(sellicOptionContext.optionName2())
 			.options(sellicOptionContext.options())

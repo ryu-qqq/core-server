@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupCommand;
 import com.ryuqq.core.domain.product.dao.group.ProductGroupPersistenceRepository;
 
 @Repository

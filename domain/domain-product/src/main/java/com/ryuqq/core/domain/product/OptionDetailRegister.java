@@ -1,8 +1,8 @@
 package com.ryuqq.core.domain.product;
 
-
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionDetailCommand;
 import com.ryuqq.core.domain.product.dao.options.detail.OptionDetailPersistenceRepository;
 
 
@@ -15,8 +15,8 @@ public class OptionDetailRegister {
 		this.optionDetailPersistenceRepository = optionDetailPersistenceRepository;
 	}
 
-	public long register(OptionDetail optionDetail) {
-		return optionDetailPersistenceRepository.save(optionDetail.toCommand());
+	public long register(OptionDetailCommand optionDetailCommand) {
+		return optionDetailPersistenceRepository.save(optionDetailCommand);
 	}
 
 }

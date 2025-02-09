@@ -2,11 +2,12 @@ package com.ryuqq.core.domain.product;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ProductGroupContextAssembler {
 
 	private final ProductGroupFinder productGroupFinder;
@@ -17,39 +18,41 @@ public class ProductGroupContextAssembler {
 		this.productFinder = productFinder;
 	}
 
-	public ProductGroupContext assemble(long productGroupId) {
-		ProductGroupContext productGroupContext = productGroupFinder.fetchNoProductContextById(productGroupId);
-		ProductContextBundle productContextBundle = productFinder.fetchByProductGroupIds(List.of(productGroupId));
-		return ProductGroupContext.builder()
-			.productGroup(productGroupContext.getProductGroup())
-			.productDelivery(productGroupContext.getProductDelivery())
-			.productNotice(productGroupContext.getProductNotice())
-			.productDetailDescription(productGroupContext.getProductDetailDescription())
-			.productGroupImages(productGroupContext.getProductGroupImages())
-			.products(productContextBundle)
+	public DefaultProductGroupContext assemble(long productGroupId) {
+		DefaultProductGroupContext defaultProductGroupContext = productGroupFinder.fetchNoProductContextById(productGroupId);
+		DefaultProductOptionContext defaultProductOptionContext = productFinder.fetchByProductGroupId(productGroupId);
+		return DefaultProductGroupContext.builder()
+			.productGroup(defaultProductGroupContext.getProductGroup())
+			.productDelivery(defaultProductGroupContext.getProductDelivery())
+			.productNotice(defaultProductGroupContext.getProductNotice())
+			.productDetailDescription(defaultProductGroupContext.getProductDetailDescription())
+			.productGroupImages(defaultProductGroupContext.getProductGroupImageContext())
+			.products(defaultProductOptionContext)
 			.build();
 	}
 
-	public List<ProductGroupContext> assemble(List<Long> productGroupIds) {
-		List<ProductGroupContext> productGroupContexts = productGroupFinder.fetchNoProductContextByIds(productGroupIds);
-		ProductContextBundle productContextBundle = productFinder.fetchByProductGroupIds(productGroupIds);
-		Map<Long, List<ProductContext>> productGroupIdMap = groupByProductGroupId(productContextBundle);
-		return productGroupContexts.stream().map(p -> {
-			List<ProductContext> productContexts = productGroupIdMap.get(p.getProductGroupId());
-			return ProductGroupContext.builder()
+	public List<DefaultProductGroupContext> assemble(List<Long> productGroupIds) {
+		List<DefaultProductGroupContext> defaultProductGroupContexts = productGroupFinder.fetchNoProductContextByIds(productGroupIds);
+		List<DefaultProductOptionContext> defaultProductOptionContexts = productFinder.fetchByProductGroupIds(
+			productGroupIds);
+		Map<Long, DefaultProductOptionContext> productGroupIdMap = groupByProductGroupId(defaultProductOptionContexts);
+
+		return defaultProductGroupContexts.stream().map(p -> {
+			DefaultProductOptionContext defaultProductOptionContext = productGroupIdMap.get(p.getProductGroupId());
+			return DefaultProductGroupContext.builder()
 				.productGroup(p.getProductGroup())
 				.productDelivery(p.getProductDelivery())
 				.productNotice(p.getProductNotice())
 				.productDetailDescription(p.getProductDetailDescription())
-				.productGroupImages(p.getProductGroupImages())
-				.products(new ProductContextBundle(productContexts))
+				.productGroupImages(p.getProductGroupImageContext())
+				.products(defaultProductOptionContext)
 				.build();
 		}).toList();
 	}
 
-	private Map<Long, List<ProductContext>> groupByProductGroupId(ProductContextBundle productContextBundle){
-		return productContextBundle.getProducts().stream()
-			.collect(Collectors.groupingBy(ProductContext::getProductGroupId));
+	private Map<Long, DefaultProductOptionContext> groupByProductGroupId(List<DefaultProductOptionContext> defaultProductOptionContexts){
+		return defaultProductOptionContexts.stream()
+			.collect(Collectors.toMap(DefaultProductOptionContext::getProductGroupId, Function.identity(), (v1, v2) -> v1));
 	}
 
 }

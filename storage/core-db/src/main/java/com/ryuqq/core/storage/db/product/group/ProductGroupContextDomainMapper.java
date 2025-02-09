@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.ProductDelivery;
-import com.ryuqq.core.domain.product.ProductDetailDescription;
-import com.ryuqq.core.domain.product.ProductGroup;
-import com.ryuqq.core.domain.product.ProductGroupContext;
-import com.ryuqq.core.domain.product.ProductGroupImageBundle;
-import com.ryuqq.core.domain.product.ProductNotice;
+import com.ryuqq.core.domain.product.DefaultProductDelivery;
+import com.ryuqq.core.domain.product.DefaultProductDetailDescription;
+import com.ryuqq.core.domain.product.DefaultProductGroup;
+import com.ryuqq.core.domain.product.DefaultProductGroupContext;
+import com.ryuqq.core.domain.product.DefaultProductGroupImageContext;
+import com.ryuqq.core.domain.product.DefaultProductNotice;
 import com.ryuqq.core.storage.db.product.delivery.ProductDeliveryDomainMapper;
 import com.ryuqq.core.storage.db.product.delivery.ProductDeliveryDto;
 import com.ryuqq.core.storage.db.product.image.ProductDetailDescriptionDomainMapper;
@@ -22,8 +22,8 @@ import com.ryuqq.core.storage.db.product.notice.ProductNoticeDto;
 @Component
 public class ProductGroupContextDomainMapper {
 
-	public ProductGroupContext toDomain(ProductGroupContextDto dto){
-		return ProductGroupContext.builder()
+	public DefaultProductGroupContext toDomain(ProductGroupContextDto dto){
+		return DefaultProductGroupContext.builder()
 			.productGroup(toProductGroupDomain(dto.getProductGroupDto()))
 			.productNotice(toProductNotice(dto.getProductNoticeDto()))
 			.productDelivery(toProductDelivery(dto.getProductDeliveryDto()))
@@ -32,23 +32,23 @@ public class ProductGroupContextDomainMapper {
 			.build();
 	}
 
-	public ProductGroup toProductGroupDomain(ProductGroupDto dto){
+	public DefaultProductGroup toProductGroupDomain(ProductGroupDto dto){
 		return ProductGroupDomainMapper.toDomain(dto);
 	}
 
-	private ProductNotice toProductNotice(ProductNoticeDto dto) {
+	private DefaultProductNotice toProductNotice(ProductNoticeDto dto) {
 		return ProductDomainMapper.toDomain(dto);
 	}
 
-	private ProductDelivery toProductDelivery(ProductDeliveryDto dto) {
+	private DefaultProductDelivery toProductDelivery(ProductDeliveryDto dto) {
 			return ProductDeliveryDomainMapper.toDomain(dto);
 	}
 
-	private ProductGroupImageBundle toProductGroupImages(List<ProductGroupImageDto> images) {
-		return new ProductGroupImageBundle(ProductImageDomainMapper.toProductGroupImages(images));
+	private DefaultProductGroupImageContext toProductGroupImages(List<ProductGroupImageDto> images) {
+		return new DefaultProductGroupImageContext(ProductImageDomainMapper.toProductGroupImages(images));
 	}
 
-	private ProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {
+	private DefaultProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {
 		return ProductDetailDescriptionDomainMapper.toProductDetailDescription(dto);
 	}
 

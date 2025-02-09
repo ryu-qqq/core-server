@@ -2,6 +2,10 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
+
 @Component
 public class ProductGroupImageDomainHandler {
 
@@ -14,13 +18,19 @@ public class ProductGroupImageDomainHandler {
 		this.productDetailDescriptionRegister = productDetailDescriptionRegister;
 	}
 
-
-	public void handleProductImageDomain(ProductGroupImageBundle productGroupImageBundle){
-		productGroupImageRegister.register(productGroupImageBundle);
+	public void handle(long productGroupId, ProductGroupContextCommand.EssentialProductImageInfo productImageInfo){
+		handleProductImageDomain(productGroupId, productImageInfo.productGroupImageContextCommand());
+		handleProductDetailDescriptionDomain(productGroupId, productImageInfo.productDetailDescription());
 	}
 
-	public void handleProductDetailDescriptionDomain(ProductDetailDescription productDetailDescription){
-		productDetailDescriptionRegister.register(productDetailDescription);
+	private void handleProductImageDomain(long productGroupId, ProductGroupImageContextCommand productGroupImageContextCommand){
+		ProductGroupImageContextCommand assignedProductGroupImageContextCommand = productGroupImageContextCommand.assignProductGroupId(productGroupId);
+		productGroupImageRegister.register(assignedProductGroupImageContextCommand.productGroupImageCommands());
+	}
+
+	private void handleProductDetailDescriptionDomain(long productGroupId, ProductDetailDescriptionCommand productDetailDescriptionCommand){
+		ProductDetailDescriptionCommand assignProductDetailDescriptionCommand = productDetailDescriptionCommand.assignProductGroupId(productGroupId);
+		productDetailDescriptionRegister.register(assignProductDetailDescriptionCommand);
 	}
 
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
 import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionPersistenceRepository;
 
 @Component
@@ -16,20 +16,16 @@ public class ProductOptionRegister {
 		this.productOptionPersistenceRepository = productOptionPersistenceRepository;
 	}
 
-	public void register(ProductOption productOption){
-		productOptionPersistenceRepository.save(productOption.toCommand());
+	public void register(OptionContextCommand optionContextCommand){
+		productOptionPersistenceRepository.save(optionContextCommand);
 	}
 
-	public void register(List<ProductOption> productOptions){
-		List<ProductOptionCommand> productOptionCommands = productOptions.stream()
-			.map(ProductOption::toCommand)
-			.toList();
-
-		productOptionPersistenceRepository.saveAll(productOptionCommands);
+	public void register(List<OptionContextCommand> optionContextCommands){
+		productOptionPersistenceRepository.saveAll(optionContextCommands);
 	}
 
-	public void update(ProductOption productOption){
-		productOptionPersistenceRepository.update(productOption.toCommand());
+	public void update(OptionContextCommand optionContextCommand){
+		productOptionPersistenceRepository.update(optionContextCommand);
 	}
 
 	public void delete(List<Long> productIds){

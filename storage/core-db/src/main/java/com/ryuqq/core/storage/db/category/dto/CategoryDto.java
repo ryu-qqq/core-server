@@ -1,4 +1,4 @@
-package com.ryuqq.core.storage.db.category;
+package com.ryuqq.core.storage.db.category.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 
