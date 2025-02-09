@@ -1,8 +1,8 @@
-package com.ryuqq.core.domain.brand;
+package com.ryuqq.core.domain.brand.dao;
 
 public interface BrandQueryRepository {
 
 	boolean existById(long brandId);
-	DefaultBrand fetchById(long brandId);
+	BrandSnapshot fetchById(long brandId);
 
 }

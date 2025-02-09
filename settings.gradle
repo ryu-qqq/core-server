@@ -22,6 +22,7 @@ include 'domain:domain-product'
 include 'domain:domain-brand'
 include 'domain:domain-category'
 include 'domain:domain-external'
+include 'domain:domain-seller'
 
 //storage
 include 'storage:core-db'

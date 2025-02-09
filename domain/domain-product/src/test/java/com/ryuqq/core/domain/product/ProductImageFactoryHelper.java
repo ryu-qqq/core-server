@@ -7,9 +7,9 @@ import com.ryuqq.core.enums.ProductImageType;
 
 public class ProductImageFactoryHelper {
 
-	public static ProductGroupImageBundle createExistingImages(int count) {
-		List<ProductGroupImage> images = IntStream.rangeClosed(1, count)
-			.mapToObj(i -> ProductGroupImage.create(
+	public static DefaultProductGroupImageContext createExistingImages(int count) {
+		List<DefaultProductGroupImage> images = IntStream.rangeClosed(1, count)
+			.mapToObj(i -> DefaultProductGroupImage.create(
 				(long) i,
 				1L,
 				i
@@ -25,7 +25,7 @@ public class ProductImageFactoryHelper {
 			))
 			.toList();
 
-		return new ProductGroupImageBundle(images);
+		return new DefaultProductGroupImageContext(images);
 	}
 
 }

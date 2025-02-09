@@ -4,7 +4,7 @@ import com.ryuqq.core.enums.ErrorType;
 
 public class DomainException extends RuntimeException {
 
-	private final ErrorType  errorType;
+	private final ErrorType errorType;
 
 	public DomainException(ErrorType errorType, String message) {
 		super(message);

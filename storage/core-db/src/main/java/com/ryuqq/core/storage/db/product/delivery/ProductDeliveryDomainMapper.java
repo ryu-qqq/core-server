@@ -1,12 +1,12 @@
 package com.ryuqq.core.storage.db.product.delivery;
 
 import com.ryuqq.core.domain.Money;
-import com.ryuqq.core.domain.product.ProductDelivery;
+import com.ryuqq.core.domain.product.DefaultProductDelivery;
 
 public class ProductDeliveryDomainMapper {
 
-	public static ProductDelivery toDomain(ProductDeliveryDto dto) {
-		return ProductDelivery.create(
+	public static DefaultProductDelivery toDomain(ProductDeliveryDto dto) {
+		return DefaultProductDelivery.create(
 			dto.getProductGroupId(),
 			dto.getDeliveryArea(),
 			Money.wons(dto.getDeliveryFee()),

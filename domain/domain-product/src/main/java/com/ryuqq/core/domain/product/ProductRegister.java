@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.options.ProductCommand;
+import com.ryuqq.core.domain.product.core.ProductCommand;
 import com.ryuqq.core.domain.product.dao.options.ProductPersistenceRepository;
 
 @Component
@@ -16,15 +16,11 @@ public class ProductRegister {
 		this.productPersistenceRepository = productPersistenceRepository;
 	}
 
-	public long register(Product product) {
-		return productPersistenceRepository.save(product.toCommand());
+	public long register(ProductCommand productCommand) {
+		return productPersistenceRepository.save(productCommand);
 	}
 
-	public void update(List<Product> products){
-		List<ProductCommand> productCommands = products.stream()
-			.map(Product::toCommand)
-			.toList();
-
+	public void update(List<ProductCommand> productCommands){
 		productPersistenceRepository.updateAll(productCommands);
 	}
 

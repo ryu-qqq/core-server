@@ -1,14 +1,12 @@
 package com.ryuqq.core.storage.db.category;
 
-import org.springframework.stereotype.Component;
+import com.ryuqq.core.domain.category.dao.CategorySnapshot;
+import com.ryuqq.core.storage.db.category.dto.CategoryDto;
 
-import com.ryuqq.core.domain.category.DefaultCategory;
+public class CategorySnapshotMapper {
 
-@Component
-public class CategoryDomainMapper {
-
-	public DefaultCategory toDomain(CategoryDto categoryDto) {
-		return new DefaultCategory(
+	public static CategorySnapshot toSnapshot(CategoryDto categoryDto) {
+		return new CategorySnapshot(
 			categoryDto.getId(),
 			categoryDto.getCategoryName(),
 			categoryDto.getDepth(),

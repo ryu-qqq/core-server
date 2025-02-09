@@ -16,7 +16,7 @@ import com.ryuqq.core.api.controller.v1.product.response.ProductGroupInsertRespo
 import com.ryuqq.core.api.controller.v1.product.service.ProductGroupContextCommandService;
 import com.ryuqq.core.api.controller.v1.product.service.ProductGroupContextQueryService;
 import com.ryuqq.core.api.payload.ApiResponse;
-import com.ryuqq.core.domain.product.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
 
 import jakarta.validation.Valid;
 
@@ -36,7 +36,7 @@ public class ProductController {
 
 	@GetMapping("/product/group/{productGroupId}")
 	public ResponseEntity<ApiResponse<ProductGroupContext>> fetchProductGroupContext(@PathVariable("productGroupId") long productGroupId){
-		return ResponseEntity.ok(ApiResponse.success(productGroupContextQueryService.fetchByProductGroupId(productGroupId)));
+		return ResponseEntity.ok(ApiResponse.success(productGroupContextQueryService.fetchById(productGroupId)));
 	}
 
 	@PostMapping("/product/group")

@@ -6,6 +6,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
+
 @Component
 public class ProductDomainHandler {
 
@@ -19,32 +24,35 @@ public class ProductDomainHandler {
 		this.optionDomainHandler = optionDomainHandler;
 	}
 
-	public void handleProductDomain(ProductContextBundle productContextBundle) {
-		Map<Long, List<OptionContext>> optionMap = new LinkedHashMap<>();
+	public void handle(long productGroupId, ProductOptionContextCommand productOptionContextCommand){
+		ProductOptionContextCommand assignProductOptionContextCommand = productOptionContextCommand.assignProductGroupId(productGroupId);
 
-		productContextBundle.getProducts().forEach(productContext -> {
-			long productId = productRegister.register(productContext.getProduct());
-			if (!productContext.getOptions().isEmpty()) {
-				optionMap.put(productId, productContext.getOptions());
+		Map<Long, List<? extends OptionContextCommand>> optionMap = new LinkedHashMap<>();
+
+		assignProductOptionContextCommand.productCommands().forEach(productCommand -> {
+			long productId = productRegister.register(productCommand.productCommand());
+			if (!productCommand.optionContextCommands().isEmpty()) {
+				optionMap.put(productId, productCommand.optionContextCommands());
 			}
 		});
 
-		optionDomainHandler.handleOptionMapping(optionMap);
+		optionDomainHandler.handle(optionMap);
+
 	}
 
-	public void updateProductDomain(ProductContextBundle productContextBundle) {
-		List<Long> toDeleteIds = productContextBundle.getProducts()
+	public void handle(ProductOptionContextCommand productOptionContextCommand) {
+		List<Long> toDeleteIds = productOptionContextCommand.productCommands()
 			.stream()
-			.filter(ProductContext::isDeleted)
-			.map(ProductContext::getId)
+			.filter(ProductOptionCommand::deleted)
+			.map(p -> p.productCommand().id())
 			.toList();
 
-		List<Product> products = productContextBundle.getProducts()
+		List<ProductCommand> productCommands = productOptionContextCommand.productCommands()
 			.stream()
-			.map(ProductContext::getProduct)
+			.map(ProductOptionCommand::productCommand)
 			.toList();
 
-		productRegister.update(products);
+		productRegister.update(productCommands);
 
 		if(!toDeleteIds.isEmpty()) {
 			productOptionRegister.delete(toDeleteIds);

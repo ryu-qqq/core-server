@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
 import com.ryuqq.core.domain.product.dao.image.ProductGroupImagePersistenceRepository;
 
 @Repository
@@ -25,7 +25,7 @@ public class ProductGroupImageJdbcPersistenceRepository implements ProductGroupI
 	}
 
 	@Override
-	public void saveAll(List<ProductGroupImageCommand> productGroupImageCommands) {
+	public void saveAll(List<? extends ProductGroupImageCommand> productGroupImageCommands) {
 		List<ProductGroupImageEntity> entities = getEntities(productGroupImageCommands);
 		productGroupImageJdbcRepository.batchInsertProductGroupImages(entities);
 	}
@@ -37,13 +37,13 @@ public class ProductGroupImageJdbcPersistenceRepository implements ProductGroupI
 
 
 	@Override
-	public void updateAll(List<ProductGroupImageCommand> productGroupImageCommands) {
+	public void updateAll(List<? extends ProductGroupImageCommand> productGroupImageCommands) {
 		List<ProductGroupImageEntity> entities = getEntities(productGroupImageCommands);
 		productGroupImageJdbcRepository.batchUpdateProductGroups(entities);
 	}
 
 
-	private List<ProductGroupImageEntity> getEntities(List<ProductGroupImageCommand> productGroupImageCommands) {
+	private List<ProductGroupImageEntity> getEntities(List<? extends ProductGroupImageCommand> productGroupImageCommands) {
 		return productGroupImageCommands.stream()
 			.map(productGroupImageStorageMapper::toEntity)
 			.toList();

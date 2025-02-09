@@ -4,41 +4,40 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductNotice;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.core.UpdateChecker;
 import com.ryuqq.core.domain.product.core.UpdateDecision;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component
-public class ProductNoticeChecker implements UpdateChecker<ProductNotice, ProductNotice> {
+public class ProductNoticeChecker implements UpdateChecker<ProductNotice, ProductNoticeCommand> {
 
 	@Override
-	public UpdateDecision checkUpdates(long productGroupId, ProductNotice existing, ProductNotice updated) {
-		UpdateDecision decision = new UpdateDecision();
-
+	public void checkUpdates(UpdateDecision decision, ProductNotice existing, ProductNoticeCommand updated) {
 		boolean anyChangeDetected = hasUpdates(existing, updated);
 
 		if (anyChangeDetected) {
-			decision.addUpdate(updated.assignProductGroupId(existing.getProductGroupId()), ProductDomainEventType.NOTICE,false);
+			decision.addUpdate(updated, ProductDomainEventType.NOTICE,false);
 		}
 
-		return decision;
 	}
 
 	@Override
 	public boolean supports(Object fieldValue) {
-		return fieldValue instanceof ProductNotice;
+		return fieldValue instanceof DefaultProductNotice;
 	}
 
-	private boolean hasUpdates(ProductNotice existing, ProductNotice updated) {
-		return !Objects.equals(existing.getMaterial(), updated.getMaterial()) ||
-			!Objects.equals(existing.getColor(), updated.getColor()) ||
-			!Objects.equals(existing.getSize(), updated.getSize()) ||
-			!Objects.equals(existing.getMaker(), updated.getMaker()) ||
-			existing.getOrigin() != updated.getOrigin() ||
-			!Objects.equals(existing.getWashingMethod(), updated.getWashingMethod()) ||
-			!Objects.equals(existing.getYearMonth(), updated.getYearMonth()) ||
-			!Objects.equals(existing.getAssuranceStandard(), updated.getAssuranceStandard()) ||
-			!Objects.equals(existing.getAsPhone(), updated.getAsPhone());
+	private boolean hasUpdates(ProductNotice existing, ProductNoticeCommand updated) {
+		return !Objects.equals(existing.getMaterial(), updated.material()) ||
+			!Objects.equals(existing.getColor(), updated.color()) ||
+			!Objects.equals(existing.getSize(), updated.size()) ||
+			!Objects.equals(existing.getMaker(), updated.maker()) ||
+			existing.getOrigin() != updated.origin() ||
+			!Objects.equals(existing.getWashingMethod(), updated.washingMethod()) ||
+			!Objects.equals(existing.getYearMonth(), updated.yearMonth()) ||
+			!Objects.equals(existing.getAssuranceStandard(), updated.assuranceStandard()) ||
+			!Objects.equals(existing.getAsPhone(), updated.asPhone());
 	}
 
 

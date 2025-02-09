@@ -1,11 +1,11 @@
 package com.ryuqq.core.storage.db.product.group;
 
-import com.ryuqq.core.domain.product.ProductGroup;
+import com.ryuqq.core.domain.product.DefaultProductGroup;
 
 public class ProductGroupDomainMapper {
 
-	public static ProductGroup toDomain(ProductGroupDto dto) {
-		return ProductGroup.create(
+	public static DefaultProductGroup toDomain(ProductGroupDto dto) {
+		return DefaultProductGroup.create(
 			dto.getProductGroupId(),
 			dto.getSellerId(),
 			dto.getCategoryId(),

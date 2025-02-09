@@ -23,11 +23,6 @@ public class UpdateDecision {
 		return isRealTime ? !realTimeUpdates.isEmpty() : !batchUpdates.isEmpty();
 	}
 
-	public void merge(UpdateDecision other) {
-		realTimeUpdates.addAll(other.getRealTimeUpdates());
-		batchUpdates.addAll(other.getBatchUpdates());
-	}
-
 	public List<UpdateDomain<?>> getRealTimeUpdates() {
 		return realTimeUpdates;
 	}

@@ -2,10 +2,11 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.core.UpdateProcessor;
 
 @Component
-public class ProductNoticeUpdateProcessor implements UpdateProcessor<ProductNotice> {
+public class ProductNoticeUpdateProcessor implements UpdateProcessor<ProductNoticeCommand> {
 
 	private final ProductNoticeRegister productNoticeRegister;
 
@@ -15,12 +16,12 @@ public class ProductNoticeUpdateProcessor implements UpdateProcessor<ProductNoti
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductNotice.class.equals(domainType);
+		return ProductNoticeCommand.class.equals(domainType);
 	}
 
 	@Override
-	public void processUpdate(ProductNotice entity) {
-		productNoticeRegister.update(entity);
+	public void processUpdate(ProductNoticeCommand productNoticeCommand) {
+		productNoticeRegister.update(productNoticeCommand);
 	}
 
 }

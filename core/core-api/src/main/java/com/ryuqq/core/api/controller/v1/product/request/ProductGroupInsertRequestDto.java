@@ -32,7 +32,6 @@ public record ProductGroupInsertRequestDto(
 	@Size(max = 250, message = "Product Group Name must be 100 characters or less.")
 	String productGroupName,
 
-	//@NotBlank(message = "Style Code cannot be blank.")
 	@Size(max = 50, message = "Style Code must be 50 characters or less.")
 	String styleCode,
 

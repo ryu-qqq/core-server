@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record ProductGroupContextCommandRequestDto(
+
 	@NotNull(message = "Product Group cannot be null.")
 	@Valid
 	ProductGroupInsertRequestDto productGroup,
@@ -34,17 +35,8 @@ public record ProductGroupContextCommandRequestDto(
 	List<ProductInsertRequestDto> productOptions
 ) {
 
-	public long getBrandId(){
-		return productGroup.brandId();
-	}
-
-	public long getCategoryId(){
-		return productGroup.categoryId();
-	}
-
 	public OptionType getOptionType(){
 		return productGroup.optionType();
 	}
-
 
 }

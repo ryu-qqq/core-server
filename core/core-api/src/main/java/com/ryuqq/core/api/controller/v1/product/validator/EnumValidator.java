@@ -1,6 +1,6 @@
 package com.ryuqq.core.api.controller.v1.product.validator;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -18,6 +18,7 @@ public class EnumValidator implements ConstraintValidator<ValidEnum, Enum<?>> {
 		if (value == null) {
 			return true;
 		}
-		return Stream.of(enumClass.getEnumConstants()).anyMatch(e -> e.equals(value));
+		return Arrays.asList(enumClass.getEnumConstants()).contains(value);
 	}
+
 }

@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommandFactory;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.dao.notice.ProductNoticePersistenceRepository;
 
 @Component
@@ -14,14 +14,12 @@ public class ProductNoticeRegister {
 		this.productNoticePersistenceRepository = productNoticePersistenceRepository;
 	}
 
-	public void register(ProductNotice productNotice){
-		productNoticePersistenceRepository.save(ProductNoticeCommandFactory.createCommandFrom(productNotice));
+	public void register(ProductNoticeCommand productNoticeCommand){
+		productNoticePersistenceRepository.save(productNoticeCommand);
 	}
 
-	public void update(ProductNotice productNotice){
-		productNoticePersistenceRepository.update(ProductNoticeCommandFactory.createCommandFrom(productNotice));
+	public void update(ProductNoticeCommand productNoticeCommand){
+		productNoticePersistenceRepository.update(productNoticeCommand);
 	}
-
-
 
 }

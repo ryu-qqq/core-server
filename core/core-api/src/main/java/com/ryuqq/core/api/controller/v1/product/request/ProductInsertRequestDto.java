@@ -27,5 +27,4 @@ public record ProductInsertRequestDto(
 
 	@Valid
 	List<ProductOptionInsertRequestDto> options
-) {
-}
+) {}

@@ -5,10 +5,12 @@ import java.math.BigDecimal;
 import com.querydsl.core.annotations.QueryProjection;
 
 import com.ryuqq.core.enums.OptionName;
+import com.ryuqq.core.enums.OptionType;
 
 public class ProductContextDto {
 
 	private final long productGroupId;
+	private final OptionType optionType;
 	private final long productId;
 	private final int quantity;
 	private final boolean soldOutYn;
@@ -22,10 +24,11 @@ public class ProductContextDto {
 	private final BigDecimal additionalPrice;
 
 	@QueryProjection
-	public ProductContextDto(long productGroupId, long productId, int quantity, boolean soldOutYn, boolean displayYn,
+	public ProductContextDto(long productGroupId, OptionType optionType, long productId, int quantity, boolean soldOutYn, boolean displayYn,
 							 boolean productDeleted, long productOptionId, Long optionGroupId, Long optionDetailId, OptionName optionName, String optionValue,
 							 BigDecimal additionalPrice) {
 		this.productGroupId = productGroupId;
+		this.optionType = optionType;
 		this.productId = productId;
 		this.quantity = quantity;
 		this.soldOutYn = soldOutYn;
@@ -41,6 +44,10 @@ public class ProductContextDto {
 
 	public long getProductGroupId() {
 		return productGroupId;
+	}
+
+	public OptionType getOptionType() {
+		return optionType;
 	}
 
 	public long getProductId() {

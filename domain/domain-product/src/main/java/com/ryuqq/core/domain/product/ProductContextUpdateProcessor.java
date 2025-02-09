@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
 import com.ryuqq.core.domain.product.core.UpdateProcessor;
 
 @Component
-public class ProductContextUpdateProcessor implements UpdateProcessor<ProductContextBundle> {
+public class ProductContextUpdateProcessor implements UpdateProcessor<ProductOptionContextCommand> {
 
 	private final ProductDomainHandler productDomainHandler;
 
@@ -18,29 +21,33 @@ public class ProductContextUpdateProcessor implements UpdateProcessor<ProductCon
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductContextBundle.class.equals(domainType);
+		return ProductOptionContextCommand.class.equals(domainType);
 	}
 
 	@Override
-	public void processUpdate(ProductContextBundle entity) {
-		List<ProductContext> toInserts = new ArrayList<>();
-		List<ProductContext> toUpdates = new ArrayList<>();
+	public void processUpdate(ProductOptionContextCommand productOptionContextCommand) {
+		List<ProductOptionCommand> toInserts = new ArrayList<>();
+		List<ProductOptionCommand> toUpdates = new ArrayList<>();
 
 
-		for(ProductContext productCommand : entity.getProducts()) {
-			if(productCommand.getId() != null){
-				toUpdates.add(productCommand);
+		for(ProductOptionCommand productOptionCommand : productOptionContextCommand.productCommands()) {
+			ProductCommand productCommand = productOptionCommand.productCommand();
+
+			if(productCommand.id() >0){
+				toUpdates.add(productOptionCommand);
 			}else{
-				toInserts.add(productCommand);
+				toInserts.add(productOptionCommand);
 			}
 		}
 
 		if(!toInserts.isEmpty()){
-			productDomainHandler.handleProductDomain(new ProductContextBundle(toInserts));
+			ProductOptionContextCommand toInsertCommand = ProductOptionContextCommand.of(productOptionContextCommand.productGroupId(), productOptionContextCommand.optionType(), toInserts);
+			productDomainHandler.handle(productOptionContextCommand.productGroupId(), toInsertCommand);
 		}
 
 		if(!toUpdates.isEmpty()){
-			productDomainHandler.updateProductDomain(new ProductContextBundle(toUpdates));
+			ProductOptionContextCommand toUpdateCommand = ProductOptionContextCommand.of(productOptionContextCommand.productGroupId(), productOptionContextCommand.optionType(), toUpdates);
+			productDomainHandler.handle(toUpdateCommand);
 		}
 	}
 

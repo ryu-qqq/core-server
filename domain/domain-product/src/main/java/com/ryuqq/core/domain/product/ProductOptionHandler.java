@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
 import com.ryuqq.core.enums.OptionName;
 
 @Component
@@ -16,21 +17,24 @@ public class ProductOptionHandler {
 		this.productOptionRegister = productOptionRegister;
 	}
 
-	public void createProductOptions(Long productId, List<OptionContext> options,
-													Map<OptionName, Long> optionGroupMap,
-													Map<String, Long> optionDetailMap) {
-		List<ProductOption> productOptions = options.stream()
-			.map(option -> ProductOption.create(
-				productId,
-				optionGroupMap.get(option.getOptionName()),
-				optionDetailMap.get(option.getOptionValue())
-			))
+
+	public void register(Long productId, List<? extends OptionContextCommand> productOptionCommands,
+									 Map<OptionName, Long> optionGroupMap,
+									 Map<String, Long> optionDetailMap) {
+		List<OptionContextCommand> productOptions = productOptionCommands.stream()
+			.map(option ->
+					OptionContextCommand.of(
+						productId,
+						optionGroupMap.get(option.optionName()),
+						optionDetailMap.get(option.optionValue()),
+						option.optionName(),
+						option.optionValue()
+						))
 			.toList();
 
-		register(productOptions);
-	}
 
-	private void register(List<ProductOption> productOptions) {
 		productOptionRegister.register(productOptions);
 	}
+
+
 }

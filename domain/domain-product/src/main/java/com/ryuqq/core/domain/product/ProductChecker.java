@@ -4,15 +4,18 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.Product;
+import com.ryuqq.core.domain.product.core.ProductCommand;
+
 @Component
 public class ProductChecker  {
-	public boolean checkUpdates(Product existing, Product updated) {
+	public boolean checkUpdates(Product existing, ProductCommand updated) {
 		return
-			existing.isSoldOut() != updated.isSoldOut() ||
-				existing.isDisplayed() != updated.isDisplayed() ||
-				existing.getQuantity() != updated.getQuantity() ||
-				!Objects.equals(existing.getAdditionalPrice(), updated.getAdditionalPrice()) ||
-				existing.isDeleted() != updated.isDeleted();
+			existing.isSoldOut() != updated.soldOut() ||
+				existing.isDisplayed() != updated.displayed() ||
+				existing.getQuantity() != updated.quantity() ||
+				!Objects.equals(existing.getAdditionalPrice(), updated.additionalPrice()) ||
+				existing.isDeleted() != updated.deleted();
 	}
 
 }

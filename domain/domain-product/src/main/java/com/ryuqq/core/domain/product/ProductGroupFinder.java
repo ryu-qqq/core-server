@@ -2,11 +2,11 @@ package com.ryuqq.core.domain.product;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.product.dao.group.ProductGroupQueryRepository;
 
-@Component
+@Service
 public class ProductGroupFinder {
 
 	private final ProductGroupQueryRepository productGroupQueryRepository;
@@ -16,15 +16,15 @@ public class ProductGroupFinder {
 	}
 
 
-	public ProductGroupContext fetchNoProductContextById(long productGroupId) {
+	public DefaultProductGroupContext fetchNoProductContextById(long productGroupId) {
 		return productGroupQueryRepository.fetchContextById(productGroupId);
 	}
 
-	public List<ProductGroupContext> fetchNoProductContextByIds(List<Long> productGroupIds) {
+	public List<DefaultProductGroupContext> fetchNoProductContextByIds(List<Long> productGroupIds) {
 		return productGroupQueryRepository.fetchContextByIds(productGroupIds);
 	}
 
-	public List<ProductGroup> fetchProductGroupBySellerId(long sellerId){
+	public List<DefaultProductGroup> fetchProductGroupBySellerId(long sellerId){
 		return productGroupQueryRepository.fetchBySellerId(sellerId);
 	}
 

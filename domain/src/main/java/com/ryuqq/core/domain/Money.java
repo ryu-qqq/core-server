@@ -43,29 +43,34 @@ public class Money {
 	}
 
 	public BigDecimal divide(Money divisor, int scale, RoundingMode roundingMode) {
-		if (divisor.amount.compareTo(BigDecimal.ZERO) == 0) {
+		if (divisor.amount.compareTo(BigDecimal.ZERO)
+			== 0) {
 			throw new IllegalArgumentException("Cannot divide by zero");
 		}
 		return this.amount.divide(divisor.amount, scale, roundingMode);
 	}
 
-
 	public boolean isLessThan(Money money) {
-		return amount.compareTo(money.amount) < 0;
+		return amount.compareTo(money.amount)
+			< 0;
 	}
 
 	public boolean isGreaterThan(Money money) {
-		return amount.compareTo(money.amount) > 0;
+		return amount.compareTo(money.amount)
+			> 0;
 	}
 
 	public boolean isGreaterThanOrEqual(Money money) {
-		return amount.compareTo(money.amount) >= 0;
+		return amount.compareTo(money.amount)
+			>= 0;
 	}
 
 	public boolean between(Money min, Money max) {
-		return this.amount.compareTo(min.amount) >= 0 && this.amount.compareTo(max.amount) <= 0;
+		return this.amount.compareTo(min.amount)
+			>= 0
+			&& this.amount.compareTo(max.amount)
+			<= 0;
 	}
-
 
 	public long toPlainStringWithoutDecimal() {
 		BigDecimal roundedAmount = this.amount.setScale(0, RoundingMode.HALF_UP);
@@ -73,7 +78,8 @@ public class Money {
 	}
 
 	public boolean equals(Object object) {
-		if (this == object) {
+		if (this
+			== object) {
 			return true;
 		}
 

@@ -2,12 +2,13 @@ package com.ryuqq.core.domain.brand;
 
 import com.ryuqq.core.domain.brand.core.Brand;
 
-public record DefaultBrand(
+record DefaultBrand(
 	long id,
 	String brandName,
 	String brandNameKr,
 	boolean displayed
 ) implements Brand {
+
 	@Override
 	public long getId() {
 		return id;
@@ -17,4 +18,6 @@ public record DefaultBrand(
 	public String getBrandName() {
 		return brandName;
 	}
+
+
 }

@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommandFactory;
+import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
 import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryPersistenceRepository;
 
 @Component
@@ -14,12 +14,12 @@ public class ProductDeliveryRegister {
 		this.productDeliveryPersistenceRepository = productDeliveryPersistenceRepository;
 	}
 
-	public void register(ProductDelivery productDelivery){
-		productDeliveryPersistenceRepository.save(ProductDeliveryCommandFactory.createCommandFrom(productDelivery));
+	public void register(ProductDeliveryCommand productDeliveryCommand){
+		productDeliveryPersistenceRepository.save(productDeliveryCommand);
 	}
 
-	public void update(ProductDelivery productDelivery){
-		productDeliveryPersistenceRepository.update(ProductDeliveryCommandFactory.createCommandFrom(productDelivery));
+	public void update(ProductDeliveryCommand productDeliveryCommand){
+		productDeliveryPersistenceRepository.update(productDeliveryCommand);
 	}
 
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.ProductGroup;
-import com.ryuqq.core.domain.product.ProductGroupContext;
+import com.ryuqq.core.domain.product.DefaultProductGroup;
+import com.ryuqq.core.domain.product.DefaultProductGroupContext;
 import com.ryuqq.core.domain.product.dao.group.ProductGroupQueryRepository;
 import com.ryuqq.core.storage.db.exception.DataNotFoundException;
 
@@ -23,7 +23,7 @@ public class DefaultProductGroupQueryRepository implements ProductGroupQueryRepo
 
 
 	@Override
-	public ProductGroupContext fetchContextById(long productGroupId) {
+	public DefaultProductGroupContext fetchContextById(long productGroupId) {
 		return productGroupQueryDslRepository.fetchContextById(productGroupId)
 			.map(productGroupContextDomainMapper::toDomain)
 			.orElseThrow(() ->
@@ -31,13 +31,13 @@ public class DefaultProductGroupQueryRepository implements ProductGroupQueryRepo
 	}
 
 	@Override
-	public List<ProductGroupContext> fetchContextByIds(List<Long> productGroupIds) {
+	public List<DefaultProductGroupContext> fetchContextByIds(List<Long> productGroupIds) {
 		return productGroupQueryDslRepository.fetchContextByIds(productGroupIds).stream()
 			.map(productGroupContextDomainMapper::toDomain)
 			.toList();
 	}
 	@Override
-	public List<ProductGroup> fetchBySellerId(long sellerId){
+	public List<DefaultProductGroup> fetchBySellerId(long sellerId){
 		return productGroupQueryDslRepository.fetchBySellerId(sellerId).stream()
 			.map(productGroupContextDomainMapper::toProductGroupDomain)
 			.toList();

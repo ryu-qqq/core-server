@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
+import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.dao.notice.ProductNoticePersistenceRepository;
 
 @Repository

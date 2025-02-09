@@ -2,6 +2,8 @@ bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
+	implementation project(":domain:domain-product")
+
 
 	implementation project(":domain:domain-git")
 	implementation project(":domain:domain-product")

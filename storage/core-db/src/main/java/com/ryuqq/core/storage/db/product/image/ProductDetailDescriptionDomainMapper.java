@@ -1,10 +1,10 @@
 package com.ryuqq.core.storage.db.product.image;
 
-import com.ryuqq.core.domain.product.ProductDetailDescription;
+import com.ryuqq.core.domain.product.DefaultProductDetailDescription;
 
 public class ProductDetailDescriptionDomainMapper {
 
-	public static ProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {
-		return ProductDetailDescription.create(dto.getProductGroupId(), dto.getDetailDescription());
+	public static DefaultProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {
+		return DefaultProductDetailDescription.create(dto.getProductGroupId(), dto.getDetailDescription());
 	}
 }

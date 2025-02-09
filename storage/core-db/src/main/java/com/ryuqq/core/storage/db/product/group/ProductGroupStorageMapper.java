@@ -2,13 +2,16 @@ package com.ryuqq.core.storage.db.product.group;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.core.Price;
+import com.ryuqq.core.domain.product.core.ProductGroupCommand;
 
 @Component
 public class ProductGroupStorageMapper {
 
 	public ProductGroupEntity toEntity(ProductGroupCommand productGroupCommand){
-		if(productGroupCommand.id() != null){
+		Price price = productGroupCommand.getPrice();
+
+		if(productGroupCommand.id() > 0){
 			return new ProductGroupEntity(
 				productGroupCommand.id(),
 				productGroupCommand.sellerId(),
@@ -19,13 +22,13 @@ public class ProductGroupStorageMapper {
 				productGroupCommand.productCondition(),
 				productGroupCommand.managementType(),
 				productGroupCommand.optionType(),
-				productGroupCommand.regularPrice(),
-				productGroupCommand.currentPrice(),
-				productGroupCommand.discountRate(),
+				price.getRegularPrice(),
+				price.getCurrentPrice(),
+				price.getDiscountRate(),
 				productGroupCommand.soldOut(),
 				productGroupCommand.displayed(),
 				productGroupCommand.productStatus(),
-				productGroupCommand.keywords()
+				productGroupCommand.keyword()
 			);
 		}
 
@@ -38,13 +41,13 @@ public class ProductGroupStorageMapper {
 			productGroupCommand.productCondition(),
 			productGroupCommand.managementType(),
 			productGroupCommand.optionType(),
-			productGroupCommand.regularPrice(),
-			productGroupCommand.currentPrice(),
-			productGroupCommand.discountRate(),
+			price.getRegularPrice(),
+			price.getCurrentPrice(),
+			price.getDiscountRate(),
 			productGroupCommand.soldOut(),
 			productGroupCommand.displayed(),
 			productGroupCommand.productStatus(),
-			productGroupCommand.keywords()
+			productGroupCommand.keyword()
 		);
 	}
 

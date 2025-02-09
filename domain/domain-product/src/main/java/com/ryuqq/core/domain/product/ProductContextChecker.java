@@ -8,13 +8,21 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.OptionContext;
+import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.core.Product;
+import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.core.ProductContext;
+import com.ryuqq.core.domain.product.core.ProductOptionCommand;
+import com.ryuqq.core.domain.product.core.ProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
 import com.ryuqq.core.domain.product.core.UpdateChecker;
 import com.ryuqq.core.domain.product.core.UpdateDecision;
 import com.ryuqq.core.enums.OptionName;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component
-public class ProductContextChecker implements UpdateChecker<ProductContextBundle, ProductContextBundle> {
+public class ProductContextChecker implements UpdateChecker<ProductOptionContext, ProductOptionContextCommand> {
 
 	private final ProductChecker productChecker;
 
@@ -23,50 +31,49 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 	}
 
 	@Override
-	public UpdateDecision checkUpdates(long productGroupId, ProductContextBundle existing, ProductContextBundle updated) {
+	public void checkUpdates(UpdateDecision decision, ProductOptionContext existing, ProductOptionContextCommand updated) {
 
-		UpdateDecision decision = new UpdateDecision();
-		List<ProductContext> changedProductContext = new ArrayList<>();
+		List<ProductOptionCommand> changedDefaultProductContext = new ArrayList<>();
 
-		Map<String, ProductContext> existingMap = toOptionNameValueMap(existing);
+		Map<String, ProductContext> existingOptionNameValueMap = toOptionNameValueMap(existing);
 		Map<OptionName, Long> optionGroupIdValueMap = toOptionNameMap(existing);
 		Map<String, Long> optionDetailMap = toOptionDetailMap(existing);
 
-		for (ProductContext newProductContext : updated.getProducts()) {
-			String optionNameValue = newProductContext.getOptionNameValue();
-			ProductContext existingContext = existingMap.get(optionNameValue);
+		for (ProductOptionCommand productOptionCommand : updated.productCommands()) {
+			String optionNameValue = productOptionCommand.getOptionNameValue();
+			ProductContext existingContext = existingOptionNameValueMap.get(optionNameValue);
 
 			if (existingContext == null) {
-				ProductContext updatedProductContext = processNewProductContext(newProductContext, optionGroupIdValueMap, optionDetailMap);
-				changedProductContext.add(updatedProductContext);
+				ProductOptionCommand updatedProductOptionCommand = processNewProductContext(productOptionCommand, optionGroupIdValueMap, optionDetailMap);
+				changedDefaultProductContext.add(updatedProductOptionCommand);
 			}else{
-				boolean productUpdated = productChecker.checkUpdates(existingContext.getProduct(), newProductContext.getProduct());
+				boolean productUpdated = productChecker.checkUpdates(existingContext.getProduct(), productOptionCommand.productCommand());
 				if (productUpdated) {
-					ProductContext updatedProductContext = existingContext.assignProduct(newProductContext.getProduct());
-					changedProductContext.add(updatedProductContext);
+					Product product = existingContext.getProduct();
+
+					ProductOptionCommand assignedId = productOptionCommand.assignId(product.getId());
+					changedDefaultProductContext.add(assignedId);
 				}
-				existingMap.remove(optionNameValue);
+				existingOptionNameValueMap.remove(optionNameValue);
 			}
 		}
 
-		existingMap.values().forEach(p -> changedProductContext.add(p.deleted()));
+		processDeleteProductContext(existingOptionNameValueMap, changedDefaultProductContext);
 
-		if(!changedProductContext.isEmpty()){
-			ProductContextBundle productContextBundle = new ProductContextBundle(changedProductContext);
-			ProductContextBundle assignedProductGroupIdBundle = productContextBundle.assignProductGroupId(productGroupId);
-			decision.addUpdate(assignedProductGroupIdBundle, ProductDomainEventType.STOCK, true);
+		if(!changedDefaultProductContext.isEmpty()){
+			ProductOptionContextCommand productOptionContextCommand = ProductOptionContextCommand.of(existing.getProductGroupId(), updated.optionType(), changedDefaultProductContext);
+			decision.addUpdate(productOptionContextCommand, ProductDomainEventType.STOCK, true);
 		}
 
-		return decision;
 	}
 
-	private Map<String, ProductContext> toOptionNameValueMap(ProductContextBundle existing) {
+	private Map<String, ProductContext> toOptionNameValueMap(ProductOptionContext existing) {
 		return existing.getProducts().stream()
 			.collect(Collectors.toMap(ProductContext::getOptionNameValue, Function.identity(), (v1, v2) -> v1));
 	}
 
 
-	private Map<OptionName, Long> toOptionNameMap(ProductContextBundle existing) {
+	private Map<OptionName, Long> toOptionNameMap(ProductOptionContext existing) {
 		return existing.getProducts().stream()
 			.flatMap(productContext -> productContext.getOptions().stream())
 			.collect(Collectors.toMap(
@@ -76,7 +83,7 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 			));
 	}
 
-	private Map<String, Long> toOptionDetailMap(ProductContextBundle existing) {
+	private Map<String, Long> toOptionDetailMap(ProductOptionContext existing) {
 		return existing.getProducts().stream()
 			.flatMap(productContext -> productContext.getOptions().stream())
 			.collect(Collectors.toMap(
@@ -87,17 +94,19 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 	}
 
 
-	private ProductContext processNewProductContext(ProductContext newProductContext, Map<OptionName, Long> optionGroupIdValueMap, Map<String, Long> optionDetailIdMap) {
-		List<OptionContext> updatedOptions = newProductContext.getOptions().stream()
-			.map(optionContext -> {
-				Long optionGroupId = optionGroupIdValueMap.get(optionContext.getOptionName());
-				Long optionDetailId = optionDetailIdMap.get(optionContext.getOptionValue());
+	private ProductOptionCommand processNewProductContext(ProductOptionCommand productOptionCommand, Map<OptionName, Long> optionGroupIdValueMap, Map<String, Long> optionDetailIdMap) {
+		List<OptionContextCommand> optionContextCommands = productOptionCommand.optionContextCommands().stream()
+			.map(defaultOptionContext -> {
+				Long optionGroupId = optionGroupIdValueMap.get(defaultOptionContext.optionName());
+				Long optionDetailId = optionDetailIdMap.get(defaultOptionContext.optionValue());
 
-				OptionContext updatedOption = optionContext;
-				if (optionGroupId != null) {
+				OptionContextCommand updatedOption = defaultOptionContext;
+				if (optionGroupId
+					!= null) {
 					updatedOption = updatedOption.assignedOptionGroupId(optionGroupId);
 				}
-				if (optionDetailId != null) {
+				if (optionDetailId
+					!= null) {
 					updatedOption = updatedOption.assignedOptionDetailId(optionDetailId);
 				}
 
@@ -105,12 +114,37 @@ public class ProductContextChecker implements UpdateChecker<ProductContextBundle
 			})
 			.collect(Collectors.toList());
 
-		return newProductContext.assignOptions(updatedOptions);
+
+		return productOptionCommand.assignProductOptionCommand(optionContextCommands);
 	}
+
+	private void processDeleteProductContext(Map<String, ProductContext> existingOptionNameValueMap, List<ProductOptionCommand> changedDefaultProductContext) {
+		existingOptionNameValueMap.values().forEach(p -> {
+			Product product = p.getProduct();
+			List<? extends OptionContext> options = p.getOptions();
+
+			ProductCommand productCommand = ProductCommand.of(
+				product.getId(), product.getProductGroupId(), product.isSoldOut(),
+				product.isDisplayed(), product.getQuantity(),
+				product.getAdditionalPrice(), true
+			);
+
+			List<OptionContextCommand> optionContextCommands = options.stream()
+				.map(o -> OptionContextCommand.of(o.getProductId(), o.getOptionGroupId(), o.getOptionDetailId(),
+					o.getOptionName(), o.getOptionValue()))
+				.toList();
+
+			ProductOptionCommand productOptionCommand = ProductOptionCommand.of(productCommand, true, optionContextCommands);
+
+			changedDefaultProductContext.add(productOptionCommand);
+		});
+	}
+
+
 
 	@Override
 	public boolean supports(Object fieldValue) {
-		return fieldValue instanceof ProductContextBundle;
+		return fieldValue instanceof DefaultProductOptionContext;
 	}
 
 }

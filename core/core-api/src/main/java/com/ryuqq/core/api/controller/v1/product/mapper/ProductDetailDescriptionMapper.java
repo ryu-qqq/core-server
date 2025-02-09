@@ -3,8 +3,8 @@ package com.ryuqq.core.api.controller.v1.product.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductDetailDescriptionRequestDto;
-import com.ryuqq.core.domain.product.ProductDetailDescription;
-import com.ryuqq.core.domain.product.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
+import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 
 @Component
 public class ProductDetailDescriptionMapper implements DomainMapper<ProductDetailDescriptionRequestDto> {
@@ -15,11 +15,15 @@ public class ProductDetailDescriptionMapper implements DomainMapper<ProductDetai
 	}
 
 	@Override
-	public ProductGroupContext.Builder map(ProductDetailDescriptionRequestDto source,
-										   ProductGroupContext.Builder builder) {
+	public ProductGroupContextCommandBuilder map(ProductDetailDescriptionRequestDto requestDto,
+												 ProductGroupContextCommandBuilder builder) {
+		long productGroupId = builder.getProductGroupId().orElse(0L);
 
-		ProductDetailDescription productDetailDescription = ProductDetailDescription.create(source.detailDescription());
-		builder.productDetailDescription(productDetailDescription);
+		ProductDetailDescriptionCommand productDetailDescriptionCommand =
+			ProductDetailDescriptionCommand.of(productGroupId, requestDto.detailDescription());
+
+		builder.withProductDetailDescriptionCommand(productDetailDescriptionCommand);
 		return builder;
 	}
+
 }

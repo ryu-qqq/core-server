@@ -1,4 +1,29 @@
 package com.ryuqq.core.storage.db.seller;
 
-public class SellerQueryRepository implements SellerQu{
+import org.springframework.stereotype.Repository;
+
+import com.ryuqq.core.domain.seller.dao.SellerQueryRepository;
+import com.ryuqq.core.domain.seller.dao.SellerSnapshot;
+import com.ryuqq.core.storage.db.exception.DataNotFoundException;
+
+@Repository
+public class DefaultSellerQueryRepository implements SellerQueryRepository {
+
+	private final SellerQueryDslRepository sellerQueryDslRepository;
+
+	public DefaultSellerQueryRepository(SellerQueryDslRepository sellerQueryDslRepository) {
+		this.sellerQueryDslRepository = sellerQueryDslRepository;
+	}
+
+	@Override
+	public boolean existById(long id) {
+		return sellerQueryDslRepository.existById(id);
+	}
+
+	@Override
+	public SellerSnapshot fetchById(long id) {
+		return sellerQueryDslRepository.fetchById(id)
+			.map(SellerSnapshotMapper::toSnapshot)
+			.orElseThrow(() -> new DataNotFoundException(String.format("Seller Not found seller Id : %s", id)));
+	}
 }

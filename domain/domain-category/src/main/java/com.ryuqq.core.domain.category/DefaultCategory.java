@@ -4,7 +4,7 @@ import com.ryuqq.core.domain.category.core.Category;
 import com.ryuqq.core.enums.CategoryType;
 import com.ryuqq.core.enums.TargetGroup;
 
-public record DefaultCategory(
+record DefaultCategory(
 	 long id,
 	 String categoryName,
 	 int depth,
