@@ -1,7 +1,7 @@
 buyMa:
-    host-url: 'https://personal-shopper-api.buyma.com'
-    clientId: 'pD4b74FBck3F_oEb5G_7hBaCyJyTon64avhsQNIt3-4'
-    secretKey: '9Dw-U1QkP3ApEbNXwPgkuMx-56xVuHErgkhSOs3Mu_o'
-    code: '2rs8MgoBEJDUfzsMSOnwKRj-mQ8o-fN2glElGMd65c4'
-    accessToken: 'IotoWQgEm4ZhI7wpa4CmGotb13mh0OimSqVfz9uGOz4'
-    refreshToken: 'w3kL8eVD1X8cGB0LRUuZIVmMGH1EEu-CI3quZ1VexHs'
+    host-url: 'your_key'
+    clientId: 'your_key'
+    secretKey: 'your_key'
+    code: 'your_key'
+    accessToken: 'your_key'
+    refreshToken: 'your_key'
