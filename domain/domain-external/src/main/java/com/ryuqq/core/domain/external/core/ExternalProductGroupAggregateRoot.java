@@ -34,9 +34,8 @@ public class ExternalProductGroupAggregateRoot {
 		this.siteRequestProcessorExecutor = siteRequestProcessorExecutor;
 	}
 
-	public void syncExternalProductGroup(long siteId, SyncStatus status){
-		List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchBySiteIdAndStatus(siteId,
-			status);
+	public void syncExternalProductGroup(long siteId, SyncStatus status, ProductDomainEventType eventType, int size){
+		List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchBySiteIdAndStatus(siteId, status, size);
 
 		if(!externalProductGroups.isEmpty()){
 			externalProductGroups.forEach(productGroup ->
@@ -44,7 +43,7 @@ public class ExternalProductGroupAggregateRoot {
 			);
 
 			SiteName siteName= externalProductGroups.getFirst().getSiteName();
-			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), ProductDomainEventType.PRODUCT_GROUP_REGISTER);
+			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), eventType);
 		}
 
 	}

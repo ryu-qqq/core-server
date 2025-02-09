@@ -8,7 +8,7 @@ import com.ryuqq.core.domain.product.core.ProductCommand;
 public class ProductStorageMapper {
 
 	public ProductEntity toEntity(ProductCommand productCommand){
-		if(productCommand.id() > 0){
+		if(productCommand.id() != null){
 			return new ProductEntity(
 				productCommand.id(),
 				productCommand.productGroupId(),

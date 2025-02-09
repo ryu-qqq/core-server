@@ -18,8 +18,8 @@ public class ExternalProductGroupDomainService {
 	}
 
 
-	public void syncExternalProductGroup(long siteId, SyncStatus status){
-		externalProductGroupAggregateRoot.syncExternalProductGroup(siteId, status);
+	public void syncExternalProductGroup(long siteId, SyncStatus status, ProductDomainEventType eventType, int size){
+		externalProductGroupAggregateRoot.syncExternalProductGroup(siteId, status, eventType, size);
 	}
 
 	public void registerExternalProductGroup(long sellerId, long productGroupId, long brandId, long categoryId){

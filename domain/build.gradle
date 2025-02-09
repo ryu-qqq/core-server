@@ -6,5 +6,5 @@ dependencies {
 	implementation project(":support:logging")
 	implementation project(":support:utils")
 
-	compileOnly("org.springframework:spring-context")
+	implementation("org.springframework:spring-context")
 }

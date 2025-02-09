@@ -31,7 +31,7 @@ public class ExternalProductController {
 
 	@PostMapping("/external/product-sync")
 	public void update(@RequestBody ExternalProductSyncRequestDto externalProductSyncRequestDto){
-		externalProductGroupDomainService.syncExternalProductGroup(externalProductSyncRequestDto.siteId(), externalProductSyncRequestDto.status());
+		externalProductGroupDomainService.syncExternalProductGroup(externalProductSyncRequestDto.siteId(), externalProductSyncRequestDto.status(), externalProductSyncRequestDto.productDomainEventType(), externalProductSyncRequestDto.size());
 	}
 
 

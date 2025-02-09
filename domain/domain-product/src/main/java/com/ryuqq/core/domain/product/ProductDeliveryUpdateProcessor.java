@@ -16,7 +16,7 @@ public class ProductDeliveryUpdateProcessor implements UpdateProcessor<ProductDe
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductDeliveryCommand.class.equals(domainType);
+		return ProductDeliveryCommand.class.isAssignableFrom(domainType);
 	}
 
 	@Override

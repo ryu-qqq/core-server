@@ -25,7 +25,7 @@ public class DefaultProductGroupContextCommandService implements ProductGroupCon
 
 	@Override
 	public long save(ProductGroupContextCommand productGroupContextCommand) {
-		productGroupDomainBusinessValidator.validate(productGroupContextCommand, false);
+		//productGroupDomainBusinessValidator.validate(productGroupContextCommand, false);
 		long id = productGroupContextRegister.registerProductGroupContext(productGroupContextCommand);
 		productGroupContextEventHandler.handleEvents(id, productGroupContextCommand.getProductGroupCommand());
 		return id;
@@ -33,7 +33,7 @@ public class DefaultProductGroupContextCommandService implements ProductGroupCon
 
 	@Override
 	public long update(long id, ProductGroupContextCommand productGroupContextCommand) {
-		productGroupDomainBusinessValidator.validate(productGroupContextCommand, true);
+		//productGroupDomainBusinessValidator.validate(productGroupContextCommand, true);
 		UpdateDecision updateDecision = productGroupContextUpdater.updateProductGroupContext(id,
 			productGroupContextCommand);
 

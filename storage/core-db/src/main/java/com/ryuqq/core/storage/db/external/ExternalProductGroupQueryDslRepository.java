@@ -30,7 +30,7 @@ public class ExternalProductGroupQueryDslRepository {
 
 
 	public List<ExternalProductGroupDto> fetchByProductGroupIdsAndStatus(List<Long> productGroupIds, SyncStatus status) {
-		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(null, productGroupIds, status);
+		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(null, productGroupIds, status, productGroupIds.size(), null);
 
 		return queryFactory
 			.from(externalProductGroupEntity)
@@ -76,7 +76,7 @@ public class ExternalProductGroupQueryDslRepository {
 
 	public List<ExternalProductGroupDto> fetchBySiteIdsAndProductGroupIds(List<Long> productGroupIds, List<Long> siteIds){
 
-		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(siteIds, productGroupIds, null);
+		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(siteIds, productGroupIds, null, productGroupIds.size(), true);
 
 		return queryFactory.select(
 				new QExternalProductGroupDto(
@@ -202,8 +202,8 @@ public class ExternalProductGroupQueryDslRepository {
 				).get(productGroupId));
 	}
 
-	public List<ExternalProductGroupDto> fetchBySiteIdAndStatus(long siteId, SyncStatus status) {
-		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(List.of(siteId), null, status);
+	public List<ExternalProductGroupDto> fetchBySiteIdAndStatus(long siteId, SyncStatus status, int size) {
+		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(List.of(siteId), null, status, size, null);
 		return queryFactory
 			.from(externalProductGroupEntity)
 			.innerJoin(siteEntity)
@@ -244,14 +244,14 @@ public class ExternalProductGroupQueryDslRepository {
 				);
 	}
 
-	private List<Long> fetchExternalProductGroupIds(List<Long> siteIds, List<Long> productGroupIds, SyncStatus status) {
+	private List<Long> fetchExternalProductGroupIds(List<Long> siteIds, List<Long> productGroupIds, SyncStatus status, int size, Boolean synced) {
 		return queryFactory
 			.select(externalProductGroupEntity.id)
 			.from(externalProductGroupEntity)
 			.where(
-				siteIdIn(siteIds), productGroupIdIn(productGroupIds), statusEq(status)
+				siteIdIn(siteIds), productGroupIdIn(productGroupIds), statusEq(status), syncedEq(synced)
 			)
-			.limit(50)
+			.limit(size)
 			.orderBy(externalProductGroupEntity.productGroupId.desc())
 			.fetch();
 	}
@@ -277,6 +277,14 @@ public class ExternalProductGroupQueryDslRepository {
 
 	private BooleanExpression statusEq(SyncStatus status) {
 		if(status != null) return externalProductGroupEntity.status.eq(status);
+		return null;
+	}
+
+	private BooleanExpression syncedEq(Boolean synced) {
+		if(synced != null){
+			if(synced) return externalProductGroupEntity.externalProductGroupId.isNotNull();
+			return externalProductGroupEntity.externalProductGroupId.isNull();
+		}
 		return null;
 	}
 

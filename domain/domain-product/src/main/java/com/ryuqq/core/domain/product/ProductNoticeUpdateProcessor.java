@@ -16,7 +16,7 @@ public class ProductNoticeUpdateProcessor implements UpdateProcessor<ProductNoti
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductNoticeCommand.class.equals(domainType);
+		return ProductNoticeCommand.class.isAssignableFrom(domainType);
 	}
 
 	@Override

@@ -12,6 +12,6 @@ public interface ExternalProductGroupQueryRepository {
 	List<ExternalProductGroup> fetchBySiteIdsAndProductGroupIds(List<Long> productGroupIds, List<Long> siteIds);
 
 	ExternalProductGroup fetchBySiteIdAndProductGroupId(long siteId, long productGroupId);
-	List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status);
+	List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status, int size);
 
 }

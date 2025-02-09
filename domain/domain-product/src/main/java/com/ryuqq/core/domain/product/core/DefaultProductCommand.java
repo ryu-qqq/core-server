@@ -3,7 +3,7 @@ package com.ryuqq.core.domain.product.core;
 import java.math.BigDecimal;
 
 public record DefaultProductCommand(
-	long id,
+	Long id,
 	long productGroupId,
 	boolean soldOut,
 	boolean displayed,

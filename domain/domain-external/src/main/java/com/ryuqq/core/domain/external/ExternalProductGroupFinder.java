@@ -20,8 +20,8 @@ public class ExternalProductGroupFinder {
 		return externalProductGroupQueryRepository.fetchBySiteIdAndProductGroupId(siteId, productGroupId);
 	}
 
-	public List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status) {
-		return externalProductGroupQueryRepository.fetchBySiteIdAndStatus(siteId, status);
+	public List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status, int size) {
+		return externalProductGroupQueryRepository.fetchBySiteIdAndStatus(siteId, status, size);
 	}
 
 	public List<ExternalProductGroup> fetchByProductGroupId(long productGroupId) {

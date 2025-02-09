@@ -16,7 +16,7 @@ public class ProductGroupImageUpdateProcessor implements UpdateProcessor<Product
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductGroupImageContextCommand.class.equals(domainType);
+		return ProductGroupImageContextCommand.class.isAssignableFrom(domainType);
 	}
 
 	@Override

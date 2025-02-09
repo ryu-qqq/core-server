@@ -47,8 +47,8 @@ public class DefaultExternalProductGroupQueryRepository implements ExternalProdu
 	}
 
 	@Override
-	public List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status) {
-		return externalProductGroupQueryDslRepository.fetchBySiteIdAndStatus(siteId, status)
+	public List<ExternalProductGroup> fetchBySiteIdAndStatus(long siteId, SyncStatus status, int size) {
+		return externalProductGroupQueryDslRepository.fetchBySiteIdAndStatus(siteId, status, size)
 			.stream()
 			.map(externalProductGroupDomainMapper::toDomain)
 			.toList();

@@ -21,7 +21,7 @@ public class ProductContextUpdateProcessor implements UpdateProcessor<ProductOpt
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductOptionContextCommand.class.equals(domainType);
+		return ProductOptionContextCommand.class.isAssignableFrom(domainType);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class ProductContextUpdateProcessor implements UpdateProcessor<ProductOpt
 		for(ProductOptionCommand productOptionCommand : productOptionContextCommand.productCommands()) {
 			ProductCommand productCommand = productOptionCommand.productCommand();
 
-			if(productCommand.id() >0){
+			if(productCommand.id() != null){
 				toUpdates.add(productOptionCommand);
 			}else{
 				toInserts.add(productOptionCommand);

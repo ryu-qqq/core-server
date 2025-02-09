@@ -16,7 +16,7 @@ public class ProductGroupUpdateProcessor implements UpdateProcessor<ProductGroup
 
 	@Override
 	public boolean supports(Class<?> domainType) {
-		return ProductGroupCommand.class.equals(domainType);
+		return ProductGroupCommand.class.isAssignableFrom(domainType);
 	}
 
 	@Override
