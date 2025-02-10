@@ -1,6 +1,6 @@
 package com.ryuqq.core.api.controller.v1.product.mapper;
 
-import com.ryuqq.core.unit.test.BaseUnitTest;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.ryuqq.core.unit.test.BaseUnitTest;
 
 @DisplayName("ProductGroupContextCommandFactoryProvider 단위 테스트")
 class ProductGroupContextCommandFactoryProviderTest extends BaseUnitTest {
