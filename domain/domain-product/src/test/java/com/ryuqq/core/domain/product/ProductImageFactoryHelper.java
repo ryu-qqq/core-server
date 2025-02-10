@@ -3,6 +3,8 @@ package com.ryuqq.core.domain.product;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.ryuqq.core.domain.product.core.DefaultProductGroupImage;
+import com.ryuqq.core.domain.product.core.DefaultProductGroupImageContext;
 import com.ryuqq.core.enums.ProductImageType;
 
 public class ProductImageFactoryHelper {

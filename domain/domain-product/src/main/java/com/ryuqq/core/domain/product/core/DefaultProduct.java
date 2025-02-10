@@ -1,9 +1,7 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-
-import com.ryuqq.core.domain.product.core.Product;
 
 public class DefaultProduct implements Product {
 

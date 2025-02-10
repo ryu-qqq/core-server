@@ -1,11 +1,10 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.product.core.ProductGroupContext;
-import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
+import com.ryuqq.core.domain.product.ProductGroupContextFinder;
 
 @Service
 class DefaultProductGroupContextQueryService implements ProductGroupContextQueryInterface {

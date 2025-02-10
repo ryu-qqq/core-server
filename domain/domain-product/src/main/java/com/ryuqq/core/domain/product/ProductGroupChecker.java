@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.DefaultProductGroup;
 import com.ryuqq.core.domain.product.core.Price;
 import com.ryuqq.core.domain.product.core.ProductGroup;
 import com.ryuqq.core.domain.product.core.ProductGroupCommand;

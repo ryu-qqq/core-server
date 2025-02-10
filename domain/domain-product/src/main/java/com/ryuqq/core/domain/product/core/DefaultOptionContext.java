@@ -1,8 +1,7 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.Objects;
 
-import com.ryuqq.core.domain.product.core.OptionContext;
 import com.ryuqq.core.enums.OptionName;
 
 public class DefaultOptionContext implements OptionContext {

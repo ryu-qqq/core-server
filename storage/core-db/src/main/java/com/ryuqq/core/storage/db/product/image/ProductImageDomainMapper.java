@@ -2,7 +2,7 @@ package com.ryuqq.core.storage.db.product.image;
 
 import java.util.List;
 
-import com.ryuqq.core.domain.product.DefaultProductGroupImage;
+import com.ryuqq.core.domain.product.core.DefaultProductGroupImage;
 
 
 public class ProductImageDomainMapper {

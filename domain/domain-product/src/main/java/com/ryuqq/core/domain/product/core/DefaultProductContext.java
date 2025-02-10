@@ -1,11 +1,7 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.ryuqq.core.domain.product.core.OptionContext;
-import com.ryuqq.core.domain.product.core.Product;
-import com.ryuqq.core.domain.product.core.ProductContext;
 
 public class DefaultProductContext implements ProductContext {
 

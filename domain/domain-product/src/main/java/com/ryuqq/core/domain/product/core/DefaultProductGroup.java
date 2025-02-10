@@ -1,9 +1,8 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import com.ryuqq.core.domain.product.core.ProductGroup;
 import com.ryuqq.core.enums.ManagementType;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;

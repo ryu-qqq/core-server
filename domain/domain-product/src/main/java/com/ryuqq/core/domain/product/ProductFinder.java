@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
 import com.ryuqq.core.domain.product.dao.options.ProductQueryRepository;
 
 @Service

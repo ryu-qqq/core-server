@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
 import com.ryuqq.core.domain.product.core.OptionContext;
 import com.ryuqq.core.domain.product.core.OptionContextCommand;
 import com.ryuqq.core.domain.product.core.Product;

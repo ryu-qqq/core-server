@@ -1,8 +1,6 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.Objects;
-
-import com.ryuqq.core.domain.product.core.ProductDetailDescription;
 
 public class DefaultProductDetailDescription implements ProductDetailDescription {
 

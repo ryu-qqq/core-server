@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.DefaultOptionContext;
-import com.ryuqq.core.domain.product.DefaultProduct;
-import com.ryuqq.core.domain.product.DefaultProductContext;
-import com.ryuqq.core.domain.product.DefaultProductOptionContext;
+import com.ryuqq.core.domain.product.core.DefaultOptionContext;
+import com.ryuqq.core.domain.product.core.DefaultProduct;
+import com.ryuqq.core.domain.product.core.DefaultProductContext;
+import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
 import com.ryuqq.core.enums.OptionType;
 
 @Component

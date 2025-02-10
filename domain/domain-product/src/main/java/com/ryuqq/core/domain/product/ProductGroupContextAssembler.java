@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.ryuqq.core.domain.product.core.DefaultProductGroupContext;
+import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
+
 @Service
 public class ProductGroupContextAssembler {
 

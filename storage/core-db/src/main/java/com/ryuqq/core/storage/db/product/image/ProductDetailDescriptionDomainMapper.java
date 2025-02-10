@@ -1,6 +1,6 @@
 package com.ryuqq.core.storage.db.product.image;
 
-import com.ryuqq.core.domain.product.DefaultProductDetailDescription;
+import com.ryuqq.core.domain.product.core.DefaultProductDetailDescription;
 
 public class ProductDetailDescriptionDomainMapper {
 

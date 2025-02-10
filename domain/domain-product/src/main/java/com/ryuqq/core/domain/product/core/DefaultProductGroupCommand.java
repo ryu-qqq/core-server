@@ -2,7 +2,6 @@ package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
 
-import com.ryuqq.core.domain.product.DefaultPrice;
 import com.ryuqq.core.enums.ManagementType;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;

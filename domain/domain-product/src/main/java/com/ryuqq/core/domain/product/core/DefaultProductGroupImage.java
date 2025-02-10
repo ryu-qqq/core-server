@@ -1,8 +1,7 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.Objects;
 
-import com.ryuqq.core.domain.product.core.ProductGroupImage;
 import com.ryuqq.core.enums.ProductImageType;
 
 public class DefaultProductGroupImage implements ProductGroupImage {

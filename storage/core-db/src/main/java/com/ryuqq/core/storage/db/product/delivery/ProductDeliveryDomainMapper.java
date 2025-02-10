@@ -1,7 +1,7 @@
 package com.ryuqq.core.storage.db.product.delivery;
 
 import com.ryuqq.core.domain.Money;
-import com.ryuqq.core.domain.product.DefaultProductDelivery;
+import com.ryuqq.core.domain.product.core.DefaultProductDelivery;
 
 public class ProductDeliveryDomainMapper {
 

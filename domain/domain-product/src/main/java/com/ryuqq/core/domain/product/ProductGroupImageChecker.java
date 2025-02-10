@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.DefaultProductGroupImageContext;
 import com.ryuqq.core.domain.product.core.ProductGroupImage;
 import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupImageContext;

@@ -1,11 +1,10 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import com.ryuqq.core.domain.Money;
 import com.ryuqq.core.domain.exception.DomainException;
-import com.ryuqq.core.domain.product.core.Price;
 import com.ryuqq.core.enums.ErrorType;
 
 public class DefaultPrice implements Price {

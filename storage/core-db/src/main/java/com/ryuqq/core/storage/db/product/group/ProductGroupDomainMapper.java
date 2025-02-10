@@ -1,6 +1,6 @@
 package com.ryuqq.core.storage.db.product.group;
 
-import com.ryuqq.core.domain.product.DefaultProductGroup;
+import com.ryuqq.core.domain.product.core.DefaultProductGroup;
 
 public class ProductGroupDomainMapper {
 

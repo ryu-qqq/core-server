@@ -1,6 +1,6 @@
 package com.ryuqq.core.storage.db.product.notice;
 
-import com.ryuqq.core.domain.product.DefaultProductNotice;
+import com.ryuqq.core.domain.product.core.DefaultProductNotice;
 
 public class ProductDomainMapper {
 

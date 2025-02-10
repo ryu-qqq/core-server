@@ -1,7 +1,4 @@
-package com.ryuqq.core.domain.product;
-
-import com.ryuqq.core.domain.product.core.ProductGroupContext;
-import com.ryuqq.core.domain.product.core.ProductOptionContext;
+package com.ryuqq.core.domain.product.core;
 
 public class DefaultProductGroupContext implements ProductGroupContext {
 

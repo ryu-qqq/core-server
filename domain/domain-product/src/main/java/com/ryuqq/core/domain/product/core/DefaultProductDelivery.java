@@ -1,10 +1,9 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.ryuqq.core.domain.Money;
-import com.ryuqq.core.domain.product.core.ProductDelivery;
 import com.ryuqq.core.enums.ReturnMethod;
 import com.ryuqq.core.enums.ShipmentCompanyCode;
 

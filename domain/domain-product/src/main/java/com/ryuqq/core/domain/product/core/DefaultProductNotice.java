@@ -1,6 +1,5 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
-import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.enums.Origin;
 
 public class DefaultProductNotice implements ProductNotice {

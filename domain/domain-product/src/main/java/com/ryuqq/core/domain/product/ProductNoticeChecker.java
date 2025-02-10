@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.DefaultProductNotice;
 import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.core.UpdateChecker;

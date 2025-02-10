@@ -1,10 +1,8 @@
-package com.ryuqq.core.domain.product;
+package com.ryuqq.core.domain.product.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.ryuqq.core.domain.product.core.ProductGroupImageContext;
 
 public class DefaultProductGroupImageContext implements ProductGroupImageContext {
 
