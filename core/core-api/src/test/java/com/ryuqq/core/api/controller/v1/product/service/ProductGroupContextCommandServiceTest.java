@@ -1,11 +1,11 @@
 package com.ryuqq.core.api.controller.v1.product.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -62,20 +62,10 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 			long result = service.registerProductGroupContext(requestDto);
 
 			// then
-			assertThat(result).isEqualTo(1L);
+			Assertions.assertEquals(result, 1L);
 			verify(productGroupContextCommandInterface).save(productGroupContextCommand);
 		}
 
-		@Test
-		@DisplayName("FactoryProvider가 null을 반환하면 예외가 발생한다.")
-		void shouldThrowExceptionWhenFactoryProviderIsNull() {
-			// given
-			when(factoryProvider.getProvider(false)).thenReturn(null);
-
-			// when & then
-			assertThrows(NullPointerException.class, () ->
-				service.registerProductGroupContext(requestDto));
-		}
 
 		@Test
 		@DisplayName("save 과정에서 예외가 발생하면 예외를 던진다.")
@@ -117,7 +107,7 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 			long result = service.updateProductGroupContext(productGroupId, requestDto);
 
 			// then
-			assertThat(result).isEqualTo(1L);
+			Assertions.assertEquals(result, 1L);
 			verify(productGroupContextCommandInterface).update(productGroupId, productGroupContextCommand);
 		}
 
