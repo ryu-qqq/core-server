@@ -1,6 +1,6 @@
 oco:
-    id: "TREXI2"
-    password: "a1234567"
-    host-url: 'https://www.ocokorea.com:9300/api/v1'
-    api-key: 'apilive20231011bee'
+    id: "your_key"
+    password: "your_key"
+    host-url: 'your_key'
+    api-key: 'your_key'
 
