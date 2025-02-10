@@ -20,10 +20,8 @@
 				<logLevel/>
 				<threadName/>
 				<loggerName/>
-				<mdc>
-					<includeMdcKey>traceId</includeMdcKey>
-				</mdc>
-				<jsonProvider fieldName="message" writeToMap="true"/>
+				<message/>
+				<mdc/>
 			</providers>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
