@@ -31,7 +31,15 @@ public class ProductGroupQueryDslRepository {
 
 	public ProductGroupQueryDslRepository(JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
+	}
 
+	public Optional<Long> fetchTopId(){
+		return Optional.ofNullable(queryFactory
+			.select(productGroupEntity.id)
+			.from(productGroupEntity)
+			.orderBy(productGroupEntity.id.desc())
+			.limit(1)
+			.fetchOne());
 	}
 
 	public Optional<ProductGroupContextDto> fetchContextById(long productGroupId) {

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.domain.external.core.ExternalMallProductGroupRequestResponse;
 import com.ryuqq.core.domain.external.core.SiteRequestProcessor;
 import com.ryuqq.core.domain.external.core.UpdateTypeHandler;
@@ -24,8 +23,8 @@ public class SellicSiteRequestProcessor implements SiteRequestProcessor {
 	}
 
 	@Override
-	public boolean supportsSite(ExternalSite site) {
-		return site.siteName() == SiteName.SELLIC;
+	public boolean supportsSite(SiteName siteName) {
+		return siteName == SiteName.SELLIC;
 	}
 
 	@Override

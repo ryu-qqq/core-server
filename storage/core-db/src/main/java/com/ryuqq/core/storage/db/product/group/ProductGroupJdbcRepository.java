@@ -30,17 +30,18 @@ public class ProductGroupJdbcRepository {
 
 	public int[] batchInsertProductGroups(List<ProductGroupEntity> productGroups) {
         String sql = "INSERT INTO PRODUCT_GROUP " +
-                "(SELLER_ID, CATEGORY_ID, BRAND_ID, PRODUCT_GROUP_NAME, STYLE_CODE, PRODUCT_CONDITION, " +
+                "(ID, SELLER_ID, CATEGORY_ID, BRAND_ID, PRODUCT_GROUP_NAME, STYLE_CODE, PRODUCT_CONDITION, " +
                 "MANAGEMENT_TYPE, OPTION_TYPE, REGULAR_PRICE, CURRENT_PRICE, DISCOUNT_RATE, SOLD_OUT, " +
                 "DISPLAYED, PRODUCT_STATUS, KEYWORDS) " +
-                "VALUES (:sellerId, :categoryId, :brandId, :productGroupName, :styleCode, :productCondition, " +
-                ":managementType, :optionType, :regularPrice, :currentPrice, :discountRate, :soldOutYn, " +
-                ":displayYn, :productStatus, :keywords)";
+                "VALUES (:id, :sellerId, :categoryId, :brandId, :productGroupName, :styleCode, :productCondition, " +
+                ":managementType, :optionType, :regularPrice, :currentPrice, :discountRate, :soldOut, " +
+                ":displayed, :productStatus, :keywords)";
 
         List<Map<String, Object>> batchValues = productGroups.stream()
                 .map(group -> {
                     MapSqlParameterSource params = new MapSqlParameterSource()
-                            .addValue("sellerId", group.getSellerId())
+							.addValue("id", group.getId())
+							.addValue("sellerId", group.getSellerId())
                             .addValue("categoryId", group.getCategoryId())
                             .addValue("brandId", group.getBrandId())
                             .addValue("productGroupName", group.getProductGroupName())
@@ -67,7 +68,8 @@ public class ProductGroupJdbcRepository {
         String sql = "UPDATE PRODUCT_GROUP " +
                 "SET CATEGORY_ID = :categoryId, " +
                 "BRAND_ID = :brandId, " +
-                "PRODUCT_GROUP_NAME = :productGroupName, " +
+				"SELLER_ID = :sellerId, " +
+				"PRODUCT_GROUP_NAME = :productGroupName, " +
                 "STYLE_CODE = :styleCode, " +
                 "PRODUCT_CONDITION = :productCondition, " +
                 "MANAGEMENT_TYPE = :managementType, " +
@@ -88,7 +90,8 @@ public class ProductGroupJdbcRepository {
                             .addValue("productGroupId", group.getId())
                             .addValue("categoryId", group.getCategoryId())
                             .addValue("brandId", group.getBrandId())
-                            .addValue("productGroupName", group.getProductGroupName())
+							.addValue("sellerId", group.getSellerId())
+							.addValue("productGroupName", group.getProductGroupName())
                             .addValue("styleCode", group.getStyleCode())
                             .addValue("productCondition", group.getProductCondition().toString())
                             .addValue("managementType", group.getManagementType().toString())

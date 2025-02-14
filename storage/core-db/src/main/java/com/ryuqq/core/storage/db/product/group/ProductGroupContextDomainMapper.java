@@ -27,7 +27,7 @@ public class ProductGroupContextDomainMapper {
 			.productGroup(toProductGroupDomain(dto.getProductGroupDto()))
 			.productNotice(toProductNotice(dto.getProductNoticeDto()))
 			.productDelivery(toProductDelivery(dto.getProductDeliveryDto()))
-			.productGroupImages(toProductGroupImages(dto.getProductGroupImageDto()))
+			.productGroupImages(toProductGroupImages(dto.getProductGroupId(), dto.getProductGroupImageDto()))
 			.productDetailDescription(toProductDetailDescription(dto.getProductDetailDescriptionDto()))
 			.build();
 	}
@@ -44,8 +44,8 @@ public class ProductGroupContextDomainMapper {
 			return ProductDeliveryDomainMapper.toDomain(dto);
 	}
 
-	private DefaultProductGroupImageContext toProductGroupImages(List<ProductGroupImageDto> images) {
-		return new DefaultProductGroupImageContext(ProductImageDomainMapper.toProductGroupImages(images));
+	private DefaultProductGroupImageContext toProductGroupImages(long productGroupId, List<ProductGroupImageDto> images) {
+		return new DefaultProductGroupImageContext(productGroupId, ProductImageDomainMapper.toProductGroupImages(images));
 	}
 
 	private DefaultProductDetailDescription toProductDetailDescription(ProductDetailDescriptionDto dto) {

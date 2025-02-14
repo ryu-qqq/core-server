@@ -41,7 +41,6 @@ public class ProductNoticeJdbcPersistenceRepository implements ProductNoticePers
 		productNoticeJdbcRepository.batchUpdateProductNotices(entities);
 	}
 
-
 	private List<ProductNoticeEntity> toEntities(List<ProductNoticeCommand> productNoticeCommands){
 		return productNoticeCommands.stream()
 			.map(productNoticeStorageMapper::toEntity)

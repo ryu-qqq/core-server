@@ -27,7 +27,7 @@ public class ProductImageFactoryHelper {
 			))
 			.toList();
 
-		return new DefaultProductGroupImageContext(images);
+		return new DefaultProductGroupImageContext(0L, images);
 	}
 
 }

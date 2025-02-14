@@ -7,6 +7,7 @@ import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.enums.SyncStatus;
 
 public interface ExternalProductGroupQueryRepository {
+	boolean existBySiteIdAndProductGroupId(long siteId, long productGroupId);
 
 	List<ExternalProductGroup> fetchByProductGroupIdsAndStatus(List<Long> productGroupIds, SyncStatus status);
 	List<ExternalProductGroup> fetchBySiteIdsAndProductGroupIds(List<Long> productGroupIds, List<Long> siteIds);

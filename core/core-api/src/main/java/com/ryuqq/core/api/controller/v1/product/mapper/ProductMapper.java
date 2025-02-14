@@ -14,7 +14,7 @@ import com.ryuqq.core.domain.product.core.ProductOptionCommand;
 import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
 
 @Component
-public class ProductMapper implements DomainMapper<List<ProductInsertRequestDto>>{
+class ProductMapper implements DomainMapper<List<ProductInsertRequestDto>>{
 
 	@Override
 	public boolean supports(Object fieldValue) {

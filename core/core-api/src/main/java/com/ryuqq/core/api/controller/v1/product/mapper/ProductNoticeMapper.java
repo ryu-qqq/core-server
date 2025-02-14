@@ -7,7 +7,7 @@ import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 
 @Component
-public class ProductNoticeMapper implements DomainMapper<ProductNoticeInsertRequestDto> {
+class ProductNoticeMapper implements DomainMapper<ProductNoticeInsertRequestDto> {
 
 	@Override
 	public boolean supports(Object fieldValue) {

@@ -24,14 +24,14 @@ public class ProductGroupContextCommandService {
 
 	@Transactional
 	public long registerProductGroupContext(ProductGroupContextCommandRequestDto requestDto){
-		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider(false);
+		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider();
 		ProductGroupContextCommand productGroupContext = provider.createCommand(null, requestDto);
 		return productGroupContextCommandInterface.save(productGroupContext);
 	}
 
 	@Transactional
 	public long updateProductGroupContext(long productGroupId, ProductGroupContextCommandRequestDto requestDto){
-		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider(true);
+		ProductGroupContextCommandFactory provider = productGroupContextCommandFactoryProvider.getProvider();
 		ProductGroupContextCommand productGroupContext = provider.createCommand(productGroupId, requestDto);
 		return productGroupContextCommandInterface.update(productGroupId, productGroupContext);
 	}

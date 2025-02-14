@@ -16,6 +16,11 @@ public class ExternalProductGroupFinder {
 
 	private final ExternalProductGroupQueryRepository externalProductGroupQueryRepository;
 
+	public boolean existBySiteIdAndProductGroupId(long siteId, long productGroupId) {
+		return externalProductGroupQueryRepository.existBySiteIdAndProductGroupId(siteId, productGroupId);
+
+	}
+
 	public ExternalProductGroup fetchBySiteIdAndProductGroupId(long siteId, long productGroupId) {
 		return externalProductGroupQueryRepository.fetchBySiteIdAndProductGroupId(siteId, productGroupId);
 	}
@@ -28,7 +33,7 @@ public class ExternalProductGroupFinder {
 		return externalProductGroupQueryRepository.fetchByProductGroupIdsAndStatus(List.of(productGroupId), null);
 	}
 
-	public List<ExternalProductGroup> fetchByProductGroupIdsAndSiteIds(long productGroupId, List<Long> siteIds) {
+	public List<ExternalProductGroup> fetchByProductGroupIdsAndSiteIds(long productGroupId, List<Long> siteIds, List<SyncStatus> statuses) {
 		return externalProductGroupQueryRepository.fetchBySiteIdsAndProductGroupIds(List.of(productGroupId), siteIds);
 	}
 

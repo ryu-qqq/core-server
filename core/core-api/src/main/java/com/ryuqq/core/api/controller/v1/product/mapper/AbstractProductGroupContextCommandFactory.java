@@ -1,6 +1,7 @@
 package com.ryuqq.core.api.controller.v1.product.mapper;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
@@ -31,26 +32,37 @@ public abstract class AbstractProductGroupContextCommandFactory implements Produ
 		throw new IllegalArgumentException("No suitable mapper found for field value: " + fieldValue);
 	}
 
-
 	public ProductGroupContextCommand createCommand(Long productGroupId, ProductGroupContextCommandRequestDto dto) {
-
 		ProductGroupContextCommandBuilder builder = createBuilder();
+
 		if (productGroupId != null) {
 			builder.withProductGroupId(productGroupId);
 		}
 
-		for (Field field : getDeclaredFields(dto.getClass())) {
-			field.setAccessible(true);
-			try {
-				Object fieldValue = field.get(dto);
-				if (fieldValue != null) {
+		Field[] declaredFields = getDeclaredFields(dto.getClass());
+
+		if(declaredFields.length == 0) {
+			throw new CoreException(ErrorType.UNEXPECTED_ERROR, "ProductGroupContextCommandRequestDto class declaredFields cannot be empty");
+		}
+		Arrays.stream(declaredFields)
+			.forEach(field -> {
+				field.setAccessible(true);
+				try {
+					Object fieldValue = field.get(dto);
+
+					if (fieldValue == null) {
+						throw new CoreException(ErrorType.INVALID_INPUT_ERROR, "Field " + field.getName() + " cannot be null.");
+					}
+
 					DomainMapper<Object> mapper = findMapperOrThrow(fieldValue);
 					mapper.map(fieldValue, builder);
+
+				} catch (IllegalAccessException e) {
+					throw new CoreException(ErrorType.UNEXPECTED_ERROR, "Access to field " + field.getName() + " failed", e);
+				} catch (NullPointerException e) {
+					throw new CoreException(ErrorType.INVALID_INPUT_ERROR, "Field " + field.getName() + " is null", e);
 				}
-			} catch (IllegalAccessException e) {
-				throw new CoreException(ErrorType.UNEXPECTED_ERROR, e);
-			}
-		}
+			});
 
 		return builder.build();
 	}

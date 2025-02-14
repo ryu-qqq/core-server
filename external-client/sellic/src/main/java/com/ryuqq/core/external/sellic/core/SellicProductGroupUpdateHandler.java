@@ -36,7 +36,11 @@ public class SellicProductGroupUpdateHandler implements UpdateTypeHandler {
 
 	@Override
 	public boolean supports(SiteName siteName, ProductDomainEventType productDomainEventType) {
-		return SiteName.SELLIC.equals(siteName) &&  ProductDomainEventType.PRODUCT_GROUP.equals(productDomainEventType);
+		return SiteName.SELLIC.equals(siteName)
+			&& ProductDomainEventType.PRODUCT_GROUP.equals(productDomainEventType)
+			|| SiteName.SELLIC.equals(siteName)
+			&& ProductDomainEventType.STOCK.equals(productDomainEventType)
+			|| SiteName.SELLIC.equals(siteName) && ProductDomainEventType.PRICE.equals(productDomainEventType);
 	}
 
 	@Override

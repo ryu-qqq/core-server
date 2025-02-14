@@ -27,6 +27,12 @@ public class OcoConfig {
 	}
 
 	@Bean
+	public Logger.Level ocoFeignLoggerLevel() {
+		return Logger.Level.FULL;
+	}
+
+
+	@Bean
 	public FeignRequestLoggingInterceptor ocoFeignRequestLoggingInterceptor() {
 		return new FeignRequestLoggingInterceptor();
 	}

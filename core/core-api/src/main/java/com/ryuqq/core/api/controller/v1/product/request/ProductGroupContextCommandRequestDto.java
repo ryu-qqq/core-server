@@ -2,8 +2,6 @@ package com.ryuqq.core.api.controller.v1.product.request;
 
 import java.util.List;
 
-import com.ryuqq.core.enums.OptionType;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -33,10 +31,4 @@ public record ProductGroupContextCommandRequestDto(
 
 	@Valid
 	List<ProductInsertRequestDto> productOptions
-) {
-
-	public OptionType getOptionType(){
-		return productGroup.optionType();
-	}
-
-}
+) {}

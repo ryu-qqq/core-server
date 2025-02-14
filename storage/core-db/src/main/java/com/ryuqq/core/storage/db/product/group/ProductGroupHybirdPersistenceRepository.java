@@ -12,20 +12,18 @@ public class ProductGroupHybirdPersistenceRepository implements ProductGroupPers
 
 	private final ProductGroupStorageMapper productGroupStorageMapper;
 	private final ProductGroupJdbcRepository productGroupJdbcRepository;
-	private final ProductGroupJpaRepository productGroupJpaRepository;
 
 	public ProductGroupHybirdPersistenceRepository(ProductGroupStorageMapper productGroupStorageMapper,
-												   ProductGroupJdbcRepository productGroupJdbcRepository,
-												   ProductGroupJpaRepository productGroupJpaRepository) {
+												   ProductGroupJdbcRepository productGroupJdbcRepository) {
 		this.productGroupStorageMapper = productGroupStorageMapper;
 		this.productGroupJdbcRepository = productGroupJdbcRepository;
-		this.productGroupJpaRepository = productGroupJpaRepository;
 	}
 
 	@Override
 	public long save(ProductGroupCommand productGroupCommand){
 		List<ProductGroupEntity> entities = getEntities(List.of(productGroupCommand));
-		return productGroupJpaRepository.save(entities.getFirst()).getId();
+		productGroupJdbcRepository.batchInsertProductGroupsAndGetIds(entities);
+		return productGroupCommand.id();
 	}
 
 	@Override

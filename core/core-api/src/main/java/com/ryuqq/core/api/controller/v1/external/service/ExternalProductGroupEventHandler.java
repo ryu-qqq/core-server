@@ -29,7 +29,6 @@ public class ExternalProductGroupEventHandler {
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async("virtualThreadExecutor")
 	public void handleBatchUpdateRequiredEvent(ProductGroupSyncUpdateRequiredEvent event) {
 		externalProductGroupDomainService.updateExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());

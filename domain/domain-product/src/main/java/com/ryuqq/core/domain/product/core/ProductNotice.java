@@ -4,6 +4,7 @@ import com.ryuqq.core.enums.Origin;
 
 public interface ProductNotice {
 
+	Long getProductGroupId();
 	String getMaterial();
 	String getColor();
 	String getSize();

@@ -1,12 +1,10 @@
 package com.ryuqq.core.domain.external.core;
 
-import java.util.concurrent.BlockingQueue;
 
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.MdcContextPropagatingExecutorService;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
-import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Service
@@ -29,28 +27,26 @@ public class SiteRequestProcessorExecutor {
 		this.responseHandler = responseHandler;
 	}
 
-	public void processRequests(ExternalSite externalSite, ProductDomainEventType productDomainEventType) {
-		BlockingQueue<ExternalProductGroup> queue = queueManager.getQueue(externalSite.siteId());
-
-		if (queue == null || queue.isEmpty()) {
-			return;
+	public void processRequests(ExternalProductGroup externalProductGroup, ProductDomainEventType productDomainEventType) {
+		try {
+			SiteRequestProcessor processor = processorProvider.getProcessor(externalProductGroup.getSiteName());
+			ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, externalProductGroup);
+			responseHandler.handleResponse(productDomainEventType, externalProductGroup, response);
+		} catch (Exception e) {
+			responseHandler.handleFailure(externalProductGroup, e);
 		}
 
-		SiteRequestProcessor processor = processorProvider.getProcessor(externalSite);
 
-		while (!queue.isEmpty()) {
-			ExternalProductGroup productGroup = queue.poll();
-			if (productGroup == null) continue;
 
-			executorService.submit(() -> {
-				try {
-					ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, productGroup);
-					responseHandler.handleResponse(productDomainEventType, productGroup, response);
-				} catch (Exception e) {
-					responseHandler.handleFailure(productGroup, e);
-				}
-			});
-		}
+			// executorService.submit(() -> {
+			// 	try {
+			// 		SiteRequestProcessor processor = processorProvider.getProcessor(externalProductGroup.getSiteName());
+			// 		ExternalMallProductGroupRequestResponse response = processor.process(productDomainEventType, externalProductGroup);
+			// 		responseHandler.handleResponse(productDomainEventType, externalProductGroup, response);
+			// 	} catch (Exception e) {
+			// 		responseHandler.handleFailure(externalProductGroup, e);
+			// 	}
+			// });
 	}
 
 }

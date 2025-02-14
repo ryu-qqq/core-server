@@ -7,7 +7,7 @@ import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 
 @Component
-public class ProductDeliveryMapper implements DomainMapper<ProductDeliveryRequestDto> {
+class ProductDeliveryMapper implements DomainMapper<ProductDeliveryRequestDto> {
 
 	@Override
 	public boolean supports(Object fieldValue) {
@@ -18,8 +18,7 @@ public class ProductDeliveryMapper implements DomainMapper<ProductDeliveryReques
 	public ProductGroupContextCommandBuilder map(ProductDeliveryRequestDto requestDto, ProductGroupContextCommandBuilder builder) {
 		long productGroupId = builder.getProductGroupId().orElse(0L);
 
-		ProductDeliveryCommand productDeliveryCommand =
-			ProductDeliveryCommand.of(productGroupId, requestDto.deliveryArea(),
+		ProductDeliveryCommand productDeliveryCommand = ProductDeliveryCommand.of(productGroupId, requestDto.deliveryArea(),
 			requestDto.deliveryFee(), requestDto.deliveryPeriodAverage(), requestDto.returnMethodDomestic(),
 			requestDto.returnCourierDomestic(), requestDto.returnChargeDomestic(), requestDto.returnExchangeAreaDomestic());
 

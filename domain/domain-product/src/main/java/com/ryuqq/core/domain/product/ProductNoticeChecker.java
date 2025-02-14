@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.DefaultProductNotice;
 import com.ryuqq.core.domain.product.core.ProductNotice;
 import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.core.UpdateChecker;
@@ -19,14 +18,14 @@ public class ProductNoticeChecker implements UpdateChecker<ProductNotice, Produc
 		boolean anyChangeDetected = hasUpdates(existing, updated);
 
 		if (anyChangeDetected) {
-			decision.addUpdate(updated, ProductDomainEventType.NOTICE,false);
+			ProductNoticeCommand assignedProductGroupIdCommand = updated.assignProductGroupId(existing.getProductGroupId());
+			decision.addUpdate(assignedProductGroupIdCommand, ProductDomainEventType.NOTICE,false);
 		}
-
 	}
 
 	@Override
 	public boolean supports(Object fieldValue) {
-		return fieldValue instanceof DefaultProductNotice;
+		return fieldValue instanceof ProductNotice;
 	}
 
 	private boolean hasUpdates(ProductNotice existing, ProductNoticeCommand updated) {

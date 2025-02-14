@@ -1,7 +1,10 @@
 package com.ryuqq.core.domain.product;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
 import com.ryuqq.core.domain.product.core.UpdateProcessor;
 
@@ -21,7 +24,21 @@ public class ProductGroupImageUpdateProcessor implements UpdateProcessor<Product
 
 	@Override
 	public void processUpdate(ProductGroupImageContextCommand productGroupImageContextCommand) {
-		productGroupImageRegister.update(productGroupImageContextCommand.productGroupImageCommands());
+
+		List<? extends ProductGroupImageCommand> insertProductGroupImageCommands =
+			productGroupImageContextCommand.getInsertProductGroupImageCommands();
+
+		if(!insertProductGroupImageCommands.isEmpty()){
+			productGroupImageRegister.register(insertProductGroupImageCommands);
+		}
+
+		List<? extends ProductGroupImageCommand> updateProductGroupImageCommands =
+			productGroupImageContextCommand.getUpdateProductGroupImageCommands();
+
+		if(!updateProductGroupImageCommands.isEmpty()){
+			productGroupImageRegister.update(updateProductGroupImageCommands);
+		}
+
 	}
 
 }

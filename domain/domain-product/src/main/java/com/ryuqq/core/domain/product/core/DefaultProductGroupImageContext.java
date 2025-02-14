@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class DefaultProductGroupImageContext implements ProductGroupImageContext {
-
+	private final Long productGroupId;
 	private final List<DefaultProductGroupImage> images;
 
-	public DefaultProductGroupImageContext(List<DefaultProductGroupImage> images) {
+	public DefaultProductGroupImageContext(Long productGroupId, List<DefaultProductGroupImage> images) {
 		if (images == null ) {
 			images = new ArrayList<>();
 		}
+		this.productGroupId = productGroupId;
 		this.images = images;
+	}
+
+	public Long getProductGroupId() {
+		return productGroupId;
 	}
 
 	public List<DefaultProductGroupImage> getImages() {
@@ -23,7 +28,7 @@ public class DefaultProductGroupImageContext implements ProductGroupImageContext
 		List<DefaultProductGroupImage> updatedImages = images.stream()
 			.map(image -> image.assignProductGroupId(productGroupId))
 			.toList();
-		return new DefaultProductGroupImageContext(updatedImages);
+		return new DefaultProductGroupImageContext(productGroupId, updatedImages);
 	}
 
 	@Override

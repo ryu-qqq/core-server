@@ -11,6 +11,7 @@ public interface ProductGroup {
 	String getProductGroupName();
 	long getCategoryId();
 	long getBrandId();
+	long getSellerId();
 	String getStyleCode();
 	ProductCondition getProductCondition();
 	ManagementType getManagementType();

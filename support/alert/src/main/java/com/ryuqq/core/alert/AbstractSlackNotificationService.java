@@ -21,8 +21,8 @@ public abstract class AbstractSlackNotificationService<T> implements Notificatio
 	public void notifySlack(T payload) {
 		try {
 			String channel = determineChannel();
-			String formattedMessage = formatMessage(payload);
-			SlackNotifier.sendMessage(token, channel, formattedMessage);
+			// String formattedMessage = formatMessage(payload);
+			// SlackNotifier.sendMessage(token, channel, formattedMessage);
 		} catch (Exception e) {
 			handleNotificationError(payload, e);
 		}

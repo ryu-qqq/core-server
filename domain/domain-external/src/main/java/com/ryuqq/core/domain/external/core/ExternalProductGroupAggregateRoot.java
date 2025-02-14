@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.external.core;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.ExternalProductGroupFinder;
@@ -10,10 +10,9 @@ import com.ryuqq.core.domain.external.ExternalProductGroupRegister;
 import com.ryuqq.core.domain.external.ExternalSite;
 import com.ryuqq.core.domain.external.ExternalSiteSellerRelationFinder;
 import com.ryuqq.core.enums.ProductDomainEventType;
-import com.ryuqq.core.enums.SiteName;
 import com.ryuqq.core.enums.SyncStatus;
 
-@Component
+@Service
 public class ExternalProductGroupAggregateRoot {
 
 	private final ExternalProductGroupFinder externalProductGroupFinder;
@@ -39,20 +38,17 @@ public class ExternalProductGroupAggregateRoot {
 
 		if(!externalProductGroups.isEmpty()){
 			externalProductGroups.forEach(productGroup ->
-				siteRequestQueueManager.addRequest(productGroup.getSiteId(), productGroup)
-			);
-
-			SiteName siteName= externalProductGroups.getFirst().getSiteName();
-			siteRequestProcessorExecutor.processRequests(new ExternalSite(siteId, siteName), eventType);
+			siteRequestProcessorExecutor.processRequests(productGroup, eventType));
 		}
-
 	}
 
 	public void registerExternalProductGroupWaitingStatus(long sellerId, long productGroupId, long brandId, long categoryId){
 		externalSiteSellerRelationFinder.fetchBySellerId(sellerId).ifPresent(e -> {
-			List<ExternalProductGroup> externalProductGroups = e.externalSites().stream().map(
-				site -> ExternalProductGroup.create(site.siteId(), site.siteName(), productGroupId, brandId, categoryId, sellerId, SyncStatus.WAITING)
-			).toList();
+			List<ExternalProductGroup> externalProductGroups = e.externalSites().stream()
+				.filter(site -> !externalProductGroupFinder.existBySiteIdAndProductGroupId(site.siteId(), productGroupId))
+				.map(site ->
+					ExternalProductGroup.create(site.siteId(), site.siteName(), productGroupId, brandId, categoryId, sellerId, SyncStatus.WAITING)
+				).toList();
 
 			externalProductGroupRegister.register(externalProductGroups);
 		});
@@ -65,11 +61,12 @@ public class ExternalProductGroupAggregateRoot {
 				.map(ExternalSite::siteId)
 				.toList();
 
-			List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchByProductGroupIdsAndSiteIds(productGroupId, siteIds);
+			List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchByProductGroupIdsAndSiteIds(productGroupId, siteIds, SyncStatus.getSyncStatus());
 
 			List<ExternalProductGroup> updatedProductGroups = externalProductGroups.stream()
 				.map(existingGroup -> new ExternalProductGroup.Builder(existingGroup)
 					.status(SyncStatus.SYNC_REQUIRED)
+					.sellerId(sellerId)
 					.brandId(brandId)
 					.categoryId(categoryId)
 					.build())
@@ -88,14 +85,10 @@ public class ExternalProductGroupAggregateRoot {
 				.toList();
 
 			List<ExternalProductGroup> externalProductGroups = externalProductGroupFinder.fetchByProductGroupIdsAndSiteIds(
-				productGroupId, siteIds);
+				productGroupId, siteIds, SyncStatus.getSyncStatus());
 
 			externalProductGroups.forEach(productGroup ->
-				siteRequestQueueManager.addRequest(productGroup.getSiteId(), productGroup)
-			);
-
-			relation.externalSites().forEach(site ->
-				siteRequestProcessorExecutor.processRequests(site, productDomainEventType));
+				siteRequestProcessorExecutor.processRequests(productGroup, productDomainEventType));
 		});
 	}
 

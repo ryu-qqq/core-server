@@ -7,7 +7,7 @@ import com.ryuqq.core.domain.product.core.ProductGroupCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 
 @Component
-public class ProductGroupMapper implements DomainMapper<ProductGroupInsertRequestDto> {
+class ProductGroupMapper implements DomainMapper<ProductGroupInsertRequestDto> {
 
 	@Override
 	public boolean supports(Object fieldValue) {
@@ -36,6 +36,7 @@ public class ProductGroupMapper implements DomainMapper<ProductGroupInsertReques
 			requestDto.keywords());
 
 		builder.withProductGroupCommand(productGroupCommand);
+		builder.withOptionType(requestDto.optionType());
 		return builder;
 	}
 

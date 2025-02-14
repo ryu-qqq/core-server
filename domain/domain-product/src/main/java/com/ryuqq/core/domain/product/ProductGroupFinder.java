@@ -17,6 +17,9 @@ public class ProductGroupFinder {
 		this.productGroupQueryRepository = productGroupQueryRepository;
 	}
 
+	public long fetchTopId(){
+		return productGroupQueryRepository.fetchTopId();
+	}
 
 	public DefaultProductGroupContext fetchNoProductContextById(long productGroupId) {
 		return productGroupQueryRepository.fetchContextById(productGroupId);

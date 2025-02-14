@@ -44,7 +44,9 @@ public class SellicProductMapper {
 	public SellicProductInsertRequestDto toRequestDto(ExternalProductGroup externalProductGroup) {
 		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(
 			externalProductGroup.getProductGroupId());
-		Brand brand = brandQueryInterface.fetchById(externalProductGroup.getBrandId());
+
+		Brand brand = brandQueryInterface.fetchById(productGroupContext.getProductGroup().getBrandId());
+
 		ProductGroup productGroup = productGroupContext.getProductGroup();
 		ProductNotice productNotice = productGroupContext.getProductNotice();
 		Price price = productGroup.getPrice();

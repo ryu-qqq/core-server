@@ -22,6 +22,11 @@ public class DefaultExternalProductGroupQueryRepository implements ExternalProdu
 	}
 
 	@Override
+	public boolean existBySiteIdAndProductGroupId(long siteId, long productGroupId) {
+		return externalProductGroupQueryDslRepository.existBySiteIdAndProductGroupId(siteId, productGroupId);
+	}
+
+	@Override
 	public List<ExternalProductGroup> fetchByProductGroupIdsAndStatus(List<Long> productGroupIds, SyncStatus status) {
 		return externalProductGroupQueryDslRepository.fetchByProductGroupIdsAndStatus(productGroupIds, status)
 			.stream()

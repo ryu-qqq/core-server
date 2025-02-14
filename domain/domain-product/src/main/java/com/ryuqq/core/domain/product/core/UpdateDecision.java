@@ -23,6 +23,10 @@ public class UpdateDecision {
 		return isRealTime ? !realTimeUpdates.isEmpty() : !batchUpdates.isEmpty();
 	}
 
+	public boolean hasUpdates() {
+		return !realTimeUpdates.isEmpty() && !batchUpdates.isEmpty();
+	}
+
 	public List<UpdateDomain<?>> getRealTimeUpdates() {
 		return realTimeUpdates;
 	}

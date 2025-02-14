@@ -7,7 +7,7 @@ import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
 
 @Component
-public class ProductDetailDescriptionMapper implements DomainMapper<ProductDetailDescriptionRequestDto> {
+class ProductDetailDescriptionMapper implements DomainMapper<ProductDetailDescriptionRequestDto> {
 
 	@Override
 	public boolean supports(Object fieldValue) {

@@ -16,4 +16,18 @@ record DefaultProductGroupImageContextCommand(
 
 		return new DefaultProductGroupImageContextCommand(assignedProductGroupImages);
 	}
+
+	@Override
+	public List<? extends ProductGroupImageCommand> getInsertProductGroupImageCommands() {
+		return productGroupImageCommands.stream()
+			.filter(p -> p.id() == 0)
+			.toList();
+	}
+
+	@Override
+	public List<? extends ProductGroupImageCommand> getUpdateProductGroupImageCommands() {
+		return productGroupImageCommands.stream()
+			.filter(p -> p.id() != 0)
+			.toList();
+	}
 }

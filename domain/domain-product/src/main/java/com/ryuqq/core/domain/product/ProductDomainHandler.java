@@ -29,15 +29,15 @@ public class ProductDomainHandler {
 
 		Map<Long, List<? extends OptionContextCommand>> optionMap = new LinkedHashMap<>();
 
-		assignProductOptionContextCommand.productCommands().forEach(productCommand -> {
-			long productId = productRegister.register(productCommand.productCommand());
-			if (!productCommand.optionContextCommands().isEmpty()) {
-				optionMap.put(productId, productCommand.optionContextCommands());
-			}
-		});
+		assignProductOptionContextCommand.productCommands()
+			.forEach(productCommand -> {
+				long productId = productRegister.register(productCommand.productCommand());
+				if (!productCommand.optionContextCommands().isEmpty()) {
+					optionMap.put(productId, productCommand.optionContextCommands());
+				}
+			});
 
 		optionDomainHandler.handle(optionMap);
-
 	}
 
 	public void handle(ProductOptionContextCommand productOptionContextCommand) {
@@ -57,7 +57,6 @@ public class ProductDomainHandler {
 		if(!toDeleteIds.isEmpty()) {
 			productOptionRegister.delete(toDeleteIds);
 		}
-
 
 	}
 

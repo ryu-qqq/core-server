@@ -39,6 +39,7 @@ public class ProductGroupChecker implements UpdateChecker<ProductGroup, ProductG
 	private boolean hasUpdates(ProductGroup existing, ProductGroupCommand updated) {
 		return existing.getBrandId() != updated.brandId() ||
 			existing.getCategoryId() != updated.categoryId() ||
+			existing.getSellerId() != updated.sellerId() ||
 			!Objects.equals(existing.getProductGroupName(), updated.productGroupName()) ||
 			!Objects.equals(existing.getStyleCode(), updated.styleCode()) ||
 			existing.getProductCondition() != updated.productCondition() ||

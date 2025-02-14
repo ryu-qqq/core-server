@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.exception.AsyncDomainException;
+import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.domain.external.ExternalProduct;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.ExternalProductGroupRegister;
 import com.ryuqq.core.domain.external.ExternalProductRegister;
+import com.ryuqq.core.domain.external.ExternalProductSyncRequestRegister;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.events.ExternalProductGroupFailedEvent;
@@ -19,13 +21,17 @@ public class SiteRequestProcessResponseHandler {
 	private final ExternalProductGroupEventPublisher eventPublisher;
 	private final ExternalProductGroupRegister externalProductGroupRegister;
 	private final ExternalProductRegister externalProductRegister;
+	private final ExternalProductSyncRequestRegister externalProductSyncRequestRegister;
+
 
 	public SiteRequestProcessResponseHandler(ExternalProductGroupEventPublisher eventPublisher,
 											 ExternalProductGroupRegister externalProductGroupRegister,
-											 ExternalProductRegister externalProductRegister) {
+											 ExternalProductRegister externalProductRegister,
+											 ExternalProductSyncRequestRegister externalProductSyncRequestRegister) {
 		this.eventPublisher = eventPublisher;
 		this.externalProductGroupRegister = externalProductGroupRegister;
 		this.externalProductRegister = externalProductRegister;
+		this.externalProductSyncRequestRegister = externalProductSyncRequestRegister;
 	}
 
 
@@ -36,6 +42,11 @@ public class SiteRequestProcessResponseHandler {
 			ExternalProductGroup externalProductGroup = ExternalProductGroupResponseFactory.mapResponse(
 				productDomainEventType, productGroup, response);
 			externalProductGroupRegister.update(externalProductGroup);
+
+			externalProductSyncRequestRegister.register(
+				externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(),
+				response.getExternalProductGroupId(), true
+			);
 
 			if (!response.getProductIdMappings().isEmpty()) {
 				List<ExternalProduct> externalProducts = ExternalProductResponseFactory.mapResponse(
@@ -48,11 +59,10 @@ public class SiteRequestProcessResponseHandler {
 		}
 	}
 
-	public void handleFailure(ExternalProductGroup productGroup, Exception e) {
-		AsyncDomainException asyncDomainException = new AsyncDomainException(ErrorType.UNEXPECTED_ERROR, e);
-
-		eventPublisher.publishEvent(new ExternalProductGroupFailedEvent(productGroup.getSiteId(), productGroup.getProductGroupId(), asyncDomainException));
-		throw asyncDomainException;
+	public void handleFailure(ExternalProductGroup externalProductGroup, Exception e) {
+		DomainException domainException = new DomainException(ErrorType.UNEXPECTED_ERROR, e);
+		eventPublisher.publishEvent(new ExternalProductGroupFailedEvent(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), domainException));
+		externalProductSyncRequestRegister.register(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), null, false);
 	}
 
 

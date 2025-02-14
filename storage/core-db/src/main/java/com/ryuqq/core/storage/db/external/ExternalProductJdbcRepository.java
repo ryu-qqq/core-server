@@ -51,7 +51,7 @@ public class ExternalProductJdbcRepository {
 			"ADDITIONAL_PRICE = :additionalPrice, " +
 			"SOLD_OUT = :soldOut, " +
 			"DISPLAYED = :displayed, " +
-			"DELTED = :deleted, " +
+			"DELETED = :deleted, " +
 			"UPDATED_AT = :updatedAt " +
 			"WHERE EXTERNAL_PRODUCT_GROUP_ID = :externalProductGroupId AND PRODUCT_ID = :productId ";
 
@@ -66,6 +66,7 @@ public class ExternalProductJdbcRepository {
 					.addValue("additionalPrice", product.getAdditionalPrice())
 					.addValue("soldOut", product.isSoldOut())
 					.addValue("displayed", product.isDisplayed())
+					.addValue("deleted", product.isDeleted())
 					.addValue("updatedAt", LocalDateTime.now());
 
 				return params.getValues();

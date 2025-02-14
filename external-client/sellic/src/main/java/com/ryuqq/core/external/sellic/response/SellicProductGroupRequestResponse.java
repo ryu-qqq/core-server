@@ -51,4 +51,5 @@ public record SellicProductGroupRequestResponse(
 	public BigDecimal getCurrentPrice() {
 		return currentPrice;
 	}
+
 }

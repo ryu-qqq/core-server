@@ -2,13 +2,13 @@ package com.ryuqq.core.domain.external;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.external.dao.group.ExternalProductGroupCommand;
 import com.ryuqq.core.domain.external.dao.group.ExternalProductGroupCommandFactory;
 import com.ryuqq.core.domain.external.dao.group.ExternalProductGroupPersistenceRepository;
 
-@Component
+@Service
 public class ExternalProductGroupRegister {
 
 	private final ExternalProductGroupPersistenceRepository externalProductGroupPersistenceRepository;

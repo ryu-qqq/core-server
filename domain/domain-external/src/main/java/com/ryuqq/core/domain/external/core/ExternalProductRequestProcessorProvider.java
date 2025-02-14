@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.external.ExternalSite;
+import com.ryuqq.core.enums.SiteName;
 
 @Service
 public class ExternalProductRequestProcessorProvider {
@@ -15,11 +15,11 @@ public class ExternalProductRequestProcessorProvider {
 		this.siteProcessors = siteProcessors;
 	}
 
-	public SiteRequestProcessor getProcessor(ExternalSite site) {
+	public SiteRequestProcessor getProcessor(SiteName siteName) {
 		return siteProcessors.stream()
-			.filter(processor -> processor.supportsSite(site))
+			.filter(processor -> processor.supportsSite(siteName))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("No processor found for site: " + site.siteName()));
+			.orElseThrow(() -> new IllegalArgumentException("No processor found for site: " + siteName));
 	}
 
 

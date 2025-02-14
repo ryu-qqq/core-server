@@ -26,13 +26,13 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 
 		Map<String, ProductGroupImage> existingMap = mapByImageUrl(existing);
 
-		processUpdatedImages(updated, existingMap, changedImages);
+		processUpdatedImages(existing.getProductGroupId(), updated, existingMap, changedImages);
 
 		processDeletedImages(existingMap, changedImages);
 
 		if(!changedImages.isEmpty()){
-			ProductGroupImageContextCommand productGroupImageContextCommand = ProductGroupImageContextCommand.of(
-				changedImages);
+			ProductGroupImageContextCommand productGroupImageContextCommand = ProductGroupImageContextCommand.of(changedImages);
+
 			decision.addUpdate(productGroupImageContextCommand, ProductDomainEventType.IMAGE,false);
 		}
 	}
@@ -53,7 +53,7 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 	}
 
 
-	private void processUpdatedImages(ProductGroupImageContextCommand updated, Map<String, ProductGroupImage> existingMap,
+	private void processUpdatedImages(long productGroupId, ProductGroupImageContextCommand updated, Map<String, ProductGroupImage> existingMap,
 									  List<ProductGroupImageCommand> changedImages) {
 		for (ProductGroupImageCommand newImage : updated.productGroupImageCommands()) {
 			ProductGroupImage existingImage = existingMap.get(newImage.imageUrl());
@@ -65,7 +65,8 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 				}
 				existingMap.remove(newImage.imageUrl());
 			} else {
-				changedImages.add(newImage);
+				ProductGroupImageCommand assignedProductGroupImageCommand = newImage.assignProductGroupId(productGroupId);
+				changedImages.add(assignedProductGroupImageCommand);
 			}
 		}
 	}

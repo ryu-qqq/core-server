@@ -54,7 +54,7 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 		@DisplayName("정상적으로 ProductGroupContextCommand를 생성하고 저장할 수 있다.")
 		void shouldRegisterProductGroupContextSuccessfully() {
 			// given
-			when(factoryProvider.getProvider(false)).thenReturn(factory);
+			when(factoryProvider.getProvider()).thenReturn(factory);
 			when(factory.createCommand(null, requestDto)).thenReturn(productGroupContextCommand);
 			when(productGroupContextCommandInterface.save(productGroupContextCommand)).thenReturn(1L);
 
@@ -71,7 +71,7 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 		@DisplayName("save 과정에서 예외가 발생하면 예외를 던진다.")
 		void shouldThrowExceptionWhenSaveFails() {
 			// given
-			when(factoryProvider.getProvider(false)).thenReturn(factory);
+			when(factoryProvider.getProvider()).thenReturn(factory);
 			when(factory.createCommand(null, requestDto)).thenReturn(productGroupContextCommand);
 			when(productGroupContextCommandInterface.save(productGroupContextCommand))
 				.thenThrow(new RuntimeException("Test"));
@@ -99,7 +99,7 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 		@DisplayName("정상적으로 ProductGroupContextCommand를 생성하고 업데이트할 수 있다.")
 		void shouldUpdateProductGroupContextSuccessfully() {
 			// given
-			when(factoryProvider.getProvider(true)).thenReturn(factory);
+			when(factoryProvider.getProvider()).thenReturn(factory);
 			when(factory.createCommand(productGroupId, requestDto)).thenReturn(productGroupContextCommand);
 			when(productGroupContextCommandInterface.update(productGroupId, productGroupContextCommand)).thenReturn(1L);
 
@@ -115,7 +115,7 @@ class ProductGroupContextCommandServiceTest extends BaseUnitTest {
 		@DisplayName("update 과정에서 다른 예외가 발생하면 예외를 던진다.")
 		void shouldThrowExceptionWhenUpdateFails() {
 			// given
-			when(factoryProvider.getProvider(true)).thenReturn(factory);
+			when(factoryProvider.getProvider()).thenReturn(factory);
 			when(factory.createCommand(productGroupId, requestDto)).thenReturn(productGroupContextCommand);
 			when(productGroupContextCommandInterface.update(productGroupId, productGroupContextCommand))
 				.thenThrow(new RuntimeException("Test"));

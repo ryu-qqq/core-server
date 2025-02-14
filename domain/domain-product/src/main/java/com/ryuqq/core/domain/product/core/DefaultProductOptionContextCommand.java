@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ryuqq.core.enums.OptionType;
 
-record DefaultProductOptionContextCommand(
+public record DefaultProductOptionContextCommand(
 	long productGroupId,
 	OptionType optionType,
 	List<? extends ProductOptionCommand> productCommands

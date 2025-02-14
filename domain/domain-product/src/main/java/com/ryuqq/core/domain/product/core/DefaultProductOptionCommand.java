@@ -3,7 +3,7 @@ package com.ryuqq.core.domain.product.core;
 import java.util.List;
 import java.util.stream.Collectors;
 
-record DefaultProductOptionCommand(
+public record DefaultProductOptionCommand(
 	ProductCommand productCommand,
 	boolean deleted,
 	List<? extends OptionContextCommand> optionContextCommands

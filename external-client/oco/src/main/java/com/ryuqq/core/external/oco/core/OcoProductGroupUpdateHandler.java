@@ -38,7 +38,9 @@ public class OcoProductGroupUpdateHandler implements UpdateTypeHandler {
 
 	@Override
 	public boolean supports(SiteName siteName, ProductDomainEventType productDomainEventType) {
-		return SiteName.OCO.equals(siteName) &&  ProductDomainEventType.PRODUCT_GROUP.equals(productDomainEventType);
+		return SiteName.OCO.equals(siteName) &&  ProductDomainEventType.PRODUCT_GROUP.equals(productDomainEventType)
+			|| SiteName.OCO.equals(siteName) && ProductDomainEventType.PRICE.equals(productDomainEventType)
+			|| SiteName.OCO.equals(siteName) && ProductDomainEventType.STOCK.equals(productDomainEventType);
 	}
 
 	@Override

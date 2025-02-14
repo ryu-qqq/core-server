@@ -19,7 +19,9 @@ public class ProductDetailDescriptionChecker implements
 	public void checkUpdates(UpdateDecision decision, ProductDetailDescription existing, ProductDetailDescriptionCommand updated) {
 
 		if (hasUpdates(existing, updated)) {
-			decision.addUpdate(updated, ProductDomainEventType.IMAGE,false);
+			ProductDetailDescriptionCommand assignedProductGroupIdCommand = updated.assignProductGroupId(
+				existing.getProductGroupId());
+			decision.addUpdate(assignedProductGroupIdCommand, ProductDomainEventType.IMAGE,false);
 		}
 	}
 

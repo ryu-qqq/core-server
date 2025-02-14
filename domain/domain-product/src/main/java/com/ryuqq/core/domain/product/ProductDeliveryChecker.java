@@ -20,7 +20,8 @@ public class ProductDeliveryChecker implements UpdateChecker<ProductDelivery, Pr
 		boolean anyChangeDetected = hasUpdates(existing, updated);
 
 		if (anyChangeDetected) {
-			decision.addUpdate(updated, ProductDomainEventType.DELIVERY, false);
+			ProductDeliveryCommand assignedProductGroupIdCommand = updated.assignProductGroupId(existing.getProductGroupId());
+			decision.addUpdate(assignedProductGroupIdCommand, ProductDomainEventType.DELIVERY, false);
 		}
 	}
 

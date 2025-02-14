@@ -21,6 +21,11 @@ public class DefaultProductGroupQueryRepository implements ProductGroupQueryRepo
 		this.productGroupQueryDslRepository = productGroupQueryDslRepository;
 	}
 
+	@Override
+	public long fetchTopId() {
+		return productGroupQueryDslRepository.fetchTopId()
+			.orElse(0L);
+	}
 
 	@Override
 	public DefaultProductGroupContext fetchContextById(long productGroupId) {

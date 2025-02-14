@@ -28,6 +28,16 @@ public class ExternalProductGroupQueryDslRepository {
 		this.queryFactory = queryFactory;
 	}
 
+	public boolean existBySiteIdAndProductGroupId(long siteId, long productGroupId){
+		Long id = queryFactory
+			.select(externalProductGroupEntity.id)
+			.from(externalProductGroupEntity)
+			.where(siteIdEq(siteId), productGroupIdEq(productGroupId))
+			.limit(1)
+			.fetchOne();
+
+		return  id != null;
+	}
 
 	public List<ExternalProductGroupDto> fetchByProductGroupIdsAndStatus(List<Long> productGroupIds, SyncStatus status) {
 		List<Long> externalProductGroupIds = fetchExternalProductGroupIds(null, productGroupIds, status, productGroupIds.size(), null);

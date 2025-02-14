@@ -10,7 +10,7 @@ import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
 
 @Component
-public class ProductGroupImageMapper implements DomainMapper<List<ProductGroupImageRequestDto>> {
+class ProductGroupImageMapper implements DomainMapper<List<ProductGroupImageRequestDto>> {
 
 	@Override
 	public boolean supports(Object fieldValue) {

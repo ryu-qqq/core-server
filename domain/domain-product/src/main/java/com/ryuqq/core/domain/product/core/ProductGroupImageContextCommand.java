@@ -13,4 +13,8 @@ public interface ProductGroupImageContextCommand {
 
 	ProductGroupImageContextCommand assignProductGroupId(long productGroupId);
 
+
+	List<? extends ProductGroupImageCommand> getInsertProductGroupImageCommands();
+	List<? extends ProductGroupImageCommand> getUpdateProductGroupImageCommands();
+
 }

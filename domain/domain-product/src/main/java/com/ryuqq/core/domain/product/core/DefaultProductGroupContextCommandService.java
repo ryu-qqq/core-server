@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.domain.product.ProductGroupContextRegister;
 import com.ryuqq.core.domain.product.ProductGroupContextUpdater;
-import com.ryuqq.core.enums.ErrorType;
 
 @Service
 public class DefaultProductGroupContextCommandService implements ProductGroupContextCommandInterface {
@@ -36,16 +35,15 @@ public class DefaultProductGroupContextCommandService implements ProductGroupCon
 	@Override
 	public long update(long id, ProductGroupContextCommand productGroupContextCommand) {
 		//productGroupDomainBusinessValidator.validate(productGroupContextCommand, true);
-		try {
-			UpdateDecision updateDecision = productGroupContextUpdater.updateProductGroupContext(id,
-				productGroupContextCommand);
-
+		try{
+			UpdateDecision updateDecision = productGroupContextUpdater.updateProductGroupContext(id, productGroupContextCommand);
 			productGroupContextEventHandler.handleEvents(id, productGroupContextCommand.getProductGroupCommand(), updateDecision);
 			return id;
-
-		}catch (DomainException e){
-			if(e.getErrorType().equals(ErrorType.NOT_FOUND_ERROR)){
-				return save(productGroupContextCommand);
+		}catch (Exception e){
+			if(e instanceof DomainException e1){
+				if(e1.getErrorType().getStatus() == 404){
+					return save(productGroupContextCommand);
+				}
 			}
 			throw e;
 		}

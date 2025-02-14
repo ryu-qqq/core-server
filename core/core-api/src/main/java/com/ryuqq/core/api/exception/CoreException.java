@@ -16,6 +16,11 @@ public class CoreException extends RuntimeException {
 		this.errorType = errorType;
 	}
 
+	public CoreException(ErrorType errorType, String message, Throwable cause) {
+		super(message, cause);
+		this.errorType = errorType;
+	}
+
 	public ErrorType getErrorType() {
 		return errorType;
 	}

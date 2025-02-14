@@ -6,7 +6,7 @@ import com.ryuqq.core.enums.ReturnMethod;
 import com.ryuqq.core.enums.ShipmentCompanyCode;
 
 public interface ProductDelivery {
-
+	Long getProductGroupId();
 	String getDeliveryArea();
 	BigDecimal getDeliveryFee();
 	int getDeliveryPeriodAverage();

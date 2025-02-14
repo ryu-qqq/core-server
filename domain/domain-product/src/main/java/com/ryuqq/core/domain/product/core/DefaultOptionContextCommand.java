@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product.core;
 
 import com.ryuqq.core.enums.OptionName;
 
-record DefaultOptionContextCommand(
+public record DefaultOptionContextCommand(
 	long productId,
 	long optionGroupId,
 	long optionDetailId,
@@ -14,7 +14,7 @@ record DefaultOptionContextCommand(
 
 	@Override
 	public String optionNameValue() {
-		return optionName + " " + optionDetailId;
+		return optionName + " " + optionValue;
 	}
 
 	@Override

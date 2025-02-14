@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
 import com.ryuqq.core.api.controller.v1.product.response.ProductGroupInsertResponseDto;
+import com.ryuqq.core.api.controller.v1.product.response.ProductGroupTopIdResponse;
 import com.ryuqq.core.api.controller.v1.product.service.ProductGroupContextCommandService;
 import com.ryuqq.core.api.controller.v1.product.service.ProductGroupContextQueryService;
 import com.ryuqq.core.api.payload.ApiResponse;
@@ -31,6 +32,11 @@ public class ProductController {
 							 ProductGroupContextQueryService productGroupContextQueryService) {
 		this.productGroupContextCommandService = productGroupContextCommandService;
 		this.productGroupContextQueryService = productGroupContextQueryService;
+	}
+
+	@GetMapping("/product/group/top-id")
+	public ResponseEntity<ApiResponse<ProductGroupTopIdResponse>> fetchProductGroupTopId(){
+		return ResponseEntity.ok(ApiResponse.success(productGroupContextQueryService.fetchProductGroupTopId()));
 	}
 
 
