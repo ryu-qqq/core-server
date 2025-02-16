@@ -52,7 +52,7 @@ public class BuyMaProductMapper {
 		Brand brand = brandQueryInterface.fetchById(externalProductGroup.getBrandId());
 
 		String productGroupName;
-		if(externalProductGroup.getExternalProductGroupId() != null){
+		if(externalProductGroup.getProductName() != null){
 			productGroupName = externalProductGroup.getProductName();
 		}else{
 			TranslateResult translate = translationService.translate(productGroup.getProductGroupName());

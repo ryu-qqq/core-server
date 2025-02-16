@@ -31,7 +31,7 @@ public class BuyMaProductInsertedAdapter {
 	private static long getProductGroupId(String referenceNumber){
 		String[] split = referenceNumber.split("_");
 		if(split.length > 1){
-			return Long.parseLong(split[1]);
+			return Long.parseLong(split[0]);
 		}else{
 			return Long.parseLong(referenceNumber);
 		}
