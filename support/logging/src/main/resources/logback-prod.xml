@@ -16,12 +16,10 @@
 				<mdc/>
 			</providers>
 		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/var/log/spring/core-server.log.%d{yyyy-MM-dd}.%i.json</fileNamePattern>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>/var/log/spring/core-server.log.%d{yyyy-MM-dd}-%i.json</fileNamePattern>
 			<maxHistory>30</maxHistory>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxFileSize>10MB</maxFileSize>
 		</rollingPolicy>
 	</appender>
 
