@@ -2,9 +2,9 @@ package com.ryuqq.core.storage.db.product.option;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
-import com.ryuqq.core.domain.product.core.OptionDetailCommand;
-import com.ryuqq.core.domain.product.core.OptionGroupCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.detail.OptionDetailCommand;
+import com.ryuqq.core.domain.product.dao.options.group.OptionGroupCommand;
 
 @Component
 public class OptionStorageMapper {

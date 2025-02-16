@@ -40,7 +40,7 @@ include 'external-client:git-hub'
 include 'external-client:oco'
 include 'external-client:sellic'
 include 'external-client:buyma'
-
+include 'external-client:openAi'
 
 
 //tests

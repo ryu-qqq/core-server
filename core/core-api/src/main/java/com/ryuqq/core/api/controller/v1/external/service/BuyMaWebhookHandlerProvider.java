@@ -20,6 +20,6 @@ public class BuyMaWebhookHandlerProvider {
 		return (BuyMaWebhookHandler<T, ?>) handlers.stream()
 			.filter(handler -> handler.canHandle(dtoClass))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("No GitHub Webhook handler found for: " + dtoClass.getName()));
+			.orElseThrow(() -> new IllegalArgumentException("No BuyMa Webhook handler found for: " + dtoClass.getName()));
 	}
 }

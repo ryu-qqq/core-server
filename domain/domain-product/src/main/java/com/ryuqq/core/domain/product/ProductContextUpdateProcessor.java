@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductCommand;
-import com.ryuqq.core.domain.product.core.ProductOptionCommand;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateProcessor;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 
 @Component
 public class ProductContextUpdateProcessor implements UpdateProcessor<ProductOptionContextCommand> {

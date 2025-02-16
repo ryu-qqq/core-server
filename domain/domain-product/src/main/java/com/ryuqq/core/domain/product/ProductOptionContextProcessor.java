@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
-import com.ryuqq.core.domain.product.core.ProductCommand;
 import com.ryuqq.core.domain.product.core.ProductContext;
-import com.ryuqq.core.domain.product.core.ProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
 import com.ryuqq.core.enums.OptionName;
 
 public class ProductOptionContextProcessor {
@@ -56,4 +56,5 @@ public class ProductOptionContextProcessor {
 			changedDefaultProductContext.add(productOptionCommand);
 		});
 	}
+
 }

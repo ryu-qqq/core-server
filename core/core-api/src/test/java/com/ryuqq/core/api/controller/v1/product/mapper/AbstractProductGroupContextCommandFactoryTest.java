@@ -18,7 +18,7 @@ import org.mockito.Mock;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
 import com.ryuqq.core.api.exception.CoreException;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class AbstractProductGroupContextCommandFactoryTest extends BaseUnitTest {

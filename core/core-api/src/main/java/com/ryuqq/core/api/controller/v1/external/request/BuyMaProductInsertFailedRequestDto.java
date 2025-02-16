@@ -5,17 +5,13 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@JsonIgnoreProperties(ignoreUnknown = true)
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record BuyMaProductInsertFailedRequestDto(
 	@JsonProperty("request_uid")
 	String requestUid,
-    Map<String, Map<String, ErrorDetail>> errors
 
-) implements BuyMaEventRequestDto{
+	@JsonProperty("errors")
+	Map<String, List<String>> errors
 
-	public record ErrorDetail(
-		@JsonProperty("memo")
-		List<String> memo
-	) {}
-}
+) implements BuyMaEventRequestDto{}

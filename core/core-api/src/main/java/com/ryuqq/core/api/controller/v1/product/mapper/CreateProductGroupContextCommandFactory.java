@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.DefaultCreateProductGroupContextCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.DefaultCreateProductGroupContextCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 
 @Component
 public class CreateProductGroupContextCommandFactory extends AbstractProductGroupContextCommandFactory {

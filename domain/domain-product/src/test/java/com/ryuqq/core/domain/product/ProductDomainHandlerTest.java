@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
-import com.ryuqq.core.domain.product.core.ProductCommand;
-import com.ryuqq.core.domain.product.core.ProductOptionCommand;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class ProductDomainHandlerTest extends BaseUnitTest {

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import com.ryuqq.core.domain.product.core.Product;
-import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 @DisplayName("ProductChecker 단위 테스트")

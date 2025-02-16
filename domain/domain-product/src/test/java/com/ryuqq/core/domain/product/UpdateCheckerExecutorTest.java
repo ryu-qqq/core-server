@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class UpdateCheckerExecutorTest extends BaseUnitTest {

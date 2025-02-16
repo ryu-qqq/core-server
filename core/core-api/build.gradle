@@ -23,6 +23,8 @@ dependencies {
 	runtimeOnly project(":external-client:sellic")
 	runtimeOnly project(":external-client:oco")
 	runtimeOnly project(":external-client:buyma")
+	runtimeOnly project(":external-client:openAi")
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'

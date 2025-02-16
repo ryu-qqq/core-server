@@ -16,8 +16,7 @@ import org.mockito.Spy;
 
 import com.ryuqq.core.domain.product.core.DefaultProductNotice;
 import com.ryuqq.core.domain.product.core.ProductNotice;
-import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
 import com.ryuqq.core.enums.Origin;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.unit.test.BaseUnitTest;

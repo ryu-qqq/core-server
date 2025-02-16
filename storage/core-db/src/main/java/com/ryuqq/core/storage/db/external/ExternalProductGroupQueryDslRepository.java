@@ -119,7 +119,7 @@ public class ExternalProductGroupQueryDslRepository {
 				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
 				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
 			.leftJoin(externalCategoryEntity)
-				.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.brandId))
+				.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.categoryId))
 				.on(externalCategoryEntity.siteId.eq(externalProductGroupEntity.siteId))
 			.where(
 				externalProductGroupIdIn(externalProductGroupIds)
@@ -225,7 +225,7 @@ public class ExternalProductGroupQueryDslRepository {
 				.on(externalBrandEntity.internalBrandId.eq(externalProductGroupEntity.brandId))
 				.on(externalBrandEntity.siteId.eq(externalProductGroupEntity.siteId))
 			.leftJoin(externalCategoryEntity)
-				.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.brandId))
+				.on(externalCategoryEntity.internalCategoryId.eq(externalProductGroupEntity.categoryId))
 				.on(externalCategoryEntity.siteId.eq(externalProductGroupEntity.siteId))
 			.where(externalProductGroupIdIn(externalProductGroupIds))
 			.transform(

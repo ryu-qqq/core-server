@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
 import com.ryuqq.core.domain.product.dao.image.ProductGroupImagePersistenceRepository;
 
 @Component

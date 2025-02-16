@@ -2,7 +2,7 @@ package com.ryuqq.core.storage.db.product.delivery;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommand;
 
 @Component
 public class ProductDeliveryStorageMapper {

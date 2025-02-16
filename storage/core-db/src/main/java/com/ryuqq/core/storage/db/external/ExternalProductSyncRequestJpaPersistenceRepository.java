@@ -1,9 +1,9 @@
 package com.ryuqq.core.storage.db.external;
 
+import org.springframework.stereotype.Repository;
+
 import com.ryuqq.core.domain.external.dao.history.ExternalProductSyncCommand;
 import com.ryuqq.core.domain.external.dao.history.ExternalProductSyncRequestPersistenceRepository;
-
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class ExternalProductSyncRequestJpaPersistenceRepository implements

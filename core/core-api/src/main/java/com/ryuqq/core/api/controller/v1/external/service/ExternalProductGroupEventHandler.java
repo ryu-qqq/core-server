@@ -22,7 +22,7 @@ public class ExternalProductGroupEventHandler {
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async("virtualThreadExecutor")
+	@Async("asyncThreadPoolTaskExecutor")
 	public void handleProductGroupRegisteredEvent(ProductGroupSyncRequiredEvent event) {
 		externalProductGroupDomainService.registerExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
@@ -35,7 +35,7 @@ public class ExternalProductGroupEventHandler {
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	@Async("virtualThreadExecutor")
+	@Async("asyncThreadPoolTaskExecutor")
 	public void handleRealTimeUpdateEvent(RealTimeUpdateEvent event) {
 		externalProductGroupDomainService.requestExternalSite(
 			event.sellerId(), event.productGroupId(), event.productDomainEventType()
@@ -43,7 +43,7 @@ public class ExternalProductGroupEventHandler {
 	}
 
 	@EventListener
-	@Async("virtualThreadExecutor")
+	@Async("asyncThreadPoolTaskExecutor")
 	public void handleFailedSyncExternalProductGroup(ExternalProductGroupFailedEvent event){
 		externalProductGroupDomainService.updateFailedExternalProductGroup(
 			event.siteId(), event.productGroupId()

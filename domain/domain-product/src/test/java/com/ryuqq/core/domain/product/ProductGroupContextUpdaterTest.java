@@ -12,20 +12,18 @@ import org.mockito.Mock;
 
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.domain.product.core.ProductDelivery;
-import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
 import com.ryuqq.core.domain.product.core.ProductDetailDescription;
-import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
 import com.ryuqq.core.domain.product.core.ProductGroup;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupContext;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContext;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
 import com.ryuqq.core.domain.product.core.ProductNotice;
-import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
 import com.ryuqq.core.domain.product.core.ProductOptionContext;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageContextCommand;
+import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 

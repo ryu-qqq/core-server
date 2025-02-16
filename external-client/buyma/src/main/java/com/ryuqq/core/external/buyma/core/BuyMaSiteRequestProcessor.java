@@ -24,7 +24,7 @@ public class BuyMaSiteRequestProcessor implements SiteRequestProcessor {
 
 	@Override
 	public boolean supportsSite(SiteName siteName) {
-		return siteName == SiteName.OCO;
+		return siteName == SiteName.BUYMA;
 	}
 
 	@Override

@@ -35,6 +35,11 @@ public class BuyMaOptionMapper {
 	public BuyMaOptionContext toBuyMaOptionContext(long siteId, long productGroupId, String externalCategoryId) {
 		ProductOptionContext productOptionContext = productOptionContextQueryInterface.fetchByProductGroupId(
 			productGroupId);
+
+		if(externalCategoryId.isBlank()){
+			return createNoOptionContext(productOptionContext.getProducts());
+		}
+
 		List<? extends ExternalCategoryOptionMapping> externalCategoryOptionMappings =
 			externalCategoryOptionQueryInterface.fetchBySiteIdAndExternalCategoryIds(siteId, List.of(externalCategoryId));
 

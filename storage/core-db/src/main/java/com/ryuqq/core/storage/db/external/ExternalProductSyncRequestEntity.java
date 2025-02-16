@@ -19,7 +19,7 @@ public class ExternalProductSyncRequestEntity extends BaseEntity {
 	@Column(name = "PRODUCT_GROUP_ID", nullable = false)
 	private long productGroupId;
 
-	@Column(name = "EXTERNAL_PRODUCT_GROUP_ID", nullable = false)
+	@Column(name = "EXTERNAL_PRODUCT_GROUP_ID", nullable = true)
 	private String externalProductGroupId;
 
 	@Column(name = "SYNC_RESULT", nullable = false)

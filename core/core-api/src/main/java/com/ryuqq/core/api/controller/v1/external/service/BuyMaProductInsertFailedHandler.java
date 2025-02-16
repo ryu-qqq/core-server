@@ -1,6 +1,7 @@
 package com.ryuqq.core.api.controller.v1.external.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ryuqq.core.api.controller.v1.external.mapper.BuyMaProductInsertedAdapter;
 import com.ryuqq.core.api.controller.v1.external.request.BuyMaEventRequestDto;
@@ -10,7 +11,8 @@ import com.ryuqq.core.api.controller.v1.external.response.BuyMaProductInsertFail
 import com.ryuqq.core.domain.external.ExternalProductGroupStatusUpdater;
 import com.ryuqq.core.enums.SiteName;
 
-@Component
+@Transactional
+@Service
 public class BuyMaProductInsertFailedHandler implements BuyMaWebhookHandler<BuyMaProductInsertFailedRequestDto, BuyMaProductInsertFailedResponseDto>{
 
 	private final ExternalProductGroupStatusUpdater externalProductGroupStatusUpdater;

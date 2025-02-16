@@ -2,8 +2,6 @@ package com.ryuqq.core.domain.product.dao.options;
 
 import java.util.List;
 
-import com.ryuqq.core.domain.product.core.ProductCommand;
-
 public interface ProductPersistenceRepository {
 
 	long save(ProductCommand productCommand);

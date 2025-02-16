@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupImageRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
 import com.ryuqq.core.enums.ProductImageType;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 

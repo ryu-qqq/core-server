@@ -3,8 +3,8 @@ package com.ryuqq.core.api.controller.v1.product.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductDetailDescriptionRequestDto;
-import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommand;
 
 @Component
 class ProductDetailDescriptionMapper implements DomainMapper<ProductDetailDescriptionRequestDto> {

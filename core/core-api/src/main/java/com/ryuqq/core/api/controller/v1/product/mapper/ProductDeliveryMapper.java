@@ -3,8 +3,8 @@ package com.ryuqq.core.api.controller.v1.product.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductDeliveryRequestDto;
-import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 
 @Component
 class ProductDeliveryMapper implements DomainMapper<ProductDeliveryRequestDto> {

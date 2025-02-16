@@ -31,7 +31,7 @@ public class BuyMaStockUpdateHandler implements UpdateTypeHandler {
 
 	@Override
 	public boolean supports(SiteName siteName, ProductDomainEventType productDomainEventType) {
-		return SiteName.BUYMA.equals(siteName) && ProductDomainEventType.STOCK.equals(productDomainEventType);
+		return false;
 	}
 
 	@Override

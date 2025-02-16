@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
 import com.ryuqq.core.api.exception.CoreException;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.enums.ErrorType;
 
 public abstract class AbstractProductGroupContextCommandFactory implements ProductGroupContextCommandFactory {

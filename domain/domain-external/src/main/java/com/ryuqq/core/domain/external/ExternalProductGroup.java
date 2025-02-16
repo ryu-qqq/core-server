@@ -90,6 +90,9 @@ public class ExternalProductGroup {
 	}
 
 	public String getExternalCategoryId() {
+		if(externalCategoryId == null) {
+			return "";
+		}
 		return externalCategoryId;
 	}
 

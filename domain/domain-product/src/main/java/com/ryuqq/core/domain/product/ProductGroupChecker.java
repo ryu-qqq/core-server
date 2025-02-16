@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.product.core.DefaultProductGroup;
 import com.ryuqq.core.domain.product.core.Price;
 import com.ryuqq.core.domain.product.core.ProductGroup;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component

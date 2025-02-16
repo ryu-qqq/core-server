@@ -1,0 +1,4 @@
+
+openai:
+    api:
+        key: 'your_key'

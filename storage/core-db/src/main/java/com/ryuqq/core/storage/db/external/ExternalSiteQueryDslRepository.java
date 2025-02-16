@@ -82,7 +82,7 @@ public class ExternalSiteQueryDslRepository  {
 		return Optional.ofNullable(queryFactory
 				.select(
 					new QExternalSiteDto(
-						externalSiteSellerEntity.siteId,
+						siteEntity.id,
 						siteEntity.name
 					)
 				)

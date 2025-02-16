@@ -27,7 +27,7 @@ public class BuyMaEventResolver implements HandlerMethodArgumentResolver  {
 
 		String eventType = webRequest.getHeader("X-Buyma-Event");
 		if (eventType == null) {
-			throw new IllegalArgumentException("Missing required header: X-GitHub-Event");
+			throw new IllegalArgumentException("Missing required header: \"X-Buyma-Event\"");
 		}
 
 		HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
@@ -35,12 +35,11 @@ public class BuyMaEventResolver implements HandlerMethodArgumentResolver  {
 			throw new IllegalStateException("Unable to retrieve HttpServletRequest");
 		}
 
-		String payload;
-		if (request instanceof RequestWrapper wrapper) {
-			payload = new String(wrapper.getContentAsByteArray(), request.getCharacterEncoding());
-		} else {
-			payload = request.getReader().lines().reduce("", String::concat);
+		if (!(request instanceof RequestWrapper)) {
+			request = new RequestWrapper(request);
 		}
+
+		String payload = new String(((RequestWrapper) request).getContentAsByteArray(), request.getCharacterEncoding());
 
 		return BuyMaEventFactory.getEventInfo(eventType, payload);
 	}

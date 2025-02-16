@@ -20,7 +20,7 @@ public class BuyMaResponseFactory {
 			externalProductGroup.getSiteId(),
 			externalProductGroup.getProductGroupId(),
 			buyMaProductInsertResponseDto.requestUid(),
-			SyncStatus.APPROVED,
+			SyncStatus.PROCESSING,
 			productName,
 			regularPrice,
 			currentPrice,

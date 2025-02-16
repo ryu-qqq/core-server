@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
 import com.ryuqq.core.domain.product.dao.group.ProductGroupPersistenceRepository;
 
 @Component

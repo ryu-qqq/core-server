@@ -5,9 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.UpdateProcessor;
-
-
 @Component
 public class UpdateProcessorProvider {
 

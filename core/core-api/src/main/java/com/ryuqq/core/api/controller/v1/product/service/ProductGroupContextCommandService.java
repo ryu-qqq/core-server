@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextCommandFactory;
 import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextCommandFactoryProvider;
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupContextCommandRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
 import com.ryuqq.core.domain.product.core.ProductGroupContextCommandInterface;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
 
 @Service
 public class ProductGroupContextCommandService {

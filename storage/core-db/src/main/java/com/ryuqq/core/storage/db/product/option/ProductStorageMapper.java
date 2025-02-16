@@ -2,7 +2,7 @@ package com.ryuqq.core.storage.db.product.option;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
 
 @Component
 public class ProductStorageMapper {

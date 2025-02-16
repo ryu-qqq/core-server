@@ -9,6 +9,7 @@ spring:
       - sellic.yml
       - oco.yml
       - buyma.yml
+      - openAi.yml
       - monitoring.yml
 
   web.resources.add-mappings: false

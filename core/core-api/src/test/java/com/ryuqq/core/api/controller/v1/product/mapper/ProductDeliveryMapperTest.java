@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductDeliveryRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.enums.ReturnMethod;
 import com.ryuqq.core.enums.ShipmentCompanyCode;
 import com.ryuqq.core.unit.test.BaseUnitTest;

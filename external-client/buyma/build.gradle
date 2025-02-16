@@ -2,4 +2,6 @@
 
 dependencies {
 	implementation project(":external-client")
+	implementation project(":external-client:openAi")
+
 }

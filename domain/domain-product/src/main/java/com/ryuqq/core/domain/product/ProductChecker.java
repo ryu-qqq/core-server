@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.product.core.Product;
-import com.ryuqq.core.domain.product.core.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
 
 @Component
 public class ProductChecker  {

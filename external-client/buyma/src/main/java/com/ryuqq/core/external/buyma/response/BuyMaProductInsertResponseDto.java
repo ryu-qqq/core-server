@@ -1,12 +1,12 @@
 package com.ryuqq.core.external.buyma.response;
 
-import java.time.LocalDateTime;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record BuyMaProductInsertResponseDto(
 	@JsonProperty("request_received_at")
-	LocalDateTime requestReceivedAt,
+	String requestReceivedAt,
 	@JsonProperty("request_uid")
 	String requestUid
 	) {

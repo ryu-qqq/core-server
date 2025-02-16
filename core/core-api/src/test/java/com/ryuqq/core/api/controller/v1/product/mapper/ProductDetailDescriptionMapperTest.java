@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductDetailDescriptionRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class ProductDetailDescriptionMapperTest extends BaseUnitTest {

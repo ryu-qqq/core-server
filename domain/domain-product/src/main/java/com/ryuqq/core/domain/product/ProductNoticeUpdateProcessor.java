@@ -2,8 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
-import com.ryuqq.core.domain.product.core.UpdateProcessor;
+import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
 
 @Component
 public class ProductNoticeUpdateProcessor implements UpdateProcessor<ProductNoticeCommand> {

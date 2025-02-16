@@ -4,9 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateProcessor;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageContextCommand;
 
 @Component
 public class ProductGroupImageUpdateProcessor implements UpdateProcessor<ProductGroupImageContextCommand> {

@@ -18,10 +18,8 @@ import org.mockito.Spy;
 
 import com.ryuqq.core.domain.product.core.DefaultProductGroupImage;
 import com.ryuqq.core.domain.product.core.DefaultProductGroupImageContext;
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContext;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageContextCommand;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.enums.ProductImageType;
 import com.ryuqq.core.unit.test.BaseUnitTest;

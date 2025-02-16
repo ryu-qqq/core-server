@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
 import com.ryuqq.core.enums.OptionName;
 
 @Component

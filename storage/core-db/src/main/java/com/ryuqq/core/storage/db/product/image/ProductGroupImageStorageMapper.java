@@ -2,7 +2,7 @@ package com.ryuqq.core.storage.db.product.image;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
 
 @Component
 public class ProductGroupImageStorageMapper {

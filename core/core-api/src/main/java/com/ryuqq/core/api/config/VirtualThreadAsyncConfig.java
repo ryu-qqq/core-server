@@ -29,4 +29,30 @@ public class VirtualThreadAsyncConfig implements AsyncConfigurer {
 			});
 		};
 	}
+
+	// @Bean
+	// public ExecutorService virtualThreadExecutorService() {
+	// 	return Executors.newVirtualThreadPerTaskExecutor();
+	// }
+	//
+	//
+	//
+	// @Bean(name = "virtualThreadExecutor")
+	// public Executor virtualThreadExecutor(ExecutorService virtualThreadExecutorService) {
+	// 	return runnable -> {
+	// 		Map<String, String> contextMap = MDC.getCopyOfContextMap();
+	//
+	// 		virtualThreadExecutorService.execute(() -> {
+	// 			try {
+	// 				if (contextMap != null) {
+	// 					MDC.setContextMap(contextMap);
+	// 				}
+	// 				runnable.run();
+	// 			} finally {
+	// 				MDC.clear();
+	// 			}
+	// 		});
+	// 	};
+	// }
+
 }

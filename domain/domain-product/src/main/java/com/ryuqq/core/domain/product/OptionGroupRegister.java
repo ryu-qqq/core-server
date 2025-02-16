@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.OptionGroupCommand;
+import com.ryuqq.core.domain.product.dao.options.group.OptionGroupCommand;
 import com.ryuqq.core.domain.product.dao.options.group.OptionGroupPersistenceRepository;
 
 

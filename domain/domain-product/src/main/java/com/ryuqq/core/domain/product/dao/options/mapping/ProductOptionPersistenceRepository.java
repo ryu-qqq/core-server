@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.product.dao.options.mapping;
 
 import java.util.List;
 
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
 
 public interface ProductOptionPersistenceRepository {
 

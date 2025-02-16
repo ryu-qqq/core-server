@@ -13,10 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.ryuqq.core.domain.exception.DomainException;
-import com.ryuqq.core.domain.product.core.ProductDeliveryCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommand;
-import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
+import com.ryuqq.core.domain.product.dao.delivery.ProductDeliveryCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
+import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
 import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.unit.test.BaseUnitTest;
 

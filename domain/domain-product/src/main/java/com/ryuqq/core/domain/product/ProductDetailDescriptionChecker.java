@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.product.core.DefaultProductDetailDescription;
 import com.ryuqq.core.domain.product.core.ProductDetailDescription;
-import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommand;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component

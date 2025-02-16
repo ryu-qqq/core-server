@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-
 @Component
 public class UpdateCheckerProvider {
 

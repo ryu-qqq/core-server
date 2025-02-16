@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupInsertRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
 import com.ryuqq.core.enums.ManagementType;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;

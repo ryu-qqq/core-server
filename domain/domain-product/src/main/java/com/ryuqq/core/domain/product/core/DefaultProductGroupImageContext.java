@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.ryuqq.core.domain.product.ProductGroupImageContext;
+
 public class DefaultProductGroupImageContext implements ProductGroupImageContext {
 	private final Long productGroupId;
 	private final List<DefaultProductGroupImage> images;

@@ -15,4 +15,11 @@ public class BuyMaConfig {
 	public Logger buyMaFeignLogger() {
 		return new BuyMaFeignLogger();
 	}
+
+	@Bean
+	public Logger.Level buyMaFeignLoggerLevel() {
+		return Logger.Level.FULL;
+	}
+
+
 }

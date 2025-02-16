@@ -20,9 +20,9 @@ public class ExternalProductGroupJdbcRepository {
 
 	public int[] batchInsertExternalProductGroups(List<ExternalProductGroupEntity> externalProductGroupEntities) {
 		String sql = "INSERT INTO EXTERNAL_PRODUCT_GROUP " +
-			"(SITE_ID, PRODUCT_GROUP_ID, EXTERNAL_PRODUCT_GROUP_ID, BRAND_ID, CATEGORY_ID, PRODUCT_NAME, " +
+			"(SITE_ID, PRODUCT_GROUP_ID, EXTERNAL_PRODUCT_GROUP_ID, BRAND_ID, CATEGORY_ID, SELLER_ID, PRODUCT_NAME, " +
 			"REGULAR_PRICE, CURRENT_PRICE, STATUS, FIXED_PRICE, SOLD_OUT, DISPLAYED) " +
-			"VALUES (:siteId, :productGroupId, :externalProductGroupId, :brandId, :categoryId, :productName, " +
+			"VALUES (:siteId, :productGroupId, :externalProductGroupId, :brandId, :categoryId, :sellerId, :productName, " +
 			":regularPrice, :currentPrice, :status, :fixedPrice, :soldOut, :displayed)";
 
 		List<Map<String, Object>> batchValues = externalProductGroupEntities.stream()
@@ -33,6 +33,7 @@ public class ExternalProductGroupJdbcRepository {
 					.addValue("externalProductGroupId", group.getExternalProductGroupId())
 					.addValue("brandId", group.getBrandId())
 					.addValue("categoryId", group.getCategoryId())
+					.addValue("sellerId", group.getSellerId())
 					.addValue("productName", group.getProductName())
 					.addValue("regularPrice", group.getRegularPrice())
 					.addValue("currentPrice", group.getCurrentPrice())

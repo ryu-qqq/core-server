@@ -9,11 +9,9 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
 import com.ryuqq.core.domain.product.core.Product;
 import com.ryuqq.core.domain.product.core.ProductContext;
-import com.ryuqq.core.domain.product.core.ProductOptionCommand;
 import com.ryuqq.core.domain.product.core.ProductOptionContext;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 import com.ryuqq.core.enums.OptionName;
 import com.ryuqq.core.enums.ProductDomainEventType;
 

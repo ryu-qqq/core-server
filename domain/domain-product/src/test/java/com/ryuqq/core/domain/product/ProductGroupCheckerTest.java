@@ -20,8 +20,7 @@ import org.mockito.Spy;
 
 import com.ryuqq.core.domain.product.core.DefaultProductGroup;
 import com.ryuqq.core.domain.product.core.ProductGroup;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
 import com.ryuqq.core.enums.ManagementType;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;

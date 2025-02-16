@@ -18,16 +18,20 @@ import com.ryuqq.core.external.buyma.helper.BuyMaImageInsertFactory;
 import com.ryuqq.core.external.buyma.helper.BuyMaPriceHelper;
 import com.ryuqq.core.external.buyma.helper.BuyMaProductInsertFactory;
 import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestDto;
+import com.ryuqq.core.external.openAi.TranslateResult;
+import com.ryuqq.core.external.openAi.TranslationService;
 
 @Component
 public class BuyMaProductMapper {
 
+	private final TranslationService translationService;
 	private final BrandQueryInterface brandQueryInterface;
 	private final ProductGroupContextQueryInterface productGroupContextQueryInterface;
 	private final BuyMaOptionMapper buyMaOptionMapper;
 
-	public BuyMaProductMapper(BrandQueryInterface brandQueryInterface, ProductGroupContextQueryInterface productGroupContextQueryInterface,
+	public BuyMaProductMapper(TranslationService translationService, BrandQueryInterface brandQueryInterface, ProductGroupContextQueryInterface productGroupContextQueryInterface,
 							  BuyMaOptionMapper buyMaOptionMapper) {
+		this.translationService = translationService;
 		this.brandQueryInterface = brandQueryInterface;
 		this.productGroupContextQueryInterface = productGroupContextQueryInterface;
 		this.buyMaOptionMapper = buyMaOptionMapper;
@@ -47,9 +51,18 @@ public class BuyMaProductMapper {
 
 		Brand brand = brandQueryInterface.fetchById(externalProductGroup.getBrandId());
 
+		String productGroupName;
+		if(externalProductGroup.getExternalProductGroupId() != null){
+			productGroupName = externalProductGroup.getProductName();
+		}else{
+			TranslateResult translate = translationService.translate(productGroup.getProductGroupName());
+			productGroupName = translate.translatedText();
+		}
+
+
 		return BuyMaProductInsertFactory.createInsertRequestDto(
 			externalProductGroup,
-			externalProductGroup.getProductName(),
+			productGroupName,
 			productGroup.getStyleCode(),
 			brand.getBrandName(),
 			Long.parseLong(externalProductGroup.getExternalBrandId()),

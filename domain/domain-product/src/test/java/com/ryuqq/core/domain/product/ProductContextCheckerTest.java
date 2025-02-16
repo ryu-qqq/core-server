@@ -22,8 +22,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Spy;
 
 import com.ryuqq.core.domain.product.core.ProductOptionContext;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 import com.ryuqq.core.domain.product.data.TestProductDataFactory;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductDomainEventType;

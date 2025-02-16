@@ -5,9 +5,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.product.core.ProductNotice;
-import com.ryuqq.core.domain.product.core.ProductNoticeCommand;
-import com.ryuqq.core.domain.product.core.UpdateChecker;
-import com.ryuqq.core.domain.product.core.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.notice.ProductNoticeCommand;
 import com.ryuqq.core.enums.ProductDomainEventType;
 
 @Component

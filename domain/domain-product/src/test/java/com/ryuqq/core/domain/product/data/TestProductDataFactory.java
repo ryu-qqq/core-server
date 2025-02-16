@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.ryuqq.core.domain.product.core.DefaultOptionContext;
-import com.ryuqq.core.domain.product.core.DefaultOptionContextCommand;
 import com.ryuqq.core.domain.product.core.DefaultProduct;
 import com.ryuqq.core.domain.product.core.DefaultProductContext;
-import com.ryuqq.core.domain.product.core.DefaultProductOptionCommand;
 import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
-import com.ryuqq.core.domain.product.core.DefaultProductOptionContextCommand;
-import com.ryuqq.core.domain.product.core.OptionContextCommand;
-import com.ryuqq.core.domain.product.core.ProductCommand;
-import com.ryuqq.core.domain.product.core.ProductOptionCommand;
 import com.ryuqq.core.domain.product.core.ProductOptionContext;
-import com.ryuqq.core.domain.product.core.ProductOptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.DefaultOptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.OptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.ProductCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.DefaultProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.DefaultProductOptionContextCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionCommand;
+import com.ryuqq.core.domain.product.dao.options.mapping.ProductOptionContextCommand;
 import com.ryuqq.core.enums.OptionName;
 import com.ryuqq.core.enums.OptionType;
 

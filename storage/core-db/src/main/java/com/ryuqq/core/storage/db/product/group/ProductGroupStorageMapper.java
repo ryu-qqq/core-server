@@ -3,7 +3,7 @@ package com.ryuqq.core.storage.db.product.group;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.product.core.Price;
-import com.ryuqq.core.domain.product.core.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
 
 @Component
 public class ProductGroupStorageMapper {

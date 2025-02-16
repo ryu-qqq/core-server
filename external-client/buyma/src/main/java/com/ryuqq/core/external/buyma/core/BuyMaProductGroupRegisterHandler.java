@@ -36,7 +36,8 @@ public class BuyMaProductGroupRegisterHandler implements UpdateTypeHandler {
 		return
 			SiteName.BUYMA.equals(siteName) && ProductDomainEventType.PRODUCT_GROUP_REGISTER.equals(productDomainEventType)
 			|| SiteName.BUYMA.equals(siteName) &&  ProductDomainEventType.PRODUCT_GROUP.equals(productDomainEventType)
-			|| SiteName.BUYMA.equals(siteName) &&  ProductDomainEventType.PRICE.equals(productDomainEventType);
+			|| SiteName.BUYMA.equals(siteName) &&  ProductDomainEventType.PRICE.equals(productDomainEventType)
+			|| SiteName.BUYMA.equals(siteName) && ProductDomainEventType.STOCK.equals(productDomainEventType);
 	}
 
 	@Override

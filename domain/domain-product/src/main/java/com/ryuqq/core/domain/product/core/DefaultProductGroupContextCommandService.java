@@ -3,8 +3,12 @@ package com.ryuqq.core.domain.product.core;
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.exception.DomainException;
+import com.ryuqq.core.domain.product.ProductGroupContextEventHandler;
 import com.ryuqq.core.domain.product.ProductGroupContextRegister;
 import com.ryuqq.core.domain.product.ProductGroupContextUpdater;
+import com.ryuqq.core.domain.product.ProductGroupDomainBusinessValidator;
+import com.ryuqq.core.domain.product.UpdateDecision;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
 
 @Service
 public class DefaultProductGroupContextCommandService implements ProductGroupContextCommandInterface {

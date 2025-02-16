@@ -1,10 +1,10 @@
 package com.ryuqq.core.domain.external;
 
-import com.ryuqq.core.domain.external.dao.history.DefaultExternalProductSyncCommand;
-import com.ryuqq.core.domain.external.dao.history.ExternalProductSyncRequestPersistenceRepository;
-
 import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
+
+import com.ryuqq.core.domain.external.dao.history.DefaultExternalProductSyncCommand;
+import com.ryuqq.core.domain.external.dao.history.ExternalProductSyncRequestPersistenceRepository;
 
 @Service
 public class ExternalProductSyncRequestRegister {

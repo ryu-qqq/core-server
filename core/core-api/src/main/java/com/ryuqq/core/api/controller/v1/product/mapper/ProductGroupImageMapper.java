@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupImageRequestDto;
-import com.ryuqq.core.domain.product.core.ProductGroupContextCommandBuilder;
-import com.ryuqq.core.domain.product.core.ProductGroupImageCommand;
-import com.ryuqq.core.domain.product.core.ProductGroupImageContextCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommandBuilder;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
+import com.ryuqq.core.domain.product.dao.image.ProductGroupImageContextCommand;
 
 @Component
 class ProductGroupImageMapper implements DomainMapper<List<ProductGroupImageRequestDto>> {

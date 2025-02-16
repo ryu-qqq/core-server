@@ -2,8 +2,7 @@ package com.ryuqq.core.domain.product;
 
 import org.springframework.stereotype.Component;
 
-import com.ryuqq.core.domain.product.core.ProductDetailDescriptionCommand;
-import com.ryuqq.core.domain.product.core.UpdateProcessor;
+import com.ryuqq.core.domain.product.dao.image.ProductDetailDescriptionCommand;
 
 @Component
 public class ProductDetailDescriptionUpdateProcessor implements UpdateProcessor<ProductDetailDescriptionCommand> {

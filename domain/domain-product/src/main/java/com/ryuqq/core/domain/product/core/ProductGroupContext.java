@@ -1,5 +1,7 @@
 package com.ryuqq.core.domain.product.core;
 
+import com.ryuqq.core.domain.product.ProductGroupImageContext;
+
 public interface ProductGroupContext {
 
 	ProductGroup getProductGroup();
