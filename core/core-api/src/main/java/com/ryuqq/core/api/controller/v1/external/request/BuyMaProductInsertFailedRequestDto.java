@@ -1,7 +1,5 @@
 package com.ryuqq.core.api.controller.v1.external.request;
 
-import java.util.List;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +10,6 @@ public record BuyMaProductInsertFailedRequestDto(
 	String requestUid,
 
 	@JsonProperty("errors")
-	Map<String, List<String>> errors
+	Object errors
 
 ) implements BuyMaEventRequestDto{}
