@@ -11,7 +11,8 @@ import com.ryuqq.core.domain.product.core.ProductContext;
 public class BuyMaStockCalculator {
 
 	public static int calculateTotalQuantity(List<? extends ProductContext> productContexts) {
-		return productContexts.stream().map(p -> p.getProduct().getQuantity()).reduce(0, Integer::sum);
+		Integer totalQuantity = productContexts.stream().map(p -> p.getProduct().getQuantity()).reduce(0, Integer::sum);
+		return Math.min(totalQuantity, 999);
 	}
 
 	public static String determineStockType(List<? extends ProductContext> productContexts) {
