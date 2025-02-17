@@ -59,9 +59,9 @@ class ProductGroupContextUpdaterTest extends BaseUnitTest {
 		when(mockProductGroupContextCommand.getProductDeliveryCommand()).thenReturn(mock(ProductDeliveryCommand.class));
 		when(mockProductGroupContextCommand.getProductDetailDescriptionCommand()).thenReturn(mock(
 			ProductDetailDescriptionCommand.class));
-		when(mockProductGroupContextCommand.getProductGroupImageCommandContextCommand()).thenReturn(mock(
+		when(mockProductGroupContextCommand.getProductGroupImageContextCommand()).thenReturn(mock(
 			ProductGroupImageContextCommand.class));
-		when(mockProductGroupContextCommand.getProductCommandContextCommand()).thenReturn(mock(
+		when(mockProductGroupContextCommand.getProductOptionContextCommand()).thenReturn(mock(
 			ProductOptionContextCommand.class));
 
 		doNothing().when(updateCheckerExecutor).executeChecker(any(), any(), any());
@@ -93,8 +93,8 @@ class ProductGroupContextUpdaterTest extends BaseUnitTest {
 		when(mockProductGroupContextCommand.getProductNoticeCommand()).thenReturn(mock(ProductNoticeCommand.class));
 		when(mockProductGroupContextCommand.getProductDeliveryCommand()).thenReturn(mock(ProductDeliveryCommand.class));
 		when(mockProductGroupContextCommand.getProductDetailDescriptionCommand()).thenReturn(mock(ProductDetailDescriptionCommand.class));
-		when(mockProductGroupContextCommand.getProductGroupImageCommandContextCommand()).thenReturn(mock(ProductGroupImageContextCommand.class));
-		when(mockProductGroupContextCommand.getProductCommandContextCommand()).thenReturn(mock(ProductOptionContextCommand.class));
+		when(mockProductGroupContextCommand.getProductGroupImageContextCommand()).thenReturn(mock(ProductGroupImageContextCommand.class));
+		when(mockProductGroupContextCommand.getProductOptionContextCommand()).thenReturn(mock(ProductOptionContextCommand.class));
 
 		// When
 		productGroupContextUpdater.updateProductGroupContext(1L, mockProductGroupContextCommand);
