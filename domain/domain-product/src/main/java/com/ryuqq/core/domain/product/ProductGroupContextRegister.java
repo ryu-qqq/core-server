@@ -23,7 +23,7 @@ public class ProductGroupContextRegister {
 	public long registerProductGroupContext(ProductGroupContextCommand productGroupContextCommand){
 		long productGroupId = productGroupDomainHandler.handle(productGroupContextCommand.getEssentialProductGroupInfo());
 		productGroupImageDomainHandler.handle(productGroupId, productGroupContextCommand.getEssentialProductImageInfo());
-		productDomainHandler.handle(productGroupId, productGroupContextCommand.getProductCommandContextCommand());
+		productDomainHandler.handle(productGroupId, productGroupContextCommand.getProductOptionContextCommand());
 		return productGroupId;
 	}
 

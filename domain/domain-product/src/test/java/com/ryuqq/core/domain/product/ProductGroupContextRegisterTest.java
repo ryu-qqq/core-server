@@ -55,7 +55,7 @@ class ProductGroupContextRegisterTest extends BaseUnitTest {
 
 		when(mockCommand.getEssentialProductGroupInfo()).thenReturn(essentialProductGroupInfo);
 		when(mockCommand.getEssentialProductImageInfo()).thenReturn(essentialProductImageInfo);
-		when(mockCommand.getProductCommandContextCommand()).thenReturn(productOptionContextCommand);
+		when(mockCommand.getProductOptionContextCommand()).thenReturn(productOptionContextCommand);
 
 		when(productGroupDomainHandler.handle(essentialProductGroupInfo)).thenReturn(expectedProductGroupId);
 
@@ -125,7 +125,7 @@ class ProductGroupContextRegisterTest extends BaseUnitTest {
 
 		when(mockCommand.getEssentialProductGroupInfo()).thenReturn(essentialProductGroupInfo);
 		when(mockCommand.getEssentialProductImageInfo()).thenReturn(essentialProductImageInfo);
-		when(mockCommand.getProductCommandContextCommand()).thenReturn(productOptionContextCommand);
+		when(mockCommand.getProductOptionContextCommand()).thenReturn(productOptionContextCommand);
 
 		when(productGroupDomainHandler.handle(essentialProductGroupInfo)).thenReturn(expectedProductGroupId);
 

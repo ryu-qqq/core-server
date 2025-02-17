@@ -36,8 +36,8 @@ public class ProductGroupContextUpdater {
 		compareField(decision, productGroupContext.getProductNotice(), productGroupContextCommand.getProductNoticeCommand());
 		compareField(decision, productGroupContext.getProductDelivery(), productGroupContextCommand.getProductDeliveryCommand());
 		compareField(decision, productGroupContext.getProductDetailDescription(), productGroupContextCommand.getProductDetailDescriptionCommand());
-		compareField(decision, productGroupContext.getProductGroupImageContext(), productGroupContextCommand.getProductGroupImageCommandContextCommand());
-		compareField(decision, productGroupContext.getProductOptionContext(), productGroupContextCommand.getProductCommandContextCommand());
+		compareField(decision, productGroupContext.getProductGroupImageContext(), productGroupContextCommand.getProductGroupImageContextCommand());
+		compareField(decision, productGroupContext.getProductOptionContext(), productGroupContextCommand.getProductOptionContextCommand());
 	}
 
 	private <T, U> void compareField(UpdateDecision decision, T existingField, U updatedField) {
