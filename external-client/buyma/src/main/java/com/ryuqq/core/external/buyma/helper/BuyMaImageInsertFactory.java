@@ -1,6 +1,7 @@
 package com.ryuqq.core.external.buyma.helper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.ryuqq.core.domain.product.ProductGroupImageContext;
@@ -29,7 +30,15 @@ public class BuyMaImageInsertFactory {
 			}
 		}
 
-		return buyMaImageInsertRequests;
+		List<BuyMaImageInsertRequestDto> ordered = buyMaImageInsertRequests.stream()
+			.sorted(Comparator.comparing(BuyMaImageInsertRequestDto::position))
+			.toList();
+
+		if(ordered.size() > 4) {
+			ordered = ordered.subList(0, 4);
+		}
+
+		return ordered;
 	}
 
 

@@ -1,4 +1,4 @@
-package com.ryuqq.core.domain.external.core;
+package com.ryuqq.core.domain.external;
 
 import org.springframework.stereotype.Component;
 

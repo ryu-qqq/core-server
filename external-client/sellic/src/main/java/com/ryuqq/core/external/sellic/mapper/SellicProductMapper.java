@@ -13,6 +13,8 @@ import com.ryuqq.core.domain.product.core.ProductGroup;
 import com.ryuqq.core.domain.product.core.ProductGroupContext;
 import com.ryuqq.core.domain.product.core.ProductGroupContextQueryInterface;
 import com.ryuqq.core.domain.product.core.ProductNotice;
+import com.ryuqq.core.enums.ErrorType;
+import com.ryuqq.core.external.ExternalSiteException;
 import com.ryuqq.core.external.sellic.SellicImage;
 import com.ryuqq.core.external.sellic.SellicOptionContext;
 import com.ryuqq.core.external.sellic.SellicOrigin;
@@ -64,13 +66,15 @@ public class SellicProductMapper {
 
 
 	private String resolveCategoryId(ExternalProductGroup externalProductGroup) {
-		if (externalProductGroup.getExternalCategoryId() != null) {
-			return externalProductGroup.getExternalCategoryId();
+		if (externalProductGroup.getExternalCategoryId() == null || externalProductGroup.getExternalCategoryId().isBlank()) {
+			throw new ExternalSiteException(ErrorType.BAD_REQUEST_ERROR, "Category Not Matching External Category Id: " + externalProductGroup.getExternalCategoryId());
 		}
+
 		return sellicCategoryConverter.fetchExternalCategoryId(
 			externalProductGroup.getSiteId(),
 			externalProductGroup.getCategoryId()
 		);
+
 	}
 
 

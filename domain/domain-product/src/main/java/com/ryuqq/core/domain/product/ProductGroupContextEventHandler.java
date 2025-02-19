@@ -32,6 +32,7 @@ public class ProductGroupContextEventHandler {
 		// 			productGroupCommand.brandId(), productGroupCommand.categoryId())
 		// 	);
 		// }
+
 		if (updateDecision.hasUpdates()) {
 			productGroupContextEventPublisher.publish(
 				new RealTimeUpdateEvent(productGroupCommand.sellerId(), productGroupId, ProductDomainEventType.PRODUCT_GROUP));

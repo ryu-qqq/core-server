@@ -14,30 +14,29 @@ import com.ryuqq.core.events.RealTimeUpdateEvent;
 @Component
 public class ExternalProductGroupEventHandler {
 
-	private final ExternalProductGroupDomainService externalProductGroupDomainService;
+	private final ExternalProductGroupCommandService externalProductGroupCommandService;
 
-	public ExternalProductGroupEventHandler(ExternalProductGroupDomainService externalProductGroupDomainService) {
-		this.externalProductGroupDomainService = externalProductGroupDomainService;
-
+	public ExternalProductGroupEventHandler(ExternalProductGroupCommandService externalProductGroupCommandService) {
+		this.externalProductGroupCommandService = externalProductGroupCommandService;
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	@Async("asyncThreadPoolTaskExecutor")
 	public void handleProductGroupRegisteredEvent(ProductGroupSyncRequiredEvent event) {
-		externalProductGroupDomainService.registerExternalProductGroup(
+		externalProductGroupCommandService.registerExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	public void handleBatchUpdateRequiredEvent(ProductGroupSyncUpdateRequiredEvent event) {
-		externalProductGroupDomainService.updateExternalProductGroup(
+		externalProductGroupCommandService.updateExternalProductGroup(
 			event.sellerId(), event.productGroupId(), event.brandId(), event.categoryId());
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	@Async("asyncThreadPoolTaskExecutor")
 	public void handleRealTimeUpdateEvent(RealTimeUpdateEvent event) {
-		externalProductGroupDomainService.requestExternalSite(
+		externalProductGroupCommandService.requestExternalSite(
 			event.sellerId(), event.productGroupId(), event.productDomainEventType()
 		);
 	}
@@ -45,7 +44,7 @@ public class ExternalProductGroupEventHandler {
 	@EventListener
 	@Async("asyncThreadPoolTaskExecutor")
 	public void handleFailedSyncExternalProductGroup(ExternalProductGroupFailedEvent event){
-		externalProductGroupDomainService.updateFailedExternalProductGroup(
+		externalProductGroupCommandService.updateFailedExternalProductGroup(
 			event.siteId(), event.productGroupId()
 		);
 	}

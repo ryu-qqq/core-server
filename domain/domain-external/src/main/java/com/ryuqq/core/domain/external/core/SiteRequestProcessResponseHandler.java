@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.domain.external.ExternalProduct;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
+import com.ryuqq.core.domain.external.ExternalProductGroupEventPublisher;
 import com.ryuqq.core.domain.external.ExternalProductGroupRegister;
 import com.ryuqq.core.domain.external.ExternalProductRegister;
 import com.ryuqq.core.domain.external.ExternalProductSyncRequestRegister;

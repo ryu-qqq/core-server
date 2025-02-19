@@ -1,23 +1,23 @@
 package com.ryuqq.core.domain.product;
 
-import com.ryuqq.core.domain.exception.DomainException;
-import com.ryuqq.core.domain.product.core.DefaultProductGroupContextCommandService;
-import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
-import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
-import com.ryuqq.core.enums.ErrorType;
-import com.ryuqq.core.unit.test.BaseUnitTest;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import com.ryuqq.core.domain.exception.DomainException;
+import com.ryuqq.core.domain.product.core.DefaultProductGroupContextCommandService;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupCommand;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupContextCommand;
+import com.ryuqq.core.enums.ErrorType;
+import com.ryuqq.core.unit.test.BaseUnitTest;
 
 class DefaultProductGroupContextCommandServiceTest extends BaseUnitTest {
 

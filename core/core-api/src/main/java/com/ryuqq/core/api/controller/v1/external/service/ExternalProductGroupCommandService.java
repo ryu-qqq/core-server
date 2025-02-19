@@ -1,15 +1,40 @@
 package com.ryuqq.core.api.controller.v1.external.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ryuqq.core.domain.external.ExternalProductGroupRegister;
+import com.ryuqq.core.domain.external.core.ExternalProductGroupAggregateRoot;
+import com.ryuqq.core.enums.ProductDomainEventType;
+import com.ryuqq.core.enums.SyncStatus;
 
+@Transactional
 @Service
 public class ExternalProductGroupCommandService {
 
-	private final ExternalProductGroupRegister externalProductGroupRegister;
+	private final ExternalProductGroupAggregateRoot externalProductGroupAggregateRoot;
 
-	public ExternalProductGroupCommandService(ExternalProductGroupRegister externalProductGroupRegister) {
-		this.externalProductGroupRegister = externalProductGroupRegister;
+	public ExternalProductGroupCommandService(ExternalProductGroupAggregateRoot externalProductGroupAggregateRoot) {
+		this.externalProductGroupAggregateRoot = externalProductGroupAggregateRoot;
 	}
+
+	public void syncExternalProductGroup(long siteId, SyncStatus status, ProductDomainEventType eventType, int size){
+		externalProductGroupAggregateRoot.syncExternalProductGroup(siteId, status, eventType, size);
+	}
+
+	public void registerExternalProductGroup(long sellerId, long productGroupId, long brandId, long categoryId){
+		externalProductGroupAggregateRoot.registerExternalProductGroupWaitingStatus(sellerId, productGroupId, brandId, categoryId);
+	}
+
+	public void updateExternalProductGroup(long sellerId, long productGroupId, long brandId, long categoryId){
+		externalProductGroupAggregateRoot.updateExternalProductGroupSyncRequired(sellerId, productGroupId, brandId, categoryId);
+	}
+
+	public void requestExternalSite(long sellerId, long productGroupId, ProductDomainEventType productDomainEventType){
+		externalProductGroupAggregateRoot.requestExternalSite(sellerId, productGroupId, productDomainEventType);
+	}
+
+	public void updateFailedExternalProductGroup(long siteId, long productGroupId){
+		externalProductGroupAggregateRoot.updateExternalProductGroupFailed(siteId, productGroupId);
+	}
+
 }
