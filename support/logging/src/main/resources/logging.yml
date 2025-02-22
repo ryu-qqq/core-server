@@ -12,7 +12,7 @@ monikit:
         traceEnabled: true
         interceptorsEnabled: true
     metrics:
-        enabled: true
+        metricsEnabled: true
 
 ---
 
@@ -35,7 +35,7 @@ monikit:
         traceEnabled: true
         interceptorsEnabled: true
     metrics:
-        enabled: true
+        metricsEnabled: true
 
 
 ---
@@ -59,4 +59,4 @@ monikit:
         traceEnabled: true
         interceptorsEnabled: true
     metrics:
-        enabled: true
+        metricsEnabled: true
