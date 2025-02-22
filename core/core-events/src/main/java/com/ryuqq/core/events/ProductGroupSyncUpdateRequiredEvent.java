@@ -1,5 +1,7 @@
 package com.ryuqq.core.events;
 
+import com.ryuqq.core.enums.ProductDomainEventType;
+
 /**
  * 상품 등록 시
  * 외부몰 도메인에 외부몰 상품 그룹 등록을 위한 이벤트 발행 메세지
@@ -11,5 +13,6 @@ public record ProductGroupSyncUpdateRequiredEvent(
 	long sellerId,
 	long productGroupId,
 	long brandId,
-	long categoryId
+	long categoryId,
+	ProductDomainEventType productDomainEventType
 ) {}

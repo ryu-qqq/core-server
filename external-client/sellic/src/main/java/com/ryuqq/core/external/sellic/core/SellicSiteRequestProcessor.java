@@ -1,26 +1,20 @@
 package com.ryuqq.core.external.sellic.core;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.core.ExternalMallProductGroupRequestResponse;
 import com.ryuqq.core.domain.external.core.SiteRequestProcessor;
 import com.ryuqq.core.domain.external.core.UpdateTypeHandler;
-import com.ryuqq.core.enums.ErrorType;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.enums.SiteName;
-import com.ryuqq.core.external.ExternalSiteException;
 
-@Service
+@Component
 public class SellicSiteRequestProcessor implements SiteRequestProcessor {
-
-	private final List<UpdateTypeHandler> updateHandlers;
-
-	public SellicSiteRequestProcessor(List<UpdateTypeHandler> updateHandlers) {
-		this.updateHandlers = updateHandlers;
-	}
 
 	@Override
 	public boolean supportsSite(SiteName siteName) {
@@ -28,13 +22,18 @@ public class SellicSiteRequestProcessor implements SiteRequestProcessor {
 	}
 
 	@Override
-	public ExternalMallProductGroupRequestResponse process(ProductDomainEventType productDomainEventType, ExternalProductGroup externalProductGroup) {
-		UpdateTypeHandler handler = updateHandlers.stream()
-			.filter(h -> h.supports(SiteName.SELLIC, productDomainEventType))
-			.findFirst()
-			.orElseThrow(() -> new ExternalSiteException(ErrorType.UNEXPECTED_ERROR, "No handler found for update type: " + productDomainEventType));
-
-		return handler.handle(externalProductGroup);
+	public SiteName getSupportedSite() {
+		return SiteName.SELLIC;
 	}
+
+	@Override
+	public CompletableFuture<ExternalMallProductGroupRequestResponse> process(
+		ProductDomainEventType productDomainEventType, ExternalProductGroup externalProductGroup,
+		ExecutorService executor,
+		List<UpdateTypeHandler<? extends ExternalMallProductGroupRequestResponse>> updateHandlers) {
+		return SiteRequestProcessor.super.process(productDomainEventType, externalProductGroup, executor,
+			updateHandlers);
+	}
+
 
 }

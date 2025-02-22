@@ -15,7 +15,7 @@ dependencies {
     implementation project(":core:core-enum")
 	implementation project(':core:core-events')
 
-	api project(":support:logging")
+	implementation project(":support:logging")
 	implementation project(":support:monitoring")
 	implementation project(":support:utils")
 

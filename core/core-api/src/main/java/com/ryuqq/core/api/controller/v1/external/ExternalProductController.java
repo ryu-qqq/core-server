@@ -34,7 +34,6 @@ public class ExternalProductController {
 		externalProductGroupCommandService.syncExternalProductGroup(externalProductSyncRequestDto.siteId(), externalProductSyncRequestDto.status(), externalProductSyncRequestDto.productDomainEventType(), externalProductSyncRequestDto.size());
 	}
 
-
 	@PostMapping("/external/buyma/webhook")
 	public <T extends BuyMaEventRequestDto> ResponseEntity<ApiResponse<?>> syncWebHookProduct(T requestDto){
 		@SuppressWarnings("unchecked")

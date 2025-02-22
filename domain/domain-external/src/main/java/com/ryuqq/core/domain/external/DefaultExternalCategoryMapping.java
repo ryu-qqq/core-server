@@ -2,7 +2,7 @@ package com.ryuqq.core.domain.external;
 
 import com.ryuqq.core.domain.external.core.ExternalCategoryMapping;
 
-public record ExternalCategory(
+public record DefaultExternalCategoryMapping(
 	long siteId,
 	String externalCategoryId,
 	String externalExtraCategoryId,

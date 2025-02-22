@@ -19,10 +19,6 @@ public class UpdateDecision {
 		}
 	}
 
-	public boolean hasUpdates(boolean isRealTime) {
-		return isRealTime ? !realTimeUpdates.isEmpty() : !batchUpdates.isEmpty();
-	}
-
 	public boolean hasUpdates() {
 		return !realTimeUpdates.isEmpty() || !batchUpdates.isEmpty();
 	}

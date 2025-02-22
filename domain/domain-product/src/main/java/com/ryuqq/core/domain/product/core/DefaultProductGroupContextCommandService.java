@@ -49,6 +49,11 @@ public class DefaultProductGroupContextCommandService implements ProductGroupCon
 					return save(productGroupContextCommand);
 				}
 			}
+
+			if(e.getMessage().contains("not found")) {
+				return save(productGroupContextCommand);
+			}
+
 			throw e;
 		}
 	}

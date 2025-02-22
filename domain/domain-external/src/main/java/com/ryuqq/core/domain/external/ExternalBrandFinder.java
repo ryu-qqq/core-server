@@ -16,12 +16,12 @@ public class ExternalBrandFinder implements ExternalBrandQueryInterface {
 		this.externalBrandQueryRepository = externalBrandQueryRepository;
 	}
 
-	public ExternalBrand fetchBySiteIdAndBrandId(long siteId, long brandId){
+	public DefaultExternalBrandMapping fetchBySiteIdAndBrandId(long siteId, long brandId){
 		return externalBrandQueryRepository.fetchBySiteIdAndBrandId(siteId, brandId);
 	}
 
 
-	public List<ExternalBrand> fetchByInternalBrandId(long siteId, List<Long> brandIds){
+	public List<DefaultExternalBrandMapping> fetchByInternalBrandId(long siteId, List<Long> brandIds){
 		return externalBrandQueryRepository.fetchBySiteIdAndBrandIds(siteId, brandIds);
 	}
 

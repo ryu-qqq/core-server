@@ -28,8 +28,8 @@ public class SellicImageInsertFactory {
 			.sorted(Comparator.comparing(SellicImage::order))
 			.toList();
 
-		if(ordered.size() > 4) {
-			ordered = ordered.subList(0, 4);
+		if(ordered.size() > 5) {
+			ordered = ordered.subList(0, 5);
 		}
 
 		return ordered;

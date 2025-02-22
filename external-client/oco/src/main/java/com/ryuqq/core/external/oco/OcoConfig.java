@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.ryuqq.core.external.FeignRequestLoggingInterceptor;
 
-import feign.Logger;
 
 @ConfigurationProperties(prefix = "oco")
 public class OcoConfig {
@@ -19,16 +18,6 @@ public class OcoConfig {
 	@Bean
 	public OcoRequestInterceptor ocoRequestInterceptor() {
 		return new OcoRequestInterceptor(ocoAuthManager);
-	}
-
-	@Bean
-	public Logger ocoFeignLogger() {
-		return new OcoFeignLogger();
-	}
-
-	@Bean
-	public Logger.Level ocoFeignLoggerLevel() {
-		return Logger.Level.FULL;
 	}
 
 

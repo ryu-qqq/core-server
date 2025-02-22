@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.external.ExternalBrand;
+import com.ryuqq.core.domain.external.DefaultExternalBrandMapping;
 import com.ryuqq.core.domain.external.dao.brand.ExternalBrandQueryRepository;
 import com.ryuqq.core.storage.db.exception.DataNotFoundException;
 
@@ -17,9 +17,9 @@ public class DefaultExternalBrandQueryRepository implements ExternalBrandQueryRe
 		this.externalBrandQueryDslRepository = externalBrandQueryDslRepository;
 	}
 
-	public ExternalBrand fetchBySiteIdAndBrandId(long siteId, long brandId){
+	public DefaultExternalBrandMapping fetchBySiteIdAndBrandId(long siteId, long brandId){
 		return externalBrandQueryDslRepository.fetchBySiteIdAndBrandId(siteId, brandId)
-			.map(e -> new ExternalBrand(
+			.map(e -> new DefaultExternalBrandMapping(
 				e.getSiteId(),
 				e.getExternalBrandId(),
 				e.getInternalBrandId()
@@ -29,9 +29,9 @@ public class DefaultExternalBrandQueryRepository implements ExternalBrandQueryRe
 
 
 	@Override
-	public List<ExternalBrand> fetchBySiteIdAndBrandIds(long siteId, List<Long> brandIds){
+	public List<DefaultExternalBrandMapping> fetchBySiteIdAndBrandIds(long siteId, List<Long> brandIds){
 		return externalBrandQueryDslRepository.fetchBySiteIdAndBrandIds(siteId, brandIds).stream()
-			.map(e -> new ExternalBrand(
+			.map(e -> new DefaultExternalBrandMapping(
 				e.getSiteId(),
 				e.getExternalBrandId(),
 				e.getInternalBrandId()

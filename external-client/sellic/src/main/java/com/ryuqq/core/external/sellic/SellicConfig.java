@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.ryuqq.core.external.FeignRequestLoggingInterceptor;
 
-import feign.Logger;
+
 
 @ConfigurationProperties(prefix = "sellic")
 public class SellicConfig {
@@ -15,16 +15,6 @@ public class SellicConfig {
     public SellicRequestInterceptor sellicRequestInterceptor() {
         return new SellicRequestInterceptor();
     }
-
-	@Bean
-	public Logger sellicFeignLogger() {
-		return new SellicFeignLogger();
-	}
-
-	@Bean
-	public Logger.Level sellicFeignLoggerLevel() {
-		return Logger.Level.FULL;
-	}
 
 	@Bean
 	public FeignRequestLoggingInterceptor sellicFeignRequestLoggingInterceptor() {

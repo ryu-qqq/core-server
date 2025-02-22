@@ -43,10 +43,10 @@ public class SiteRequestProcessResponseHandler {
 				productDomainEventType, productGroup, response);
 			externalProductGroupRegister.update(externalProductGroup);
 
-			externalProductSyncRequestRegister.register(
-				externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(),
-				response.getExternalProductGroupId(), true
-			);
+			// externalProductSyncRequestRegister.register(
+			// 	externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(),
+			// 	response.getExternalProductGroupId(), true
+			// );
 
 			if (!response.getProductIdMappings().isEmpty()) {
 				List<ExternalProduct> externalProducts = ExternalProductResponseFactory.mapResponse(
@@ -59,10 +59,10 @@ public class SiteRequestProcessResponseHandler {
 		}
 	}
 
-	public void handleFailure(ExternalProductGroup externalProductGroup, Exception e) {
+	public void handleFailure(ExternalProductGroup externalProductGroup, Throwable e) {
 		DomainException domainException = new DomainException(ErrorType.UNEXPECTED_ERROR, e);
 		eventPublisher.publishEvent(new ExternalProductGroupFailedEvent(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), domainException));
-		externalProductSyncRequestRegister.register(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), null, false);
+		//externalProductSyncRequestRegister.register(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), null, false);
 	}
 
 
