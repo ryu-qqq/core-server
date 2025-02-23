@@ -1,0 +1,2 @@
+{"@timestamp":"2025-02-23T15:00:03.952Z","level":"INFO","thread_name":"SpringApplicationShutdownHook","logger_name":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","message":"Closing JPA EntityManagerFactory for persistence unit 'default'"}
+{"@timestamp":"2025-02-23T15:00:03.955Z","level":"INFO","thread_name":"SpringApplicationShutdownHook","logger_name":"com.zaxxer.hikari.HikariDataSource","message":"core-db-pool - Shutdown initiated..."}

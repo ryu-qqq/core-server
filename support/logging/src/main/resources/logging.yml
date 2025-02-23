@@ -5,12 +5,11 @@ logging:
 monikit:
     logging:
         detailedLogging: true
-        slowQueryThresholdMs: 1000
-        criticalQueryThresholdMs: 5000
-        datasourceLoggingEnabled: true
-        filtersEnabled: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: false
         traceEnabled: true
-        interceptorsEnabled: true
+        logEnabled: true
     metrics:
         metricsEnabled: true
 
@@ -28,12 +27,11 @@ logging:
 monikit:
     logging:
         detailedLogging: true
-        slowQueryThresholdMs: 1000
-        criticalQueryThresholdMs: 5000
-        datasourceLoggingEnabled: true
-        filtersEnabled: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: false
         traceEnabled: true
-        interceptorsEnabled: true
+        logEnabled: true
     metrics:
         metricsEnabled: true
 
@@ -52,11 +50,10 @@ logging:
 monikit:
     logging:
         detailedLogging: true
-        slowQueryThresholdMs: 1000
-        criticalQueryThresholdMs: 5000
-        datasourceLoggingEnabled: true
-        filtersEnabled: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: false
         traceEnabled: true
-        interceptorsEnabled: true
+        logEnabled: true
     metrics:
         metricsEnabled: true
