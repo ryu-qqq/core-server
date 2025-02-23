@@ -15,9 +15,6 @@ management:
             export:
                 enabled: true
     metrics:
-        enable:
-            jvm: true
-            tomcat: true
         export:
             prometheus:
                 enabled: true
