@@ -1,4 +1,4 @@
-package com.ryuqq.core.logging;
+package com.ryuqq.core.alert;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 import com.monikit.core.ErrorLogNotifier;
 import com.monikit.core.ExceptionLog;
 
-import com.ryuqq.core.logging.ExceptionLogFormatter;
-
 @Component
 public class ErrorSlackNotificationService extends AbstractSlackNotificationService<String> implements
 	ErrorLogNotifier {

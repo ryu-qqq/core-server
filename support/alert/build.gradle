@@ -4,6 +4,6 @@ dependencies {
 
 	implementation project(":core:core-api")
 	implementation "com.slack.api:bolt:${slackVersions}"
-	api project(":support:logging")
+	implementation "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
 
 }
