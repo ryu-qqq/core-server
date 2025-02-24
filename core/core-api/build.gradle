@@ -30,6 +30,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework:spring-tx'
 
+	implementation "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
+	implementation "com.github.ryu-qqq.moni-kit:monikit-starter:${moniKitVersion}"
+
+
 	testImplementation testFixtures(project(":tests:unit-tests"))
 	testImplementation testFixtures(project(":tests:api-docs"))
 	testImplementation(testFixtures(project(":support:utils")))
