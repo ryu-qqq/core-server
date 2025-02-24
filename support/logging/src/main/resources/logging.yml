@@ -55,4 +55,4 @@ monikit:
         traceEnabled: true
         logEnabled: true
     metrics:
-        metricsEnabled: true
+        metricsEnabled: false
