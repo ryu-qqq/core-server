@@ -11,7 +11,11 @@ monikit:
         traceEnabled: true
         logEnabled: true
     metrics:
-        metricsEnabled: false
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50
 
 ---
 
@@ -33,7 +37,11 @@ monikit:
         traceEnabled: true
         logEnabled: true
     metrics:
-        metricsEnabled: false
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50
 
 ---
 
@@ -55,4 +63,8 @@ monikit:
         traceEnabled: true
         logEnabled: true
     metrics:
-        metricsEnabled: false
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50

@@ -39,7 +39,7 @@ public class ExceptionLogFormatter {
 	private static String getShortStackTrace(ExceptionLog logEntry) {
 		String[] lines = logEntry.getStackTrace().split("\n");
 		StringBuilder sb = new StringBuilder();
-		int maxLines = 5; // 최대 5줄까지만 출력
+		int maxLines = 5;
 
 		for (int i = 0; i < Math.min(lines.length, maxLines); i++) {
 			sb.append(lines[i]).append("\n");
