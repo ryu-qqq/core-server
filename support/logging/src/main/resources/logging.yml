@@ -7,7 +7,7 @@ monikit:
         detailedLogging: true
         slowQueryThresholdMs: 2000
         criticalQueryThresholdMs: 7000
-        datasourceLoggingEnabled: false
+        datasourceLoggingEnabled: true
         traceEnabled: true
         logEnabled: true
     metrics:
@@ -59,7 +59,7 @@ monikit:
         detailedLogging: true
         slowQueryThresholdMs: 2000
         criticalQueryThresholdMs: 7000
-        datasourceLoggingEnabled: false
+        datasourceLoggingEnabled: true
         traceEnabled: true
         logEnabled: true
     metrics:
