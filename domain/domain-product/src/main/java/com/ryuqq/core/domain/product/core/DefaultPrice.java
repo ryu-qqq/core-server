@@ -35,15 +35,16 @@ public class DefaultPrice implements Price {
 		this.discountRate = discountRate;
 	}
 
-	public static DefaultPrice create(BigDecimal regularPrice, BigDecimal currentPrice) {
+	public static DefaultPrice create(BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice) {
 		Money regularMoney = Money.wons(regularPrice);
 		Money currentMoney = Money.wons(currentPrice);
+		Money saleMoney = Money.wons(salePrice);
 
 		int discountRate = calculateDiscountRate(regularMoney, currentMoney);
 		return new DefaultPrice(
 			regularMoney,
 			currentMoney,
-			currentMoney,
+			saleMoney,
 			Money.ZERO,
 			0,
 			discountRate

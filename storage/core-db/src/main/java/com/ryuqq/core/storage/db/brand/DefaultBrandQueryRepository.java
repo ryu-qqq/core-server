@@ -1,5 +1,7 @@
 package com.ryuqq.core.storage.db.brand;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.ryuqq.core.domain.brand.dao.BrandQueryRepository;
@@ -25,6 +27,13 @@ public class DefaultBrandQueryRepository implements BrandQueryRepository {
 		return brandQueryDslRepository.fetchById(brandId)
 			.map(BrandSnapshotMapper::toSnapshot)
 			.orElseThrow(() -> new DataNotFoundException(String.format("Brand Not found brand Id : %s", brandId)));
+	}
+
+	@Override
+	public List<? extends BrandSnapshot> fetchByIds(List<Long> brandIds) {
+		return brandQueryDslRepository.fetchByIds(brandIds).stream()
+			.map(BrandSnapshotMapper::toSnapshot)
+			.toList();
 	}
 
 }

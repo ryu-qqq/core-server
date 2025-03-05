@@ -42,11 +42,11 @@ class ProductGroupImageCheckerTest extends BaseUnitTest {
 		void shouldAssignProductGroupIdAndAddUpdateForNewImages() {
 			// Given
 			ProductGroupImageContext existing = createProductGroupImageContext(
-				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg"))
+				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg", 1))
 			);
 
-			ProductGroupImageCommand existingImage = spy(ProductGroupImageCommand.of(0L, 1L, ProductImageType.MAIN, "img1.jpg", "origin1.jpg", false));
-			ProductGroupImageCommand newImage = spy(ProductGroupImageCommand.of(0L, 1L, ProductImageType.DETAIL, "img2.jpg", "origin2.jpg", false)); // 새로운 이미지 추가됨
+			ProductGroupImageCommand existingImage = spy(ProductGroupImageCommand.of(0L, 1L, ProductImageType.MAIN, "img1.jpg", "origin1.jpg", 1, false));
+			ProductGroupImageCommand newImage = spy(ProductGroupImageCommand.of(0L, 1L, ProductImageType.DETAIL, "img2.jpg", "origin2.jpg", 2, false)); // 새로운 이미지 추가됨
 
 			ProductGroupImageContextCommand updated = spy(ProductGroupImageContextCommand.of(List.of(existingImage, newImage)));
 			doReturn(newImage).when(newImage).assignProductGroupId(1L);
@@ -68,10 +68,10 @@ class ProductGroupImageCheckerTest extends BaseUnitTest {
 		void shouldAddUpdateForUpdatedOriginUrl() {
 			// Given
 			ProductGroupImageContext existing = createProductGroupImageContext(
-				List.of(createProductGroupImage(1L, "img1.jpg", "old-origin1.jpg"))
+				List.of(createProductGroupImage(1L, "img1.jpg", "old-origin1.jpg", 1))
 			);
 
-			ProductGroupImageCommand updatedImage = spy(ProductGroupImageCommand.of(1L, 1L, ProductImageType.MAIN, "img1.jpg", "new-origin1.jpg", false));
+			ProductGroupImageCommand updatedImage = spy(ProductGroupImageCommand.of(1L, 1L, ProductImageType.MAIN, "img1.jpg", "new-origin1.jpg", 1, false));
 
 			ProductGroupImageContextCommand updated = spy(ProductGroupImageContextCommand.of(List.of(updatedImage)));
 
@@ -90,7 +90,7 @@ class ProductGroupImageCheckerTest extends BaseUnitTest {
 		void shouldAddUpdateForDeletedImages() {
 			// Given
 			ProductGroupImageContext existing = createProductGroupImageContext(
-				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg"))
+				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg", 1))
 			);
 
 			ProductGroupImageContextCommand updated = spy(ProductGroupImageContextCommand.of(List.of()));
@@ -107,11 +107,11 @@ class ProductGroupImageCheckerTest extends BaseUnitTest {
 		void shouldNotAddUpdateIfNoChangesDetected() {
 			// Given
 			ProductGroupImageContext existing = createProductGroupImageContext(
-				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg"))
+				List.of(createProductGroupImage(1L, "img1.jpg", "origin1.jpg", 1))
 			);
 
 			ProductGroupImageContextCommand updated = spy(ProductGroupImageContextCommand.of(
-				List.of(ProductGroupImageCommand.of(1L, 1L, ProductImageType.MAIN, "img1.jpg", "origin1.jpg", false))
+				List.of(ProductGroupImageCommand.of(1L, 1L, ProductImageType.MAIN, "img1.jpg", "origin1.jpg", 1, false))
 			));
 
 			// When
@@ -167,8 +167,8 @@ class ProductGroupImageCheckerTest extends BaseUnitTest {
 		return new DefaultProductGroupImageContext(1L, images);
 	}
 
-	private DefaultProductGroupImage createProductGroupImage(Long id, String imageUrl, String originUrl) {
-		return DefaultProductGroupImage.create(id, 1L, ProductImageType.MAIN, imageUrl, originUrl, false);
+	private DefaultProductGroupImage createProductGroupImage(Long id, String imageUrl, String originUrl, int displayOrder) {
+		return DefaultProductGroupImage.create(id, 1L, ProductImageType.MAIN, imageUrl, originUrl, displayOrder, false);
 	}
 
 }

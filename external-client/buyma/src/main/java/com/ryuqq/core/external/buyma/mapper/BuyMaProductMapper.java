@@ -66,7 +66,7 @@ public class BuyMaProductMapper implements ExternalProductRequestMapper<BuyMaPro
 			externalProductGroup,
 			productGroupName,
 			productGroup.getStyleCode(),
-			brand.getBrandName(),
+			brand.brandName(),
 			Long.parseLong(externalProductGroup.getExternalBrandId()),
 			Long.parseLong(externalProductGroup.getExternalCategoryId()),
 			buyMaOptionContext.buyMaVariants(),

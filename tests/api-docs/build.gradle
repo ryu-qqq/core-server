@@ -13,32 +13,7 @@ dependencies {
 	testFixturesImplementation 'com.fasterxml.jackson.core:jackson-databind'
 
 }
+
 ext {
 	snippetsDir = file('build/generated-snippets')
-}
-
-asciidoctor {
-	dependsOn test
-	inputs.dir snippetsDir
-
-	sources {
-		include("**/index.adoc", "**/common/*.adoc")
-	}
-
-	attributes 'snippets': snippetsDir
-	baseDirFollowsSourceFile()
-}
-
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs')
-}
-
-tasks.register('copyDocument', Copy) {
-	dependsOn asciidoctor
-	from file("build/docs/asciidoc")
-	into file("src/main/resources/static/docs")
-}
-
-build {
-	dependsOn copyDocument
 }

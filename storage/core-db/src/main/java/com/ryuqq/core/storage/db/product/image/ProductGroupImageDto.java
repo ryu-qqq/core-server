@@ -12,16 +12,19 @@ public class ProductGroupImageDto {
     private final ProductImageType productImageType;
     private final String imageUrl;
     private final String originUrl;
+	private final int displayOrder;
 	private final boolean deleted;
 
     @QueryProjection
     public ProductGroupImageDto(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl,
+								int displayOrder,
 								boolean deleted) {
         this.id = id;
         this.productGroupId = productGroupId;
         this.productImageType = productImageType;
         this.imageUrl = imageUrl;
         this.originUrl = originUrl;
+		this.displayOrder = displayOrder;
 		this.deleted = deleted;
 	}
 
@@ -44,6 +47,10 @@ public class ProductGroupImageDto {
     public String getOriginUrl() {
         return originUrl;
     }
+
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
 
 	public boolean isDeleted() {
 		return deleted;

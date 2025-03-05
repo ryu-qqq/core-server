@@ -8,5 +8,6 @@ public interface ProductGroupImage {
 	ProductImageType getProductImageType();
 	String getOriginUrl();
 	String getImageUrl();
+	int displayOrder();
 	boolean isDeleted();
 }

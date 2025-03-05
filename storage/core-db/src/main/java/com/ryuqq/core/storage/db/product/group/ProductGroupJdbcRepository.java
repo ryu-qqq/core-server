@@ -31,10 +31,10 @@ public class ProductGroupJdbcRepository {
 	public int[] batchInsertProductGroups(List<ProductGroupEntity> productGroups) {
         String sql = "INSERT INTO PRODUCT_GROUP " +
                 "(ID, SELLER_ID, CATEGORY_ID, BRAND_ID, PRODUCT_GROUP_NAME, STYLE_CODE, PRODUCT_CONDITION, " +
-                "MANAGEMENT_TYPE, OPTION_TYPE, REGULAR_PRICE, CURRENT_PRICE, DISCOUNT_RATE, SOLD_OUT, " +
+                "MANAGEMENT_TYPE, OPTION_TYPE, REGULAR_PRICE, CURRENT_PRICE, SALE_PRICE, DISCOUNT_RATE, SOLD_OUT, " +
                 "DISPLAYED, PRODUCT_STATUS, KEYWORDS) " +
                 "VALUES (:id, :sellerId, :categoryId, :brandId, :productGroupName, :styleCode, :productCondition, " +
-                ":managementType, :optionType, :regularPrice, :currentPrice, :discountRate, :soldOut, " +
+                ":managementType, :optionType, :regularPrice, :currentPrice, :salePrice, :discountRate, :soldOut, " +
                 ":displayed, :productStatus, :keywords)";
 
         List<Map<String, Object>> batchValues = productGroups.stream()
@@ -51,7 +51,8 @@ public class ProductGroupJdbcRepository {
                             .addValue("optionType", group.getOptionType().toString())
                             .addValue("regularPrice", group.getRegularPrice())
                             .addValue("currentPrice", group.getCurrentPrice())
-                            .addValue("discountRate", group.getDiscountRate())
+							.addValue("salePrice", group.getSalePrice())
+							.addValue("discountRate", group.getDiscountRate())
                             .addValue("soldOut", group.isSoldOut())
                             .addValue("displayed", group.isDisplayed())
                             .addValue("productStatus", group.getProductStatus().toString())
@@ -76,7 +77,8 @@ public class ProductGroupJdbcRepository {
                 "OPTION_TYPE = :optionType, " +
                 "REGULAR_PRICE = :regularPrice, " +
                 "CURRENT_PRICE = :currentPrice, " +
-                "DISCOUNT_RATE = :discountRate, " +
+				"SALE_PRICE = :salePrice, " +
+				"DISCOUNT_RATE = :discountRate, " +
                 "SOLD_OUT = :soldOut, " +
                 "DISPLAYED = :displayed, " +
                 "PRODUCT_STATUS = :productStatus, " +
@@ -98,7 +100,8 @@ public class ProductGroupJdbcRepository {
                             .addValue("optionType", group.getOptionType().toString())
                             .addValue("regularPrice", group.getRegularPrice())
                             .addValue("currentPrice", group.getCurrentPrice())
-                            .addValue("discountRate", group.getDiscountRate())
+							.addValue("salePrice", group.getSalePrice())
+							.addValue("discountRate", group.getDiscountRate())
                             .addValue("soldOut", group.isSoldOut())
                             .addValue("displayed", group.isDisplayed())
                             .addValue("productStatus", group.getProductStatus().toString())

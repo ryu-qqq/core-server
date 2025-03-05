@@ -31,6 +31,7 @@ class ProductGroupMapper implements DomainMapper<ProductGroupInsertRequestDto> {
 			requestDto.optionType(),
 			requestDto.regularPrice(),
 			requestDto.currentPrice(),
+			requestDto.currentPrice(),
 			requestDto.soldOut(),
 			requestDto.displayed(),
 			requestDto.keywords());

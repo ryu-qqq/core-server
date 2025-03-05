@@ -1,5 +1,6 @@
 package com.ryuqq.core.storage.db.product.image;
 
+import java.util.Comparator;
 import java.util.List;
 
 import com.ryuqq.core.domain.product.core.DefaultProductGroupImage;
@@ -16,8 +17,10 @@ public class ProductImageDomainMapper {
 					dto.getProductImageType(),
 					dto.getImageUrl(),
 					dto.getOriginUrl(),
+					dto.getDisplayOrder(),
 					dto.isDeleted())
 			)
+			.sorted(Comparator.comparingInt(DefaultProductGroupImage::displayOrder))
 			.toList();
 	}
 

@@ -24,7 +24,12 @@ class CategoryFinder implements CategoryQueryInterface {
 
 	@Override
 	public List<? extends Category> fetchRecursiveByIds(long categoryId, boolean isParentRelation){
-		return categoryQueryRepository.fetchRecursiveByIds(List.of(categoryId), isParentRelation).stream()
+		return fetchRecursiveByIds(List.of(categoryId), isParentRelation);
+	}
+
+	@Override
+	public List<? extends Category> fetchRecursiveByIds(List<Long> categoryIds, boolean isParentRelation){
+		return categoryQueryRepository.fetchRecursiveByIds(categoryIds, isParentRelation).stream()
 			.map(CategoryMapper::toCategory)
 			.toList();
 	}

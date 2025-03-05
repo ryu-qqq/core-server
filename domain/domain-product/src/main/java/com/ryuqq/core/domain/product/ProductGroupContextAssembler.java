@@ -1,61 +1,44 @@
 package com.ryuqq.core.domain.product;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.product.core.DefaultProductGroupContext;
-import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductGroupSearchCondition;
 
 @Service
 public class ProductGroupContextAssembler {
 
 	private final ProductGroupFinder productGroupFinder;
-	private final ProductFinder productFinder;
+	private final ProductContextAssembler productContextAssembler;
 
-	public ProductGroupContextAssembler(ProductGroupFinder productGroupFinder, ProductFinder productFinder) {
+	public ProductGroupContextAssembler(ProductGroupFinder productGroupFinder,
+										ProductContextAssembler productContextAssembler) {
 		this.productGroupFinder = productGroupFinder;
-		this.productFinder = productFinder;
+		this.productContextAssembler = productContextAssembler;
 	}
 
-	public DefaultProductGroupContext assemble(long productGroupId) {
-		DefaultProductGroupContext defaultProductGroupContext = productGroupFinder.fetchNoProductContextById(productGroupId);
-		DefaultProductOptionContext defaultProductOptionContext = productFinder.fetchByProductGroupId(productGroupId);
-		return DefaultProductGroupContext.builder()
-			.productGroup(defaultProductGroupContext.getProductGroup())
-			.productDelivery(defaultProductGroupContext.getProductDelivery())
-			.productNotice(defaultProductGroupContext.getProductNotice())
-			.productDetailDescription(defaultProductGroupContext.getProductDetailDescription())
-			.productGroupImages(defaultProductGroupContext.getProductGroupImageContext())
-			.products(defaultProductOptionContext)
-			.build();
+	public ProductGroupContext assemble(long productGroupId) {
+		ProductGroupContext productGroupContext = productGroupFinder.fetchProductContextById(productGroupId);
+		return productContextAssembler.assembleWithProducts(productGroupContext);
 	}
 
-	public List<DefaultProductGroupContext> assemble(List<Long> productGroupIds) {
-		List<DefaultProductGroupContext> defaultProductGroupContexts = productGroupFinder.fetchNoProductContextByIds(productGroupIds);
-		List<DefaultProductOptionContext> defaultProductOptionContexts = productFinder.fetchByProductGroupIds(
-			productGroupIds);
-		Map<Long, DefaultProductOptionContext> productGroupIdMap = groupByProductGroupId(defaultProductOptionContexts);
+	public List<ProductGroupContext> assemble(ProductGroupSearchCondition productGroupSearchCondition) {
+		List<? extends ProductGroupContext> productGroupContexts = productGroupFinder.fetchByCondition(productGroupSearchCondition);
 
-		return defaultProductGroupContexts.stream().map(p -> {
-			DefaultProductOptionContext defaultProductOptionContext = productGroupIdMap.get(p.getProductGroupId());
-			return DefaultProductGroupContext.builder()
-				.productGroup(p.getProductGroup())
-				.productDelivery(p.getProductDelivery())
-				.productNotice(p.getProductNotice())
-				.productDetailDescription(p.getProductDetailDescription())
-				.productGroupImages(p.getProductGroupImageContext())
-				.products(defaultProductOptionContext)
-				.build();
-		}).toList();
+		if(productGroupContexts.isEmpty()) {
+			return List.of();
+		}
+
+		return productContextAssembler.assembleWithProducts(productGroupContexts);
 	}
 
-	private Map<Long, DefaultProductOptionContext> groupByProductGroupId(List<DefaultProductOptionContext> defaultProductOptionContexts){
-		return defaultProductOptionContexts.stream()
-			.collect(Collectors.toMap(DefaultProductOptionContext::getProductGroupId, Function.identity(), (v1, v2) -> v1));
+
+	public long countByCondition(ProductGroupSearchCondition productGroupSearchCondition){
+		return productGroupFinder.countByCondition(productGroupSearchCondition);
 	}
+
+
 
 }

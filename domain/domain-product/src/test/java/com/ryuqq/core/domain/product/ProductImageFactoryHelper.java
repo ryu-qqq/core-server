@@ -23,6 +23,7 @@ public class ProductImageFactoryHelper {
 					+ i,
 				"originUrl-"
 					+ i,
+				i,
 				false
 			))
 			.toList();

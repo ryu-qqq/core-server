@@ -2,6 +2,7 @@ package com.ryuqq.core.storage.db.brand;
 
 import static com.ryuqq.core.storage.db.brand.QBrandEntity.brandEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -46,8 +47,26 @@ public class BrandQueryDslRepository  {
                         .fetchOne());
     }
 
+	public List<BrandDto> fetchByIds(List<Long> brandIds) {
+		return queryFactory
+			.select(
+				new QBrandDto(
+					brandEntity.id,
+					brandEntity.brandName,
+					brandEntity.brandNameKr,
+					brandEntity.displayed
+				)
+			)
+			.from(brandEntity)
+			.where(brandIdIn(brandIds))
+			.fetch();
+	}
+
     private BooleanExpression brandIdEq(long brandId){
         return brandEntity.id.eq(brandId);
     }
+	private BooleanExpression brandIdIn(List<Long> brandIds){
+		return brandEntity.id.in(brandIds);
+	}
 
 }

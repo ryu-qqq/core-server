@@ -17,6 +17,7 @@ public class ProductGroupDomainMapper {
 			dto.getOptionType(),
 			dto.getRegularPrice(),
 			dto.getCurrentPrice(),
+			dto.getSalePrice(),
 			dto.isSoldOut(),
 			dto.isDisplayed(),
 			dto.getProductStatus(),

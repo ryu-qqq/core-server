@@ -11,28 +11,30 @@ public class DefaultProductGroupImage implements ProductGroupImage {
 	private final ProductImageType productImageType;
 	private final String imageUrl;
 	private final String originUrl;
+	private final int displayOrder;
 	private final boolean deleted;
 
 	private DefaultProductGroupImage(Long id, Long productGroupId, ProductImageType productImageType, String imageUrl,
-									 String originUrl, boolean deleted) {
+									 String originUrl, int displayOrder, boolean deleted) {
 		this.id = id;
 		this.productGroupId = productGroupId;
 		this.productImageType = productImageType;
 		this.imageUrl = imageUrl;
 		this.originUrl = originUrl;
+		this.displayOrder = displayOrder;
 		this.deleted = deleted;
 	}
 
-	public static DefaultProductGroupImage create(ProductImageType productImageType, String imageUrl, String originUrl, boolean deleted){
-		return new DefaultProductGroupImage(null, null, productImageType, imageUrl, originUrl, deleted);
+	public static DefaultProductGroupImage create(ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder, boolean deleted){
+		return new DefaultProductGroupImage(null, null, productImageType, imageUrl, originUrl, displayOrder, deleted);
 	}
 
-	public static DefaultProductGroupImage create(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, boolean deleted){
-		return new DefaultProductGroupImage(id, productGroupId, productImageType, imageUrl, originUrl, deleted);
+	public static DefaultProductGroupImage create(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder,  boolean deleted){
+		return new DefaultProductGroupImage(id, productGroupId, productImageType, imageUrl, originUrl, displayOrder, deleted);
 	}
 
 	public DefaultProductGroupImage assignProductGroupId(Long productGroupId) {
-		return new DefaultProductGroupImage(this.id, productGroupId, productImageType, imageUrl, originUrl, deleted);
+		return new DefaultProductGroupImage(this.id, productGroupId, productImageType, imageUrl, originUrl, displayOrder, deleted);
 	}
 
 	@Override
@@ -53,6 +55,11 @@ public class DefaultProductGroupImage implements ProductGroupImage {
 	@Override
 	public String getImageUrl() {
 		return imageUrl;
+	}
+
+	@Override
+	public int displayOrder() {
+		return 0;
 	}
 
 	@Override

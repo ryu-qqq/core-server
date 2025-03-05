@@ -98,7 +98,7 @@ public class SellicProductMapper implements ExternalProductRequestMapper<SellicP
 			.deliveryChargeType(1296)
 			.deliveryFee("0")
 			.tax(0)
-			.brand(brand.getBrandName())
+			.brand(brand.brandName())
 			.detailNote(productDetailDescription.getDetailDescription())
 			.marketPrice(sellicPrice.regularPrice())
 			.salePrice(sellicPrice.currentPrice())

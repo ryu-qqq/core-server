@@ -48,7 +48,7 @@ public class DefaultProductGroup implements ProductGroup {
 	public static DefaultProductGroup create(Long id, long sellerId, long categoryId, long brandId, String productGroupName,
 											 String styleCode,
 											 ProductCondition productCondition, ManagementType managementType, OptionType optionType,
-											 BigDecimal regularPrice, BigDecimal currentPrice, boolean soldOut,
+											 BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice, boolean soldOut,
 											 boolean displayed, ProductStatus productStatus, String keyword){
 		return new DefaultProductGroup(
 			id,
@@ -60,7 +60,7 @@ public class DefaultProductGroup implements ProductGroup {
 			productCondition,
 			managementType,
 			optionType,
-			DefaultPrice.create(regularPrice, currentPrice),
+			DefaultPrice.create(regularPrice, currentPrice, salePrice),
 			soldOut,
 			displayed,
 			productStatus,

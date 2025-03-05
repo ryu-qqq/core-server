@@ -1,21 +1,23 @@
 package com.ryuqq.core.domain.product.core;
 
+import com.ryuqq.core.domain.product.ProductGroupImageContext;
+
 public class DefaultProductGroupContext implements ProductGroupContext {
 
-	private final DefaultProductGroup defaultProductGroup;
-	private final DefaultProductDelivery defaultProductDelivery;
-	private final DefaultProductNotice defaultProductNotice;
-	private final DefaultProductDetailDescription defaultProductDetailDescription;
-	private final DefaultProductGroupImageContext defaultProductGroupImageContext;
-	private final DefaultProductOptionContext defaultProductOptionContext;
+	private final ProductGroup productGroup;
+	private final ProductDelivery productDelivery;
+	private final ProductNotice productNotice;
+	private final ProductDetailDescription productDetailDescription;
+	private final ProductGroupImageContext productGroupImageContext;
+	private final ProductOptionContext productOptionContext;
 
 	private DefaultProductGroupContext(Builder builder) {
-		this.defaultProductGroup = builder.defaultProductGroup;
-		this.defaultProductDelivery = builder.defaultProductDelivery;
-		this.defaultProductNotice = builder.defaultProductNotice;
-		this.defaultProductDetailDescription = builder.defaultProductDetailDescription;
-		this.defaultProductGroupImageContext = builder.productGroupImages;
-		this.defaultProductOptionContext = builder.products;
+		this.productGroup = builder.productGroup;
+		this.productDelivery = builder.productDelivery;
+		this.productNotice = builder.productNotice;
+		this.productDetailDescription = builder.productDetailDescription;
+		this.productGroupImageContext = builder.productGroupImages;
+		this.productOptionContext = builder.productOptionContext;
 	}
 
 	public static Builder builder() {
@@ -24,40 +26,40 @@ public class DefaultProductGroupContext implements ProductGroupContext {
 
 
 	public static class Builder {
-		private DefaultProductGroup defaultProductGroup;
-		private DefaultProductDelivery defaultProductDelivery;
-		private DefaultProductNotice defaultProductNotice;
-		private DefaultProductDetailDescription defaultProductDetailDescription;
-		private DefaultProductGroupImageContext productGroupImages;
-		private DefaultProductOptionContext products;
+		private ProductGroup productGroup;
+		private ProductDelivery productDelivery;
+		private ProductNotice productNotice;
+		private ProductDetailDescription productDetailDescription;
+		private ProductGroupImageContext productGroupImages;
+		private ProductOptionContext productOptionContext;
 
-		public Builder productGroup(DefaultProductGroup defaultProductGroup) {
-			this.defaultProductGroup = defaultProductGroup;
+		public Builder productGroup(ProductGroup productGroup) {
+			this.productGroup = productGroup;
 			return this;
 		}
 
-		public Builder productDelivery(DefaultProductDelivery defaultProductDelivery) {
-			this.defaultProductDelivery = defaultProductDelivery;
+		public Builder productDelivery(ProductDelivery productDelivery) {
+			this.productDelivery = productDelivery;
 			return this;
 		}
 
-		public Builder productNotice(DefaultProductNotice defaultProductNotice) {
-			this.defaultProductNotice = defaultProductNotice;
+		public Builder productNotice(ProductNotice productNotice) {
+			this.productNotice = productNotice;
 			return this;
 		}
 
-		public Builder productDetailDescription(DefaultProductDetailDescription defaultProductDetailDescription) {
-			this.defaultProductDetailDescription = defaultProductDetailDescription;
+		public Builder productDetailDescription(ProductDetailDescription productDetailDescription) {
+			this.productDetailDescription = productDetailDescription;
 			return this;
 		}
 
-		public Builder productGroupImages(DefaultProductGroupImageContext productGroupImages) {
+		public Builder productGroupImages(ProductGroupImageContext productGroupImages) {
 			this.productGroupImages = productGroupImages;
 			return this;
 		}
 
-		public Builder products(DefaultProductOptionContext products) {
-			this.products = products;
+		public Builder products(ProductOptionContext productOptionContext) {
+			this.productOptionContext = productOptionContext;
 			return this;
 		}
 
@@ -66,44 +68,53 @@ public class DefaultProductGroupContext implements ProductGroupContext {
 		}
 	}
 
-
-	public DefaultProductGroup getProductGroup() {
-		return defaultProductGroup;
+	@Override
+	public long getId() {
+		return productGroup.getId();
 	}
 
-	public DefaultProductDelivery getProductDelivery() {
-		return defaultProductDelivery;
+	@Override
+	public ProductGroup getProductGroup() {
+		return productGroup;
 	}
 
-	public DefaultProductNotice getProductNotice() {
-		return defaultProductNotice;
+	@Override
+	public ProductDelivery getProductDelivery() {
+		return productDelivery;
 	}
 
-	public DefaultProductDetailDescription getProductDetailDescription() {
-		return defaultProductDetailDescription;
+	@Override
+	public ProductNotice getProductNotice() {
+		return productNotice;
 	}
 
-	public DefaultProductGroupImageContext getProductGroupImageContext() {
-		return defaultProductGroupImageContext;
+	@Override
+	public ProductDetailDescription getProductDetailDescription() {
+		return productDetailDescription;
+	}
+
+	@Override
+	public ProductGroupImageContext getProductGroupImageContext() {
+		return productGroupImageContext;
 	}
 
 	@Override
 	public ProductOptionContext getProductOptionContext() {
-		return defaultProductOptionContext;
+		return productOptionContext;
 	}
 
 	public long getSellerId() {
-		return defaultProductGroup.getSellerId();
+		return productGroup.getSellerId();
 	}
 
 	public long getProductGroupId() {
-		return defaultProductGroup.getId();
+		return productGroup.getId();
 	}
 
-	public long getCategoryId(){return defaultProductGroup.getCategoryId();}
+	public long getCategoryId(){return productGroup.getCategoryId();}
 
 	public long getBrandId(){
-		return defaultProductGroup.getBrandId();
+		return productGroup.getBrandId();
 	}
 
 }

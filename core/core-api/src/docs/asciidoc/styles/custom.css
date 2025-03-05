@@ -1,0 +1,56 @@
+/* 전체 배경색 및 폰트 */
+body {
+	font-family: 'Inter', sans-serif;
+	background-color: #f9f9f9;
+	color: #333;
+	line-height: 1.6;
+}
+
+/* 헤더 스타일 */
+h1, h2, h3 {
+	font-weight: bold;
+	color: #0056b3;
+}
+
+/* 목차 스타일 */
+#toc {
+	background: #ffffff;
+	padding: 15px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 테이블 스타일 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+th {
+	background: #007bff;
+	color: white;
+}
+
+/* 코드 블록 스타일 */
+pre {
+	background: #272822;
+	color: #f8f8f2;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/* 링크 스타일 */
+a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

@@ -135,13 +135,13 @@ class ProductGroupCheckerTest extends BaseUnitTest {
 
 	private ProductGroup createProductGroup(String name, String styleCode, ProductCondition condition, ManagementType managementType, OptionType optionType,
 											BigDecimal price, BigDecimal cost, boolean isRefundable, boolean isExchangeable, ProductStatus status, String keyword) {
-		return DefaultProductGroup.create(1L, 2L, 3L, 4L, name, styleCode, condition, managementType, optionType, price, cost, isRefundable, isExchangeable, status, keyword);
+		return DefaultProductGroup.create(1L, 2L, 3L, 4L, name, styleCode, condition, managementType, optionType, price, cost, cost, isRefundable, isExchangeable, status, keyword);
 	}
 
 
 	private ProductGroupCommand createProductGroupCommand(String name, String styleCode, ProductCondition condition, ManagementType managementType, OptionType optionType,
 														  BigDecimal price, BigDecimal cost, boolean isRefundable, boolean isExchangeable, String keyword) {
-		return ProductGroupCommand.of(1L, 2L, 3L, 4L, name, styleCode, condition, managementType, optionType, price, cost, isRefundable, isExchangeable, keyword);
+		return ProductGroupCommand.of(1L, 2L, 3L, 4L, name, styleCode, condition, managementType, optionType, price, cost, cost, isRefundable, isExchangeable, keyword);
 	}
 
 }

@@ -1,0 +1,41 @@
+= 📌 CORE API SERVER 문서 (v0.0.1)
+:toc: left
+:toc-title: API 목록
+:doctype: book
+:icons: font
+:source-highlighter: highlight.js
+
+:sectnums:
+:sectlinks:
+
+
+
+
+
+== 🚀 API 개요
+CORE API는 상품 및 브랜드 정보를 제공하는 RESTful API입니다.
+현재 API 문서는 지속적으로 업데이트되고 있으며, 최신 버전(v0.0.1)이 유지됩니다.
+
+⚠ **서버 통합 작업이 진행 중입니다. 따라서 일부 문서가 미흡할 수 있으며, 최대한 빠른 시일 내에 완성할 예정입니다.** ⚠
+이용에 불편을 드려 죄송합니다.
+
+⚠ **이 문서의 모든 저작권 및 재산권은 Connectly에게 있으며, 무단 배포 및 복제를 금합니다.** ⚠
+
+== 📌 브랜드 API
+link:brand-api.html[브랜드 API 문서 보기]- 개발중..
+
+== 🛒 카테고리 API
+link:category-api.html[카테고리 API 문서 보기]- 개발중..
+
+== 🏷 상품 API
+link:product-api.html[상품 API 문서 보기]
+
+== 📌 API 사용 방법
+1. **Base URL**: `https://core-server.set-of.net/v1`
+2. **권한별 접근 제한**:
+- API 접근 권한에 따라 응답 데이터가 다를 수 있습니다.
+- 예를 들어, 관리자 계정과 일반 사용자 계정의 응답 형식 및 허용된 API 엔드포인트가 다를 수 있습니다.
+- **정확한 권한 정보는 API 토큰 발급 시 확인해주세요. (개발 중)**
+
+== 📢 문의 및 지원
+API 관련 문의 사항은 `rsw2@connectly.com`으로 연락 바랍니다.

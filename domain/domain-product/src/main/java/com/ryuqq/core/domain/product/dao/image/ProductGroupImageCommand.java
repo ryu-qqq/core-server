@@ -8,18 +8,19 @@ public interface ProductGroupImageCommand {
 	ProductImageType productImageType();
 	String imageUrl();
 	String originUrl();
+	int displayOrder();
 	boolean deleted();
 
 
-	static ProductGroupImageCommand of(long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl) {
+	static ProductGroupImageCommand of(long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder) {
 		return new DefaultProductGroupImageCommand(
-			0, productGroupId, productImageType, imageUrl, originUrl, false
+			0, productGroupId, productImageType, imageUrl, originUrl, displayOrder, false
 		);
 	}
 
-	static ProductGroupImageCommand of(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, boolean deleted) {
+	static ProductGroupImageCommand of(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder, boolean deleted) {
 		return new DefaultProductGroupImageCommand(
-			id, productGroupId, productImageType, imageUrl, originUrl, deleted
+			id, productGroupId, productImageType, imageUrl, originUrl, displayOrder, deleted
 		);
 	}
 

@@ -15,6 +15,7 @@ public class ProductGroupImageStorageMapper {
 				productGroupImageCommand.productImageType(),
 				productGroupImageCommand.imageUrl(),
 				productGroupImageCommand.originUrl(),
+				productGroupImageCommand.displayOrder(),
 				productGroupImageCommand.deleted()
 			);
 		}
@@ -24,6 +25,7 @@ public class ProductGroupImageStorageMapper {
 			productGroupImageCommand.productImageType(),
 			productGroupImageCommand.imageUrl(),
 			productGroupImageCommand.originUrl(),
+			productGroupImageCommand.displayOrder(),
 			productGroupImageCommand.deleted()
 		);
 	}

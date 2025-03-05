@@ -5,23 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.product.ProductGroupContextFinder;
-import com.ryuqq.core.domain.product.ProductGroupFinder;
 
 @Service
 class DefaultProductGroupContextQueryService implements ProductGroupContextQueryInterface {
 
 	private final ProductGroupContextFinder productGroupContextFinder;
-	private final ProductGroupFinder productGroupFinder;
 
-	public DefaultProductGroupContextQueryService(ProductGroupContextFinder productGroupContextFinder,
-												  ProductGroupFinder productGroupFinder) {
+	public DefaultProductGroupContextQueryService(ProductGroupContextFinder productGroupContextFinder) {
 		this.productGroupContextFinder = productGroupContextFinder;
-		this.productGroupFinder = productGroupFinder;
-	}
-
-	@Override
-	public long fetchProductGroupTopId() {
-		return productGroupFinder.fetchTopId();
 	}
 
 	@Override
@@ -30,8 +21,14 @@ class DefaultProductGroupContextQueryService implements ProductGroupContextQuery
 	}
 
 	@Override
-	public List<? extends ProductGroupContext> fetchByIds(List<Long> productGroupIds) {
-		return productGroupContextFinder.fetchByIds(productGroupIds);
+	public List<? extends ProductGroupContext> fetchByCondition(
+		ProductGroupSearchCondition productGroupSearchCondition) {
+		return productGroupContextFinder.fetchByCondition(productGroupSearchCondition);
+	}
+
+	@Override
+	public long countByCondition(ProductGroupSearchCondition productGroupSearchCondition) {
+		return productGroupContextFinder.countByCondition(productGroupSearchCondition);
 	}
 
 }
