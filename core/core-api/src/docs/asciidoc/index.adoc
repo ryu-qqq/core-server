@@ -21,13 +21,13 @@ CORE API는 상품 및 브랜드 정보를 제공하는 RESTful API입니다.
 ⚠ **이 문서의 모든 저작권 및 재산권은 Connectly에게 있으며, 무단 배포 및 복제를 금합니다.** ⚠
 
 == 📌 브랜드 API
-link:brand-api.html[브랜드 API 문서 보기]
+link:brand.html[브랜드 API 문서 보기]
 
 == 🛒 카테고리 API
-link:category-api.html[카테고리 API 문서 보기]
+link:category.html[카테고리 API 문서 보기]
 
 == 🏷 상품 API
-link:product-api.html[상품 API 문서 보기]
+link:product.html[상품 API 문서 보기]
 
 == 📌 API 사용 방법
 1. **Base URL**: `https://core-server.set-of.net/api/v1`

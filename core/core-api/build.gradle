@@ -80,17 +80,6 @@ tasks.register('copyDocument', Copy) {
 	from file("$buildDir/docs/asciidoc") // ✅ 변환된 HTML 파일들 복사
 	into file("$projectDir/src/main/resources/static/docs")
 
-	doLast {
-		file("$projectDir/src/main/resources/static/docs/product.html")
-			.renameTo(file("$projectDir/src/main/resources/static/docs/product-api.html"))
-
-		file("$projectDir/src/main/resources/static/docs/brand.html")
-			.renameTo(file("$projectDir/src/main/resources/static/docs/brand-api.html"))
-
-		file("$projectDir/src/main/resources/static/docs/cateogry.html")
-			.renameTo(file("$projectDir/src/main/resources/static/docs/cateogry-api.html"))
-
-	}
 }
 
 // ✅ build 실행 시 문서 복사 태스크 실행
