@@ -28,7 +28,6 @@ public class ProductGroupContextQueryService {
 
 	public long countByCondition(ProductGroupSearchCondition productGroupSearchCondition){
 		return productGroupContextQueryInterface.countByCondition(productGroupSearchCondition);
-
 	}
 
 }

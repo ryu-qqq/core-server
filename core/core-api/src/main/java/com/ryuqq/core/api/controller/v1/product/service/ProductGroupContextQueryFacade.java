@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ryuqq.core.api.controller.v1.product.mapper.ProductGroupContextResponseMapperProvider;
 import com.ryuqq.core.api.controller.v1.product.request.ProductGroupSearchConditionRequestDto;
@@ -16,6 +17,7 @@ import com.ryuqq.core.domain.product.core.ProductGroupSearchCondition;
 import com.ryuqq.core.domain.seller.core.Seller;
 import com.ryuqq.core.enums.RequesterType;
 
+@Transactional(readOnly = true)
 @Service
 public class ProductGroupContextQueryFacade {
 

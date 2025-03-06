@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.ryuqq.core.domain.brand.core.BrandSearchCondition;
 import com.ryuqq.core.domain.brand.dao.BrandQueryRepository;
 import com.ryuqq.core.domain.brand.dao.BrandSnapshot;
 import com.ryuqq.core.storage.db.exception.DataNotFoundException;
@@ -30,10 +31,15 @@ public class DefaultBrandQueryRepository implements BrandQueryRepository {
 	}
 
 	@Override
-	public List<? extends BrandSnapshot> fetchByIds(List<Long> brandIds) {
-		return brandQueryDslRepository.fetchByIds(brandIds).stream()
+	public List<? extends BrandSnapshot> fetchByCondition(BrandSearchCondition brandSearchCondition) {
+		return brandQueryDslRepository.fetchByCondition(brandSearchCondition).stream()
 			.map(BrandSnapshotMapper::toSnapshot)
 			.toList();
+	}
+
+	@Override
+	public long countByCondition(BrandSearchCondition brandSearchCondition) {
+		return brandQueryDslRepository.countByCondition(brandSearchCondition);
 	}
 
 }

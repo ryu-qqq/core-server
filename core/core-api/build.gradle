@@ -82,7 +82,11 @@ tasks.register('copyDocument', Copy) {
 
 	doLast {
 		file("$projectDir/src/main/resources/static/docs/product.html")
-			.renameTo(file("$projectDir/src/main/resources/static/docs/product-api.html")) // ✅ product.html -> product-api.html 변경
+			.renameTo(file("$projectDir/src/main/resources/static/docs/product-api.html"))
+
+		file("$projectDir/src/main/resources/static/docs/brand.html")
+			.renameTo(file("$projectDir/src/main/resources/static/docs/brand-api.html"))
+
 	}
 }
 

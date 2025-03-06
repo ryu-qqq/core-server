@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Untitled</title>
+<title>🏷 브랜드 API 문서</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -440,6 +440,44 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_브랜드_api_문서">🏷 브랜드 API 문서</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_개요">📌 개요</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>이 문서는 <strong>DEFAULT 권한 사용자 전용 API 문서</strong>입니다.
+DEFAULT 권한 사용자에게는 추가적인 브랜드 관련 기능이 제공되지 않습니다.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_상품_목록_조회">🛒 상품 목록 조회</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<h1 id="_브랜드_조회_api" class="sect0">브랜드 조회 API</h1>
+<div class="sect1">
+<h2 id="_요청_정보">요청 정보</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/brand?page=0&amp;size=10 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Requester-Type: DEFAULT
+Host: com.ryuqqq.setof</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_요청_헤더">요청 헤더</h2>
+<div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -459,10 +497,134 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tbody>
 </table>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_요청_파라미터">요청 파라미터</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 (기본값: 0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 (기본값: 20)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>brandIds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 ID 목록</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>brandSortField</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 정렬 기준 (ID)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 방식 (ASC/DESC)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cursorId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징을 위한 커서 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>brandSearchField</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 검색 필드 (ID, PRODUCT_GROUP_NAME)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>searchWord</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 키워드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mainDisplayNameType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드명 검색 기준 한글 or 영어 (KR, US)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_응답_정보">응답 정보</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 877
+
+{
+  "data" : {
+    "content" : [ {
+      "id" : 4856,
+      "brandName" : "Moncler",
+      "brandNameKr" : "몽클레어",
+      "displayed" : true
+    }, {
+      "id" : 4857,
+      "brandName" : "Murad",
+      "brandNameKr" : "뮤라드",
+      "displayed" : true
+    }, {
+      "id" : 4858,
+      "brandName" : "NANOS",
+      "brandNameKr" : "나노스",
+      "displayed" : true
+    }, {
+      "id" : 4859,
+      "brandName" : "MONOTHEME",
+      "brandNameKr" : "모노템",
+      "displayed" : true
+    }, {
+      "id" : 4860,
+      "brandName" : "MONDAINE",
+      "brandNameKr" : "몬데인",
+      "displayed" : true
+    } ],
+    "last" : true,
+    "first" : false,
+    "sort" : "DESC",
+    "size" : 10,
+    "numberOfElements" : 5,
+    "empty" : false,
+    "cursor" : 4860,
+    "totalElements" : 5
+  },
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_예제_요청_curl">예제 요청 (cURL)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://com.ryuqqq.setof/api/v1/brand?page=0&amp;size=10' -i -X GET \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Requester-Type: DEFAULT'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2025-03-05 16:52:53 +0900
+Last updated 2025-03-06 14:20:11 +0900
 </div>
 </div>
 </body>

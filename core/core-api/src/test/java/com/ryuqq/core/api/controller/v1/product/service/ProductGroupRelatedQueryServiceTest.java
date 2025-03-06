@@ -1,6 +1,7 @@
 package com.ryuqq.core.api.controller.v1.product.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 
 import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
+import com.ryuqq.core.domain.brand.core.BrandSearchCondition;
 import com.ryuqq.core.domain.category.core.Category;
 import com.ryuqq.core.domain.category.core.CategoryQueryInterface;
 import com.ryuqq.core.domain.seller.core.Seller;
@@ -61,12 +63,14 @@ class ProductGroupRelatedQueryServiceTest extends BaseUnitTest {
 		void shouldFetchMultipleBrandsByIds() {
 			// Given
 			List<Long> brandIds = List.of(10L, 20L);
+
 			Brand brand1 = mock(Brand.class);
 			Brand brand2 = mock(Brand.class);
 			when(brand1.id()).thenReturn(10L);
 			when(brand2.id()).thenReturn(20L);
 
-			when(brandQueryInterface.fetchByIds(brandIds)).thenAnswer(invocation -> List.of(brand1, brand2));
+			when(brandQueryInterface.fetchByCondition(any(BrandSearchCondition.class)))
+				.thenAnswer(invocation -> List.of(brand1, brand2));
 
 			// When
 			Map<Long, Brand> result = productGroupRelatedQueryService.fetchBrandById(brandIds);

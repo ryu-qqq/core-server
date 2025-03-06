@@ -1,0 +1,18 @@
+= 브랜드 조회 API
+:toc: left
+
+== 요청 정보
+include::{snippets}/brand-get-default/http-request.adoc[]
+
+== 요청 헤더
+include::{snippets}/brand-get-default/request-headers.adoc[]
+
+== 요청 파라미터
+include::{snippets}/brand-get-default/query-parameters.adoc[]
+
+== 응답 정보
+include::{snippets}/brand-get-default/http-response.adoc[]
+
+== 예제 요청 (cURL)
+include::{snippets}/brand-get-default/curl-request.adoc[]
+

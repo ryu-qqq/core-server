@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
+import com.ryuqq.core.domain.brand.core.BrandSearchCondition;
 import com.ryuqq.core.domain.category.core.Category;
 import com.ryuqq.core.domain.category.core.CategoryQueryInterface;
 import com.ryuqq.core.domain.seller.core.Seller;
@@ -37,7 +38,9 @@ public class ProductGroupRelatedQueryService {
 	}
 
 	public Map<Long, Brand> fetchBrandById(List<Long> brandIds) {
-		List<? extends Brand> brands = brandQueryInterface.fetchByIds(brandIds);
+
+		BrandSearchCondition brandSearchCondition = BrandSearchCondition.builder().brandIds(brandIds).build();
+		List<? extends Brand> brands = brandQueryInterface.fetchByCondition(brandSearchCondition);
 		return brands.stream()
 			.collect(Collectors.toMap(Brand::id, Function.identity(),
 				(v1, v2) -> v1));
