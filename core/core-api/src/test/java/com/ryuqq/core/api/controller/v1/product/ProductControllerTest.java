@@ -61,7 +61,6 @@ class ProductControllerTest extends RestDocsTest {
 			0, 10, null, null, null, null,
 			null, true, false, null, null, null, null, Sort.DESC,
 			null, null, null, null,
-			null, null,
 			null, null
 		);
 
@@ -124,7 +123,6 @@ class ProductControllerTest extends RestDocsTest {
 					fieldWithPath("data.content[].productGroup.managementType").description("상품 관리 타입"),
 					fieldWithPath("data.content[].productGroup.optionType").description("옵션 타입"),
 
-					// 가격 정보
 					fieldWithPath("data.content[].productGroup.price.regularPrice").description("정가"),
 					fieldWithPath("data.content[].productGroup.price.currentPrice").description("현재 판매 가격"),
 					fieldWithPath("data.content[].productGroup.price.salePrice").description("할인가"),
@@ -136,7 +134,8 @@ class ProductControllerTest extends RestDocsTest {
 					fieldWithPath("data.content[].productGroup.displayed").description("노출 여부"),
 					fieldWithPath("data.content[].productGroup.productStatus").description("상품 상태 (예: WAITING, ACTIVE)"),
 					fieldWithPath("data.content[].productGroup.keyword").description("상품 키워드"),
-
+					fieldWithPath("data.content[].productGroup.createAt").description("상품 등록일 (yyyy-MM-dd HH:mm:ss)"),
+					fieldWithPath("data.content[].productGroup.updateAt").description("상품 수정일 (yyyy-MM-dd HH:mm:ss)"),
 
 					fieldWithPath("data.content[].productNotice.material").description("소재 정보"),
 					fieldWithPath("data.content[].productNotice.color").description("색상 정보"),
@@ -147,7 +146,6 @@ class ProductControllerTest extends RestDocsTest {
 					fieldWithPath("data.content[].productNotice.yearMonth").description("제조 연월"),
 					fieldWithPath("data.content[].productNotice.assuranceStandard").description("품질 보증 기준"),
 					fieldWithPath("data.content[].productNotice.asPhone").description("A/S 연락처"),
-
 
 					fieldWithPath("data.content[].productDelivery.deliveryArea").description("배송 지역"),
 					fieldWithPath("data.content[].productDelivery.deliveryFee").description("배송비"),

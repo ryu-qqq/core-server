@@ -436,32 +436,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>🏷 상품 API 문서</h1>
-<div class="details">
-<span id="revnumber">version 0.0.1</span>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_개요">1. 📌 개요</a></li>
-<li><a href="#_상품_목록_조회">2. 🛒 상품 목록 조회</a></li>
-<li><a href="#_상품_그룹_조회_api">상품 그룹 조회 API</a>
-<ul class="sectlevel1">
-<li><a href="#_요청_정보">1. 요청 정보</a></li>
-<li><a href="#_요청_헤더">2. 요청 헤더</a></li>
-<li><a href="#_요청_파라미터">3. 요청 파라미터</a></li>
-<li><a href="#_응답_정보">4. 응답 정보</a></li>
-<li><a href="#_예제_요청_curl">5. 예제 요청 (cURL)</a></li>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_개요">1. 📌 개요</h2>
+<h2 id="_상품_api_문서">🏷 상품 API 문서</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_개요">📌 개요</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>이 문서는 <strong>DEFAULT 권한 사용자 전용 API 문서</strong>입니다.
@@ -470,14 +456,14 @@ DEFAULT 권한 사용자에게는 추가적인 상품 관련 기능이 제공되
 </div>
 </div>
 <div class="sect1">
-<h2 id="_상품_목록_조회">2. 🛒 상품 목록 조회</h2>
+<h2 id="_상품_목록_조회">🛒 상품 목록 조회</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <h1 id="_상품_그룹_조회_api" class="sect0">상품 그룹 조회 API</h1>
 <div class="sect1">
-<h2 id="_요청_정보">1. 요청 정보</h2>
+<h2 id="_요청_정보">요청 정보</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -490,7 +476,7 @@ Host: com.ryuqqq.setof</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_요청_헤더">2. 요청 헤더</h2>
+<h2 id="_요청_헤더">요청 헤더</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -513,7 +499,7 @@ Host: com.ryuqqq.setof</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_요청_파라미터">3. 요청 파라미터</h2>
+<h2 id="_요청_파라미터">요청 파라미터</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -600,13 +586,13 @@ Host: com.ryuqqq.setof</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_응답_정보">4. 응답 정보</h2>
+<h2 id="_응답_정보">응답 정보</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 12149
+Content-Length: 12413
 
 {
   "data" : {
@@ -633,7 +619,9 @@ Content-Length: 12149
         "soldOut" : false,
         "displayed" : true,
         "productStatus" : "WAITING",
-        "keyword" : ""
+        "keyword" : "",
+        "createAt" : "2025-03-06 11:05:00",
+        "updateAt" : "2025-03-06 11:05:00"
       },
       "productNotice" : {
         "material" : "상세페이지 참조",
@@ -745,7 +733,9 @@ Content-Length: 12149
         "soldOut" : false,
         "displayed" : true,
         "productStatus" : "WAITING",
-        "keyword" : ""
+        "keyword" : "",
+        "createAt" : "2025-03-06 11:05:00",
+        "updateAt" : "2025-03-06 11:05:00"
       },
       "productNotice" : {
         "material" : "상세페이지 참조",
@@ -876,7 +866,9 @@ Content-Length: 12149
         "soldOut" : false,
         "displayed" : true,
         "productStatus" : "WAITING",
-        "keyword" : ""
+        "keyword" : "",
+        "createAt" : "2025-03-06 11:05:00",
+        "updateAt" : "2025-03-06 11:05:00"
       },
       "productNotice" : {
         "material" : "상세페이지 참조",
@@ -1033,7 +1025,7 @@ Content-Length: 12149
 </div>
 </div>
 <div class="sect1">
-<h2 id="_예제_요청_curl">5. 예제 요청 (cURL)</h2>
+<h2 id="_예제_요청_curl">예제 요청 (cURL)</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1048,7 +1040,7 @@ Content-Length: 12149
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2025-03-05 16:47:56 +0900
+Last updated 2025-03-06 09:38:53 +0900
 </div>
 </div>
 </body>

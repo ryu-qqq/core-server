@@ -34,8 +34,6 @@ public class DefaultProductGroupIdBooleanBuilderFactory {
 
 		if (condition.getCreatedAtFrom() != null && condition.getCreatedAtTo() != null) {
 			whereCondition.and(productGroup.createdAt.between(condition.getCreatedAtFrom(), condition.getCreatedAtTo()));
-		} else if (condition.getUpdatedAtFrom() != null && condition.getUpdatedAtTo() != null) {
-			whereCondition.and(productGroup.updatedAt.between(condition.getUpdatedAtFrom(), condition.getUpdatedAtTo()));
 		}
 
 		return whereCondition;

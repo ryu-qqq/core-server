@@ -1,5 +1,9 @@
 package com.ryuqq.core.api.controller.v1.product.response;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.ryuqq.core.domain.product.core.ProductGroup;
 import com.ryuqq.core.domain.seller.core.Seller;
 import com.ryuqq.core.enums.ManagementType;
@@ -22,7 +26,11 @@ public record DefaultProductGroupResponseDto(
 	boolean soldOut,
 	boolean displayed,
 	ProductStatus productStatus,
-	String keyword
+	String keyword,
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	LocalDateTime createAt,
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	LocalDateTime updateAt
 ) {
 
 	public static DefaultProductGroupResponseDto from(ProductGroup productGroup, Seller seller) {
@@ -41,7 +49,9 @@ public record DefaultProductGroupResponseDto(
 			productGroup.isSoldOut(),
 			productGroup.isDisplayed(),
 			productGroup.getProductStatus(),
-			productGroup.getKeyword()
+			productGroup.getKeyword(),
+			productGroup.getCreateAt(),
+			productGroup.getUpdateAt()
 		);
 	}
 }

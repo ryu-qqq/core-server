@@ -30,8 +30,6 @@ public class ProductGroupSearchCondition {
 	private final String searchWord;
 	private final LocalDateTime createdAtFrom;
 	private final LocalDateTime createdAtTo;
-	private final LocalDateTime updatedAtFrom;
-	private final LocalDateTime updatedAtTo;
 	private final boolean simpleQuery;
 
 	private ProductGroupSearchCondition(Builder builder) {
@@ -55,8 +53,6 @@ public class ProductGroupSearchCondition {
 		this.searchWord = builder.searchWord;
 		this.createdAtFrom = builder.createdAtFrom;
 		this.createdAtTo = builder.createdAtTo;
-		this.updatedAtFrom = builder.updatedAtFrom;
-		this.updatedAtTo = builder.updatedAtTo;
 		this.simpleQuery = builder.simpleQuery;
 	}
 
@@ -85,8 +81,6 @@ public class ProductGroupSearchCondition {
 		private String searchWord;
 		private LocalDateTime createdAtFrom;
 		private LocalDateTime createdAtTo;
-		private LocalDateTime updatedAtFrom;
-		private LocalDateTime updatedAtTo;
 		private boolean simpleQuery = false;
 
 		public Builder page(int page) {
@@ -189,16 +183,6 @@ public class ProductGroupSearchCondition {
 			return this;
 		}
 
-		public Builder updatedAtFrom(LocalDateTime updatedAtFrom) {
-			this.updatedAtFrom = updatedAtFrom;
-			return this;
-		}
-
-		public Builder updatedAtTo(LocalDateTime updatedAtTo) {
-			this.updatedAtTo = updatedAtTo;
-			return this;
-		}
-
 		public Builder simpleQuery(boolean simpleQuery) {
 			this.simpleQuery = simpleQuery;
 			return this;
@@ -287,14 +271,6 @@ public class ProductGroupSearchCondition {
 
 	public LocalDateTime getCreatedAtTo() {
 		return createdAtTo;
-	}
-
-	public LocalDateTime getUpdatedAtFrom() {
-		return updatedAtFrom;
-	}
-
-	public LocalDateTime getUpdatedAtTo() {
-		return updatedAtTo;
 	}
 
 	public boolean isSimpleQuery() {

@@ -109,7 +109,9 @@ public abstract class AbstractProductGroupQueryDslRepository implements ProductG
 							productGroupEntity.soldOut,
 							productGroupEntity.displayed,
 							productGroupEntity.productStatus,
-							productGroupEntity.keywords.coalesce("")
+							productGroupEntity.keywords.coalesce(""),
+							productGroupEntity.createdAt,
+							productGroupEntity.updatedAt
 						),
 						new QProductNoticeDto(
 							productNoticeEntity.productGroupId,

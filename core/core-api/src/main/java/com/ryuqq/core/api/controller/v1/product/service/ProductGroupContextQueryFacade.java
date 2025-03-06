@@ -1,7 +1,5 @@
 package com.ryuqq.core.api.controller.v1.product.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,39 +56,21 @@ public class ProductGroupContextQueryFacade {
 		List<? extends ProductGroupContext> productGroupContexts = productGroupContextQueryService.fetchByCondition(
 			productGroupSearchCondition);
 
-		Map<String, List<Long>> stringListMap = extractIds(productGroupContexts);
+		Map<String, List<Long>> extractedIds = ProductGroupExtractor.extractIds(productGroupContexts);
 
 		int size = productGroupSearchCondition.getSize();
-		Map<Long, Brand> brandMap = productGroupRelatedQueryService.fetchBrandById(stringListMap.get("brandIds"));
-		Map<Long, List<Category>> categories = productGroupRelatedQueryService.fetchCategoryHierarchyByIds(stringListMap.get("categoryIds"));
-		Map<Long, Seller> sellerMap = productGroupRelatedQueryService.fetchSellerById(stringListMap.get("sellerIds"));
+		Map<String, Object> relatedEntities = ProductGroupExtractor.fetchRelatedEntities(productGroupRelatedQueryService, extractedIds);
 
 		return (T) productGroupContextResponseMapperProvider
 			.getMapper(requesterType)
-			.toResponseDto(productGroupContexts, brandMap, categories, sellerMap, size, count);
+			.toResponseDto(
+				productGroupContexts,
+				(Map<Long, Brand>) relatedEntities.get("brandMap"),
+				(Map<Long, List<Category>>) relatedEntities.get("categoryMap"),
+				(Map<Long, Seller>) relatedEntities.get("sellerMap"),
+				size,
+				count
+			);
 	}
-
-
-	private Map<String, List<Long>> extractIds(List<? extends ProductGroupContext> productGroupContexts) {
-		List<Long> brandIds = new ArrayList<>();
-		List<Long> categoryIds = new ArrayList<>();
-		List<Long> sellerIds = new ArrayList<>();
-
-		for (ProductGroupContext context : productGroupContexts) {
-			ProductGroup productGroup = context.getProductGroup();
-
-			brandIds.add(productGroup.getBrandId());
-			categoryIds.add(productGroup.getCategoryId());
-			sellerIds.add(productGroup.getSellerId());
-		}
-
-		Map<String, List<Long>> extractedIds = new HashMap<>();
-		extractedIds.put("brandIds", brandIds);
-		extractedIds.put("categoryIds", categoryIds);
-		extractedIds.put("sellerIds", sellerIds);
-
-		return extractedIds;
-	}
-
 
 }

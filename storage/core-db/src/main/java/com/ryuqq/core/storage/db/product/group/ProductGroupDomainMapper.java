@@ -21,7 +21,9 @@ public class ProductGroupDomainMapper {
 			dto.isSoldOut(),
 			dto.isDisplayed(),
 			dto.getProductStatus(),
-			dto.getKeywords()
+			dto.getKeywords(),
+			dto.getCreateAt(),
+			dto.getUpdateAt()
 		);
 	}
 }

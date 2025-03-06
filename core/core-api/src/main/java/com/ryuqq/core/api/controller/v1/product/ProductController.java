@@ -55,6 +55,7 @@ public class ProductController {
 		@RequestHeader(value = "Requester-Type", required = false, defaultValue = "DEFAULT") String requesterType) {
 
 		RequesterType type = RequesterType.valueOf(requesterType.toUpperCase());
+
 		return ResponseEntity.ok(ApiResponse.success(productGroupContextQueryFacade.fetchByConditionForRequester(productGroupSearchConditionRequestDto,
 			type)));
 	}
@@ -65,13 +66,11 @@ public class ProductController {
 		return ResponseEntity.ok(ApiResponse.success(new ProductGroupInsertResponseDto(productGroupId)));
 	}
 
-
 	@PutMapping("/product/group/{productGroupId}")
 	public ResponseEntity<ApiResponse<ProductGroupInsertResponseDto>> updateProductGroup(@PathVariable("productGroupId") long productGroupId, @RequestBody @Valid ProductGroupContextCommandRequestDto productGroupContextCommandRequestDto){
 		long updatedProductGroupId = productGroupContextCommandService.updateProductGroupContext(productGroupId, productGroupContextCommandRequestDto);
 		return ResponseEntity.ok(ApiResponse.success(new ProductGroupInsertResponseDto(updatedProductGroupId)));
 	}
-
 
 
 }

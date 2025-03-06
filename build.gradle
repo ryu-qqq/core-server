@@ -21,19 +21,6 @@ allprojects {
 	}
 }
 
-spotless {
-	java {
-		target fileTree('src') {
-			include '**/*.java'
-			exclude '**/Q*.java'
-			exclude '**/generated/**'
-		}
-		importOrderFile(rootProject.file('rule-config/importorder'))
-		removeUnusedImports()
-		trimTrailingWhitespace()
-		endWithNewline()
-	}
-}
 
 checkstyle {
 	toolVersion = "${checkstyleVersion}"

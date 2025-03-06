@@ -2,6 +2,7 @@ package com.ryuqq.core.storage.db.product.group;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import com.querydsl.core.annotations.QueryProjection;
 
@@ -29,12 +30,16 @@ public class ProductGroupDto {
     private final boolean displayed;
     private final ProductStatus productStatus;
     private final String keywords;
+	private LocalDateTime createAt;
+	private LocalDateTime updateAt;
 
 	@QueryProjection
 	public ProductGroupDto(long productGroupId, long sellerId, long categoryId, long brandId, String productGroupName,
 						   String styleCode, ProductCondition productCondition, ManagementType managementType,
 						   OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice,
-						   int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords) {
+						   int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords,
+						   LocalDateTime createAt,
+						   LocalDateTime updateAt) {
 		this.productGroupId = productGroupId;
 		this.sellerId = sellerId;
 		this.categoryId = categoryId;
@@ -52,6 +57,8 @@ public class ProductGroupDto {
 		this.displayed = displayed;
 		this.productStatus = productStatus;
 		this.keywords = keywords;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
 	}
 
 	public long getProductGroupId() {
@@ -120,5 +127,13 @@ public class ProductGroupDto {
 
 	public String getKeywords() {
 		return keywords;
+	}
+
+	public LocalDateTime getCreateAt() {
+		return createAt;
+	}
+
+	public LocalDateTime getUpdateAt() {
+		return updateAt;
 	}
 }

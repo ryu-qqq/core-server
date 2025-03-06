@@ -1,6 +1,5 @@
 = 상품 그룹 조회 API
 :toc: left
-:sectnums:
 
 == 요청 정보
 include::{snippets}/product-group-get-default/http-request.adoc[]

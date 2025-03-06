@@ -1,6 +1,7 @@
 package com.ryuqq.core.api.data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ryuqq.core.api.controller.v1.product.response.DefaultProductGroupContextResponseDto;
@@ -87,7 +88,9 @@ public class ProductGroupModuleHelper {
 			false,
 			true,
 			ProductStatus.WAITING,
-			""
+			"",
+			LocalDateTime.now(),
+			LocalDateTime.now()
 		);
 	}
 

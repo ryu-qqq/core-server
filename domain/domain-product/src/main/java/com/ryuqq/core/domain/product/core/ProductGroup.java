@@ -1,5 +1,7 @@
 package com.ryuqq.core.domain.product.core;
 
+import java.time.LocalDateTime;
+
 import com.ryuqq.core.enums.ManagementType;
 import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;
@@ -21,5 +23,7 @@ public interface ProductGroup {
 	boolean isDisplayed();
 	ProductStatus getProductStatus();
 	String getKeyword();
+	LocalDateTime getCreateAt();
+	LocalDateTime getUpdateAt();
 
 }

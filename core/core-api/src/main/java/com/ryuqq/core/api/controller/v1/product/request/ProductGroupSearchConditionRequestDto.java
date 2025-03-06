@@ -35,17 +35,9 @@ public record ProductGroupSearchConditionRequestDto(
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	LocalDateTime createdAtFrom,
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	LocalDateTime createdAtTo,
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	LocalDateTime updatedAtFrom,
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	LocalDateTime updatedAtTo
+	LocalDateTime createdAtTo
 ) {
 	public ProductGroupSearchCondition toProductGroupSearchCondition() {
-
-		if ((createdAtFrom != null && createdAtTo != null) && (updatedAtFrom != null && updatedAtTo != null)) {
-			throw new IllegalArgumentException("Either 'createdAt' or 'updatedAt' should be provided, but not both.");
-		}
 
 		return ProductGroupSearchCondition.builder()
 			.page(page != null ? page : 0)
@@ -68,8 +60,6 @@ public record ProductGroupSearchConditionRequestDto(
 			.searchWord(searchWord)
 			.createdAtFrom(createdAtFrom)
 			.createdAtTo(createdAtTo)
-			.updatedAtFrom(updatedAtFrom)
-			.updatedAtTo(updatedAtTo)
 			.simpleQuery(ProductGroupSearchConditionAnalyzer.isSimpleQuery(this))
 			.build();
 	}

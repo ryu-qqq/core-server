@@ -18,7 +18,7 @@ public class ProductGroupSearchConditionHelper {
 		BooleanBuilder searchCondition = new BooleanBuilder();
 
 		if (condition.getSearchWord() == null || condition.getSearchWord().isBlank()) {
-			return searchCondition; // 검색어가 없으면 빈 조건 반환
+			return searchCondition;
 		}
 
 		String likePattern = "%" + condition.getSearchWord() + "%";
