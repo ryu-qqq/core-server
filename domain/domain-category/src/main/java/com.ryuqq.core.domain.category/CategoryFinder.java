@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.category.core.Category;
 import com.ryuqq.core.domain.category.core.CategoryQueryInterface;
+import com.ryuqq.core.domain.category.core.CategorySearchCondition;
 import com.ryuqq.core.domain.category.dao.CategoryQueryRepository;
 
 @Component
@@ -24,9 +25,26 @@ class CategoryFinder implements CategoryQueryInterface {
 
 	@Override
 	public List<? extends Category> fetchRecursiveByIds(long categoryId, boolean isParentRelation){
-		return categoryQueryRepository.fetchRecursiveByIds(List.of(categoryId), isParentRelation).stream()
+		return fetchRecursiveByIds(List.of(categoryId), isParentRelation);
+	}
+
+	@Override
+	public List<? extends Category> fetchRecursiveByIds(List<Long> categoryIds, boolean isParentRelation){
+		return categoryQueryRepository.fetchRecursiveByIds(categoryIds, isParentRelation).stream()
 			.map(CategoryMapper::toCategory)
 			.toList();
+	}
+
+	@Override
+	public List<? extends Category> fetchByCondition(CategorySearchCondition categorySearchCondition) {
+		return categoryQueryRepository.fetchByCondition(categorySearchCondition).stream()
+			.map(CategoryMapper::toCategory)
+			.toList();
+	}
+
+	@Override
+	public long countByCondition(CategorySearchCondition categorySearchCondition) {
+		return categoryQueryRepository.countByCondition(categorySearchCondition);
 	}
 
 }

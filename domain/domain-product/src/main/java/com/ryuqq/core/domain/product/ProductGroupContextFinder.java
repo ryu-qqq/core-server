@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ryuqq.core.domain.product.core.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductGroupSearchCondition;
 
 @Service
 public class ProductGroupContextFinder {
@@ -19,8 +20,11 @@ public class ProductGroupContextFinder {
 		return productGroupContextAssembler.assemble(productGroupId);
 	}
 
-	public List<? extends ProductGroupContext> fetchByIds(List<Long> productGroupIds){
-		return productGroupContextAssembler.assemble(productGroupIds);
+	public List<? extends ProductGroupContext> fetchByCondition(ProductGroupSearchCondition productGroupSearchCondition){
+		return productGroupContextAssembler.assemble(productGroupSearchCondition);
 	}
 
+	public long countByCondition(ProductGroupSearchCondition productGroupSearchCondition){
+		return productGroupContextAssembler.countByCondition(productGroupSearchCondition);
+	}
 }

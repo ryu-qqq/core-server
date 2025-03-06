@@ -19,12 +19,12 @@ public class StorageExceptionWrapperAspect {
 	public Object handleStorageLayerExceptions(ProceedingJoinPoint joinPoint) throws Throwable {
 		try {
 			return joinPoint.proceed();
-		}catch (RdsStorageException e) {
-			throw e;
 		} catch (TransientDataAccessException e) {
 			throw new RdsStorageException(ErrorType.DATABASE_TRANSIENT_ERROR, e);
 		} catch (NonTransientDataAccessException e) {
 			throw new RdsStorageException(ErrorType.DATABASE_PERMANENT_ERROR, e);
+		} catch (RdsStorageException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new RdsStorageException(ErrorType.UNEXPECTED_ERROR, e);
 		}

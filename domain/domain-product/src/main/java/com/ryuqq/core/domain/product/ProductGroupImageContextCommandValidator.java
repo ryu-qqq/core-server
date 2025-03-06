@@ -1,5 +1,7 @@
 package com.ryuqq.core.domain.product;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.product.dao.image.ProductGroupImageCommand;
@@ -17,10 +19,7 @@ public class ProductGroupImageContextCommandValidator implements
 
 	@Override
 	public void validate(ProductGroupImageContextCommand target, ValidationResult result, boolean updated) {
-		long mainImageCount = target.productGroupImageCommands().stream()
-			.map(ProductGroupImageCommand::productImageType)
-			.filter(type -> type == ProductImageType.MAIN)
-			.count();
+		long mainImageCount = getMainImageCount(target.productGroupImageCommands());
 
 		if (mainImageCount == 0) {
 			result.addError("At least one MAIN image is required.");
@@ -30,4 +29,12 @@ public class ProductGroupImageContextCommandValidator implements
 			result.addError("Only one MAIN image is allowed.");
 		}
 	}
+
+	private long getMainImageCount(List<? extends ProductGroupImageCommand> productGroupImageCommands) {
+		return productGroupImageCommands.stream()
+			.map(ProductGroupImageCommand::productImageType)
+			.filter(type -> type == ProductImageType.MAIN)
+			.count();
+	}
+
 }

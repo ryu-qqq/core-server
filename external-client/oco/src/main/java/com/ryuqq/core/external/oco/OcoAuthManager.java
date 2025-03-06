@@ -23,9 +23,6 @@ public class OcoAuthManager {
 	@Value("${oco.password}")
 	private String password;
 
-	@Value("${oco.api-key}")
-	private String apiKey;
-
 	private volatile String token;
 	private volatile Instant expiryTime;
 
@@ -36,7 +33,6 @@ public class OcoAuthManager {
 	public String getToken() {
 		if (token == null || isTokenExpired()) {
 			synchronized (this) {
-				// 이중 체크 락킹
 				if (token == null || isTokenExpired()) {
 					fetchToken();
 				}

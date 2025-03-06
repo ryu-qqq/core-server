@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface ProductGroupContextQueryInterface {
 
-	long fetchProductGroupTopId();
 	ProductGroupContext fetchById(long productGroupId);
-	List<? extends ProductGroupContext> fetchByIds(List<Long> productGroupIds);
+	List<? extends ProductGroupContext> fetchByCondition(ProductGroupSearchCondition productGroupSearchCondition);
+	long countByCondition(ProductGroupSearchCondition productGroupSearchCondition);
 
 }

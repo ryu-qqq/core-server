@@ -26,6 +26,7 @@ public class ProductOptionValidator implements ProductGroupDomainValidator<Produ
 	public void validate(ProductOptionContextCommand target, ValidationResult result, boolean updated) {
 
 		OptionType optionType = target.optionType();
+
 		List<? extends ProductOptionCommand> productCommands = target.productCommands();
 
 		if (!optionType.isMultiOption() && productCommands.size() > 1) {
@@ -39,9 +40,6 @@ public class ProductOptionValidator implements ProductGroupDomainValidator<Produ
 		assert productCommands != null;
 		productCommands
 			.forEach(p -> validateOption(p.productCommand(), optionType, p.optionContextCommands(), result, updated));
-
-
-
 	}
 
 	private void validateOption(ProductCommand productCommand, OptionType optionType, List<? extends OptionContextCommand> options, ValidationResult result, boolean updated) {

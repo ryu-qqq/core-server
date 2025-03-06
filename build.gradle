@@ -21,19 +21,6 @@ allprojects {
 	}
 }
 
-spotless {
-	java {
-		target fileTree('src') {
-			include '**/*.java'
-			exclude '**/Q*.java'
-			exclude '**/generated/**'
-		}
-		importOrderFile(rootProject.file('rule-config/importorder'))
-		removeUnusedImports()
-		trimTrailingWhitespace()
-		endWithNewline()
-	}
-}
 
 checkstyle {
 	toolVersion = "${checkstyleVersion}"
@@ -57,7 +44,6 @@ subprojects {
 
 	dependencies {
 		implementation "org.springframework.boot:spring-boot-starter-aop"
-
 		testImplementation "org.springframework.boot:spring-boot-starter-test"
 		testImplementation "org.junit.platform:junit-platform-suite:${junitPlatFormVersion}"
 		testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"

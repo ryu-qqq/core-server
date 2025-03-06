@@ -51,7 +51,7 @@ public class ProductDomainMapper {
 
 	private Map<String, List<ProductContextDto>> groupProductsByProductGroupId(List<ProductContextDto> products) {
 		return products.stream()
-			.collect(Collectors.groupingBy(p -> p.getOptionGroupId() + "," + p.getOptionType()));
+			.collect(Collectors.groupingBy(p -> p.getProductGroupId() + "," + p.getOptionType()));
 	}
 
 	private List<DefaultProductContext> createProductContexts(List<ProductContextDto> products) {

@@ -52,25 +52,28 @@ public class ProductGroupEntity extends BaseEntity {
     @Column(name = "CURRENT_PRICE", nullable = false)
     private BigDecimal currentPrice;
 
+	@Column(name = "SALE_PRICE", nullable = false)
+	private BigDecimal salePrice;
+
     @Column(name = "DISCOUNT_RATE", nullable = false)
     private int discountRate;
 
     @Column(name = "SOLD_OUT", nullable = false)
     private boolean soldOut;
 
-    @Column(name = "DISPLAYED",  nullable = false)
+    @Column(name = "DISPLAYED", nullable = false)
     private boolean displayed;
 
     @Column(name = "PRODUCT_STATUS", length = 10,  nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ProductStatus productStatus;
 
-    @Column(name = "KEYWORDS",  length =255, nullable = true)
+    @Column(name = "KEYWORDS", length =255, nullable = true)
     private String keywords;
 
     protected ProductGroupEntity() {}
 
-    public ProductGroupEntity(long sellerId, long categoryId, long brandId, String productGroupName, String styleCode, ProductCondition productCondition, ManagementType managementType, OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords) {
+    public ProductGroupEntity(long sellerId, long categoryId, long brandId, String productGroupName, String styleCode, ProductCondition productCondition, ManagementType managementType, OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice, int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords) {
         this.sellerId = sellerId;
         this.categoryId = categoryId;
         this.brandId = brandId;
@@ -81,6 +84,7 @@ public class ProductGroupEntity extends BaseEntity {
         this.optionType = optionType;
         this.regularPrice = regularPrice;
         this.currentPrice = currentPrice;
+		this.salePrice = salePrice;
         this.discountRate = discountRate;
         this.soldOut = soldOut;
         this.displayed = displayed;
@@ -88,7 +92,7 @@ public class ProductGroupEntity extends BaseEntity {
         this.keywords = keywords;
     }
 
-    public ProductGroupEntity(long id, long sellerId, long categoryId, long brandId, String productGroupName, String styleCode, ProductCondition productCondition, ManagementType managementType, OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords) {
+    public ProductGroupEntity(long id, long sellerId, long categoryId, long brandId, String productGroupName, String styleCode, ProductCondition productCondition, ManagementType managementType, OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice, int discountRate, boolean soldOut, boolean displayed, ProductStatus productStatus, String keywords) {
         this.id = id;
         this.sellerId = sellerId;
         this.categoryId = categoryId;
@@ -100,7 +104,8 @@ public class ProductGroupEntity extends BaseEntity {
         this.optionType = optionType;
         this.regularPrice = regularPrice;
         this.currentPrice = currentPrice;
-        this.discountRate = discountRate;
+		this.salePrice = salePrice;
+		this.discountRate = discountRate;
         this.soldOut = soldOut;
         this.displayed = displayed;
         this.productStatus = productStatus;
@@ -145,6 +150,10 @@ public class ProductGroupEntity extends BaseEntity {
 
 	public BigDecimal getCurrentPrice() {
 		return currentPrice;
+	}
+
+	public BigDecimal getSalePrice() {
+		return salePrice;
 	}
 
 	public int getDiscountRate() {

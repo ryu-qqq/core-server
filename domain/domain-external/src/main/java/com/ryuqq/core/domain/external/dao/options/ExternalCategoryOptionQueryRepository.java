@@ -2,10 +2,10 @@ package com.ryuqq.core.domain.external.dao.options;
 
 import java.util.List;
 
-import com.ryuqq.core.domain.external.ExternalCategoryOption;
+import com.ryuqq.core.domain.external.DefaultExternalCategoryOptionMapping;
 
 public interface ExternalCategoryOptionQueryRepository {
 
-	List<ExternalCategoryOption> fetchBySiteIdAndExternalCategoryIds(long siteId, List<String> externalCategoryIds);
+	List<DefaultExternalCategoryOptionMapping> fetchBySiteIdAndExternalCategoryIds(long siteId, List<String> externalCategoryIds);
 
 }

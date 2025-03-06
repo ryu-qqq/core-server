@@ -26,23 +26,28 @@ public class ProductGroupImageEntity extends BaseEntity {
 	@Column(name = "ORIGIN_URL", length = 255, nullable = false)
 	private String originUrl;
 
+	@Column(name = "DISPLAY_ORDER", nullable = true)
+	private int displayOrder;
+
 	protected ProductGroupImageEntity() {}
 
 
-	public ProductGroupImageEntity(long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, boolean deleted) {
+	public ProductGroupImageEntity(long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder, boolean deleted) {
 		this.productGroupId = productGroupId;
 		this.productImageType = productImageType;
 		this.imageUrl = imageUrl;
 		this.originUrl = originUrl;
+		this.displayOrder = displayOrder;
 		this.deleted =deleted;
 	}
 
-	public ProductGroupImageEntity(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, boolean deleted) {
+	public ProductGroupImageEntity(long id, long productGroupId, ProductImageType productImageType, String imageUrl, String originUrl, int displayOrder, boolean deleted) {
 		this.id = id;
 		this.productGroupId = productGroupId;
 		this.productImageType = productImageType;
 		this.imageUrl = imageUrl;
 		this.originUrl = originUrl;
+		this.displayOrder = displayOrder;
 		this.deleted =deleted;
 	}
 
@@ -62,4 +67,7 @@ public class ProductGroupImageEntity extends BaseEntity {
 		return originUrl;
 	}
 
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
 }

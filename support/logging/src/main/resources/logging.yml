@@ -4,13 +4,18 @@ logging:
 
 monikit:
     logging:
-        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
-        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
-        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
-        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
-
+        detailedLogging: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: true
+        traceEnabled: true
+        logEnabled: true
     metrics:
-        enabled: true
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50
 
 ---
 
@@ -25,14 +30,18 @@ logging:
 
 monikit:
     logging:
-        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
-        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
-        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
-        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
-
+        detailedLogging: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: true
+        traceEnabled: true
+        logEnabled: true
     metrics:
-        enabled: true
-
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50
 
 ---
 
@@ -47,10 +56,15 @@ logging:
 
 monikit:
     logging:
-        detailedLogging: true  # 상세 로깅 여부 (기본값: false)
-        slowQueryThresholdMs: 1000  # WARN 로그 기준 (1초 이상)
-        criticalQueryThresholdMs: 5000  # ERROR 로그 기준 (5초 이상)
-        datasourceLoggingEnabled: true  # 데이터베이스 로깅 활성화 여부
-
+        detailedLogging: true
+        slowQueryThresholdMs: 2000
+        criticalQueryThresholdMs: 7000
+        datasourceLoggingEnabled: true
+        traceEnabled: true
+        logEnabled: true
     metrics:
-        enabled: true
+        metricsEnabled: true
+        queryMetricsEnabled: true
+        httpMetricsEnabled: true
+        slowQueryThresholdMs: 2000
+        querySamplingRate: 50

@@ -9,15 +9,15 @@ public class ExternalProductGroupContext {
 
 	private final ExternalProductGroup externalProduct;
 	private final List<ExternalProduct> externalProducts;
-	private final ExternalBrand externalBrand;
-	private final ExternalCategory externalCategory;
+	private final DefaultExternalBrandMapping defaultExternalBrandMapping;
+	private final DefaultExternalCategoryMapping defaultExternalCategoryMapping;
 
 	private ExternalProductGroupContext(ExternalProductGroup externalProduct, List<ExternalProduct> externalProducts,
-									   ExternalBrand externalBrand, ExternalCategory externalCategory) {
+										DefaultExternalBrandMapping defaultExternalBrandMapping, DefaultExternalCategoryMapping defaultExternalCategoryMapping) {
 		this.externalProduct = externalProduct;
 		this.externalProducts = externalProducts;
-		this.externalBrand = externalBrand;
-		this.externalCategory = externalCategory;
+		this.defaultExternalBrandMapping = defaultExternalBrandMapping;
+		this.defaultExternalCategoryMapping = defaultExternalCategoryMapping;
 	}
 
 	public static ExternalProductGroupContext create(ExternalProductGroup externalProduct, List<ExternalProduct> externalProducts) {
@@ -25,8 +25,9 @@ public class ExternalProductGroupContext {
 	}
 
 
-	public static ExternalProductGroupContext create(ExternalProductGroup externalProduct, List<ExternalProduct> externalProducts, ExternalBrand externalBrand, ExternalCategory externalCategory) {
-		return new ExternalProductGroupContext(externalProduct, externalProducts, externalBrand, externalCategory);
+	public static ExternalProductGroupContext create(ExternalProductGroup externalProduct, List<ExternalProduct> externalProducts, DefaultExternalBrandMapping defaultExternalBrandMapping, DefaultExternalCategoryMapping defaultExternalCategoryMapping) {
+		return new ExternalProductGroupContext(externalProduct, externalProducts, defaultExternalBrandMapping,
+			defaultExternalCategoryMapping);
 	}
 
 	public SiteName getSiteName(){
@@ -44,13 +45,14 @@ public class ExternalProductGroupContext {
 		ExternalProductGroupContext that = (ExternalProductGroupContext) object;
 		return Objects.equals(externalProduct, that.externalProduct)
 			&& Objects.equals(externalProducts, that.externalProducts)
-			&& Objects.equals(externalBrand, that.externalBrand)
-			&& Objects.equals(externalCategory, that.externalCategory);
+			&& Objects.equals(defaultExternalBrandMapping, that.defaultExternalBrandMapping)
+			&& Objects.equals(defaultExternalCategoryMapping, that.defaultExternalCategoryMapping);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(externalProduct, externalProducts, externalBrand, externalCategory);
+		return Objects.hash(externalProduct, externalProducts, defaultExternalBrandMapping,
+			defaultExternalCategoryMapping);
 	}
 
 	@Override
@@ -64,10 +66,10 @@ public class ExternalProductGroupContext {
 			+ externalProducts
 			+
 			", externalBrand="
-			+ externalBrand
+			+ defaultExternalBrandMapping
 			+
 			", externalCategory="
-			+ externalCategory
+			+ defaultExternalCategoryMapping
 			+
 			'}';
 	}

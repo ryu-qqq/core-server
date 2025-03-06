@@ -1,6 +1,8 @@
 package com.ryuqq.core.external.buyma.core;
 
 import java.math.BigDecimal;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 import org.springframework.stereotype.Component;
 
@@ -8,27 +10,21 @@ import com.ryuqq.core.domain.external.ExternalProductGroup;
 import com.ryuqq.core.domain.external.core.UpdateTypeHandler;
 import com.ryuqq.core.enums.ProductDomainEventType;
 import com.ryuqq.core.enums.SiteName;
-import com.ryuqq.core.external.FeignClientWrapper;
-import com.ryuqq.core.external.buyma.BuyMaClient;
 import com.ryuqq.core.external.buyma.helper.BuyMaResponseFactory;
 import com.ryuqq.core.external.buyma.mapper.BuyMaProductMapper;
 import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestDto;
-import com.ryuqq.core.external.buyma.request.BuyMaProductInsertRequestWrapperDto;
 import com.ryuqq.core.external.buyma.response.BuyMaProductInsertResponse;
-import com.ryuqq.core.external.buyma.response.BuyMaProductInsertResponseDto;
 
 @Component
-public class BuyMaProductGroupRegisterHandler implements UpdateTypeHandler {
+public class BuyMaProductGroupRegisterHandler implements UpdateTypeHandler<BuyMaProductInsertResponse> {
 
 	private final BuyMaProductMapper buymaProductMapper;
-	private final BuyMaClient buyMaClient;
-	private final FeignClientWrapper feignClientWrapper;
+	private final BuyMaRequestExecutor buyMaRequestExecutor;
 
-	public BuyMaProductGroupRegisterHandler(BuyMaProductMapper buymaProductMapper, BuyMaClient buyMaClient,
-											FeignClientWrapper feignClientWrapper) {
+	public BuyMaProductGroupRegisterHandler(BuyMaProductMapper buymaProductMapper,
+											BuyMaRequestExecutor buyMaRequestExecutor) {
 		this.buymaProductMapper = buymaProductMapper;
-		this.buyMaClient = buyMaClient;
-		this.feignClientWrapper = feignClientWrapper;
+		this.buyMaRequestExecutor = buyMaRequestExecutor;
 	}
 
 	@Override
@@ -41,19 +37,17 @@ public class BuyMaProductGroupRegisterHandler implements UpdateTypeHandler {
 	}
 
 	@Override
-	public BuyMaProductInsertResponse handle(ExternalProductGroup externalProductGroup) {
-		BuyMaProductInsertRequestDto insetRequestDto = buymaProductMapper.toInsetRequestDto(
-			externalProductGroup);
+	public CompletableFuture<BuyMaProductInsertResponse> handle(ExternalProductGroup externalProductGroup, ExecutorService executor) {
+		BuyMaProductInsertRequestDto requestDto = buymaProductMapper.toInsertRequestDto(externalProductGroup);
 
-		BuyMaProductInsertResponseDto buyMaProductInsertResponseDto = feignClientWrapper.executeFeignCall(
-			() -> buyMaClient.insertProduct(new BuyMaProductInsertRequestWrapperDto(insetRequestDto)));
-
-		return BuyMaResponseFactory.createProductResponse(
-			externalProductGroup,
-			buyMaProductInsertResponseDto,
-			insetRequestDto.getName(),
-			BigDecimal.valueOf(insetRequestDto.getReferencePrice()),
-			BigDecimal.valueOf(insetRequestDto.getPrice())
-		);
+		return buyMaRequestExecutor.sendRequestAsync(requestDto, executor)
+			.thenApply(responseDto -> BuyMaResponseFactory.createProductResponse(
+				externalProductGroup,
+				responseDto,
+				requestDto.getName(),
+				BigDecimal.valueOf(requestDto.getReferencePrice()),
+				BigDecimal.valueOf(requestDto.getPrice())
+			));
 	}
+
 }

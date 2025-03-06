@@ -1,6 +1,7 @@
 package com.ryuqq.core.domain.product.core;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.ryuqq.core.enums.ManagementType;
@@ -24,11 +25,14 @@ public class DefaultProductGroup implements ProductGroup {
 	private final boolean displayed;
 	private final ProductStatus productStatus;
 	private final String keyword;
+	private final LocalDateTime createAt;
+	private final LocalDateTime updateAt;
 
 	private DefaultProductGroup(Long id, long sellerId, long categoryId, long brandId, String productGroupName,
 								String styleCode,
 								ProductCondition productCondition, ManagementType managementType, OptionType optionType, DefaultPrice defaultPrice, boolean soldOut,
-								boolean displayed, ProductStatus productStatus, String keyword) {
+								boolean displayed, ProductStatus productStatus, String keyword, LocalDateTime createAt,
+								LocalDateTime updateAt) {
 		this.id = id;
 		this.sellerId = sellerId;
 		this.categoryId = categoryId;
@@ -43,13 +47,16 @@ public class DefaultProductGroup implements ProductGroup {
 		this.displayed = displayed;
 		this.productStatus = productStatus;
 		this.keyword = keyword;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
 	}
 
 	public static DefaultProductGroup create(Long id, long sellerId, long categoryId, long brandId, String productGroupName,
 											 String styleCode,
 											 ProductCondition productCondition, ManagementType managementType, OptionType optionType,
-											 BigDecimal regularPrice, BigDecimal currentPrice, boolean soldOut,
-											 boolean displayed, ProductStatus productStatus, String keyword){
+											 BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice, boolean soldOut,
+											 boolean displayed, ProductStatus productStatus, String keyword, LocalDateTime createAt,
+											 LocalDateTime updateAt){
 		return new DefaultProductGroup(
 			id,
 			sellerId,
@@ -60,18 +67,20 @@ public class DefaultProductGroup implements ProductGroup {
 			productCondition,
 			managementType,
 			optionType,
-			DefaultPrice.create(regularPrice, currentPrice),
+			DefaultPrice.create(regularPrice, currentPrice, salePrice),
 			soldOut,
 			displayed,
 			productStatus,
-			keyword
+			keyword,
+			createAt,
+			updateAt
 		);
 	}
 
 	public DefaultProductGroup assignId(Long id) {
 		return new DefaultProductGroup(id, this.sellerId, this.categoryId, this.brandId,
 		this.productGroupName, this.styleCode, this.productCondition, this.managementType, this.optionType,
-		this.defaultPrice, this.soldOut , this.displayed, this.productStatus, this.keyword);
+		this.defaultPrice, this.soldOut , this.displayed, this.productStatus, this.keyword, this.createAt, this.updateAt);
 	}
 
 	public Long getId() {
@@ -142,6 +151,14 @@ public class DefaultProductGroup implements ProductGroup {
 		return defaultPrice.getDiscountRate();
 	}
 
+	public LocalDateTime getCreateAt() {
+		return createAt;
+	}
+
+	public LocalDateTime getUpdateAt() {
+		return updateAt;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this
@@ -179,12 +196,12 @@ public class DefaultProductGroup implements ProductGroup {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, sellerId, categoryId, brandId, productGroupName, styleCode, productCondition,
-			managementType, optionType, defaultPrice, soldOut, displayed, productStatus, keyword);
+			managementType, optionType, defaultPrice, soldOut, displayed, productStatus, keyword, createAt, updateAt);
 	}
 
 	@Override
 	public String toString() {
-		return "ProductGroup{"
+		return "DefaultProductGroup{"
 			+
 			"id="
 			+ id
@@ -215,7 +232,7 @@ public class DefaultProductGroup implements ProductGroup {
 			", optionType="
 			+ optionType
 			+
-			", price="
+			", defaultPrice="
 			+ defaultPrice
 			+
 			", soldOut="
@@ -230,6 +247,12 @@ public class DefaultProductGroup implements ProductGroup {
 			", keyword='"
 			+ keyword
 			+ '\''
+			+
+			", createAt="
+			+ createAt
+			+
+			", updateAt="
+			+ updateAt
 			+
 			'}';
 	}

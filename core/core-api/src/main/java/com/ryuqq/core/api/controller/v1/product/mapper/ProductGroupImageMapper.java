@@ -1,5 +1,6 @@
 package com.ryuqq.core.api.controller.v1.product.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -24,15 +25,30 @@ class ProductGroupImageMapper implements DomainMapper<List<ProductGroupImageRequ
 	public ProductGroupContextCommandBuilder map(List<ProductGroupImageRequestDto> requestDto,
 												 ProductGroupContextCommandBuilder builder) {
 		long productGroupId = builder.getProductGroupId().orElse(0L);
+		int imageSortCounter = 2;
 
-		List<ProductGroupImageCommand> productGroupImageCommands = requestDto.stream()
-			.map(p -> ProductGroupImageCommand.of(
-				productGroupId,
-				p.productImageType(),
-				p.imageUrl(),
-				p.imageUrl()
-			))
-			.toList();
+		List<ProductGroupImageCommand> productGroupImageCommands = new ArrayList<>();
+
+		for (ProductGroupImageRequestDto img : requestDto) {
+			if (img.productImageType().isMain()) {
+				productGroupImageCommands.add(ProductGroupImageCommand.of(
+					productGroupId,
+					img.productImageType(),
+					img.imageUrl(),
+					img.imageUrl(),
+					1
+				));
+			} else {
+				productGroupImageCommands.add(ProductGroupImageCommand.of(
+					productGroupId,
+					img.productImageType(),
+					img.imageUrl(),
+					img.imageUrl(),
+					imageSortCounter
+				));
+				imageSortCounter++;
+			}
+		}
 
 		ProductGroupImageContextCommand productGroupImageContextCommand = ProductGroupImageContextCommand.of(
 			productGroupImageCommands);

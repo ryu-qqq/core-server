@@ -57,12 +57,12 @@ public class DefaultCreateProductGroupContextCommand implements ProductGroupCont
 	}
 
 	@Override
-	public ProductGroupImageContextCommand getProductGroupImageCommandContextCommand() {
+	public ProductGroupImageContextCommand getProductGroupImageContextCommand() {
 		return productGroupImageContextCommand;
 	}
 
 	@Override
-	public ProductOptionContextCommand getProductCommandContextCommand() {
+	public ProductOptionContextCommand getProductOptionContextCommand() {
 		return productOptionContextCommand;
 	}
 

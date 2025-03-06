@@ -3,6 +3,7 @@ package com.ryuqq.core.domain.product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 			ProductGroupImage existingImage = existingMap.get(newImage.imageUrl());
 
 			if (existingImage != null) {
-				if (needsUpdate(existingImage.getOriginUrl(), newImage.originUrl())) {
+				if (needsUpdate(existingImage, newImage)) {
 					ProductGroupImageCommand productGroupImageCommand = newImage.assignProductGroupId(existingImage.getId());
 					changedImages.add(productGroupImageCommand);
 				}
@@ -78,6 +79,7 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 					image.getProductImageType(),
 					image.getImageUrl(),
 					image.getOriginUrl(),
+					image.displayOrder(),
 					true
 				);
 
@@ -85,8 +87,11 @@ public class ProductGroupImageChecker implements UpdateChecker<ProductGroupImage
 			});
 	}
 
-	private boolean needsUpdate(String existingUrl, String originUrl) {
-		return !existingUrl.equals(originUrl);
+
+	private boolean needsUpdate(ProductGroupImage existingUrl, ProductGroupImageCommand originUrl) {
+		return !Objects.equals(existingUrl.getOriginUrl(), originUrl.originUrl())
+			&& !Objects.equals(existingUrl.displayOrder(), originUrl.displayOrder());
 	}
+
 
 }

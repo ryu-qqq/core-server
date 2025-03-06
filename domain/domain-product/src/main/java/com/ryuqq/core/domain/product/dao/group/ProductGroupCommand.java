@@ -27,11 +27,11 @@ public interface ProductGroupCommand {
 	static ProductGroupCommand of(long productGroupId, long sellerId, long categoryId, long brandId,
 								  String productGroupName, String styleCode,
 								  ProductCondition productCondition, ManagementType managementType,
-								  OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice,
+								  OptionType optionType, BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice,
 								  boolean soldOut, boolean displayed, String keyword) {
 
 		return new DefaultProductGroupCommand(productGroupId, sellerId, categoryId, brandId, productGroupName, styleCode,
-			productCondition, managementType, optionType, regularPrice, currentPrice, soldOut, displayed,
+			productCondition, managementType, optionType, regularPrice, currentPrice, salePrice, soldOut, displayed,
 			ProductStatus.WAITING, keyword);
 	}
 

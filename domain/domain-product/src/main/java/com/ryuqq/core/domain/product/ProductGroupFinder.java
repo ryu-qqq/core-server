@@ -4,33 +4,35 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.product.core.DefaultProductGroup;
-import com.ryuqq.core.domain.product.core.DefaultProductGroupContext;
-import com.ryuqq.core.domain.product.dao.group.ProductGroupQueryRepository;
+import com.ryuqq.core.domain.product.core.ProductGroupContext;
+import com.ryuqq.core.domain.product.core.ProductGroupSearchCondition;
+import com.ryuqq.core.domain.product.dao.group.ProductGroupQueryRepositoryProvider;
 
 @Service
 public class ProductGroupFinder {
 
-	private final ProductGroupQueryRepository productGroupQueryRepository;
+	private final ProductGroupQueryRepositoryProvider productGroupQueryRepositoryProvider;
 
-	public ProductGroupFinder(ProductGroupQueryRepository productGroupQueryRepository) {
-		this.productGroupQueryRepository = productGroupQueryRepository;
+	public ProductGroupFinder(ProductGroupQueryRepositoryProvider productGroupQueryRepositoryProvider) {
+		this.productGroupQueryRepositoryProvider = productGroupQueryRepositoryProvider;
 	}
 
-	public long fetchTopId(){
-		return productGroupQueryRepository.fetchTopId();
+	public ProductGroupContext fetchProductContextById(long productGroupId) {
+		return productGroupQueryRepositoryProvider
+			.getProductGroupQueryRepository(true)
+			.fetchContextById(productGroupId);
 	}
 
-	public DefaultProductGroupContext fetchNoProductContextById(long productGroupId) {
-		return productGroupQueryRepository.fetchContextById(productGroupId);
+	public List<? extends ProductGroupContext> fetchByCondition(ProductGroupSearchCondition productGroupSearchCondition) {
+		return productGroupQueryRepositoryProvider
+			.getProductGroupQueryRepository(productGroupSearchCondition.isSimpleQuery())
+			.fetchContextByCondition(productGroupSearchCondition);
 	}
 
-	public List<DefaultProductGroupContext> fetchNoProductContextByIds(List<Long> productGroupIds) {
-		return productGroupQueryRepository.fetchContextByIds(productGroupIds);
-	}
-
-	public List<DefaultProductGroup> fetchProductGroupBySellerId(long sellerId){
-		return productGroupQueryRepository.fetchBySellerId(sellerId);
+	public long countByCondition(ProductGroupSearchCondition productGroupSearchCondition){
+		return productGroupQueryRepositoryProvider
+			.getProductGroupQueryRepository(productGroupSearchCondition.isSimpleQuery())
+			.countByCondition(productGroupSearchCondition);
 	}
 
 }

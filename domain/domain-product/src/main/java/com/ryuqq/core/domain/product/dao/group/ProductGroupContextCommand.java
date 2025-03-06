@@ -12,8 +12,8 @@ public interface ProductGroupContextCommand {
 	ProductNoticeCommand getProductNoticeCommand();
 	ProductDeliveryCommand getProductDeliveryCommand();
 	ProductDetailDescriptionCommand getProductDetailDescriptionCommand();
-	ProductGroupImageContextCommand getProductGroupImageCommandContextCommand();
-	ProductOptionContextCommand getProductCommandContextCommand();
+	ProductGroupImageContextCommand getProductGroupImageContextCommand();
+	ProductOptionContextCommand getProductOptionContextCommand();
 
 	default EssentialProductGroupInfo getEssentialProductGroupInfo() {
 		return new EssentialProductGroupInfo(
@@ -26,7 +26,7 @@ public interface ProductGroupContextCommand {
 	default EssentialProductImageInfo getEssentialProductImageInfo() {
 		return new EssentialProductImageInfo(
 			getProductDetailDescriptionCommand(),
-			getProductGroupImageCommandContextCommand()
+			getProductGroupImageContextCommand()
 		);
 	}
 

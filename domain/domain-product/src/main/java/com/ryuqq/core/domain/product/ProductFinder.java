@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContext;
 import com.ryuqq.core.domain.product.dao.options.ProductQueryRepository;
 
 @Service
@@ -16,13 +16,12 @@ public class ProductFinder  {
 		this.productQueryRepository = productQueryRepository;
 	}
 
-	public DefaultProductOptionContext fetchByProductGroupId(long productGroupId) {
+	public ProductOptionContext fetchByProductGroupId(long productGroupId) {
 		return productQueryRepository.fetchByProductGroupId(productGroupId);
 	}
 
-	public List<DefaultProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds){
+	public List<? extends ProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds){
 		return productQueryRepository.fetchByProductGroupIds(productGroupIds);
 	}
-
 
 }

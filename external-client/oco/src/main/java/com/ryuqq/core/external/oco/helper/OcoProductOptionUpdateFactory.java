@@ -24,14 +24,14 @@ public class OcoProductOptionUpdateFactory {
 		);
 	}
 
-	public static OcoProductOptionDeleteRequestDto createOcoOptionDeleteRequestDto(String externalProductGroupId, List<OcoOptionContext> optionContext) {
+	public static OcoProductOptionDeleteRequestDto createOcoOptionDeleteRequestDto(Integer externalProductGroupId, List<OcoOptionContext> optionContext) {
 		List<OcoOptionDeleteRequestDto> options = optionContext.stream().map(o -> new OcoOptionDeleteRequestDto(
 			o.ocoOptionInsertRequestDto().productOptionId(),
 			o.ocoOptionInsertRequestDto().pid()
 		)).toList();
 
 		return new OcoProductOptionDeleteRequestDto(
-			Long.parseLong(externalProductGroupId),
+			externalProductGroupId,
 			options
 		);
 	}

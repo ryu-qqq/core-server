@@ -12,7 +12,9 @@ spring:
       - openAi.yml
       - monitoring.yml
 
-  web.resources.add-mappings: false
+  web:
+    resources:
+        add-mappings: true
   profiles:
     active: local
 

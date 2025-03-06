@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ryuqq.core.domain.external.ExternalCategoryOption;
+import com.ryuqq.core.domain.external.DefaultExternalCategoryOptionMapping;
 import com.ryuqq.core.domain.external.dao.options.ExternalCategoryOptionQueryRepository;
 
 @Repository
@@ -18,9 +18,9 @@ public class DefaultExternalCategoryOptionQueryRepository implements ExternalCat
 	}
 
 	@Override
-	public List<ExternalCategoryOption> fetchBySiteIdAndExternalCategoryIds(long siteId, List<String> externalCategoryIds) {
+	public List<DefaultExternalCategoryOptionMapping> fetchBySiteIdAndExternalCategoryIds(long siteId, List<String> externalCategoryIds) {
 		return externalCategoryOptionQueryDslRepository.fetchBySiteIdAndCategoryIds(siteId, externalCategoryIds).stream()
-			.map(e -> new ExternalCategoryOption(
+			.map(e -> new DefaultExternalCategoryOptionMapping(
 				e.getSiteId(),
 				e.getExternalCategoryId(),
 				e.getOptionGroupId(),

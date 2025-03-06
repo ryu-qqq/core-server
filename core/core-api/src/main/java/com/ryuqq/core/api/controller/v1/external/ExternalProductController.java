@@ -12,7 +12,7 @@ import com.ryuqq.core.api.controller.v1.external.request.BuyMaEventRequestDto;
 import com.ryuqq.core.api.controller.v1.external.request.ExternalProductSyncRequestDto;
 import com.ryuqq.core.api.controller.v1.external.service.BuyMaWebhookHandler;
 import com.ryuqq.core.api.controller.v1.external.service.BuyMaWebhookHandlerProvider;
-import com.ryuqq.core.api.controller.v1.external.service.ExternalProductGroupDomainService;
+import com.ryuqq.core.api.controller.v1.external.service.ExternalProductGroupCommandService;
 import com.ryuqq.core.api.payload.ApiResponse;
 
 
@@ -20,20 +20,19 @@ import com.ryuqq.core.api.payload.ApiResponse;
 @RestController
 public class ExternalProductController {
 
-	private final ExternalProductGroupDomainService externalProductGroupDomainService;
+	private final ExternalProductGroupCommandService externalProductGroupCommandService;
 	private final BuyMaWebhookHandlerProvider buyMaWebhookHandlerProvider;
 
-	public ExternalProductController(ExternalProductGroupDomainService externalProductGroupDomainService,
+	public ExternalProductController(ExternalProductGroupCommandService externalProductGroupCommandService,
 									 BuyMaWebhookHandlerProvider buyMaWebhookHandlerProvider) {
-		this.externalProductGroupDomainService = externalProductGroupDomainService;
+		this.externalProductGroupCommandService = externalProductGroupCommandService;
 		this.buyMaWebhookHandlerProvider = buyMaWebhookHandlerProvider;
 	}
 
 	@PostMapping("/external/product-sync")
 	public void update(@RequestBody ExternalProductSyncRequestDto externalProductSyncRequestDto){
-		externalProductGroupDomainService.syncExternalProductGroup(externalProductSyncRequestDto.siteId(), externalProductSyncRequestDto.status(), externalProductSyncRequestDto.productDomainEventType(), externalProductSyncRequestDto.size());
+		externalProductGroupCommandService.syncExternalProductGroup(externalProductSyncRequestDto.siteId(), externalProductSyncRequestDto.status(), externalProductSyncRequestDto.productDomainEventType(), externalProductSyncRequestDto.size());
 	}
-
 
 	@PostMapping("/external/buyma/webhook")
 	public <T extends BuyMaEventRequestDto> ResponseEntity<ApiResponse<?>> syncWebHookProduct(T requestDto){

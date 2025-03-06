@@ -18,7 +18,6 @@ public class ExternalProductGroupFinder {
 
 	public boolean existBySiteIdAndProductGroupId(long siteId, long productGroupId) {
 		return externalProductGroupQueryRepository.existBySiteIdAndProductGroupId(siteId, productGroupId);
-
 	}
 
 	public ExternalProductGroup fetchBySiteIdAndProductGroupId(long siteId, long productGroupId) {

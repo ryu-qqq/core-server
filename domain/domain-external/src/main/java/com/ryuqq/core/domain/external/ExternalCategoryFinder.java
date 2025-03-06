@@ -17,7 +17,7 @@ public class ExternalCategoryFinder implements ExternalCategoryQueryInterface {
 		this.externalCategoryQueryRepository = externalCategoryQueryRepository;
 	}
 
-	public List<ExternalCategory> fetchBySiteIdAndCategoryIds(long siteId, List<Long> categoryIds){
+	public List<DefaultExternalCategoryMapping> fetchBySiteIdAndCategoryIds(long siteId, List<Long> categoryIds){
 		return externalCategoryQueryRepository.fetchBySiteIdAndCategoryIds(siteId, categoryIds);
 	}
 

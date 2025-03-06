@@ -32,7 +32,7 @@ public class ProductGroupContextDomainMapper {
 			.build();
 	}
 
-	public DefaultProductGroup toProductGroupDomain(ProductGroupDto dto){
+	private DefaultProductGroup toProductGroupDomain(ProductGroupDto dto){
 		return ProductGroupDomainMapper.toDomain(dto);
 	}
 

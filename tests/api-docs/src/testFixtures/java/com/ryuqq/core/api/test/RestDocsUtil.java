@@ -26,4 +26,5 @@ public class RestDocsUtil {
 			fieldWithPath("message").type(JsonFieldType.STRING).description("상태 메시지")
 		};
 	}
+
 }

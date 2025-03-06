@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.exception.DomainException;
 import com.ryuqq.core.domain.external.ExternalProduct;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
+import com.ryuqq.core.domain.external.ExternalProductGroupEventPublisher;
 import com.ryuqq.core.domain.external.ExternalProductGroupRegister;
 import com.ryuqq.core.domain.external.ExternalProductRegister;
 import com.ryuqq.core.domain.external.ExternalProductSyncRequestRegister;
@@ -42,10 +43,10 @@ public class SiteRequestProcessResponseHandler {
 				productDomainEventType, productGroup, response);
 			externalProductGroupRegister.update(externalProductGroup);
 
-			externalProductSyncRequestRegister.register(
-				externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(),
-				response.getExternalProductGroupId(), true
-			);
+			// externalProductSyncRequestRegister.register(
+			// 	externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(),
+			// 	response.getExternalProductGroupId(), true
+			// );
 
 			if (!response.getProductIdMappings().isEmpty()) {
 				List<ExternalProduct> externalProducts = ExternalProductResponseFactory.mapResponse(
@@ -58,10 +59,10 @@ public class SiteRequestProcessResponseHandler {
 		}
 	}
 
-	public void handleFailure(ExternalProductGroup externalProductGroup, Exception e) {
+	public void handleFailure(ExternalProductGroup externalProductGroup, Throwable e) {
 		DomainException domainException = new DomainException(ErrorType.UNEXPECTED_ERROR, e);
 		eventPublisher.publishEvent(new ExternalProductGroupFailedEvent(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), domainException));
-		externalProductSyncRequestRegister.register(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), null, false);
+		//externalProductSyncRequestRegister.register(externalProductGroup.getSiteId(), externalProductGroup.getProductGroupId(), null, false);
 	}
 
 

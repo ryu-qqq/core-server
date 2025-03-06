@@ -9,17 +9,18 @@ import com.ryuqq.core.enums.OptionType;
 import com.ryuqq.core.enums.ProductCondition;
 import com.ryuqq.core.enums.ProductStatus;
 
-record DefaultProductGroupCommand(long id, long sellerId, long categoryId, long brandId, String productGroupName,
+public record DefaultProductGroupCommand(long id, long sellerId, long categoryId, long brandId, String productGroupName,
 										 String styleCode, ProductCondition productCondition,
 										 ManagementType managementType, OptionType optionType,
-										 BigDecimal regularPrice, BigDecimal currentPrice, boolean soldOut, boolean displayed,
+										 BigDecimal regularPrice, BigDecimal currentPrice, BigDecimal salePrice,
+										 boolean soldOut, boolean displayed,
 										 ProductStatus productStatus, String keyword)
 
 	implements ProductGroupCommand {
 
 	@Override
 	public Price getPrice() {
-		return DefaultPrice.create(regularPrice, currentPrice);
+		return DefaultPrice.create(regularPrice, currentPrice, salePrice);
 	}
 
 }

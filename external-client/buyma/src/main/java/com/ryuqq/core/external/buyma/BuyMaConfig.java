@@ -1,25 +1,16 @@
 package com.ryuqq.core.external.buyma;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import feign.Logger;
 
+
+@ConfigurationProperties(prefix = "buyma")
 public class BuyMaConfig {
 
 	@Bean
 	public BuyMaRequestInterceptor buyMaRequestInterceptor() {
 		return new BuyMaRequestInterceptor();
 	}
-
-	@Bean
-	public Logger buyMaFeignLogger() {
-		return new BuyMaFeignLogger();
-	}
-
-	@Bean
-	public Logger.Level buyMaFeignLoggerLevel() {
-		return Logger.Level.FULL;
-	}
-
 
 }

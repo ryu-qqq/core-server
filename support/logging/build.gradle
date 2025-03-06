@@ -1,16 +1,8 @@
 dependencies {
-
-
 	implementation project(':core:core-enum')
 	implementation project(':core:core-events')
-
 	implementation project(":support:utils")
 
-	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
-	implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}"
-
-
-	api "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
-	api "com.github.ryu-qqq.moni-kit:monikit-starter:${moniKitVersion}"
-
+	implementation "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
+	implementation "com.github.ryu-qqq.moni-kit:monikit-starter:${moniKitVersion}"
 }

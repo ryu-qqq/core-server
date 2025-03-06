@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.ryuqq.core.domain.brand.core.Brand;
 import com.ryuqq.core.domain.brand.core.BrandQueryInterface;
 import com.ryuqq.core.domain.external.ExternalProductGroup;
+import com.ryuqq.core.domain.external.core.ExternalProductRequestMapper;
 import com.ryuqq.core.domain.product.core.Price;
 import com.ryuqq.core.domain.product.core.ProductGroup;
 import com.ryuqq.core.domain.product.core.ProductGroupContext;
@@ -22,7 +23,7 @@ import com.ryuqq.core.external.openAi.TranslateResult;
 import com.ryuqq.core.external.openAi.TranslationService;
 
 @Component
-public class BuyMaProductMapper {
+public class BuyMaProductMapper implements ExternalProductRequestMapper<BuyMaProductInsertRequestDto, BuyMaProductInsertRequestDto> {
 
 	private final TranslationService translationService;
 	private final BrandQueryInterface brandQueryInterface;
@@ -37,7 +38,8 @@ public class BuyMaProductMapper {
 		this.buyMaOptionMapper = buyMaOptionMapper;
 	}
 
-	public BuyMaProductInsertRequestDto toInsetRequestDto(ExternalProductGroup externalProductGroup){
+	@Override
+	public BuyMaProductInsertRequestDto toInsertRequestDto(ExternalProductGroup externalProductGroup){
 		ProductGroupContext productGroupContext = productGroupContextQueryInterface.fetchById(externalProductGroup.getProductGroupId());
 
 		ProductGroup productGroup = productGroupContext.getProductGroup();
@@ -52,7 +54,7 @@ public class BuyMaProductMapper {
 		Brand brand = brandQueryInterface.fetchById(externalProductGroup.getBrandId());
 
 		String productGroupName;
-		if(externalProductGroup.getExternalProductGroupId() != null){
+		if(externalProductGroup.getProductName() != null){
 			productGroupName = externalProductGroup.getProductName();
 		}else{
 			TranslateResult translate = translationService.translate(productGroup.getProductGroupName());
@@ -64,7 +66,7 @@ public class BuyMaProductMapper {
 			externalProductGroup,
 			productGroupName,
 			productGroup.getStyleCode(),
-			brand.getBrandName(),
+			brand.brandName(),
 			Long.parseLong(externalProductGroup.getExternalBrandId()),
 			Long.parseLong(externalProductGroup.getExternalCategoryId()),
 			buyMaOptionContext.buyMaVariants(),
@@ -77,5 +79,9 @@ public class BuyMaProductMapper {
 
 	}
 
+	@Override
+	public BuyMaProductInsertRequestDto toUpdateRequestDto(ExternalProductGroup externalProductGroup) {
+		return toInsertRequestDto(externalProductGroup);
+	}
 
 }

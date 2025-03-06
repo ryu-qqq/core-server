@@ -2,6 +2,7 @@ package com.ryuqq.core.storage.db.seller;
 
 import static com.ryuqq.core.storage.db.seller.QSellerEntity.sellerEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -46,8 +47,27 @@ public class SellerQueryDslRepository {
 		);
 	}
 
+
+	public List<SellerDto> fetchByIds(List<Long> ids){
+		return
+			queryFactory.select(
+					new QSellerDto(
+						sellerEntity.id,
+						sellerEntity.sellerName
+					)
+				)
+				.from(sellerEntity)
+				.where(sellerIdIn(ids))
+				.fetch();
+	}
+
 	private BooleanExpression sellerIdEq(long id){
 		return sellerEntity.id.eq(id);
 	}
+
+	private BooleanExpression sellerIdIn(List<Long> ids){
+		return sellerEntity.id.in(ids);
+	}
+
 
 }

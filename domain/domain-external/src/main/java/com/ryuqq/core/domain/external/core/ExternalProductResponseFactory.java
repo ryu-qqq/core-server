@@ -24,11 +24,7 @@ public class ExternalProductResponseFactory {
 						pi.isDeleted()
 			))
 			.toList();
-
 	}
-
-
-
 
 
 }

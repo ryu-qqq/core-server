@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ryuqq.core.domain.external.ExternalProductGroup;
+import com.ryuqq.core.domain.external.core.ExternalProductRequestMapper;
 import com.ryuqq.core.domain.product.core.ProductDelivery;
 import com.ryuqq.core.domain.product.core.ProductDetailDescription;
 import com.ryuqq.core.domain.product.core.ProductGroup;
@@ -23,7 +24,7 @@ import com.ryuqq.core.external.oco.request.OcoImageInsertRequestDto;
 import com.ryuqq.core.external.oco.request.OcoProductInsertRequestDto;
 
 @Component
-public class OcoProductMapper {
+public class OcoProductMapper implements ExternalProductRequestMapper<OcoProductGroupInsertRequestContext, OcoProductGroupUpdateRequestContext> {
 
 	private final ProductGroupContextQueryInterface productGroupContextQueryInterface;
 	private final OcoCategoryConverter ocoCategoryConverter;
@@ -37,7 +38,8 @@ public class OcoProductMapper {
 		this.ocoOptionConverter = ocoOptionConverter;
 	}
 
-	public OcoProductGroupInsertRequestContext toInsetRequestDto(ExternalProductGroup externalProductGroup) {
+	@Override
+	public OcoProductGroupInsertRequestContext toInsertRequestDto(ExternalProductGroup externalProductGroup) {
 		CommonContext commonContext = prepareCommonContext(externalProductGroup);
 
 		OcoProductInsertRequestDto insertRequestDto = OcoProductInsertFactory.createInsertRequestDto(
@@ -49,6 +51,7 @@ public class OcoProductMapper {
 		return new OcoProductGroupInsertRequestContext(insertRequestDto, commonContext.optionContexts);
 	}
 
+	@Override
 	public OcoProductGroupUpdateRequestContext toUpdateRequestDto(ExternalProductGroup externalProductGroup) {
 		CommonContext commonContext = prepareCommonContext(externalProductGroup);
 

@@ -2,10 +2,9 @@ package com.ryuqq.core.domain.product.dao.options;
 
 import java.util.List;
 
-import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContext;
 
 public interface ProductQueryRepository {
-	DefaultProductOptionContext fetchByProductGroupId(long productGroupId);
-	List<DefaultProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds);
-
+	ProductOptionContext fetchByProductGroupId(long productGroupId);
+	List<? extends ProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds);
 }

@@ -10,12 +10,12 @@ import com.ryuqq.core.storage.db.product.image.ProductGroupImageDto;
 import com.ryuqq.core.storage.db.product.notice.ProductNoticeDto;
 
 public class ProductGroupContextDto {
+
 	private final ProductGroupDto productGroupDto;
 	private final ProductNoticeDto productNoticeDto;
 	private final ProductDeliveryDto productDeliveryDto;
 	private final List<ProductGroupImageDto> productGroupImageDto;
 	private final ProductDetailDescriptionDto productDetailDescriptionDto;
-
 
 	@QueryProjection
 	public ProductGroupContextDto(ProductGroupDto productGroupDto, ProductNoticeDto productNoticeDto,

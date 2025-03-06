@@ -10,12 +10,13 @@ dependencies {
 	implementation project(":domain:domain-brand")
 	implementation project(":domain:domain-category")
 	implementation project(":domain:domain-external")
+	implementation project(":domain:domain-seller")
 
 	implementation project(":core:core-batch")
     implementation project(":core:core-enum")
 	implementation project(':core:core-events')
 
-	api project(":support:logging")
+	implementation project(":support:logging")
 	implementation project(":support:monitoring")
 	implementation project(":support:utils")
 
@@ -30,8 +31,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework:spring-tx'
 
+	implementation "com.github.ryu-qqq.moni-kit:monikit-core:${moniKitVersion}"
+	implementation "com.github.ryu-qqq.moni-kit:monikit-starter:${moniKitVersion}"
+
+
 	testImplementation testFixtures(project(":tests:unit-tests"))
 	testImplementation testFixtures(project(":tests:api-docs"))
+
 	testImplementation(testFixtures(project(":support:utils")))
 	testRuntimeOnly project(":support:alert")
 
@@ -39,4 +45,56 @@ dependencies {
 	testImplementation 'io.rest-assured:spring-mock-mvc'
 
 
+}
+ext {
+	snippetsDir = file("$buildDir/generated-snippets")
+}
+
+asciidoctor {
+	dependsOn restDocsTest
+	inputs.dir snippetsDir
+
+	sourceDir = file("$projectDir/src/docs/asciidoc") // ✅ 소스를 `src/docs/asciidoc/`로 변경
+	outputDir = file("$buildDir/docs/asciidoc") // ✅ 변환된 HTML 저장 경로 유지
+
+	doFirst {
+		mkdir "$buildDir/generated-snippets"
+	}
+
+	sources {
+		include("**/*.adoc") // ✅ 이제 `src/docs/asciidoc/` 내 모든 .adoc 변환됨
+	}
+
+	attributes 'snippets': snippetsDir
+	baseDirFollowsSourceFile()
+}
+
+// ✅ 실행 전 static/docs 폴더 삭제
+asciidoctor.doFirst {
+	delete file("$projectDir/src/main/resources/static/docs")
+}
+
+// ✅ 변환된 문서를 `static/docs`로 복사하는 태스크
+tasks.register('copyDocument', Copy) {
+	dependsOn asciidoctor
+	from file("$buildDir/docs/asciidoc") // ✅ 변환된 HTML 파일들 복사
+	into file("$projectDir/src/main/resources/static/docs")
+
+	doLast {
+		file("$projectDir/src/main/resources/static/docs/product.html")
+			.renameTo(file("$projectDir/src/main/resources/static/docs/product-api.html"))
+
+		file("$projectDir/src/main/resources/static/docs/brand.html")
+			.renameTo(file("$projectDir/src/main/resources/static/docs/brand-api.html"))
+
+		file("$projectDir/src/main/resources/static/docs/cateogry.html")
+			.renameTo(file("$projectDir/src/main/resources/static/docs/cateogry-api.html"))
+
+	}
+}
+
+// ✅ build 실행 시 문서 복사 태스크 실행
+build {
+	dependsOn asciidoctor
+	finalizedBy copyDocument
 }

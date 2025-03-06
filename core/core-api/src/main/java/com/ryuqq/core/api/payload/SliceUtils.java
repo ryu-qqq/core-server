@@ -29,7 +29,7 @@ public class SliceUtils {
 			.size(pageSize)
 			.last(!hasNext)
 			.first(contents.isEmpty())
-			.numberOfElements(contents.size() - 1)
+			.numberOfElements(hasNext? contents.size() - 1 : contents.size())
 			.empty(contents.isEmpty())
 			.totalElements(totalElements)
 			.sort(Sort.DESC)

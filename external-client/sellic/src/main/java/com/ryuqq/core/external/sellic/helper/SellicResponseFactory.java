@@ -13,8 +13,8 @@ public class SellicResponseFactory {
 		ExternalProductGroup externalProductGroup,
 		SellicResponse sellicResponse,
 		String productName,
-		BigDecimal regularPrice,
-		BigDecimal currentPrice
+		int regularPrice,
+		int currentPrice
 	) {
 
 		String externalProductGroupId = externalProductGroup.getExternalProductGroupId();
@@ -28,8 +28,8 @@ public class SellicResponseFactory {
 			externalProductGroupId,
 			SyncStatus.APPROVED,
 			productName,
-			regularPrice,
-			currentPrice,
+			BigDecimal.valueOf(regularPrice),
+			BigDecimal.valueOf(currentPrice),
 			false
 		);
 	}

@@ -1,6 +1,7 @@
 package com.ryuqq.core.external.sellic.helper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.ryuqq.core.domain.product.ProductGroupImageContext;
@@ -16,16 +17,21 @@ public class SellicImageInsertFactory {
 
 		for (ProductGroupImage img : productGroupImageContext.getImages()) {
 			if (img.getProductImageType().isMain()) {
-				sellicImages.add(new SellicImage(1,img.getImageUrl()));
+				sellicImages.add(new SellicImage(1, img.getImageUrl()));
 			} else {
 				sellicImages.add(new SellicImage(imageSortCounter, img.getImageUrl()));
 				imageSortCounter++;
 			}
 		}
-		if(sellicImages.size() > 4) {
-			sellicImages = sellicImages.subList(0, 4);
+
+		List<SellicImage> ordered = sellicImages.stream()
+			.sorted(Comparator.comparing(SellicImage::order))
+			.toList();
+
+		if(ordered.size() > 5) {
+			ordered = ordered.subList(0, 5);
 		}
 
-		return sellicImages;
+		return ordered;
 	}
 }

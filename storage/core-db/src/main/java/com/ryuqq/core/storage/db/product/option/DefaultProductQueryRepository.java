@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.ryuqq.core.domain.product.core.DefaultProductOptionContext;
+import com.ryuqq.core.domain.product.core.ProductOptionContext;
 import com.ryuqq.core.domain.product.dao.options.ProductQueryRepository;
 
 @Repository
@@ -25,7 +26,7 @@ public class DefaultProductQueryRepository implements ProductQueryRepository {
 	}
 
 	@Override
-	public List<DefaultProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds) {
+	public List<? extends ProductOptionContext> fetchByProductGroupIds(List<Long> productGroupIds) {
 		List<ProductContextDto> productContextDtos = productQueryDslQueryRepository.fetchByProductGroupIds(productGroupIds);
 		return productDomainMapper.toDomains(productContextDtos);
 

@@ -85,6 +85,7 @@ class ProductGroupMapperTest extends BaseUnitTest {
 			OptionType.OPTION_ONE,
 			BigDecimal.valueOf(1000L),
 			BigDecimal.valueOf(800L),
+			BigDecimal.valueOf(800L),
 			false,
 			true,
 			"Test Keyword"

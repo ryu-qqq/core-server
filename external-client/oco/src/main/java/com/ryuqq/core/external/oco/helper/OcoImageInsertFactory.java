@@ -1,6 +1,7 @@
 package com.ryuqq.core.external.oco.helper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.ryuqq.core.domain.product.ProductGroupImageContext;
@@ -27,10 +28,16 @@ public class OcoImageInsertFactory {
 				imageSortCounter++;
 			}
 		}
-		if(ocoImageInsertRequestDtos.size() > 4) {
-			ocoImageInsertRequestDtos = ocoImageInsertRequestDtos.subList(0, 4);
+
+		List<OcoImageInsertRequestDto> ordered = ocoImageInsertRequestDtos.stream()
+			.sorted(Comparator.comparing(OcoImageInsertRequestDto::order))
+			.toList();
+
+		if(ordered.size() > 4) {
+			ordered = ordered.subList(0, 4);
 		}
 
-		return ocoImageInsertRequestDtos;
+
+		return ordered;
 	}
 }

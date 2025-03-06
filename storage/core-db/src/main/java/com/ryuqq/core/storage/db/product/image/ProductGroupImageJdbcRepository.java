@@ -19,8 +19,8 @@ public class ProductGroupImageJdbcRepository {
 
     public int[] batchInsertProductGroupImages(List<ProductGroupImageEntity> productGroupImageEntities) {
         String sql = "INSERT INTO PRODUCT_GROUP_IMAGE " +
-                "(PRODUCT_GROUP_ID, PRODUCT_GROUP_IMAGE_TYPE, IMAGE_URL, ORIGIN_URL) " +
-                "VALUES (:productGroupId, :productGroupImageType, :imageUrl, :originUrl)";
+                "(PRODUCT_GROUP_ID, PRODUCT_GROUP_IMAGE_TYPE, IMAGE_URL, ORIGIN_URL, DISPLAY_ORDER) " +
+                "VALUES (:productGroupId, :productGroupImageType, :imageUrl, :originUrl, :displayOrder)";
 
         List<Map<String, Object>> batchValues = productGroupImageEntities.stream()
                 .map(image -> {
@@ -28,7 +28,8 @@ public class ProductGroupImageJdbcRepository {
                             .addValue("productGroupId", image.getProductGroupId())
                             .addValue("productGroupImageType", image.getProductImageType().toString())
                             .addValue("imageUrl", image.getImageUrl())
-                            .addValue("originUrl", image.getOriginUrl());
+                            .addValue("originUrl", image.getOriginUrl())
+							.addValue("displayOrder", image.getDisplayOrder());
                     return params.getValues();
                 })
                 .toList();
@@ -41,7 +42,8 @@ public class ProductGroupImageJdbcRepository {
                 "SET IMAGE_URL = :imageUrl, " +
                 "ORIGIN_URL = :originUrl, " +
                 "PRODUCT_GROUP_IMAGE_TYPE = :productGroupImageType, " +
-                "DELETED = :deleted, " +
+				"DISPLAY_ORDER = :displayOrder, " +
+				"DELETED = :deleted, " +
 				"UPDATED_AT = :updatedAt " +
 				"WHERE ID = :id";
 
@@ -53,6 +55,7 @@ public class ProductGroupImageJdbcRepository {
                             .addValue("productGroupImageType", image.getProductImageType().name())
                             .addValue("deleted", image.isDeleted())
 							.addValue("updatedAt", LocalDateTime.now())
+							.addValue("displayOrder", image.getDisplayOrder())
 							.addValue("id", image.getId());
                     return params.getValues();
                 })
