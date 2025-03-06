@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>🏷 상품 API 문서</title>
+<title>카테고리 조회 API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,38 +436,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
+<h1>카테고리 조회 API</h1>
+<div class="details">
+<span id="revnumber">version 0.0.1</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_요청_정보">요청 정보</a></li>
+<li><a href="#_요청_헤더">요청 헤더</a></li>
+<li><a href="#_요청_파라미터">요청 파라미터</a></li>
+<li><a href="#_응답_정보">응답 정보</a></li>
+<li><a href="#_예제_요청_curl">예제 요청 (cURL)</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_상품_api_문서">🏷 상품 API 문서</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_개요">📌 개요</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>이 문서는 <strong>DEFAULT 권한 사용자 전용 API 문서</strong>입니다.
-DEFAULT 권한 사용자에게는 추가적인 상품 관련 기능이 제공되지 않습니다.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_상품_목록_조회">🛒 상품 목록 조회</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<h1 id="_상품_그룹_조회_api" class="sect0">상품 그룹 조회 API</h1>
 <div class="sect1">
 <h2 id="_요청_정보">요청 정보</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/product/group?page=0&amp;size=10 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/category?page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Requester-Type: DEFAULT
 Host: com.ryuqqq.setof</code></pre>
@@ -522,64 +514,40 @@ Host: com.ryuqqq.setof</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 (기본값: 20)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sellerIds</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">판매자 ID 목록</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>targetGroup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 타겟 (MALE, FEMALE, KIDS, LIFE)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>productGroupIds</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상품 그룹 ID 목록</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 타입 (NONE, CLOTHING, SHOES, BAG, ACC)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>categoryIds</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 ID 목록</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>brandIds</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 ID 목록</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>minSalePrice</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">최소 판매 가격</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxSalePrice</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">최대 판매 가격</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>minDiscountRate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">최소 할인율</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxDiscountRate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">최대 할인율</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categorySortField</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 정렬 기준 (ID)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">정렬 방식 (ASC/DESC)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>productSortField</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상품 정렬 기준 (ID, PRICE)</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cursorId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">페이징을 위한 커서 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>productSearchField</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상품 검색 필드 (ID, PRODUCT_GROUP_NAME)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>categorySearchField</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리 검색 필드 (ID, PRODUCT_GROUP_NAME)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>searchWord</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">검색 키워드</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAtFrom</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성일 시작 (YYYY-MM-DD HH:mm:ss)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAtTo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성일 종료 (YYYY-MM-DD HH:mm:ss)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mainDisplayNameType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카테고리명 검색 기준 한글 or 영어 (KR, US)</p></td>
 </tr>
 </tbody>
 </table>
@@ -592,428 +560,55 @@ Host: com.ryuqqq.setof</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 12413
+Content-Length: 1213
 
 {
   "data" : {
     "content" : [ {
-      "productGroup" : {
-        "id" : 1,
-        "sellerId" : 28,
-        "sellerName" : "setof",
-        "categoryId" : 1549,
-        "brandId" : 4856,
-        "productGroupName" : "몽클레어 키즈 와펜 패치 배색 폴로 반팔(네이비) 8A00002 89ALK 778",
-        "styleCode" : "STYLE_CODE-40120948",
-        "productCondition" : "NEW",
-        "managementType" : "SABANG",
-        "optionType" : "SINGLE",
-        "price" : {
-          "regularPrice" : 513000,
-          "currentPrice" : 281000,
-          "salePrice" : 281000,
-          "directDiscountPrice" : 0,
-          "directDiscountRate" : 0,
-          "discountRate" : 45
-        },
-        "soldOut" : false,
-        "displayed" : true,
-        "productStatus" : "WAITING",
-        "keyword" : "",
-        "createAt" : "2025-03-06 15:57:37",
-        "updateAt" : "2025-03-06 15:57:37"
-      },
-      "productNotice" : {
-        "material" : "상세페이지 참조",
-        "color" : "상세페이지 참조",
-        "size" : "상세페이지 참조",
-        "maker" : "상세페이지 참조",
-        "origin" : "KR",
-        "washingMethod" : "상세페이지 참조",
-        "yearMonth" : "상세페이지 참조",
-        "assuranceStandard" : "상세페이지 참조",
-        "asPhone" : "070-1111-1111"
-      },
-      "productDelivery" : {
-        "deliveryArea" : "마포구 독막로 15 1층",
-        "deliveryFee" : 0,
-        "deliveryPeriodAverage" : 0,
-        "returnMethodDomestic" : "RETURN_CONSUMER",
-        "returnCourierDomestic" : "SHIP04",
-        "returnChargeDomestic" : 10000,
-        "returnExchangeAreaDomestic" : "마포구 독막로 15 1층"
-      },
-      "productDetailDescription" : {
-        "detailDescription" : "html Detail Description"
-      },
-      "productGroupImages" : [ {
-        "id" : 1,
-        "productImageType" : "MAIN",
-        "imageUrl" : "test1",
-        "originUrl" : "test1",
-        "displayOrder" : 0
-      }, {
-        "id" : 2,
-        "productImageType" : "DETAIL",
-        "imageUrl" : "test2",
-        "originUrl" : "test2",
-        "displayOrder" : 0
-      } ],
-      "products" : [ {
-        "id" : 1,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ ]
-      } ],
-      "brand" : {
-        "id" : 4856,
-        "brandName" : "Moncler"
-      },
-      "categories" : [ {
-        "id" : 1543,
-        "name" : "kids",
-        "depth" : 1,
-        "parentCategoryId" : 0,
-        "displayed" : true,
-        "targetGroup" : "FEMALE",
-        "categoryType" : "NONE",
-        "path" : "1543"
-      }, {
-        "id" : 1544,
-        "name" : "의류",
-        "depth" : 2,
-        "parentCategoryId" : 1543,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544"
-      }, {
-        "id" : 1545,
-        "name" : "탑",
-        "depth" : 3,
-        "parentCategoryId" : 1544,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545"
-      }, {
-        "id" : 1549,
-        "name" : "반팔티셔츠",
-        "depth" : 4,
-        "parentCategoryId" : 1545,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545,1549"
-      } ]
+      "id" : 1543,
+      "categoryName" : "kids",
+      "depth" : 1,
+      "parentCategoryId" : 0,
+      "displayed" : true,
+      "targetGroup" : "FEMALE",
+      "categoryType" : "NONE",
+      "path" : "1543"
     }, {
-      "productGroup" : {
-        "id" : 2,
-        "sellerId" : 28,
-        "sellerName" : "setof",
-        "categoryId" : 1549,
-        "brandId" : 4856,
-        "productGroupName" : "몽클레어 키즈 와펜 패치 배색 폴로 반팔(네이비) 8A00002 89ALK 778",
-        "styleCode" : "STYLE_CODE-40120948",
-        "productCondition" : "NEW",
-        "managementType" : "SABANG",
-        "optionType" : "OPTION_ONE",
-        "price" : {
-          "regularPrice" : 513000,
-          "currentPrice" : 281000,
-          "salePrice" : 281000,
-          "directDiscountPrice" : 0,
-          "directDiscountRate" : 0,
-          "discountRate" : 45
-        },
-        "soldOut" : false,
-        "displayed" : true,
-        "productStatus" : "WAITING",
-        "keyword" : "",
-        "createAt" : "2025-03-06 15:57:37",
-        "updateAt" : "2025-03-06 15:57:37"
-      },
-      "productNotice" : {
-        "material" : "상세페이지 참조",
-        "color" : "상세페이지 참조",
-        "size" : "상세페이지 참조",
-        "maker" : "상세페이지 참조",
-        "origin" : "KR",
-        "washingMethod" : "상세페이지 참조",
-        "yearMonth" : "상세페이지 참조",
-        "assuranceStandard" : "상세페이지 참조",
-        "asPhone" : "070-1111-1111"
-      },
-      "productDelivery" : {
-        "deliveryArea" : "마포구 독막로 15 1층",
-        "deliveryFee" : 0,
-        "deliveryPeriodAverage" : 0,
-        "returnMethodDomestic" : "RETURN_CONSUMER",
-        "returnCourierDomestic" : "SHIP04",
-        "returnChargeDomestic" : 10000,
-        "returnExchangeAreaDomestic" : "마포구 독막로 15 1층"
-      },
-      "productDetailDescription" : {
-        "detailDescription" : "html Detail Description"
-      },
-      "productGroupImages" : [ {
-        "id" : 1,
-        "productImageType" : "MAIN",
-        "imageUrl" : "test1",
-        "originUrl" : "test1",
-        "displayOrder" : 0
-      }, {
-        "id" : 2,
-        "productImageType" : "DETAIL",
-        "imageUrl" : "test2",
-        "originUrl" : "test2",
-        "displayOrder" : 0
-      } ],
-      "products" : [ {
-        "id" : 1,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "COLOR",
-          "optionValue" : "Red"
-        } ]
-      }, {
-        "id" : 2,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "COLOR",
-          "optionValue" : "Blue"
-        } ]
-      } ],
-      "brand" : {
-        "id" : 4856,
-        "brandName" : "Moncler"
-      },
-      "categories" : [ {
-        "id" : 1543,
-        "name" : "kids",
-        "depth" : 1,
-        "parentCategoryId" : 0,
-        "displayed" : true,
-        "targetGroup" : "FEMALE",
-        "categoryType" : "NONE",
-        "path" : "1543"
-      }, {
-        "id" : 1544,
-        "name" : "의류",
-        "depth" : 2,
-        "parentCategoryId" : 1543,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544"
-      }, {
-        "id" : 1545,
-        "name" : "탑",
-        "depth" : 3,
-        "parentCategoryId" : 1544,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545"
-      }, {
-        "id" : 1549,
-        "name" : "반팔티셔츠",
-        "depth" : 4,
-        "parentCategoryId" : 1545,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545,1549"
-      } ]
+      "id" : 1544,
+      "categoryName" : "의류",
+      "depth" : 2,
+      "parentCategoryId" : 1543,
+      "displayed" : true,
+      "targetGroup" : "KIDS",
+      "categoryType" : "CLOTHING",
+      "path" : "1543,1544"
     }, {
-      "productGroup" : {
-        "id" : 3,
-        "sellerId" : 28,
-        "sellerName" : "setof",
-        "categoryId" : 1549,
-        "brandId" : 4856,
-        "productGroupName" : "몽클레어 키즈 와펜 패치 배색 폴로 반팔(네이비) 8A00002 89ALK 778",
-        "styleCode" : "STYLE_CODE-40120948",
-        "productCondition" : "NEW",
-        "managementType" : "SABANG",
-        "optionType" : "OPTION_TWO",
-        "price" : {
-          "regularPrice" : 513000,
-          "currentPrice" : 281000,
-          "salePrice" : 281000,
-          "directDiscountPrice" : 0,
-          "directDiscountRate" : 0,
-          "discountRate" : 45
-        },
-        "soldOut" : false,
-        "displayed" : true,
-        "productStatus" : "WAITING",
-        "keyword" : "",
-        "createAt" : "2025-03-06 15:57:37",
-        "updateAt" : "2025-03-06 15:57:37"
-      },
-      "productNotice" : {
-        "material" : "상세페이지 참조",
-        "color" : "상세페이지 참조",
-        "size" : "상세페이지 참조",
-        "maker" : "상세페이지 참조",
-        "origin" : "KR",
-        "washingMethod" : "상세페이지 참조",
-        "yearMonth" : "상세페이지 참조",
-        "assuranceStandard" : "상세페이지 참조",
-        "asPhone" : "070-1111-1111"
-      },
-      "productDelivery" : {
-        "deliveryArea" : "마포구 독막로 15 1층",
-        "deliveryFee" : 0,
-        "deliveryPeriodAverage" : 0,
-        "returnMethodDomestic" : "RETURN_CONSUMER",
-        "returnCourierDomestic" : "SHIP04",
-        "returnChargeDomestic" : 10000,
-        "returnExchangeAreaDomestic" : "마포구 독막로 15 1층"
-      },
-      "productDetailDescription" : {
-        "detailDescription" : "html Detail Description"
-      },
-      "productGroupImages" : [ {
-        "id" : 1,
-        "productImageType" : "MAIN",
-        "imageUrl" : "test1",
-        "originUrl" : "test1",
-        "displayOrder" : 0
-      }, {
-        "id" : 2,
-        "productImageType" : "DETAIL",
-        "imageUrl" : "test2",
-        "originUrl" : "test2",
-        "displayOrder" : 0
-      } ],
-      "products" : [ {
-        "id" : 1,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "COLOR",
-          "optionValue" : "Red"
-        }, {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "SIZE",
-          "optionValue" : "M"
-        } ]
-      }, {
-        "id" : 2,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "COLOR",
-          "optionValue" : "Red"
-        }, {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "SIZE",
-          "optionValue" : "L"
-        } ]
-      }, {
-        "id" : 3,
-        "productGroupId" : 1,
-        "quantity" : 10,
-        "soldOut" : false,
-        "displayed" : true,
-        "additionalPrice" : 1000.0,
-        "deleted" : false,
-        "options" : [ {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "COLOR",
-          "optionValue" : "Blue"
-        }, {
-          "optionGroupId" : 1,
-          "optionDetailId" : 1,
-          "optionName" : "SIZE",
-          "optionValue" : "S"
-        } ]
-      } ],
-      "brand" : {
-        "id" : 4856,
-        "brandName" : "Moncler"
-      },
-      "categories" : [ {
-        "id" : 1543,
-        "name" : "kids",
-        "depth" : 1,
-        "parentCategoryId" : 0,
-        "displayed" : true,
-        "targetGroup" : "FEMALE",
-        "categoryType" : "NONE",
-        "path" : "1543"
-      }, {
-        "id" : 1544,
-        "name" : "의류",
-        "depth" : 2,
-        "parentCategoryId" : 1543,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544"
-      }, {
-        "id" : 1545,
-        "name" : "탑",
-        "depth" : 3,
-        "parentCategoryId" : 1544,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545"
-      }, {
-        "id" : 1549,
-        "name" : "반팔티셔츠",
-        "depth" : 4,
-        "parentCategoryId" : 1545,
-        "displayed" : true,
-        "targetGroup" : "KIDS",
-        "categoryType" : "CLOTHING",
-        "path" : "1543,1544,1545,1549"
-      } ]
+      "id" : 1545,
+      "categoryName" : "탑",
+      "depth" : 3,
+      "parentCategoryId" : 1544,
+      "displayed" : true,
+      "targetGroup" : "KIDS",
+      "categoryType" : "CLOTHING",
+      "path" : "1543,1544,1545"
+    }, {
+      "id" : 1549,
+      "categoryName" : "반팔티셔츠",
+      "depth" : 4,
+      "parentCategoryId" : 1545,
+      "displayed" : true,
+      "targetGroup" : "KIDS",
+      "categoryType" : "CLOTHING",
+      "path" : "1543,1544,1545,1549"
     } ],
     "last" : true,
     "first" : false,
     "sort" : "DESC",
     "size" : 10,
-    "numberOfElements" : 3,
+    "numberOfElements" : 4,
     "empty" : false,
-    "cursor" : 3,
-    "totalElements" : 3
+    "cursor" : 1549,
+    "totalElements" : 4
   },
   "response" : {
     "status" : 200,
@@ -1029,7 +624,7 @@ Content-Length: 12413
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://com.ryuqqq.setof/api/v1/product/group?page=0&amp;size=10' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://com.ryuqqq.setof/api/v1/category?page=0&amp;size=10' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Requester-Type: DEFAULT'</code></pre>
 </div>
@@ -1040,7 +635,7 @@ Content-Length: 12413
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2025-03-06 09:38:53 +0900
+Last updated 2025-03-06 15:56:30 +0900
 </div>
 </div>
 </body>

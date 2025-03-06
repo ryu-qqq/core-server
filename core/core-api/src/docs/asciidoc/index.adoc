@@ -24,7 +24,7 @@ CORE API는 상품 및 브랜드 정보를 제공하는 RESTful API입니다.
 link:brand-api.html[브랜드 API 문서 보기]
 
 == 🛒 카테고리 API
-link:category-api.html[카테고리 API 문서 보기]- 개발중..
+link:category-api.html[카테고리 API 문서 보기]
 
 == 🏷 상품 API
 link:product-api.html[상품 API 문서 보기]

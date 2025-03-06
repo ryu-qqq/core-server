@@ -20,5 +20,4 @@ public class QueryDslConfig {
 		return new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
 	}
 
-
 }

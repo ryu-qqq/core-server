@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.ryuqq.core.domain.category.core.CategorySearchCondition;
 import com.ryuqq.core.domain.category.dao.CategoryQueryRepository;
 import com.ryuqq.core.domain.category.dao.CategorySnapshot;
 
@@ -27,6 +28,19 @@ public class DefaultCategoryQueryRepository implements CategoryQueryRepository {
 			.stream()
 			.map(CategorySnapshotMapper::toSnapshot)
 			.toList();
+	}
+
+	@Override
+	public List<CategorySnapshot> fetchByCondition(CategorySearchCondition categorySearchCondition) {
+		return categoryQueryDslRepository.fetchByCondition(categorySearchCondition)
+			.stream()
+			.map(CategorySnapshotMapper::toSnapshot)
+			.toList();
+	}
+
+	@Override
+	public long countByCondition(CategorySearchCondition categorySearchCondition) {
+		return categoryQueryDslRepository.countByCondition(categorySearchCondition);
 	}
 
 }

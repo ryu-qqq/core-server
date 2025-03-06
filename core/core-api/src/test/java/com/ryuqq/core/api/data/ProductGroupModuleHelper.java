@@ -30,7 +30,7 @@ public class ProductGroupModuleHelper {
 	public static DefaultProductGroupContextResponseDto createDefaultProductGroupContextResponseDto(DefaultProductGroupContext productGroupContext){
 		DefaultBrand brand = new DefaultBrand(4856L, "Moncler", "몽클레어", true);
 		DefaultSeller seller = new DefaultSeller(28L, "setof");
-		List<Category> categories = CategoryModuleHelper.toCategory();
+		List<Category> categories = CategoryModuleHelper.createCategories();
 		return new DefaultProductGroupContextResponseDto(productGroupContext, brand, categories, seller);
 	}
 
